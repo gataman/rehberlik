@@ -1,43 +1,33 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:rehberlik/models/classes.dart';
+import 'package:rehberlik/models/student_with_class.dart';
 import 'package:rehberlik/repository/classes_repository.dart';
+import 'package:rehberlik/repository/student_repository.dart';
 
 class AdminClassesController extends GetxController {
+  final _box = GetStorage();
   final _classesRepository = Get.put(ClassesRepository());
-  Rxn<List<Classes>> classesList = Rxn<List<Classes>>();
+  final _studentRepository = Get.put(StudentRepository());
+
+  Rxn<List<StudentWithClass>> studentWithClassList =
+      Rxn<List<StudentWithClass>>();
+
   var statusAddingClass = false.obs;
   var statusOpeningDialog = false.obs;
 
   final editingClasses = Rxn<Classes>();
   final selectedClassesCategory = 5.obs;
 
-  Stream<List<Classes?>> getClassesListStream({required String schoolID}) {
-    Stream<List<DocumentSnapshot<Classes?>>> streamListDocument =
-        _classesRepository
-            .getAllWithStream(schoolID: schoolID)
-            .map((querySnapshot) => querySnapshot.docs);
-
-    Stream<List<Classes?>> streamListClasses = streamListDocument
-        .map((listOfDocSnap) => listOfDocSnap.map((e) => e.data()).toList());
-
-    return streamListClasses;
-  }
-
-  void getClassesList() async {
-    final list =
-        await _classesRepository.getAll(schoolID: "w7WZvgcVPKVheXnhxMHE");
-    classesList.value = list;
-    update();
-  }
+  var selectedIndex = 0.obs;
 
   void addClass(Classes classes) {
     changeAddingStatus(true);
-    _classesRepository.add(object: classes).whenComplete(() {
-      getClassesList();
+    _classesRepository.add(object: classes).then((classID) {
+      classes.id = classID;
+      _addClassInLocalList(classes);
       changeAddingStatus(false);
-      debugPrint("İşlem tamama");
     });
   }
 
@@ -57,18 +47,75 @@ class AdminClassesController extends GetxController {
   }
 
   void updateClasses(Classes classes) {
-    _classesRepository.update(object: classes).whenComplete(() {
+    _classesRepository.update(object: classes).then((value) {
       editingClasses.value = null;
-      getClassesList();
+      _updateOrDeleteClassInLocalList(classes: classes, isUpdate: true);
       update();
     });
   }
 
-  void deleteClass(String classID) {
-    _classesRepository.delete(objectID: classID).whenComplete(() {
-      getClassesList();
+  void deleteClass(Classes classes) {
+    _classesRepository.delete(objectID: classes.id!).whenComplete(() {
       editingClasses.value = null;
+      _updateOrDeleteClassInLocalList(classes: classes, isUpdate: false);
       update();
     });
+  }
+
+  //Class and students:
+
+  void getAllStudentWithClass() async {
+    debugPrint("Get Student List Çalıştı");
+    final schoolID = _box.read("schoolID");
+
+    var _studentWithClassList =
+        await _studentRepository.getStudentWithClass(schoolID: schoolID);
+
+    studentWithClassList.value = _studentWithClassList;
+  }
+
+  /*
+  Classes? _findClassWithID({required String classID}) {
+    final classList = studentWithClassList.value;
+    if (classList == null || classList.isEmpty) {
+      return null;
+    } else {
+      final newList =
+          classList.where((element) => element.classes.id == classID);
+      if (newList.isEmpty) {
+        return null;
+      } else {
+        // newList.first.classes.className = "ZZZZZ";
+        //classList.remove(newList.first);
+      }
+    }
+
+    studentWithClassList.refresh();
+  }
+
+   */
+
+  void _addClassInLocalList(Classes classes) {
+    var classList = studentWithClassList.value;
+    final studentWithClass = StudentWithClass(classes: classes);
+    classList ??= <StudentWithClass>[];
+    classList.add(studentWithClass);
+    studentWithClassList.refresh();
+  }
+
+  void _updateOrDeleteClassInLocalList(
+      {required Classes classes, required bool isUpdate}) {
+    var classList = studentWithClassList.value;
+    if (classList != null) {
+      final newList = classList.where((element) => element.classes == classes);
+      if (newList.isNotEmpty) {
+        if (isUpdate) {
+          newList.first.classes = classes;
+        } else {
+          classList.remove(newList.first);
+        }
+        studentWithClassList.refresh();
+      }
+    }
   }
 }

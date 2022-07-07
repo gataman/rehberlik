@@ -36,3 +36,8 @@ var defaultBoxDecoration = BoxDecoration(
     Radius.circular(10),
   ),
 );
+
+const defaultDividerDecoration = BoxDecoration(
+  color: secondaryColor,
+  border: Border(bottom: BorderSide(color: Colors.white10)),
+);

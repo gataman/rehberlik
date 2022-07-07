@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/models/classes.dart';
+import 'package:rehberlik/models/student_with_class.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/classes_data_table.dart';
 
@@ -15,14 +15,16 @@ class ClassesListBox extends StatefulWidget {
 class _ClassesListBoxState extends State<ClassesListBox> {
   late AdminClassesController _controller;
 
-  List<Classes> classList = [];
+  List<StudentWithClass> classList = [];
   late ClassesDataSource classesDataSource;
 
   @override
   void initState() {
     super.initState();
     _controller = Get.put(AdminClassesController());
-    _controller.getClassesList();
+    if (_controller.studentWithClassList.value == null) {
+      _controller.getAllStudentWithClass();
+    }
     classesDataSource = ClassesDataSource(classList: classList);
   }
 
@@ -67,7 +69,7 @@ class _ClassesListBoxState extends State<ClassesListBox> {
 
   Widget _classList() {
     return Obx(() {
-      if (_controller.classesList.value == null) {
+      if (_controller.studentWithClassList.value == null) {
         return const Padding(
           padding: EdgeInsets.all(16.0),
           child: SizedBox(
@@ -79,8 +81,8 @@ class _ClassesListBoxState extends State<ClassesListBox> {
           ),
         );
       } else {
-        if (_controller.classesList.value!.isNotEmpty) {
-          classesDataSource.updateList(_controller.classesList.value);
+        if (_controller.studentWithClassList.value!.isNotEmpty) {
+          classesDataSource.updateList(_controller.studentWithClassList.value);
           return ClassesDataTable(classesDataSource: classesDataSource);
         } else {
           return const SizedBox(

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/services/base/db_base.dart';
 
@@ -30,14 +29,10 @@ class LessonService implements DBBase<Lesson> {
     return ref.update(object.toFirestore());
   }
 
-  Future<List<Lesson>> getAll(
-      {required String classID, Map<String, dynamic>? filters}) async {
-    var colRef = _db
-        .collection(_mainRef)
-        .where("classID", isEqualTo: classID)
-        .withConverter(
-            fromFirestore: Lesson.fromFirestore,
-            toFirestore: (Lesson object, _) => object.toFirestore());
+  Future<List<Lesson>> getAll({Map<String, dynamic>? filters}) async {
+    var colRef = _db.collection(_mainRef).where("").withConverter(
+        fromFirestore: Lesson.fromFirestore,
+        toFirestore: (Lesson object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
@@ -71,71 +66,5 @@ class LessonService implements DBBase<Lesson> {
       count++;
     }
     return batch.commit();
-  }
-
-  Future<void> addWithClassLevel(
-      {required String schoolID,
-      required Lesson lesson,
-      required int classLevel}) async {
-    final colRef = _db
-        .collection("classes")
-        .where("schoolID", isEqualTo: schoolID)
-        .withConverter(
-          fromFirestore: Classes.fromFirestore,
-          toFirestore: (Classes object, options) => object.toFirestore(),
-        );
-    final docSnap = await colRef.get();
-    final list = docSnap.docs.map((e) => e.data()).toList();
-
-    for (var classes in list) {
-      if (classes.classLevel == classLevel) {
-        lesson.classID = classes.id;
-        add(object: lesson);
-      }
-    }
-  }
-
-  Future<void> updateWithClassLevel(
-      {required Lesson lesson,
-      required Lesson oldLesson,
-      required int classLevel}) async {
-    final colRef = _db.collection(_mainRef).withConverter(
-          fromFirestore: Classes.fromFirestore,
-          toFirestore: (Classes object, options) => object.toFirestore(),
-        );
-    final docSnap = await colRef.get();
-    final list = docSnap.docs.map((e) => e.data()).toList();
-
-    for (var classes in list) {
-      if (classes.classLevel == classLevel) {
-        lesson.classID = classes.id;
-
-        var findingLesson = await _getLessonWithName(
-            lesson: lesson, oldLesson: oldLesson, classID: classes.id!);
-        if (findingLesson != null) {
-          findingLesson.lessonName = lesson.lessonName;
-          findingLesson.lessonTime = lesson.lessonTime;
-          update(object: findingLesson);
-        }
-      }
-    }
-  }
-
-  Future<Lesson?> _getLessonWithName(
-      {required Lesson lesson,
-      required Lesson oldLesson,
-      required String classID}) async {
-    final colRef = _db
-        .collection(_mainRef)
-        .where("lessonName", isEqualTo: oldLesson.lessonName)
-        .withConverter(
-            fromFirestore: Lesson.fromFirestore,
-            toFirestore: (Lesson object, _) => object.toFirestore());
-    final docSnap = await colRef.get();
-    if (docSnap.docs.isNotEmpty) {
-      return docSnap.docs.first.data();
-    } else {
-      return null;
-    }
   }
 }

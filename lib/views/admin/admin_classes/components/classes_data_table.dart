@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/models/classes.dart';
+import 'package:rehberlik/models/student_with_class.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
 import 'package:rehberlik/views/admin/admin_view_controller.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -37,17 +38,6 @@ class ClassesDataTable extends StatelessWidget {
           ),
         ),
         GridColumn(
-          columnName: 'level',
-          label: Container(
-            padding: const EdgeInsets.all(8.0),
-            alignment: Alignment.center,
-            child: const Text(
-              'Sınıf Seviyesi',
-              style: TextStyle(color: primaryColor),
-            ),
-          ),
-        ),
-        GridColumn(
           columnName: 'opt',
           allowSorting: false,
           label: Row(
@@ -73,10 +63,11 @@ class ClassesDataTable extends StatelessWidget {
 }
 
 class ClassesDataSource extends DataGridSource {
-  ClassesDataSource({required List<Classes?>? classList}) {
+  ClassesDataSource({required List<StudentWithClass?>? classList}) {
     if (classList != null) {
       if (classList.isNotEmpty) {
-        classList.sort((a, b) => a!.className!.compareTo(b!.className!));
+        classList.sort(
+            (a, b) => a!.classes.className!.compareTo(b!.classes.className!));
         updateList(classList);
       }
     }
@@ -84,23 +75,25 @@ class ClassesDataSource extends DataGridSource {
 
   List<DataGridRow> _classesDataGridRows = [];
   final _controller = Get.put(AdminClassesController());
+  final _adminViewController = Get.put(AdminViewController());
 
   @override
   List<DataGridRow> get rows => _classesDataGridRows;
 
-  void updateList(List<Classes?>? newList) {
+  void updateList(List<StudentWithClass?>? newList) {
     if (newList != null) {
       if (newList.isNotEmpty) {
-        newList.sort((a, b) => a!.className!.compareTo(b!.className!));
+        newList.sort(
+            (a, b) => a!.classes.className!.compareTo(b!.classes.className!));
+
         _classesDataGridRows = newList
-            .map<DataGridRow>(
-              (classes) => DataGridRow(
-                cells: <DataGridCell>[
+            .asMap()
+            .map((i, studentWithClass) => MapEntry(
+                i,
+                DataGridRow(cells: <DataGridCell>[
                   DataGridCell<String>(
-                      columnName: 'name', value: classes!.className),
-                  DataGridCell<String>(
-                      columnName: 'level',
-                      value: "${classes.classLevel.toString()}.Sınıflar"),
+                      columnName: 'name',
+                      value: studentWithClass!.classes.className),
                   DataGridCell<Widget>(
                     columnName: 'opt',
                     value: Row(
@@ -114,31 +107,31 @@ class ClassesDataSource extends DataGridSource {
                             IconButton(
                                 padding: const EdgeInsets.all(0),
                                 onPressed: () {
-                                  _showClassDetail(classes);
+                                  _showClassDetail(studentWithClass.classes, i);
                                 },
                                 icon: const Icon(
                                   Icons.search,
                                   color: Colors.lightBlueAccent,
                                 )),
                             const SizedBox(
-                              width: defaultPadding / 2,
+                              width: 4,
                             ),
                             IconButton(
                                 padding: const EdgeInsets.all(0),
                                 onPressed: () {
-                                  _editClass(classes);
+                                  _editClass(studentWithClass.classes);
                                 },
                                 icon: const Icon(
                                   Icons.edit,
                                   color: Colors.lightGreen,
                                 )),
                             const SizedBox(
-                              width: defaultPadding / 2,
+                              width: 4,
                             ),
                             IconButton(
                                 padding: const EdgeInsets.all(0),
                                 onPressed: () {
-                                  _deleteClass(classes.id!);
+                                  _deleteClass(studentWithClass.classes);
                                 },
                                 icon: const Icon(
                                   Icons.delete,
@@ -152,11 +145,9 @@ class ClassesDataSource extends DataGridSource {
                       ],
                     ),
                   ),
-                ],
-              ),
-            )
+                ])))
+            .values
             .toList();
-
         notifyListeners();
       }
     }
@@ -185,24 +176,25 @@ class ClassesDataSource extends DataGridSource {
     }).toList());
   }
 
-  void _showClassDetail(Classes classes) {
+  void _showClassDetail(Classes classes, int index) {
     _controller.showClassDetail(classes);
-    final adminViewController = Get.put(AdminViewController());
-    adminViewController.selectMenuItem(2);
-    debugPrint(classes.toString());
+    _controller.selectedIndex.value = index;
+
+    _adminViewController.selectMenuItem(2);
   }
 
   void _editClass(Classes classes) {
     _controller.editClass(classes);
   }
 
-  void _deleteClass(String classID) {
+  void _deleteClass(Classes classes) {
     Get.defaultDialog(
       title: "Uyarı",
-      middleText: "Silmek istediğinizden emin misiniz?",
+      middleText:
+          "${classes.className} adlı sınıfı silmek istediğinizden emin misiniz?",
       contentPadding: const EdgeInsets.all(defaultPadding),
       onConfirm: () {
-        _controller.deleteClass(classID);
+        _controller.deleteClass(classes);
         Get.back();
       },
       onCancel: () => Get.back(),

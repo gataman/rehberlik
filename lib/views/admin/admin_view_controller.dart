@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_view.dart';
-import 'package:rehberlik/views/admin/admin_students/admin_students_view.dart';
+import 'package:rehberlik/views/admin/admin_classes/admin_students_view.dart';
+import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_view.dart';
 import 'package:rehberlik/views/admin/admin_uploads/admin_uploads_view.dart';
 import 'package:rehberlik/views/admin/dashboard/admin_dashboard_view.dart';
 
@@ -28,8 +29,8 @@ class AdminViewController extends GetxController {
     final list = <Widget>[
       const AdminDashboardView(),
       const AdminClassesView(),
-      AdminStudentsView(),
-      const Center(child: Text("DERSLER")),
+      const AdminStudentsView(),
+      const AdminLessonsView(),
       const Center(child: Text("ÇALIŞMA PROGRAMI")),
       const Center(child: Text("RANDEVULAR")),
       const Center(child: Text("MESAJLAR")),

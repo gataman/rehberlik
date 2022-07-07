@@ -17,27 +17,10 @@ class LessonRepository implements LessonService {
       _service.update(object: object);
 
   @override
-  Future<List<Lesson>> getAll(
-          {required String classID, Map<String, dynamic>? filters}) =>
-      _service.getAll(classID: classID, filters: filters);
+  Future<List<Lesson>> getAll({Map<String, dynamic>? filters}) =>
+      _service.getAll(filters: filters);
 
   @override
   Future<void> addAll({required List<Lesson> list}) =>
       _service.addAll(list: list);
-
-  @override
-  Future<void> addWithClassLevel(
-          {required String schoolID,
-          required Lesson lesson,
-          required int classLevel}) =>
-      _service.addWithClassLevel(
-          schoolID: schoolID, lesson: lesson, classLevel: classLevel);
-
-  @override
-  Future<void> updateWithClassLevel(
-          {required Lesson lesson,
-          required Lesson oldLesson,
-          required int classLevel}) =>
-      _service.updateWithClassLevel(
-          lesson: lesson, oldLesson: oldLesson, classLevel: classLevel);
 }

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Classes {
-  final String? id;
+  String? id;
   String? schoolID;
   String? className;
   int? classLevel;

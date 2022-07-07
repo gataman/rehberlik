@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
+import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/classes_category_select_box.dart';
+import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_controller.dart';
 
-class ClassesAddFormBox extends StatefulWidget {
-  const ClassesAddFormBox({Key? key}) : super(key: key);
+class LessonAddFormBox extends StatefulWidget {
+  const LessonAddFormBox({Key? key}) : super(key: key);
 
   @override
-  State<ClassesAddFormBox> createState() => _ClassesAddFormBoxState();
+  State<LessonAddFormBox> createState() => _LessonAddFormBoxState();
 }
 
-class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
-  final _controller = Get.put(AdminClassesController());
+class _LessonAddFormBoxState extends State<LessonAddFormBox> {
+  final _controller = Get.put(AdminLessonsController());
   final _tfAddFormController = TextEditingController();
-  int _selectedCategory = 5;
-  late FocusNode _classNameFocusNode;
-  Classes? _classes;
+  int _selectedCategory = 8;
+  late FocusNode _lessonNameFocusNode;
+  Lesson? _lesson;
 
   @override
   void initState() {
-    _classNameFocusNode = FocusNode();
+    _lessonNameFocusNode = FocusNode();
     super.initState();
   }
 
@@ -42,10 +42,10 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Obx(
           () {
-            _classes = _controller.editingClasses.value;
-            if (_classes != null) {
-              _classNameFocusNode.requestFocus();
-              _tfAddFormController.text = _classes!.className!;
+            _lesson = _controller.editingLesson.value;
+            if (_lesson != null) {
+              _lessonNameFocusNode.requestFocus();
+              _tfAddFormController.text = _lesson!.lessonName!;
             } else {
               _tfAddFormController.text = "";
             }
@@ -78,14 +78,14 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
     return Row(
       children: [
         // Cancel Button
-        if (_classes != null)
+        if (_lesson != null)
           Expanded(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: warningColor,
               ),
               onPressed: () {
-                _controller.editingClasses.value = null;
+                _controller.editingLesson.value = null;
               },
               child: Row(
                 children: const [
@@ -106,32 +106,32 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
               ),
             ),
           ),
-        if (_classes != null)
+        if (_lesson != null)
           const SizedBox(
             width: defaultPadding / 2,
           ),
         Expanded(
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: _classes == null ? Colors.amber : infoColor,
+                primary: _lesson == null ? Colors.amber : infoColor,
               ),
               onPressed: () {
-                if (_classes == null) {
-                  _saveClass();
+                if (_lesson == null) {
+                  _saveLesson();
                 } else {
-                  _editClasses(_classes);
+                  _editLesson(_lesson);
                 }
               },
               child: Row(
                 children: [
-                  if (_controller.statusAddingClass.value)
+                  if (_controller.statusAddingLesson.value)
                     const SizedBox(
                         width: 16,
                         height: 16,
                         child: CircularProgressIndicator(
                           color: secondaryColor,
                         )),
-                  if (!_controller.statusAddingClass.value)
+                  if (!_controller.statusAddingLesson.value)
                     const SizedBox(
                         child: Icon(
                       Icons.save,
@@ -140,7 +140,7 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
                   Expanded(
                     child: Center(
                       child: Text(
-                        _classes == null ? "Kaydet" : "Güncelle",
+                        _lesson == null ? "Kaydet" : "Güncelle",
                         style: const TextStyle(
                             color: secondaryColor, fontWeight: FontWeight.w500),
                       ),
@@ -158,15 +158,15 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
       height: 45,
       child: TextFormField(
         onFieldSubmitted: (value) {
-          _saveClass();
+          _saveLesson();
         },
-        focusNode: _classNameFocusNode,
+        focusNode: _lessonNameFocusNode,
         textInputAction: TextInputAction.go,
         controller: _tfAddFormController,
-        style: TextStyle(color: _classes == null ? Colors.amber : infoColor),
+        style: TextStyle(color: _lesson == null ? Colors.amber : infoColor),
         textAlign: TextAlign.center,
         decoration: InputDecoration(
-          hintText: _classes == null ? "Sınıf Adı" : _classes?.className,
+          hintText: _lesson == null ? "Ders Adı" : _lesson?.lessonName,
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
@@ -181,27 +181,28 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
     return Padding(
       padding: const EdgeInsets.all(defaultPadding / 2),
       child: Text(
-        _classes == null ? "Sınıf Ekle" : "Sınıf Güncelle",
+        _lesson == null ? "Sınıf Ekle" : "Sınıf Güncelle",
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: _classes == null ? Colors.amber : infoColor,
+          color: _lesson == null ? Colors.amber : infoColor,
         ),
       ),
     );
   }
 
-  void _saveClass() {
+  void _saveLesson() {
     if (_tfAddFormController.text.trim().isEmpty) {
       debugPrint("Boşşş");
     } else {
       debugPrint(_tfAddFormController.text.toString());
 
-      final Classes classes = Classes(
+      final Lesson lesson = Lesson(
           schoolID: "w7WZvgcVPKVheXnhxMHE",
-          className: _tfAddFormController.text,
-          classLevel: _selectedCategory);
-      _controller.addClass(classes);
+          lessonName: _tfAddFormController.text,
+          classLevel: _selectedCategory,
+          lessonTime: 5);
+      _controller.addLesson(lesson);
 
       Get.snackbar(
         "Başarılı",
@@ -213,14 +214,14 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
     }
   }
 
-  void _editClasses(Classes? classes) {
-    if (classes != null) {
+  void _editLesson(Lesson? lesson) {
+    if (lesson != null) {
       if (_tfAddFormController.text.trim().isEmpty) {
         debugPrint("Boşşş");
       } else {
-        classes.className = _tfAddFormController.text;
-        classes.classLevel = _selectedCategory;
-        _controller.updateClasses(classes);
+        lesson.lessonName = _tfAddFormController.text;
+        lesson.classLevel = _selectedCategory;
+        _controller.updateLesson(lesson);
         Get.snackbar(
           "Başarılı",
           "Sınıf adı başarıyla güncellendi",
