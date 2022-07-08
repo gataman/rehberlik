@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Lesson {
-  final String? id;
+  String? id;
   int? classLevel;
   String? lessonName;
   int? lessonTime;

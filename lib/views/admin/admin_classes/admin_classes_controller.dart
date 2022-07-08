@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rehberlik/models/classes.dart';
+import 'package:rehberlik/models/student.dart';
 import 'package:rehberlik/models/student_with_class.dart';
 import 'package:rehberlik/repository/classes_repository.dart';
 import 'package:rehberlik/repository/student_repository.dart';
@@ -19,6 +20,7 @@ class AdminClassesController extends GetxController {
 
   final editingClasses = Rxn<Classes>();
   final selectedClassesCategory = 5.obs;
+  final Rxn<Student> selectedStudent = Rxn<Student>();
 
   var selectedIndex = 0.obs;
 
@@ -73,27 +75,6 @@ class AdminClassesController extends GetxController {
 
     studentWithClassList.value = _studentWithClassList;
   }
-
-  /*
-  Classes? _findClassWithID({required String classID}) {
-    final classList = studentWithClassList.value;
-    if (classList == null || classList.isEmpty) {
-      return null;
-    } else {
-      final newList =
-          classList.where((element) => element.classes.id == classID);
-      if (newList.isEmpty) {
-        return null;
-      } else {
-        // newList.first.classes.className = "ZZZZZ";
-        //classList.remove(newList.first);
-      }
-    }
-
-    studentWithClassList.refresh();
-  }
-
-   */
 
   void _addClassInLocalList(Classes classes) {
     var classList = studentWithClassList.value;

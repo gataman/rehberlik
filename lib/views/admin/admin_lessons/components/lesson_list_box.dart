@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
+import 'package:rehberlik/common/widgets/custom_rounded_button.dart';
 import 'package:rehberlik/common/widgets/default_circular_progress.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_controller.dart';
@@ -15,6 +16,7 @@ class LessonListBox extends StatelessWidget {
     return Obx(() {
       final lessonList = _controller.lessonList.value;
       final selectedIndex = _controller.selectedIndex.value;
+      final selectedCategory = selectedIndex + 5;
 
       return Container(
         decoration: defaultBoxDecoration,
@@ -28,22 +30,24 @@ class LessonListBox extends StatelessWidget {
                   height: 50,
                   child: DefaultCircularProgress(),
                 ),
-              if (lessonList != null && lessonList.isEmpty)
+              if (lessonList != null)
+                Column(
+                  children: [
+                    Text(
+                      "$selectedCategory. Sınıf Dersler",
+                      style: defaultTitleStyle,
+                    ),
+                    const Divider(),
+                  ],
+                ),
+              if (lessonList != null && lessonList[selectedCategory] != null)
+                _getLessonListBox(lessonList[selectedCategory]!),
+              if (lessonList != null && lessonList[selectedCategory] == null)
                 const Padding(
                   padding: EdgeInsets.all(defaultPadding),
-                  child: Text("Henüz ders eklenmemiş. Lütfen ekleyin"),
+                  child: Text(
+                      "Bu sınıf seviyesine henüz ders eklenmemiş. Lütfen ders ekleyiniz!"),
                 ),
-              if (lessonList != null && lessonList.length > selectedIndex)
-                Text(
-                  "${lessonList.keys.elementAt(selectedIndex)} Sınıfı",
-                  style: defaultTitleStyle,
-                ),
-              if (lessonList != null && lessonList.length > selectedIndex)
-                _getLessonListBox(
-                    lessonList.values.elementAt(selectedIndex), selectedIndex),
-              if (lessonList != null && lessonList.length <= selectedIndex)
-                const Text(
-                    "Bu sınıf seviyesine henüz ders eklenmemiş. Lütfen ders ekleyiniz!")
             ],
           ),
         ),
@@ -57,23 +61,66 @@ class LessonListBox extends StatelessWidget {
     }
   }
 
-  Widget _getLessonListBox(List<Lesson> lessonList, int selectedIndex) {
+  Widget _getLessonListBox(List<Lesson> lessonList) {
+    lessonList.sort((a, b) => b.lessonTime!.compareTo(a.lessonTime!));
     return SizedBox(
-      height: 600,
+      height: 400,
       child: ListView.builder(
           itemCount: lessonList.length,
           itemBuilder: (context, index) {
-            final lesson = lessonList[selectedIndex];
+            final lesson = lessonList[index];
             return Container(
               decoration: defaultDividerDecoration,
               child: GestureDetector(
                 onTap: () {},
                 child: ListTile(
-                  title: Text(lesson.lessonName!),
-                ),
+                    leading: const Icon(
+                      Icons.book,
+                      size: 24,
+                      color: infoColor,
+                    ),
+                    title: Text(lesson.lessonName!),
+                    trailing: Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("${lesson.lessonTime} saat"),
+                          const SizedBox(width: 16),
+                          CustomRoundedButton(
+                            onPressed: () {
+                              _controller.editingLesson.value = lesson;
+                            },
+                          ),
+                          const SizedBox(width: 16),
+                          CustomRoundedButton(
+                            bgColor: Colors.redAccent,
+                            iconData: Icons.delete,
+                            onPressed: () {
+                              _deleteLesson(lesson);
+                            },
+                          ),
+                        ],
+                      ),
+                    )),
               ),
             );
           }),
+    );
+  }
+
+  void _deleteLesson(Lesson lesson) {
+    Get.defaultDialog(
+      title: "Uyarı",
+      middleText:
+          "${lesson.lessonName} adlı dersi silmek istediğinizden emin misiniz?",
+      contentPadding: const EdgeInsets.all(defaultPadding),
+      onConfirm: () {
+        _controller.deleteLesson(lesson);
+        Get.back();
+      },
+      onCancel: () => Get.back(),
+      textConfirm: "Sil",
+      textCancel: "İptal",
     );
   }
 }

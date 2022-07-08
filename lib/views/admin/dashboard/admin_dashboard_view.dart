@@ -4,8 +4,6 @@ import 'package:rehberlik/models/class_stats.dart';
 import 'package:rehberlik/responsive.dart';
 import 'package:rehberlik/views/admin/dashboard/components/center/components/agenda_box.dart';
 import 'package:rehberlik/views/admin/dashboard/components/center/components/class_stats_list.dart';
-import 'package:rehberlik/views/admin/dashboard/components/footer.dart';
-import 'package:rehberlik/views/admin/dashboard/components/header.dart';
 import 'package:rehberlik/views/admin/dashboard/components/right_side/right_side.dart';
 
 class AdminDashboardView extends StatelessWidget {
@@ -13,6 +11,7 @@ class AdminDashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Admin Daşboard çalıştı");
     final Size _size = MediaQuery.of(context).size;
     final classStats = <ClassStats>[
       ClassStats(

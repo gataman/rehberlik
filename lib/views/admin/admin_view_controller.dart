@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_view.dart';
+import 'package:rehberlik/views/admin/admin_classes/admin_student_detail_view.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_students_view.dart';
 import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_view.dart';
 import 'package:rehberlik/views/admin/admin_uploads/admin_uploads_view.dart';
@@ -35,6 +36,7 @@ class AdminViewController extends GetxController {
       const Center(child: Text("RANDEVULAR")),
       const Center(child: Text("MESAJLAR")),
       const AdminUploadsView(),
+      const AdminStudentDetailView(),
     ];
 
     return list[selectedMenuItemIndex.value];

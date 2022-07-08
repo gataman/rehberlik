@@ -9,6 +9,7 @@ const infoColor = Colors.teal;
 const titleColor = Colors.amber;
 const buttonColor = Colors.amber;
 const warningColor = Colors.redAccent;
+const defaultEditColor = Colors.lime;
 
 const defaultPadding = 16.0;
 const mobileWidth = 600;

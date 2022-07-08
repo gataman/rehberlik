@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/models/lesson.dart';
-import 'package:rehberlik/views/admin/admin_classes/components/classes_category_select_box.dart';
 import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_controller.dart';
+import 'package:rehberlik/views/admin/admin_lessons/components/lesson_classes_category_select_box.dart';
 
 class LessonAddFormBox extends StatefulWidget {
   const LessonAddFormBox({Key? key}) : super(key: key);
@@ -15,8 +14,9 @@ class LessonAddFormBox extends StatefulWidget {
 
 class _LessonAddFormBoxState extends State<LessonAddFormBox> {
   final _controller = Get.put(AdminLessonsController());
-  final _tfAddFormController = TextEditingController();
-  int _selectedCategory = 8;
+  final _tfLessonNameFormController = TextEditingController();
+  final _tfLessonTimeFormController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   late FocusNode _lessonNameFocusNode;
   Lesson? _lesson;
 
@@ -28,7 +28,8 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
 
   @override
   void dispose() {
-    _tfAddFormController.dispose();
+    _tfLessonNameFormController.dispose();
+    _tfLessonTimeFormController.dispose();
 
     super.dispose();
   }
@@ -45,28 +46,36 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
             _lesson = _controller.editingLesson.value;
             if (_lesson != null) {
               _lessonNameFocusNode.requestFocus();
-              _tfAddFormController.text = _lesson!.lessonName!;
+              _tfLessonNameFormController.text = _lesson!.lessonName!;
+              _tfLessonTimeFormController.text =
+                  _lesson!.lessonTime!.toString();
             } else {
-              _tfAddFormController.text = "";
+              _tfLessonNameFormController.text = "";
+              _tfLessonTimeFormController.text = "";
             }
 
             return Padding(
               padding: const EdgeInsets.all(defaultPadding),
-              child: SizedBox(
-                child: Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  direction: Axis.horizontal,
-                  children: [
-                    _title(),
-                    ClassesCategorySelectBox(valueChanged: (classCategory) {
-                      _selectedCategory = classCategory;
-                      debugPrint(
-                          "Seçilen  class add form Sınıf : $classCategory");
-                    }),
-                    _classNameInput(),
-                    _actionButtons(),
-                  ],
+              child: Form(
+                key: _formKey,
+                child: SizedBox(
+                  child: Wrap(
+                    spacing: 16,
+                    runSpacing: 16,
+                    direction: Axis.horizontal,
+                    children: [
+                      _title(),
+                      LessonClassesCategorySelectBox(
+                        valueChanged: (_index) {
+                          _controller.selectedIndex.value = _index;
+                        },
+                        selectedIndex: _controller.selectedIndex.value,
+                      ),
+                      _lessonNameInput(),
+                      _lessonTimeInput(),
+                      _actionButtons(),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -153,24 +162,53 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
     );
   }
 
-  Widget _classNameInput() {
-    return SizedBox(
-      height: 45,
-      child: TextFormField(
-        onFieldSubmitted: (value) {
-          _saveLesson();
-        },
-        focusNode: _lessonNameFocusNode,
-        textInputAction: TextInputAction.go,
-        controller: _tfAddFormController,
-        style: TextStyle(color: _lesson == null ? Colors.amber : infoColor),
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          hintText: _lesson == null ? "Ders Adı" : _lesson?.lessonName,
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
+  Widget _lessonNameInput() {
+    return TextFormField(
+      validator: (text) {
+        debugPrint("...$text");
+        if (text == null || text.trim().isEmpty) {
+          return "Lütfen ders adı yazınız!";
+        }
+      },
+      onFieldSubmitted: (value) {
+        _saveLesson();
+      },
+      focusNode: _lessonNameFocusNode,
+      textInputAction: TextInputAction.go,
+      controller: _tfLessonNameFormController,
+      style: TextStyle(color: _lesson == null ? Colors.amber : infoColor),
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: _lesson == null ? "Ders Adı" : _lesson?.lessonName,
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _lessonTimeInput() {
+    return TextFormField(
+      validator: (text) {
+        debugPrint("...$text");
+        if (text == null || text.trim().isEmpty) {
+          return "Lütfen ders saati yazınız!";
+        }
+      },
+      onFieldSubmitted: (value) {
+        _saveLesson();
+      },
+      controller: _tfLessonTimeFormController,
+      style: TextStyle(color: _lesson == null ? Colors.amber : infoColor),
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText:
+            _lesson == null ? "Ders Saati" : _lesson?.lessonTime.toString(),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
           ),
         ),
       ),
@@ -181,7 +219,7 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
     return Padding(
       padding: const EdgeInsets.all(defaultPadding / 2),
       child: Text(
-        _lesson == null ? "Sınıf Ekle" : "Sınıf Güncelle",
+        _lesson == null ? "Ders Ekle" : "Ders Güncelle",
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -192,16 +230,17 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
   }
 
   void _saveLesson() {
-    if (_tfAddFormController.text.trim().isEmpty) {
-      debugPrint("Boşşş");
-    } else {
-      debugPrint(_tfAddFormController.text.toString());
+    if (_formKey.currentState != null) {
+      final isValid = _formKey.currentState!.validate();
+      if (!isValid) {
+        return;
+      }
 
       final Lesson lesson = Lesson(
           schoolID: "w7WZvgcVPKVheXnhxMHE",
-          lessonName: _tfAddFormController.text,
-          classLevel: _selectedCategory,
-          lessonTime: 5);
+          lessonName: _tfLessonNameFormController.text,
+          classLevel: _controller.selectedIndex.value + 5,
+          lessonTime: int.parse(_tfLessonTimeFormController.text));
       _controller.addLesson(lesson);
 
       Get.snackbar(
@@ -216,20 +255,17 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
 
   void _editLesson(Lesson? lesson) {
     if (lesson != null) {
-      if (_tfAddFormController.text.trim().isEmpty) {
-        debugPrint("Boşşş");
-      } else {
-        lesson.lessonName = _tfAddFormController.text;
-        lesson.classLevel = _selectedCategory;
-        _controller.updateLesson(lesson);
-        Get.snackbar(
-          "Başarılı",
-          "Sınıf adı başarıyla güncellendi",
-          duration: const Duration(seconds: 2),
-          colorText: secondaryColor,
-          backgroundColor: infoColor,
-        );
-      }
+      lesson.lessonName = _tfLessonNameFormController.text;
+      var oldClass = lesson.classLevel;
+      lesson.classLevel = _controller.selectedIndex.value + 5;
+      _controller.updateLesson(lesson, oldClass!);
+      Get.snackbar(
+        "Başarılı",
+        "Sınıf adı başarıyla güncellendi",
+        duration: const Duration(seconds: 2),
+        colorText: secondaryColor,
+        backgroundColor: infoColor,
+      );
     }
   }
 }
