@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/models/classes.dart';
@@ -61,8 +60,6 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
                     _title(),
                     ClassesCategorySelectBox(valueChanged: (classCategory) {
                       _selectedCategory = classCategory;
-                      debugPrint(
-                          "Seçilen  class add form Sınıf : $classCategory");
                     }),
                     _classNameInput(),
                     _actionButtons(),
@@ -193,10 +190,7 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
 
   void _saveClass() {
     if (_tfAddFormController.text.trim().isEmpty) {
-      debugPrint("Boşşş");
     } else {
-      debugPrint(_tfAddFormController.text.toString());
-
       final Classes classes = Classes(
           schoolID: "w7WZvgcVPKVheXnhxMHE",
           className: _tfAddFormController.text,

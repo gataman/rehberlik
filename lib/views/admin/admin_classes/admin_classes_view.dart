@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/responsive.dart';
+import 'package:rehberlik/views/admin/admin_classes/components/class_list_box.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/classes_add_form_box.dart';
-import 'package:rehberlik/views/admin/admin_classes/components/classes_list_box.dart';
 
 class AdminClassesView extends StatefulWidget {
   const AdminClassesView({Key? key}) : super(key: key);
@@ -21,28 +21,32 @@ class _AdminClassesViewState extends State<AdminClassesView> {
   }
 
   Widget _desktopContent(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Expanded(flex: 3, child: ClassesListBox()),
-        SizedBox(
-          width: defaultPadding,
-        ),
-        Expanded(flex: 2, child: ClassesAddFormBox())
-      ],
+    return SingleChildScrollView(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(flex: 3, child: ClassListBox()),
+          const SizedBox(
+            width: defaultPadding,
+          ),
+          const Expanded(flex: 2, child: ClassesAddFormBox())
+        ],
+      ),
     );
   }
 
   Widget _mobileContent(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        ClassesAddFormBox(),
-        SizedBox(
-          height: defaultPadding,
-        ),
-        ClassesListBox()
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const ClassesAddFormBox(),
+          const SizedBox(
+            height: defaultPadding,
+          ),
+          ClassListBox()
+        ],
+      ),
     );
   }
 
@@ -62,7 +66,7 @@ class _AdminClassesViewState extends State<AdminClassesView> {
         backgroundColor: infoColor,
         title: "",
         titlePadding: EdgeInsets.zero,
-        content: SizedBox(height: 200, child: ClassesAddFormBox()),
+        content: const SizedBox(height: 200, child: ClassesAddFormBox()),
         contentPadding: EdgeInsets.zero);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
 
 class Responsive extends StatelessWidget {
   final Widget mobile;

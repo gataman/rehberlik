@@ -63,49 +63,45 @@ class LessonListBox extends StatelessWidget {
 
   Widget _getLessonListBox(List<Lesson> lessonList) {
     lessonList.sort((a, b) => b.lessonTime!.compareTo(a.lessonTime!));
-    return SizedBox(
-      height: 400,
-      child: ListView.builder(
-          itemCount: lessonList.length,
-          itemBuilder: (context, index) {
-            final lesson = lessonList[index];
-            return Container(
-              decoration: defaultDividerDecoration,
-              child: GestureDetector(
-                onTap: () {},
-                child: ListTile(
-                    leading: const Icon(
-                      Icons.book,
-                      size: 24,
-                      color: infoColor,
-                    ),
-                    title: Text(lesson.lessonName!),
-                    trailing: Container(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text("${lesson.lessonTime} saat"),
-                          const SizedBox(width: 16),
-                          CustomRoundedButton(
-                            onPressed: () {
-                              _controller.editingLesson.value = lesson;
-                            },
-                          ),
-                          const SizedBox(width: 16),
-                          CustomRoundedButton(
-                            bgColor: Colors.redAccent,
-                            iconData: Icons.delete,
-                            onPressed: () {
-                              _deleteLesson(lesson);
-                            },
-                          ),
-                        ],
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: lessonList.length,
+        itemBuilder: (context, index) {
+          final lesson = lessonList[index];
+          return Container(
+            decoration: defaultDividerDecoration,
+            child: GestureDetector(
+              onTap: () {},
+              child: ListTile(
+                  leading: const Icon(
+                    Icons.book,
+                    size: 24,
+                    color: infoColor,
+                  ),
+                  title: Text(lesson.lessonName!),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("${lesson.lessonTime} saat"),
+                      const SizedBox(width: 16),
+                      CustomRoundedButton(
+                        onPressed: () {
+                          _controller.editingLesson.value = lesson;
+                        },
                       ),
-                    )),
-              ),
-            );
-          }),
-    );
+                      const SizedBox(width: 16),
+                      CustomRoundedButton(
+                        bgColor: Colors.redAccent,
+                        iconData: Icons.delete,
+                        onPressed: () {
+                          _deleteLesson(lesson);
+                        },
+                      ),
+                    ],
+                  )),
+            ),
+          );
+        });
   }
 
   void _deleteLesson(Lesson lesson) {

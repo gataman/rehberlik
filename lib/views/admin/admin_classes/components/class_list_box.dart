@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/widgets/custom_rounded_button.dart';
 import 'package:rehberlik/common/widgets/default_circular_progress.dart';
-import 'package:rehberlik/models/student.dart';
+import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
-import 'package:rehberlik/views/admin/admin_view_controller.dart';
 
-class StudentListBox extends StatelessWidget {
-  StudentListBox({Key? key}) : super(key: key);
+class ClassListBox extends StatelessWidget {
+  ClassListBox({Key? key}) : super(key: key);
   final _controller = Get.put(AdminClassesController());
-  final _adminViewController = Get.put(AdminViewController());
 
   @override
   Widget build(BuildContext context) {
     _getStudentAndClassList();
+
     return Obx(() {
       final classesList = _controller.studentWithClassList.value;
-      final selectedIndex = _controller.selectedIndex.value;
-
       return Container(
         decoration: defaultBoxDecoration,
         child: Column(
@@ -33,10 +31,10 @@ class StudentListBox extends StatelessWidget {
                 ),
               ),
             if (classesList != null)
-              Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+              const Padding(
+                padding: EdgeInsets.all(defaultPadding),
                 child: Text(
-                  "${classesList[selectedIndex].classes.className} Sınıfı",
+                  "SINIFLAR",
                   style: defaultTitleStyle,
                 ),
               ),
@@ -45,10 +43,9 @@ class StudentListBox extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: defaultPadding),
                 child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: classesList[selectedIndex].studentList!.length,
+                    itemCount: classesList.length,
                     itemBuilder: (context, index) {
-                      final student =
-                          classesList[selectedIndex].studentList![index];
+                      final classes = classesList[index].classes;
                       return Container(
                         decoration: defaultDividerDecoration,
                         child: Material(
@@ -62,31 +59,46 @@ class StudentListBox extends StatelessWidget {
                               }
                             },
                             onTap: () {
-                              _showStudentDetail(student);
+                              _showClassDetail(classes, index);
                             },
                             child: ListTile(
-                              horizontalTitleGap: 4.0,
-                              leading: _setStudentLeading(student.photoUrl),
-                              title: Text(student.studentName!,
+                              leading: SvgPicture.asset(
+                                "${iconsSrc}menu_classroom.svg",
+                                color: Colors.white54,
+                                height: 16,
+                              ),
+                              //leading: _setClassesLeading(student.photoUrl),
+                              title: Text(classes.className!,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400)),
-                              subtitle: Text(
-                                "No: ${student.studentNumber.toString()}",
-                                style: defaultSubtitleStyle,
-                              ),
+
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  CustomRoundedButton(onPressed: () {}),
+                                  CustomRoundedButton(
+                                    onPressed: () {
+                                      _showClassDetail(classes, index);
+                                    },
+                                    bgColor: Colors.blueAccent,
+                                    iconData: Icons.search,
+                                  ),
+                                  const SizedBox(
+                                    width: defaultPadding / 2,
+                                  ),
+                                  CustomRoundedButton(onPressed: () {
+                                    _editClass(classes);
+                                  }),
                                   const SizedBox(
                                     width: defaultPadding / 2,
                                   ),
                                   CustomRoundedButton(
                                       bgColor: Colors.redAccent,
                                       iconData: Icons.delete,
-                                      onPressed: () {})
+                                      onPressed: () {
+                                        _deleteClass(classes);
+                                      })
                                 ],
                               ),
                             ),
@@ -107,19 +119,29 @@ class StudentListBox extends StatelessWidget {
     }
   }
 
-  Widget _setStudentLeading(String? photoUrl) {
-    return photoUrl != null
-        ? CircleAvatar(
-            backgroundImage: NetworkImage(photoUrl),
-          )
-        : const CircleAvatar(
-            backgroundColor: Colors.white,
-            child: Icon(Icons.person),
-          );
+  void _showClassDetail(Classes classes, int index) {
+    _controller.showClassDetail(classes);
+    _controller.selectedIndex.value = index;
+    Get.toNamed(Constants.routeStudents, id: 1);
   }
 
-  void _showStudentDetail(Student student) {
-    _controller.selectedStudent.value = student;
-    Get.toNamed(Constants.routeStudentDetail, id: 1);
+  void _editClass(Classes classes) {
+    _controller.editClass(classes);
+  }
+
+  void _deleteClass(Classes classes) {
+    Get.defaultDialog(
+      title: "Uyarı",
+      middleText:
+          "${classes.className} adlı sınıfı silmek istediğinizden emin misiniz?",
+      contentPadding: const EdgeInsets.all(defaultPadding),
+      onConfirm: () {
+        _controller.deleteClass(classes);
+        Get.back();
+      },
+      onCancel: () => Get.back(),
+      textConfirm: "Sil",
+      textCancel: "İptal",
+    );
   }
 }

@@ -18,7 +18,6 @@ class AdminLessonsController extends GetxController {
   final editingLesson = Rxn<Lesson>();
 
   void getAllLessonList() async {
-    debugPrint("getAllLessonList çağrıldı");
     _lessonsRepository.getAll().then((_lessonList) {
       final lastList = _lessonList.groupBy((lesson) => lesson.classLevel);
       final sortedList = SplayTreeMap<int, List<Lesson>>.from(

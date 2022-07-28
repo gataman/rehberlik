@@ -28,7 +28,7 @@ class AdminViewController extends GetxController {
 
   Widget getSelectedView() {
     final list = <Widget>[
-      const AdminDashboardView(),
+      AdminDashboardView(),
       const AdminClassesView(),
       const AdminStudentsView(),
       const AdminLessonsView(),

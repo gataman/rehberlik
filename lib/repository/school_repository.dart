@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:rehberlik/common/models/school_student_stats.dart';
 import 'package:rehberlik/models/school.dart';
 import 'package:rehberlik/services/schools_service.dart';
 
@@ -23,4 +24,11 @@ class SchoolRepository implements SchoolService {
   @override
   Future<void> addAll({required List<School> list}) =>
       _service.addAll(list: list);
+
+  @override
+  Future<int> getStudentCount(
+          {required String schoolID,
+          required int classLevel,
+          Map<String, dynamic>? filters}) =>
+      _service.getStudentCount(schoolID: schoolID, classLevel: classLevel);
 }

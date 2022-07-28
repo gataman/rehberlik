@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/responsive.dart';
+import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/student_detail_tab_view.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/student_info_card.dart';
 
@@ -29,9 +31,9 @@ class AdminStudentDetailView extends StatelessWidget {
         const SizedBox(
           width: defaultPadding,
         ),
-        const Expanded(
+        Expanded(
           flex: 2,
-          child: Text("Menü"),
+          child: StudentInfoCard(),
         ),
       ],
     );
@@ -41,7 +43,7 @@ class AdminStudentDetailView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Menü"),
+        const Text("Menü"),
         const SizedBox(
           height: defaultPadding,
         ),

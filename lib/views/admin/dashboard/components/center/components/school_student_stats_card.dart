@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rehberlik/common/constants.dart';
+import 'package:rehberlik/common/models/school_student_stats.dart';
 import 'package:rehberlik/models/class_stats.dart';
 
-class ClassStatsCard extends StatelessWidget {
-  const ClassStatsCard({
+class SchoolStudentStatsCard extends StatelessWidget {
+  const SchoolStudentStatsCard({
     Key? key,
-    required this.classStats,
+    required this.schoolStudentStats,
   }) : super(key: key);
 
-  final ClassStats classStats;
+  final SchoolStudentStats schoolStudentStats;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +33,10 @@ class ClassStatsCard extends StatelessWidget {
               child: Center(
                 child: FittedBox(
                   child: Text(
-                    "${classStats.classLevel ?? ''}.",
+                    "${schoolStudentStats.classLevel}.",
                     style: TextStyle(
                       fontSize: 36,
-                      color: classStats.classColor ?? primaryColor,
+                      color: schoolStudentStats.classColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -49,16 +50,18 @@ class ClassStatsCard extends StatelessWidget {
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "SINIFLAR",
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
                       Text(
-                        "128 Öğrenci",
-                        style: TextStyle(fontSize: 12),
+                        schoolStudentStats.studentCount == 0
+                            ? "..."
+                            : "${schoolStudentStats.studentCount} Öğrenci",
+                        style: const TextStyle(fontSize: 12),
                       )
                     ],
                   ),

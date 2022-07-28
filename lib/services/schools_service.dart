@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/common/custom_result.dart';
+import 'package:flutter/material.dart';
+import 'package:rehberlik/common/models/school_student_stats.dart';
+import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/models/school.dart';
 import 'package:rehberlik/services/base/db_base.dart';
 
@@ -68,5 +70,39 @@ class SchoolService implements DBBase<School> {
     final docSnap = await colRef.get();
     final list = docSnap.docs.map((e) => e.data()).toList();
     return list;
+  }
+
+  Future<int> getStudentCount(
+      {required String schoolID,
+      required int classLevel,
+      Map<String, dynamic>? filters}) async {
+    var _studentTotalCount = 0;
+    var _classList = await _getClassList(schoolID, classLevel);
+    for (var classes in _classList) {
+      final _studentCount = await _getStudentCount(classes.id!);
+      _studentTotalCount += _studentCount;
+    }
+    return _studentTotalCount;
+  }
+
+  Future<List<Classes>> _getClassList(String schoolID, int classLevel) async {
+    var classesRef = _db
+        .collection("classes")
+        .where("schoolID", isEqualTo: schoolID)
+        .where("classLevel", isEqualTo: classLevel)
+        .withConverter(
+            fromFirestore: Classes.fromFirestore,
+            toFirestore: (Classes object, _) => object.toFirestore());
+
+    final classSnap = await classesRef.get();
+    return classSnap.docs.map((e) => e.data()).toList();
+  }
+
+  Future<int> _getStudentCount(String classID) async {
+    var classesRef =
+        _db.collection("students").where("classID", isEqualTo: classID);
+    final classSnap = await classesRef.get();
+
+    return classSnap.size;
   }
 }

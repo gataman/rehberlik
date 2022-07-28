@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
+import 'package:rehberlik/models/student.dart';
+import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
+import 'package:rehberlik/views/admin/admin_study_program/components/student_program_data_grid_card.dart';
 
 class StudentDetailTabView extends StatefulWidget {
   const StudentDetailTabView({Key? key}) : super(key: key);
@@ -10,6 +14,7 @@ class StudentDetailTabView extends StatefulWidget {
 
 class _StudentDetailTabViewState extends State<StudentDetailTabView>
     with SingleTickerProviderStateMixin {
+  final _controller = Get.put(AdminClassesController());
   late TabController _tabController;
 
   @override
@@ -75,8 +80,19 @@ class _StudentDetailTabViewState extends State<StudentDetailTabView>
   }
 
   List<Widget> _getTabBarViews() {
+    Student? student = _controller.selectedStudent.value;
+    final _dateNow = DateTime.now();
+    final _startTime = DateTime(_dateNow.year, _dateNow.month, _dateNow.day);
+    String? _studentID;
+    if (student != null) {
+      _studentID = student.id;
+    }
+    //"4Vmdx0gLlcN8N0qaB1PB";
+
     return <Widget>[
-      const Text("Çalışma Programı"),
+      if (_studentID != null)
+        StudentProgramDataGridCard(
+            studentID: _studentID, startTime: _startTime),
       const Text("Deneme İstatistikleri"),
       const Text("Notlar"),
     ];

@@ -58,7 +58,6 @@ class _ClassesCategorySelectBoxState extends State<ClassesCategorySelectBox> {
         onChanged: (ClassesCategory? newValue) {
           widget.valueChanged(newValue!.classLevel);
           _controller.selectedClassesCategory.value = newValue.classLevel;
-          debugPrint("onChanged ${newValue.classIndex}");
         },
         items: classesCategoryList
             .map<DropdownMenuItem<ClassesCategory>>((ClassesCategory value) {

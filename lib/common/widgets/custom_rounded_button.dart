@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
 
 class CustomRoundedButton extends StatelessWidget {
   final VoidCallback onPressed;

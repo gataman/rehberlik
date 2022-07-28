@@ -29,7 +29,7 @@ class _AdminUploadsViewState extends State<AdminUploadsView> {
                     onPressed: () {
                       _controller.selectExcelFile(isEokul: true);
                     },
-                    child: Text("E-Okul Excel Seç")),
+                    child: const Text("E-Okul Excel Seç")),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

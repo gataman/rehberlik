@@ -3,46 +3,116 @@ import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/models/class_stats.dart';
 import 'package:rehberlik/responsive.dart';
 import 'package:rehberlik/views/admin/dashboard/components/center/components/agenda_box.dart';
-import 'package:rehberlik/views/admin/dashboard/components/center/components/class_stats_list.dart';
+import 'package:rehberlik/views/admin/dashboard/components/center/components/school_student_stats_list.dart';
 import 'package:rehberlik/views/admin/dashboard/components/right_side/right_side.dart';
 
 class AdminDashboardView extends StatelessWidget {
-  const AdminDashboardView({Key? key}) : super(key: key);
+  AdminDashboardView({Key? key}) : super(key: key);
+
+  final denemeList = <String>[
+    "Hız Yayınları 1",
+    "Özdebir 1",
+    "Startfen",
+    "Özdebir 2"
+  ];
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Admin Daşboard çalıştı");
-    final Size _size = MediaQuery.of(context).size;
-    final classStats = <ClassStats>[
-      ClassStats(
-        classLevel: 5,
-        totalStudent: 125,
-        classColor: Colors.redAccent,
-      ),
-      ClassStats(
-        classLevel: 6,
-        totalStudent: 112,
-        classColor: Colors.lime,
-      ),
-      ClassStats(
-        classLevel: 7,
-        totalStudent: 112,
-        classColor: Colors.lightBlueAccent,
-      ),
-      ClassStats(
-        classLevel: 8,
-        totalStudent: 103,
-        classColor: Colors.amber,
-      ),
-    ];
+    //final Size _size = MediaQuery.of(context).size;
 
-    final denemeList = <String>[
-      "Hız Yayınları 1",
-      "Özdebir 1",
-      "Startfen",
-      "Özdebir 2"
-    ];
-    return Row(
+    return Responsive(
+        mobile: _mobileContent(context),
+        tablet: _tabletContent(),
+        desktop: _desktopContent());
+  }
+
+  Widget _desktopContent() {
+    return SingleChildScrollView(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 5,
+            child: Column(
+              children: [
+                SchoolStudentStatsList(
+                  crossAxisCount: 4,
+                  childAspectRatio: 2,
+                ),
+                const SizedBox(height: defaultPadding),
+                AgendaBox(),
+              ],
+            ),
+          ),
+          const SizedBox(
+            width: defaultPadding,
+          ),
+          Expanded(
+            flex: 2,
+            child: RightSide(denemeList: denemeList),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _tabletContent() {
+    return SingleChildScrollView(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 5,
+            child: Column(
+              children: [
+                SchoolStudentStatsList(
+                  crossAxisCount: 4,
+                  childAspectRatio: 2,
+                ),
+                const SizedBox(height: defaultPadding),
+                AgendaBox(),
+              ],
+            ),
+          ),
+          const SizedBox(
+            width: defaultPadding,
+          ),
+          Expanded(
+            flex: 2,
+            child: RightSide(denemeList: denemeList),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _mobileContent(BuildContext context) {
+    final Size _size = MediaQuery.of(context).size;
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SchoolStudentStatsList(
+            crossAxisCount: 2,
+            childAspectRatio: _size.width < 460
+                ? 2.5
+                : _size.width < 600
+                    ? 3
+                    : 4,
+          ),
+          const SizedBox(height: defaultPadding),
+          AgendaBox(),
+          const SizedBox(height: defaultPadding),
+          RightSide(denemeList: denemeList),
+        ],
+      ),
+    );
+  }
+}
+
+/*
+
+Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
@@ -71,7 +141,7 @@ class AdminDashboardView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: defaultPadding),
-              const AgendaBox(),
+              Expanded(child: AgendaBox()),
               if (Responsive.isMobile(context))
                 const SizedBox(
                   height: defaultPadding,
@@ -92,5 +162,4 @@ class AdminDashboardView extends StatelessWidget {
           ),
       ],
     );
-  }
-}
+ */

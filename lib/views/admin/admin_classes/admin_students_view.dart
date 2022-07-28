@@ -13,34 +13,38 @@ class AdminStudentsView extends StatelessWidget {
   }
 
   Widget _desktopContent() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 4,
-          child: StudentListBox(),
-        ),
-        const SizedBox(
-          width: defaultPadding,
-        ),
-        Expanded(
-          flex: 2,
-          child: ClassesSelectBox(),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 4,
+            child: StudentListBox(),
+          ),
+          const SizedBox(
+            width: defaultPadding,
+          ),
+          Expanded(
+            flex: 2,
+            child: ClassesSelectBox(),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _mobileContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClassesSelectBox(),
-        const SizedBox(
-          height: defaultPadding,
-        ),
-        StudentListBox(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ClassesSelectBox(),
+          const SizedBox(
+            height: defaultPadding,
+          ),
+          StudentListBox(),
+        ],
+      ),
     );
   }
 }

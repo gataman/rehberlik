@@ -18,7 +18,6 @@ class ClassesDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SfDataGrid(
-      shrinkWrapRows: true,
       //verticalScrollPhysics: const NeverScrollableScrollPhysics(),
       allowSorting: true,
       rowHeight: 40,
@@ -91,9 +90,12 @@ class ClassesDataSource extends DataGridSource {
             .map((i, studentWithClass) => MapEntry(
                 i,
                 DataGridRow(cells: <DataGridCell>[
-                  DataGridCell<String>(
+                  DataGridCell<Widget>(
                       columnName: 'name',
-                      value: studentWithClass!.classes.className),
+                      value: Text(
+                        studentWithClass!.classes.className.toString(),
+                        overflow: TextOverflow.ellipsis,
+                      )),
                   DataGridCell<Widget>(
                     columnName: 'opt',
                     value: Row(
@@ -114,7 +116,7 @@ class ClassesDataSource extends DataGridSource {
                                   color: Colors.lightBlueAccent,
                                 )),
                             const SizedBox(
-                              width: 4,
+                              width: 2,
                             ),
                             IconButton(
                                 padding: const EdgeInsets.all(0),
@@ -126,7 +128,7 @@ class ClassesDataSource extends DataGridSource {
                                   color: Colors.lightGreen,
                                 )),
                             const SizedBox(
-                              width: 4,
+                              width: 2,
                             ),
                             IconButton(
                                 padding: const EdgeInsets.all(0),

@@ -13,34 +13,38 @@ class AdminLessonsView extends StatelessWidget {
   }
 
   Widget _desktopContent() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 4,
-          child: LessonListBox(),
-        ),
-        const SizedBox(
-          width: defaultPadding,
-        ),
-        const Expanded(
-          flex: 2,
-          child: LessonAddFormBox(),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 4,
+            child: LessonListBox(),
+          ),
+          const SizedBox(
+            width: defaultPadding,
+          ),
+          const Expanded(
+            flex: 2,
+            child: LessonAddFormBox(),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _mobileContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const LessonAddFormBox(),
-        const SizedBox(
-          height: defaultPadding,
-        ),
-        LessonListBox(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const LessonAddFormBox(),
+          const SizedBox(
+            height: defaultPadding,
+          ),
+          LessonListBox(),
+        ],
+      ),
     );
   }
 }

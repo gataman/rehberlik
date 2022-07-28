@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/models/student.dart';
@@ -196,7 +194,6 @@ class StudentService implements DBBase<Student> {
     }
 
     final downloadUrl = await storageRef.getDownloadURL();
-    debugPrint(downloadUrl);
     return await storageRef.getDownloadURL();
   }
 }

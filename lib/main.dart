@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/locator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
 import 'package:rehberlik/views/admin/admin_view.dart';
 import 'package:rehberlik/views/admin/admin_view_binding.dart';
 import 'package:get_storage/get_storage.dart';
@@ -28,6 +28,10 @@ void main() async {
   final box = GetStorage();
   box.write("schoolID", "w7WZvgcVPKVheXnhxMHE");
 
+  final _controller = Get.put(AdminClassesController());
+  if (_controller.studentWithClassList.value == null) {
+    _controller.getAllStudentWithClass();
+  }
   runApp(const MyApp());
 }
 
@@ -59,11 +63,11 @@ class MyApp extends StatelessWidget {
           canvasColor: secondaryColor,
         ),
         initialRoute: "/admin",
-        defaultTransition: Transition.native,
+        defaultTransition: Transition.fadeIn,
         getPages: [
           GetPage(
               name: "/admin",
-              page: () => const AdminView(),
+              page: () => AdminView(),
               binding: AdminViewBinding()),
         ]);
   }

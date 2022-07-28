@@ -25,56 +25,62 @@ class SideMenu extends StatelessWidget {
                 title: "Ana Sayfa",
                 iconSrc: "${iconsSrc}menu_dashboard.svg",
                 onPress: () {
-                  itemClicked(context, 0);
+                  Get.toNamed(Constants.routeDashboard, id: 1);
+
+                  itemClicked();
                 },
               ),
               DrawerListTile(
                 title: "Sınıflar",
                 iconSrc: "${iconsSrc}menu_classroom.svg",
                 onPress: () {
-                  itemClicked(context, 1);
+                  Get.toNamed(Constants.routeClasses, id: 1);
+                  itemClicked();
                 },
               ),
               DrawerListTile(
                 title: "Öğrenciler",
                 iconSrc: "${iconsSrc}menu_classroom.svg",
                 onPress: () {
-                  itemClicked(context, 2);
+                  Get.toNamed(Constants.routeStudents, id: 1);
+                  itemClicked();
                 },
               ),
               DrawerListTile(
                 title: "Dersler",
                 iconSrc: "${iconsSrc}menu_lesson.svg",
                 onPress: () {
-                  itemClicked(context, 3);
+                  Get.toNamed(Constants.routeLessons, id: 1);
+                  itemClicked();
                 },
               ),
               DrawerListTile(
                 title: "Çalışma Programı",
                 iconSrc: "${iconsSrc}menu_timetable.svg",
                 onPress: () {
-                  itemClicked(context, 4);
+                  Get.toNamed(Constants.routeStudyProgram, id: 1);
+                  itemClicked();
                 },
               ),
               DrawerListTile(
                 title: "Randevular",
                 iconSrc: "${iconsSrc}menu_meeting.svg",
                 onPress: () {
-                  itemClicked(context, 5);
+                  itemClicked();
                 },
               ),
               DrawerListTile(
                 title: "Mesajlar",
                 iconSrc: "${iconsSrc}menu_mail.svg",
                 onPress: () {
-                  itemClicked(context, 6);
+                  itemClicked();
                 },
               ),
               DrawerListTile(
                 title: "Yüklemeler",
                 iconSrc: "${iconsSrc}menu_mail.svg",
                 onPress: () {
-                  itemClicked(context, 7);
+                  itemClicked();
                 },
               ),
             ],
@@ -84,8 +90,7 @@ class SideMenu extends StatelessWidget {
     );
   }
 
-  void itemClicked(BuildContext context, int pos) {
-    _controller.selectMenuItem(pos);
+  void itemClicked() {
     if (_controller.scaffoldStateKey.currentState!.isDrawerOpen) {
       _controller.scaffoldStateKey.currentState!.openEndDrawer();
     }
