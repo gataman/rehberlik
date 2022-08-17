@@ -30,4 +30,8 @@ class ClassesRepository implements ClassesService {
   Stream<QuerySnapshot<Classes?>> getAllWithStream(
           {required String schoolID, Map<String, dynamic>? filters}) =>
       _service.getAllWithStream(schoolID: schoolID);
+
+  @override
+  Future<Classes?> get({required String classID}) =>
+      _service.get(classID: classID);
 }

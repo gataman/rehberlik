@@ -5,6 +5,8 @@ class DefaultCircularProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CircularProgressIndicator();
+    return const Center(
+        child: SizedBox(
+            width: 50, height: 50, child: CircularProgressIndicator()));
   }
 }

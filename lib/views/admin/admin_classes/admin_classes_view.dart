@@ -1,72 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/responsive.dart';
-import 'package:rehberlik/views/admin/admin_classes/components/class_list_box.dart';
-import 'package:rehberlik/views/admin/admin_classes/components/classes_add_form_box.dart';
+library admin_classes_view;
 
-class AdminClassesView extends StatefulWidget {
+import 'admin_classes_imports.dart';
+
+part 'components/class_list_box.dart';
+part 'components/classes_add_form_box.dart';
+part 'components/classes_category_select_box.dart';
+
+class AdminClassesView extends AdminBaseView<AdminClassesController> {
   const AdminClassesView({Key? key}) : super(key: key);
 
   @override
-  State<AdminClassesView> createState() => _AdminClassesViewState();
-}
+  Widget get firstView => const ClassListBox();
 
-class _AdminClassesViewState extends State<AdminClassesView> {
   @override
-  Widget build(BuildContext context) {
-    return Responsive.isMobile(context)
-        ? _mobileContent(context)
-        : _desktopContent(context);
-  }
-
-  Widget _desktopContent(BuildContext context) {
-    return SingleChildScrollView(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(flex: 3, child: ClassListBox()),
-          const SizedBox(
-            width: defaultPadding,
-          ),
-          const Expanded(flex: 2, child: ClassesAddFormBox())
-        ],
-      ),
-    );
-  }
-
-  Widget _mobileContent(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const ClassesAddFormBox(),
-          const SizedBox(
-            height: defaultPadding,
-          ),
-          ClassListBox()
-        ],
-      ),
-    );
-  }
-
-  void _showDialog() {
-    Get.defaultDialog(
-        actions: <Widget>[
-          TextButton(
-            child: const Text(
-              "Kapat",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              Get.back();
-            },
-          )
-        ],
-        backgroundColor: infoColor,
-        title: "",
-        titlePadding: EdgeInsets.zero,
-        content: const SizedBox(height: 200, child: ClassesAddFormBox()),
-        contentPadding: EdgeInsets.zero);
-  }
+  Widget get secondView => const ClassesAddFormBox();
 }

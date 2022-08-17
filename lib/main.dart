@@ -9,8 +9,8 @@ import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/locator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
-import 'package:rehberlik/views/admin/admin_view.dart';
-import 'package:rehberlik/views/admin/admin_view_binding.dart';
+import 'package:rehberlik/views/admin/admin_main_view/admin_main_view.dart';
+import 'package:rehberlik/views/admin/admin_main_view/admin_main_view_binding.dart';
 import 'package:get_storage/get_storage.dart';
 
 void main() async {
@@ -67,8 +67,8 @@ class MyApp extends StatelessWidget {
         getPages: [
           GetPage(
               name: "/admin",
-              page: () => AdminView(),
-              binding: AdminViewBinding()),
+              page: () => AdminMainView(),
+              binding: AdminMainViewBinding()),
         ]);
   }
 }

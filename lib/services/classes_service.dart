@@ -56,6 +56,16 @@ class ClassesService implements DBBase<Classes> {
     return batch.commit();
   }
 
+  Future<Classes?> get({required String classID}) async {
+    var docRef = _db.collection(_mainRef).doc(classID).withConverter(
+        fromFirestore: Classes.fromFirestore,
+        toFirestore: (Classes object, _) => object.toFirestore());
+
+    final docSnap = await docRef.get();
+
+    return docSnap.data();
+  }
+
   Future<List<Classes>> getAll(
       {required String schoolID, Map<String, dynamic>? filters}) async {
     var colRef = _db

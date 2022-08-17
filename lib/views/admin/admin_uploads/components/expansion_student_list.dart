@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/models/student.dart';
+part of admin_uploads_view;
 
 class ExpansionStudentList extends StatefulWidget {
   final Map<String, List<Student>> data;

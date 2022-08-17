@@ -161,7 +161,6 @@ class AdminUploadsController extends GetxController {
       Uint8List bytes) async {
     //final decoder = SpreadsheetDecoder.decodeBytes(bytes, update: false);
     var decoder = Excel.decodeBytes(bytes);
-    debugPrint(decoder.tables.keys.toString());
 
     int i = 0;
     List<Student> studentList = [];
@@ -169,7 +168,6 @@ class AdminUploadsController extends GetxController {
     for (var table in decoder.tables.keys) {
       for (var row in decoder.tables[table]!.rows) {
         var data = row[0];
-        debugPrint("Gelen Data ${data.toString()}");
         var studentData = row;
         if (data != null) {
           if (i != 0) {

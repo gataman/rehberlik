@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/lesson.dart';
+import 'package:rehberlik/models/subject.dart';
 import 'package:rehberlik/services/base/db_base.dart';
 
 class LessonService implements DBBase<Lesson> {
   final _db = FirebaseFirestore.instance;
   final _mainRef = "lessons";
+  final _subRef = "subjects";
 
   @override
   Future<String> add({required Lesson object}) async {
@@ -30,16 +33,7 @@ class LessonService implements DBBase<Lesson> {
   }
 
   Future<List<Lesson>> getAll({Map<String, dynamic>? filters}) async {
-    var colRef = _db.collection(_mainRef).where("").withConverter(
-        fromFirestore: Lesson.fromFirestore,
-        toFirestore: (Lesson object, _) => object.toFirestore());
-
-    filters?.forEach((key, value) {
-      colRef = colRef.where(key, isEqualTo: value);
-    });
-
-    final docSnap = await colRef.get();
-    final list = docSnap.docs.map((e) => e.data()).toList();
+    List<Lesson> list = await _getLessonList(filters);
     return list;
   }
 
@@ -66,5 +60,49 @@ class LessonService implements DBBase<Lesson> {
       count++;
     }
     return batch.commit();
+  }
+
+  Future<List<LessonWithSubject>> getAllWithSubjects(
+      {Map<String, dynamic>? filters}) async {
+    final lessonWithSubjectList = <LessonWithSubject>[];
+
+    List<Lesson> lessonList = await _getLessonList(filters);
+
+    for (var lesson in lessonList) {
+      List<Subject> subjectList = await _getSubjectList(lesson);
+
+      final lessonWithSubject =
+          LessonWithSubject(lesson: lesson, subjectList: subjectList);
+      lessonWithSubjectList.add(lessonWithSubject);
+    }
+
+    return lessonWithSubjectList;
+  }
+
+  Future<List<Lesson>> _getLessonList(Map<String, dynamic>? filters) async {
+    var colRef = _db.collection(_mainRef).where("").withConverter(
+        fromFirestore: Lesson.fromFirestore,
+        toFirestore: (Lesson object, _) => object.toFirestore());
+    filters?.forEach((key, value) {
+      colRef = colRef.where(key, isEqualTo: value);
+    });
+
+    final docSnap = await colRef.get();
+    final lessonList = docSnap.docs.map((e) => e.data()).toList();
+    return lessonList;
+  }
+
+  Future<List<Subject>> _getSubjectList(Lesson lesson) async {
+    var subRef = _db
+        .collection(_mainRef)
+        .doc(lesson.id)
+        .collection(_subRef)
+        .withConverter(
+            fromFirestore: Subject.fromFirestore,
+            toFirestore: (Subject object, _) => object.toFirestore());
+
+    final subjectDocSnap = await subRef.get();
+    final subjectList = subjectDocSnap.docs.map((e) => e.data()).toList();
+    return subjectList;
   }
 }

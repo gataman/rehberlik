@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/models/student.dart';
 import 'package:rehberlik/models/student_with_class.dart';
 import 'package:rehberlik/repository/classes_repository.dart';
 import 'package:rehberlik/repository/student_repository.dart';
+import 'package:rehberlik/views/admin/admin_base_controller.dart';
 
-class AdminClassesController extends GetxController {
+class AdminClassesController extends AdminBaseController {
   final _box = GetStorage();
   final _classesRepository = Get.put(ClassesRepository());
   final _studentRepository = Get.put(StudentRepository());
+  final tfAddFormController = Get.put(TextEditingController());
+
+  final FocusNode classNameFocusNode = Get.put(FocusNode());
 
   Rxn<List<StudentWithClass>> studentWithClassList =
       Rxn<List<StudentWithClass>>();
@@ -20,9 +24,14 @@ class AdminClassesController extends GetxController {
 
   final editingClasses = Rxn<Classes>();
   final selectedClassesCategory = 5.obs;
-  final Rxn<Student> selectedStudent = Rxn<Student>();
 
   var selectedIndex = 0.obs;
+
+  @override
+  void onClose() {
+    tfAddFormController.dispose();
+    super.onClose();
+  }
 
   void addClass(Classes classes) {
     changeAddingStatus(true);
@@ -38,8 +47,9 @@ class AdminClassesController extends GetxController {
     update();
   }
 
-  void showClassDetail(Classes classes) {
-    // Buradan detayı görünecek sınıf seçilecek
+  void showClassDetail({required Classes classes, required int index}) {
+    selectedIndex.value = index;
+    Get.toNamed(Constants.routeStudents, id: 1);
   }
 
   void editClass(Classes classes) {
@@ -99,4 +109,7 @@ class AdminClassesController extends GetxController {
       }
     }
   }
+
+  //Students View
+
 }

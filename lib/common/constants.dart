@@ -46,6 +46,17 @@ const defaultInfoTitle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const defaultDialogSubTitleStyle = TextStyle(
+  color: infoColor,
+  fontSize: 14,
+  fontWeight: FontWeight.bold,
+);
+
+const defaultDialogSubValueStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 14,
+);
+
 const defaultTitleStyle =
     TextStyle(color: titleColor, fontSize: 16, fontWeight: FontWeight.bold);
 
@@ -71,6 +82,11 @@ class Constants {
   static const String routeStudentDetail = "/admin_student_detail";
   static const String routeLessons = "/admin_lessons";
   static const String routeStudyProgram = "/admin_study_program";
+  static const String routeSubjects = "/admin_subject";
+  static const String routeMessages = "/admin_messages";
+  static const String routeUploads = "/admin_uploads";
+  static const String routeTrialExams = "/admin_trial_exams";
+  static const String routeTrialExamDetails = "/admin_trial_exam_details";
 }
 
 const meetingTypeList = <String>[

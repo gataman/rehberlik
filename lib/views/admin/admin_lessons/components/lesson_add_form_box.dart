@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/models/lesson.dart';
-import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_controller.dart';
-import 'package:rehberlik/views/admin/admin_lessons/components/lesson_classes_category_select_box.dart';
+part of admin_lessons_view;
 
 class LessonAddFormBox extends StatefulWidget {
   const LessonAddFormBox({Key? key}) : super(key: key);
@@ -65,7 +60,7 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
                     direction: Axis.horizontal,
                     children: [
                       _title(),
-                      LessonClassesCategorySelectBox(
+                      ClassesLevelSelectBox(
                         valueChanged: (_index) {
                           _controller.selectedIndex.value = _index;
                         },
@@ -169,6 +164,7 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
         if (text == null || text.trim().isEmpty) {
           return "Lütfen ders adı yazınız!";
         }
+        return null;
       },
       onFieldSubmitted: (value) {
         _saveLesson();
@@ -196,6 +192,7 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
         if (text == null || text.trim().isEmpty) {
           return "Lütfen ders saati yazınız!";
         }
+        return null;
       },
       onFieldSubmitted: (value) {
         _saveLesson();

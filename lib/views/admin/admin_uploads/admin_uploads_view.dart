@@ -1,20 +1,10 @@
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pdf_text/pdf_text.dart';
-import 'package:rehberlik/views/admin/admin_uploads/admin_uploads_controller.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/expansion_student_list.dart';
+library admin_uploads_view;
 
-class AdminUploadsView extends StatefulWidget {
+import 'admin_uploads_imports.dart';
+part 'components/expansion_student_list.dart';
+
+class AdminUploadsView extends GetView<AdminUploadsController> {
   const AdminUploadsView({Key? key}) : super(key: key);
-
-  @override
-  State<AdminUploadsView> createState() => _AdminUploadsViewState();
-}
-
-class _AdminUploadsViewState extends State<AdminUploadsView> {
-  PlatformFile? pickedFile;
-  final _controller = Get.put(AdminUploadsController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +17,7 @@ class _AdminUploadsViewState extends State<AdminUploadsView> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                     onPressed: () {
-                      _controller.selectExcelFile(isEokul: true);
+                      controller.selectExcelFile(isEokul: true);
                     },
                     child: const Text("E-Okul Excel Seç")),
               ),
@@ -35,34 +25,34 @@ class _AdminUploadsViewState extends State<AdminUploadsView> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                     onPressed: () {
-                      _controller.selectExcelFile(isEokul: false);
+                      controller.selectExcelFile(isEokul: false);
                     },
-                    child: Text("Şablon Seç")),
+                    child: const Text("Şablon Seç")),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                     onPressed: () {
-                      _controller.addAllStudentListWithClass();
+                      controller.addAllStudentListWithClass();
                     },
-                    child: Text("Öğrenciler Kaydet")),
+                    child: const Text("Öğrenciler Kaydet")),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                     onPressed: () {
-                      _controller.selectAllStudentImage();
+                      controller.selectAllStudentImage();
                     },
-                    child: Text("Toplu Resim Ekle")),
+                    child: const Text("Toplu Resim Ekle")),
               ),
             ],
           ),
           const Divider(),
           Obx(
             () {
-              var data = _controller.parsedStudentList.value;
+              var data = controller.parsedStudentList.value;
               var addAllStudentOperations =
-                  _controller.addAllStudentResult.value;
+                  controller.addAllStudentResult.value;
 
               return Column(
                 children: [
@@ -73,17 +63,13 @@ class _AdminUploadsViewState extends State<AdminUploadsView> {
                     ),
                   if (addAllStudentOperations != null &&
                       addAllStudentOperations.isLoading)
-                    Container(
-                      child: Center(
-                        child: Text(addAllStudentOperations.message),
-                      ),
+                    Center(
+                      child: Text(addAllStudentOperations.message),
                     ),
                   if (addAllStudentOperations != null &&
                       !addAllStudentOperations.isLoading)
-                    Container(
-                      child: Center(
-                        child: Text(addAllStudentOperations.message),
-                      ),
+                    Center(
+                      child: Text(addAllStudentOperations.message),
                     ),
                   if (data != null) ExpansionStudentList(data: data)
                 ],
@@ -95,6 +81,7 @@ class _AdminUploadsViewState extends State<AdminUploadsView> {
     );
   }
 
+  /*
   Future _pickPDFText() async {
     var filePickerResult =
         await FilePicker.platform.pickFiles(type: FileType.any, withData: true);
@@ -104,4 +91,6 @@ class _AdminUploadsViewState extends State<AdminUploadsView> {
       debugPrint("");
     }
   }
+
+   */
 }

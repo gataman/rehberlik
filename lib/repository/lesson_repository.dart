@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/services/lesson_service.dart';
 
@@ -23,4 +24,9 @@ class LessonRepository implements LessonService {
   @override
   Future<void> addAll({required List<Lesson> list}) =>
       _service.addAll(list: list);
+
+  @override
+  Future<List<LessonWithSubject>> getAllWithSubjects(
+          {Map<String, dynamic>? filters}) =>
+      _service.getAllWithSubjects(filters: filters);
 }

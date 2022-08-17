@@ -1,21 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/widgets/custom_rounded_button.dart';
-import 'package:rehberlik/common/widgets/default_circular_progress.dart';
-import 'package:rehberlik/models/lesson.dart';
-import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_controller.dart';
+part of admin_lessons_view;
 
-class LessonListBox extends StatelessWidget {
-  LessonListBox({Key? key}) : super(key: key);
-  final _controller = Get.put(AdminLessonsController());
+class LessonListBox extends GetView<AdminLessonsController> {
+  const LessonListBox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     _getLessonList();
     return Obx(() {
-      final lessonList = _controller.lessonList.value;
-      final selectedIndex = _controller.selectedIndex.value;
+      final lessonList = controller.lessonList.value;
+      final selectedIndex = controller.selectedIndex.value;
       final selectedCategory = selectedIndex + 5;
 
       return Container(
@@ -23,13 +16,9 @@ class LessonListBox extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (lessonList == null)
-                const SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: DefaultCircularProgress(),
-                ),
+              if (lessonList == null) const DefaultCircularProgress(),
               if (lessonList != null)
                 Column(
                   children: [
@@ -56,8 +45,8 @@ class LessonListBox extends StatelessWidget {
   }
 
   void _getLessonList() {
-    if (_controller.lessonList.value == null) {
-      _controller.getAllLessonList();
+    if (controller.lessonList.value == null) {
+      controller.getAllLessonList();
     }
   }
 
@@ -65,14 +54,25 @@ class LessonListBox extends StatelessWidget {
     lessonList.sort((a, b) => b.lessonTime!.compareTo(a.lessonTime!));
     return ListView.builder(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: lessonList.length,
         itemBuilder: (context, index) {
           final lesson = lessonList[index];
           return Container(
             decoration: defaultDividerDecoration,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                final _subjectController = Get.put(AdminSubjectsController());
+                _subjectController.subjectList.value = null;
+                final arguments = {
+                  'lessonID': lesson.id!,
+                  'lessonName': lesson.lessonName!
+                };
+                Get.toNamed(Constants.routeSubjects,
+                    arguments: arguments, id: 1);
+              },
               child: ListTile(
+                  horizontalTitleGap: 0.2,
                   leading: const Icon(
                     Icons.book,
                     size: 24,
@@ -82,11 +82,9 @@ class LessonListBox extends StatelessWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("${lesson.lessonTime} saat"),
-                      const SizedBox(width: 16),
                       CustomRoundedButton(
                         onPressed: () {
-                          _controller.editingLesson.value = lesson;
+                          controller.editingLesson.value = lesson;
                         },
                       ),
                       const SizedBox(width: 16),
@@ -111,7 +109,7 @@ class LessonListBox extends StatelessWidget {
           "${lesson.lessonName} adlı dersi silmek istediğinizden emin misiniz?",
       contentPadding: const EdgeInsets.all(defaultPadding),
       onConfirm: () {
-        _controller.deleteLesson(lesson);
+        controller.deleteLesson(lesson);
         Get.back();
       },
       onCancel: () => Get.back(),

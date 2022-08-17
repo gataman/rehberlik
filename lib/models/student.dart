@@ -13,20 +13,23 @@ class Student {
   String? fatherPhone;
   String? motherPhone;
   String? className;
+  String? targetSchoolID;
 
-  Student(
-      {this.id,
-      this.classID,
-      this.studentName,
-      this.studentNumber,
-      this.fatherName,
-      this.motherName,
-      this.gender,
-      this.birthDay,
-      this.photoUrl,
-      this.fatherPhone,
-      this.motherPhone,
-      this.className});
+  Student({
+    this.id,
+    this.classID,
+    this.studentName,
+    this.studentNumber,
+    this.fatherName,
+    this.motherName,
+    this.gender,
+    this.birthDay,
+    this.photoUrl,
+    this.fatherPhone,
+    this.motherPhone,
+    this.className,
+    this.targetSchoolID,
+  });
 
   factory Student.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -46,6 +49,7 @@ class Student {
       fatherPhone: data?['fatherPhone'],
       motherPhone: data?['motherPhone'],
       className: data?['className'],
+      targetSchoolID: data?['targetSchoolID'],
     );
   }
 
@@ -62,11 +66,12 @@ class Student {
       if (fatherPhone != null) "fatherPhone": fatherPhone,
       if (motherPhone != null) "motherPhone": motherPhone,
       if (className != null) "className": className,
+      if (targetSchoolID != null) "targetSchoolID": targetSchoolID,
     };
   }
 
   @override
   String toString() {
-    return 'Student{id: $id, classID: $classID, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className}';
+    return 'Student{id: $id, classID: $classID, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className, targetSchoolID: $targetSchoolID}';
   }
 }

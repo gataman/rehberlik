@@ -1,12 +1,11 @@
 import 'dart:collection';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/extensions.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/repository/lesson_repository.dart';
+import 'package:rehberlik/views/admin/admin_base_controller.dart';
 
-class AdminLessonsController extends GetxController {
+class AdminLessonsController extends AdminBaseController {
   final _lessonsRepository = Get.put(LessonRepository());
 
   Rxn<Map<int, List<Lesson>>> lessonList = Rxn<Map<int, List<Lesson>>>();

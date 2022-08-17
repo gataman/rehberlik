@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/models/study_program.dart';
 import 'package:rehberlik/services/base/db_base.dart';
 
@@ -77,6 +76,7 @@ class StudyProgramService implements DBBase<StudyProgram> {
       required DateTime startTime,
       required DateTime endTime,
       Map<String, dynamic>? filters}) async {
+    debugPrint("Get All PramramList çalıştı Remote ${startTime.toString()}");
     var colRef = _db
         .collection(_mainRef)
         .doc(studentID)

@@ -1,36 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
-import 'package:rehberlik/views/admin/admin_classes/components/classes_category_select_box.dart';
+part of admin_classes_view;
 
-class ClassesAddFormBox extends StatefulWidget {
+class ClassesAddFormBox extends GetView<AdminClassesController> {
   const ClassesAddFormBox({Key? key}) : super(key: key);
-
-  @override
-  State<ClassesAddFormBox> createState() => _ClassesAddFormBoxState();
-}
-
-class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
-  final _controller = Get.put(AdminClassesController());
-  final _tfAddFormController = TextEditingController();
-  int _selectedCategory = 5;
-  late FocusNode _classNameFocusNode;
-  Classes? _classes;
-
-  @override
-  void initState() {
-    _classNameFocusNode = FocusNode();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _tfAddFormController.dispose();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +12,12 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: Obx(
           () {
-            _classes = _controller.editingClasses.value;
-            if (_classes != null) {
-              _classNameFocusNode.requestFocus();
-              _tfAddFormController.text = _classes!.className!;
+            if (controller.editingClasses.value != null) {
+              controller.classNameFocusNode.requestFocus();
+              controller.tfAddFormController.text =
+                  controller.editingClasses.value!.className!;
             } else {
-              _tfAddFormController.text = "";
+              controller.tfAddFormController.text = "";
             }
 
             return Padding(
@@ -58,9 +29,7 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
                   direction: Axis.horizontal,
                   children: [
                     _title(),
-                    ClassesCategorySelectBox(valueChanged: (classCategory) {
-                      _selectedCategory = classCategory;
-                    }),
+                    const ClassesCategorySelectBox(),
                     _classNameInput(),
                     _actionButtons(),
                   ],
@@ -75,14 +44,14 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
     return Row(
       children: [
         // Cancel Button
-        if (_classes != null)
+        if (controller.editingClasses.value != null)
           Expanded(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: warningColor,
               ),
               onPressed: () {
-                _controller.editingClasses.value = null;
+                controller.editingClasses.value = null;
               },
               child: Row(
                 children: const [
@@ -103,32 +72,34 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
               ),
             ),
           ),
-        if (_classes != null)
+        if (controller.editingClasses.value != null)
           const SizedBox(
             width: defaultPadding / 2,
           ),
         Expanded(
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: _classes == null ? Colors.amber : infoColor,
+                primary: controller.editingClasses.value == null
+                    ? Colors.amber
+                    : infoColor,
               ),
               onPressed: () {
-                if (_classes == null) {
+                if (controller.editingClasses.value == null) {
                   _saveClass();
                 } else {
-                  _editClasses(_classes);
+                  _editClasses(controller.editingClasses.value);
                 }
               },
               child: Row(
                 children: [
-                  if (_controller.statusAddingClass.value)
+                  if (controller.statusAddingClass.value)
                     const SizedBox(
                         width: 16,
                         height: 16,
                         child: CircularProgressIndicator(
                           color: secondaryColor,
                         )),
-                  if (!_controller.statusAddingClass.value)
+                  if (!controller.statusAddingClass.value)
                     const SizedBox(
                         child: Icon(
                       Icons.save,
@@ -137,7 +108,9 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
                   Expanded(
                     child: Center(
                       child: Text(
-                        _classes == null ? "Kaydet" : "Güncelle",
+                        controller.editingClasses.value == null
+                            ? "Kaydet"
+                            : "Güncelle",
                         style: const TextStyle(
                             color: secondaryColor, fontWeight: FontWeight.w500),
                       ),
@@ -157,13 +130,18 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
         onFieldSubmitted: (value) {
           _saveClass();
         },
-        focusNode: _classNameFocusNode,
+        focusNode: controller.classNameFocusNode,
         textInputAction: TextInputAction.go,
-        controller: _tfAddFormController,
-        style: TextStyle(color: _classes == null ? Colors.amber : infoColor),
+        controller: controller.tfAddFormController,
+        style: TextStyle(
+            color: controller.editingClasses.value == null
+                ? Colors.amber
+                : infoColor),
         textAlign: TextAlign.center,
         decoration: InputDecoration(
-          hintText: _classes == null ? "Sınıf Adı" : _classes?.className,
+          hintText: controller.editingClasses.value == null
+              ? "Sınıf Adı"
+              : controller.editingClasses.value?.className,
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
@@ -178,24 +156,28 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
     return Padding(
       padding: const EdgeInsets.all(defaultPadding / 2),
       child: Text(
-        _classes == null ? "Sınıf Ekle" : "Sınıf Güncelle",
+        controller.editingClasses.value == null
+            ? "Sınıf Ekle"
+            : "Sınıf Güncelle",
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: _classes == null ? Colors.amber : infoColor,
+          color: controller.editingClasses.value == null
+              ? Colors.amber
+              : infoColor,
         ),
       ),
     );
   }
 
   void _saveClass() {
-    if (_tfAddFormController.text.trim().isEmpty) {
+    if (controller.tfAddFormController.text.trim().isEmpty) {
     } else {
       final Classes classes = Classes(
           schoolID: "w7WZvgcVPKVheXnhxMHE",
-          className: _tfAddFormController.text,
-          classLevel: _selectedCategory);
-      _controller.addClass(classes);
+          className: controller.tfAddFormController.text,
+          classLevel: controller.selectedClassesCategory.value);
+      controller.addClass(classes);
 
       Get.snackbar(
         "Başarılı",
@@ -209,12 +191,12 @@ class _ClassesAddFormBoxState extends State<ClassesAddFormBox> {
 
   void _editClasses(Classes? classes) {
     if (classes != null) {
-      if (_tfAddFormController.text.trim().isEmpty) {
+      if (controller.tfAddFormController.text.trim().isEmpty) {
         debugPrint("Boşşş");
       } else {
-        classes.className = _tfAddFormController.text;
-        classes.classLevel = _selectedCategory;
-        _controller.updateClasses(classes);
+        classes.className = controller.tfAddFormController.text;
+        classes.classLevel = controller.selectedClassesCategory.value;
+        controller.updateClasses(classes);
         Get.snackbar(
           "Başarılı",
           "Sınıf adı başarıyla güncellendi",
