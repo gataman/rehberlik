@@ -68,7 +68,6 @@ class AdminDashboardController extends GetxController {
   }
 
   void getSchoolStudentStats() {
-    debugPrint("getSchoolStudentStats çalıştı");
     final List<SchoolStudentStats> _schoolStudentStatsList = [
       SchoolStudentStats(classLevel: 5, classColor: Colors.redAccent),
       SchoolStudentStats(classLevel: 6, classColor: Colors.lime),

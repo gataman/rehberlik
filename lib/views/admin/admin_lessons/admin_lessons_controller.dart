@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:rehberlik/common/extensions.dart';
 import 'package:rehberlik/models/lesson.dart';
@@ -15,6 +16,12 @@ class AdminLessonsController extends AdminBaseController {
   var statusOpeningDialog = false.obs;
 
   final editingLesson = Rxn<Lesson>();
+
+  @override
+  void onInit() {
+    debugPrint("AdminLessonsController onInit");
+    super.onInit();
+  }
 
   void getAllLessonList() async {
     _lessonsRepository.getAll().then((_lessonList) {

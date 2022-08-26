@@ -95,7 +95,6 @@ class AdminUploadsController extends GetxController {
       Uint8List bytes) async {
     //final decoder = SpreadsheetDecoder.decodeBytes(bytes, update: false);
     var decoder = Excel.decodeBytes(bytes);
-    debugPrint(decoder.tables.keys.toString());
 
     int i = 0;
     List<Student> studentList = [];

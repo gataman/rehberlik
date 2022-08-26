@@ -6,11 +6,15 @@ class LessonListBox extends GetView<AdminLessonsController> {
   @override
   Widget build(BuildContext context) {
     _getLessonList();
-    return Obx(() {
+
+    var view = Obx(() {
       final lessonList = controller.lessonList.value;
       final selectedIndex = controller.selectedIndex.value;
       final selectedCategory = selectedIndex + 5;
-
+      debugPrint("Obx LessonList ${lessonList.toString()} ");
+      debugPrint(
+          "controller LessonList id ${controller.lessonList.value.hashCode.toString()} ");
+      debugPrint("LessonList.id ${lessonList.hashCode.toString()} ");
       return Container(
         decoration: defaultBoxDecoration,
         child: Padding(
@@ -42,6 +46,8 @@ class LessonListBox extends GetView<AdminLessonsController> {
         ),
       );
     });
+    debugPrint("View hascode ${view.hashCode.toString()}");
+    return view;
   }
 
   void _getLessonList() {

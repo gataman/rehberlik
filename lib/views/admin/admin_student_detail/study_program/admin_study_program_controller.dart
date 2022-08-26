@@ -15,7 +15,6 @@ class AdminStudyProgramController extends GetxController {
   //region Methods
   Future<List<StudyProgram>> getAllPrograms(
       {required String studentID, DateTime? startTime}) async {
-    debugPrint("Get All PramramList çalıştı Local ${startTime.toString()}");
     if (startTime == null) {
       final _dateNow = DateTime.now();
       startTime = DateTime(_dateNow.year, _dateNow.month, _dateNow.day);

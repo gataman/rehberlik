@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/models/school_student_stats.dart';
-import 'package:rehberlik/models/class_stats.dart';
 
 class SchoolStudentStatsCard extends StatelessWidget {
   const SchoolStudentStatsCard({

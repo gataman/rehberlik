@@ -1,10 +1,13 @@
 library admin_trial_exam_result_view;
 
+import 'package:rehberlik/common/widgets/button_with_icon.dart';
+import 'package:rehberlik/models/trial_exam.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import 'admin_trial_exam_result_imports.dart';
 
 part 'components/trial_exam_result_data_grid.dart';
+part 'components/trial_exam_result_uploads.dart';
 
 class AdminTrialExamResultView
     extends AdminBaseView<AdminTrialExamResultController> {
@@ -14,5 +17,5 @@ class AdminTrialExamResultView
   Widget get firstView => TrialExamResultDataGrid();
 
   @override
-  Widget get secondView => const Text("ddd");
+  Widget get secondView => const TrialExamResultUploads();
 }

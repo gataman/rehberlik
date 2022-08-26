@@ -125,7 +125,6 @@ class _AgendaBoxNewEventDialogFormState
               },
               context: context,
               initialTime: _controller.startTime.value!);
-          debugPrint("New StartTime : $newStartTime");
           if (newStartTime == null) return;
 
           _controller.startTime.value = newStartTime;

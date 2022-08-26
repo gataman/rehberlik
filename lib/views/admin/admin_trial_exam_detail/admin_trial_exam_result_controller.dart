@@ -11,24 +11,22 @@ import 'package:rehberlik/repository/trial_exam_result_repository.dart';
 import 'package:rehberlik/views/admin/admin_base_controller.dart';
 
 class AdminTrialExamResultController extends AdminBaseController {
-  final TrialExam trialExam;
   final _trialExamResultRepository = Get.put(TrialExamResultRepository());
+  TrialExam? selectedTrialExam;
 
-  AdminTrialExamResultController({required this.trialExam});
+  final RxList<TrialExamResult> trialExamResultList = RxList();
 
-  Rxn<List<TrialExamResult>?> trialExamResultList =
-      Rxn<List<TrialExamResult>?>();
-
-  @override
-  void onInit() {
-    getAllTrialExamDetail(trialExamID: trialExam.id!);
-    super.onInit();
-  }
-
-  void getAllTrialExamDetail({required String trialExamID}) async {
-    final list = await _trialExamResultRepository
-        .getAll(filters: {'examID': trialExamID});
-    trialExamResultList.value = list;
+  void getAllTrialExamDetail() async {
+    if (selectedTrialExam != null) {
+      debugPrint("ListeResult ${selectedTrialExam!.id.toString()}");
+      final list = await _trialExamResultRepository
+          .getAll(filters: {'examID': selectedTrialExam!.id!});
+      if (list != null) {
+        debugPrint("Liste ID ${list.hashCode}");
+        trialExamResultList.clear();
+        trialExamResultList.addAll(list);
+      }
+    }
   }
 
   Future<void> selectExcelFile() async {
@@ -61,6 +59,5 @@ class AdminTrialExamResultController extends AdminBaseController {
 
   void _decodeExcelFile(Uint8List bytes) {
     var decoder = Excel.decodeBytes(bytes);
-    debugPrint(decoder.tables.keys.toString());
   }
 }

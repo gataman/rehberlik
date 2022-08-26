@@ -13,11 +13,13 @@ class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
 
   @override
   Widget build(BuildContext context) {
+    //_getTrialExamResultList();
+    final trialExam = controller.selectedTrialExam;
     return Obx(() {
       final trialExamResultList = controller.trialExamResultList.value;
-      final trialExam = controller.trialExam;
+      debugPrint("Obx çalıştı Liste ${trialExamResultList.toString()}");
 
-      if (trialExamResultList != null && trialExamResultList.isNotEmpty) {
+      if (trialExamResultList.isNotEmpty) {
         _trialExamResultDataSource.updateList(
             trialExamResultList: trialExamResultList);
       }
@@ -40,7 +42,7 @@ class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
                     children: [
                       Expanded(
                         child: Text(
-                          "${trialExam.examName.toString()} ${trialExam.classLevel.toString()} . Sınıf Deneme Sonucu",
+                          "${trialExam?.examName.toString()} ${trialExam?.classLevel.toString()} . Sınıf Deneme Sonucu",
                           style: defaultTitleStyle,
                         ),
                       ),
@@ -181,6 +183,10 @@ class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
         overflow: TextOverflow.ellipsis,
       ),
     );
+  }
+
+  void _getTrialExamResultList() {
+    controller.getAllTrialExamDetail();
   }
 }
 

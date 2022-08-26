@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:rehberlik/common/models/school_student_stats.dart';
 import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/models/school.dart';
 import 'package:rehberlik/services/base/db_base.dart';

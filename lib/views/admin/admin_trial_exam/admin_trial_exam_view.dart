@@ -1,5 +1,7 @@
 library admin_trial_exam_view;
 
+import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_controller.dart';
+
 import 'admin_trial_exam_imports.dart';
 
 part 'components/trial_exam_list_box.dart';

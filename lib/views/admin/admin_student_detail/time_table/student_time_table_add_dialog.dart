@@ -21,7 +21,6 @@ class StudentTimeTableAddDialog {
         builder: (BuildContext context) {
           return Obx(() {
             TimeTable? timeTable = _controller.selectedTimeTable.value;
-            debugPrint("Seçilen Time Table : ${timeTable.toString()}");
             if (timeTable != null) {
               return AlertDialog(
                 backgroundColor: bgColor,

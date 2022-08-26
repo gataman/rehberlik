@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:rehberlik/common/models/school_student_stats.dart';
-import 'package:rehberlik/models/school.dart';
 import 'package:rehberlik/models/study_program.dart';
 import 'package:rehberlik/services/study_program_service.dart';
 

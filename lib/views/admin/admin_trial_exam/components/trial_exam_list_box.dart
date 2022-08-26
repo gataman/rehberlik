@@ -42,7 +42,6 @@ class TrialExamListBox extends GetView<AdminTrialExamController> {
     return Obx(() {
       final trialExamList = controller.trialExamList.value;
       final selectedClassLevel = controller.selectedClassLevel;
-      debugPrint('Liste ${trialExamList.toString()}');
 
       return Container(
         decoration: defaultBoxDecoration,
@@ -99,9 +98,14 @@ class TrialExamListBox extends GetView<AdminTrialExamController> {
             decoration: defaultDividerDecoration,
             child: GestureDetector(
               onTap: () {
-                final arguments = {'trialExam': trialExam};
-                Get.toNamed(Constants.routeTrialExamDetails,
-                    arguments: arguments, id: 1);
+                final trialExamResultController =
+                    Get.put(AdminTrialExamResultController());
+                if (trialExamResultController.selectedTrialExam != trialExam) {
+                  trialExamResultController.selectedTrialExam = trialExam;
+                  trialExamResultController.getAllTrialExamDetail();
+                }
+
+                Get.toNamed(Constants.routeTrialExamResult, id: 1);
               },
               child: ListTile(
                   horizontalTitleGap: 0.2,

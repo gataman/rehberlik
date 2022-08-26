@@ -63,7 +63,6 @@ class TimeTableService implements DBBase<TimeTable> {
 
     final docSnap = await colRef.get();
     final list = docSnap.docs.map((e) => e.data()).toList();
-    debugPrint("Gelen List ${list.toString()}");
     return list;
   }
 

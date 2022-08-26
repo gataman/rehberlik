@@ -86,7 +86,9 @@ class Constants {
   static const String routeMessages = "/admin_messages";
   static const String routeUploads = "/admin_uploads";
   static const String routeTrialExams = "/admin_trial_exams";
-  static const String routeTrialExamDetails = "/admin_trial_exam_details";
+  static const String routeTrialExamResult = "/admin_trial_exam_result";
+  static const String routeTrialExamExcelImport =
+      "/admin_trial_exam_result_exam_import";
 }
 
 const meetingTypeList = <String>[

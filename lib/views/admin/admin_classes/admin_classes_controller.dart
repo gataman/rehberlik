@@ -77,7 +77,6 @@ class AdminClassesController extends AdminBaseController {
   //Class and students:
 
   void getAllStudentWithClass() async {
-    debugPrint("Get Student List Çalıştı");
     final schoolID = _box.read("schoolID");
 
     var _studentWithClassList =

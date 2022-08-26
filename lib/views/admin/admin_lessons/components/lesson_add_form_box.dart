@@ -160,7 +160,6 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
   Widget _lessonNameInput() {
     return TextFormField(
       validator: (text) {
-        debugPrint("...$text");
         if (text == null || text.trim().isEmpty) {
           return "Lütfen ders adı yazınız!";
         }
@@ -188,7 +187,6 @@ class _LessonAddFormBoxState extends State<LessonAddFormBox> {
   Widget _lessonTimeInput() {
     return TextFormField(
       validator: (text) {
-        debugPrint("...$text");
         if (text == null || text.trim().isEmpty) {
           return "Lütfen ders saati yazınız!";
         }

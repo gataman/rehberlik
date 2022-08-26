@@ -7,6 +7,8 @@ import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/student.dart';
 import 'package:rehberlik/models/subject.dart';
 import 'package:rehberlik/models/time_table.dart';
+import 'package:rehberlik/responsive.dart';
+import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/time_table/student_time_table_add_dialog.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/time_table/student_time_table_controller.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -23,14 +25,13 @@ class StudentTimeTableCard extends StatefulWidget {
 
 class _StudentTimeTableCardState extends State<StudentTimeTableCard> {
   final _controller = Get.put(StudentTimeTableController());
+  final _detailController = Get.put(AdminStudentDetailController());
 
   final TimeTableDataSource _timeTableDataSource = TimeTableDataSource();
 
   @override
   void initState() {
-    _controller.getAllTimeTable(student: widget.student).then((value) {
-      debugPrint("Gelen Liste: ${value.toString()}");
-    });
+    _controller.getAllTimeTable(student: widget.student).then((value) {});
 
     super.initState();
   }
@@ -61,7 +62,7 @@ class _StudentTimeTableCardState extends State<StudentTimeTableCard> {
         verticalScrollPhysics: const NeverScrollableScrollPhysics(),
         gridLinesVisibility: GridLinesVisibility.both,
         headerGridLinesVisibility: GridLinesVisibility.both,
-        columnWidthMode: ColumnWidthMode.fitByCellValue,
+        columnWidthMode: ColumnWidthMode.fill,
         headerRowHeight: 30,
         defaultColumnWidth: 50,
         rowHeight: 80,
@@ -70,29 +71,39 @@ class _StudentTimeTableCardState extends State<StudentTimeTableCard> {
   }
 
   List<GridColumn> _getColumns() {
+    double width =
+        _detailController.isExpanded.value && !Responsive.isMobile(context)
+            ? double.nan
+            : 100;
     return <GridColumn>[
       GridColumn(
           columnName: 'monday',
           label: _getLabelTitleText("Pazartesi"),
-          width: 100),
+          width: width),
       GridColumn(
-          columnName: 'tuesday', label: _getLabelTitleText("Salı"), width: 100),
+          columnName: 'tuesday',
+          label: _getLabelTitleText("Salı"),
+          width: width),
       GridColumn(
           columnName: 'wednesday',
           label: _getLabelTitleText("Çarşamba"),
-          width: 100),
+          width: width),
       GridColumn(
           columnName: 'thursday',
           label: _getLabelTitleText("Perşembe"),
-          width: 100),
+          width: width),
       GridColumn(
-          columnName: 'friday', label: _getLabelTitleText("Cuma"), width: 100),
+          columnName: 'friday',
+          label: _getLabelTitleText("Cuma"),
+          width: width),
       GridColumn(
           columnName: 'saturday',
           label: _getLabelTitleText("Cumartesi"),
-          width: 100),
+          width: width),
       GridColumn(
-          columnName: 'sunday', label: _getLabelTitleText("Pazar"), width: 100)
+          columnName: 'sunday',
+          label: _getLabelTitleText("Pazar"),
+          width: width)
     ];
   }
 
@@ -201,7 +212,6 @@ class TimeTableDataSource extends DataGridSource {
       } else {
         return GestureDetector(
             onTap: () {
-              debugPrint("Ders eklenme");
               _controller.selectedTimeTable.value = timeTable;
               if (_context != null) {
                 var dialog = StudentTimeTableAddDialog(_controller);

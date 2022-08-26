@@ -11,7 +11,6 @@ class AdminMessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Admin Message çalıştı");
     return const AdminMessageContent();
   }
 }

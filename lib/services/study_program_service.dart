@@ -76,7 +76,6 @@ class StudyProgramService implements DBBase<StudyProgram> {
       required DateTime startTime,
       required DateTime endTime,
       Map<String, dynamic>? filters}) async {
-    debugPrint("Get All PramramList çalıştı Remote ${startTime.toString()}");
     var colRef = _db
         .collection(_mainRef)
         .doc(studentID)

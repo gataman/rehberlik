@@ -52,7 +52,6 @@ class _StudentProgramDataGridCardState
 
     return Obx(() {
       if (_controller.programList.value != null) {
-        debugPrint("ObxListe çalıştı ${_controller.programList.value}");
         _programDataSource.updateList(
             programList: _controller.programList.value!);
       }
@@ -547,7 +546,6 @@ class StudyProgramDataSource extends DataGridSource {
             }
           },
           onSubmitted: (value) {
-            debugPrint("OnSubmited----------");
             submitCell();
           },
           style: const TextStyle(fontSize: 14, color: Colors.white54),
@@ -579,7 +577,6 @@ class SelectionController extends RowSelectionManager {
   @override
   void handleKeyEvent(RawKeyEvent keyEvent) {
     super.handleKeyEvent(keyEvent);
-    debugPrint("Key -------- ${keyEvent.toString()}");
     if (keyEvent.logicalKey.keyLabel == 'Tab') {
       super.handleKeyEvent(keyEvent);
       _changingRow.columnIndex++;

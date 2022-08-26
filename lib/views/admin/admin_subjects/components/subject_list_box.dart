@@ -13,6 +13,8 @@ class SubjectListBox extends GetView<AdminSubjectsController> {
     _getSubjectList(lessonID: lessonID);
     return Obx(() {
       final subjectList = controller.subjectList.value;
+      debugPrint("Obx SubjectList ${subjectList.toString()} ");
+
       return Container(
         decoration: defaultBoxDecoration,
         child: Padding(
@@ -25,7 +27,6 @@ class SubjectListBox extends GetView<AdminSubjectsController> {
               if (subjectList != null)
                 GestureDetector(
                   onTap: () {
-                    debugPrint("Tıklandı");
                     Get.back(id: 1);
                   },
                   child: Row(

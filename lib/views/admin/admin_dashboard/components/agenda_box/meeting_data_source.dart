@@ -39,7 +39,6 @@ class MeetingDataSource extends CalendarDataSource {
 
   @override
   Future<void> handleLoadMore(DateTime startDate, DateTime endDate) {
-    debugPrint("start time : $startDate");
     return super.handleLoadMore(startDate, endDate);
   }
 }

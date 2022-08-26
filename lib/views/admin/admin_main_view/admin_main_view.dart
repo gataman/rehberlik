@@ -1,9 +1,12 @@
 library admin_main_view;
 
+import 'dart:developer';
+
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_binding.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_binding.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_view.dart';
+import 'package:rehberlik/views/admin/admin_trial_exam_detail/components/admin_trial_exam_excel_import_view.dart';
 
 import 'admin_main_view_imports.dart';
 
@@ -55,6 +58,8 @@ class AdminMainView extends GetView<AdminMainViewController> {
       page: () => AdminDashboardView(),
     );
 
+    inspect(_navigatorKey);
+
     return Container(
       padding: const EdgeInsets.all(defaultPadding),
       height: 550,
@@ -103,11 +108,11 @@ class AdminMainView extends GetView<AdminMainViewController> {
                   final arguments = settings.arguments as Map<String, String>;
 
                   pageRoute = GetPageRoute(
-                    page: () => AdminSubjectsView(
+                    page: () => Get.put(AdminSubjectsView(
                       lessonID: arguments['lessonID']!,
                       lessonName: arguments['lessonName']!,
-                    ),
-                    binding: AdminSubjectsBinding(),
+                    )),
+                    binding: Get.put(AdminSubjectsBinding()),
                   );
                   break;
                 case Constants.routeMessages:
@@ -131,22 +136,17 @@ class AdminMainView extends GetView<AdminMainViewController> {
                   );
                   break;
 
-                case Constants.routeTrialExamDetails:
-                  final arguments =
-                      settings.arguments as Map<String, TrialExam>;
+                case Constants.routeTrialExamResult:
+                  pageRoute = GetPageRoute(
+                      page: () => AdminTrialExamResultView(),
+                      binding: AdminTrialExamResultBinding());
 
-                  if (arguments['trialExam'] != null) {
-                    pageRoute = GetPageRoute(
-                        page: () => const AdminTrialExamResultView(),
-                        binding: AdminTrialExamResultBinding(
-                            arguments['trialExam']!));
-                  } else {
-                    pageRoute = GetPageRoute(
-                      page: () => AdminDashboardView(),
-                      binding: AdminDashboardViewBinding(),
-                    );
-                  }
+                  break;
 
+                case Constants.routeTrialExamExcelImport:
+                  pageRoute = GetPageRoute(
+                    page: () => const AdminTrialExamExcelImportView(),
+                  );
                   break;
 
                 case '/':

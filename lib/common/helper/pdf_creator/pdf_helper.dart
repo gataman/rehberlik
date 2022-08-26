@@ -1,23 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
 
 class PdfHelper {
   static Future<PdfFont> getPdfFont(
       {required double size, required bool isBold}) async {
-    var path = 'fonts/roboto_bold.ttf';
-    if (kIsWeb) {
-      if (isBold) {
-        path = 'fonts/roboto_bold.ttf';
-      } else {
-        path = 'fonts/roboto_regular.ttf';
-      }
+    var path = 'assets/fonts/roboto_bold.ttf';
+    if (isBold) {
+      path = 'assets/fonts/roboto_bold.ttf';
     } else {
-      if (isBold) {
-        path = 'assets/fonts/roboto_bold.ttf';
-      } else {
-        path = 'assets/fonts/roboto_regular.ttf';
-      }
+      path = 'assets/fonts/roboto_regular.ttf';
     }
     final ByteData fontData = await rootBundle.load(path);
     // final ttf = pw.Font.ttf(fontData);

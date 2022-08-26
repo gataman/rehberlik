@@ -48,7 +48,5 @@ class AdminTrialExamController extends AdminBaseController {
     final _remoteList =
         await _trialExamRepository.getAll(filters: {'classLevel': classLevel});
     trialExamList.value = _remoteList;
-
-    debugPrint("Get all trial exam çalıştı");
   }
 }

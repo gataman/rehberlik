@@ -19,7 +19,6 @@ class SideMenu extends GetView<AdminMainViewController> {
                 iconSrc: "${iconsSrc}menu_dashboard.svg",
                 onPress: () {
                   Get.toNamed(Constants.routeDashboard, id: 1);
-
                   itemClicked();
                 },
               ),

@@ -193,7 +193,7 @@ class StudentService implements DBBase<Student> {
       await storageRef.putFile(File(imageFile.path), metadata);
     }
 
-    final downloadUrl = await storageRef.getDownloadURL();
+    //final downloadUrl = await storageRef.getDownloadURL();
     return await storageRef.getDownloadURL();
   }
 }

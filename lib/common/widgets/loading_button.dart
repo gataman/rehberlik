@@ -33,7 +33,6 @@ class LoadingButton extends StatelessWidget {
             ValueListenableBuilder(
                 valueListenable: loadingListener,
                 builder: (context, isLoading, child) {
-                  debugPrint("Listener çalıştı ${isLoading.toString()}");
                   if (isLoading as bool) {
                     return SizedBox(
                         width: 16,

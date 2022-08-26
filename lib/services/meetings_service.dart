@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/models/meetings.dart';
 import 'package:rehberlik/services/base/db_base.dart';
 
