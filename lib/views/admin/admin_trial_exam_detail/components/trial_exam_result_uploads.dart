@@ -23,7 +23,7 @@ class TrialExamResultUploads extends GetView<AdminTrialExamResultController> {
               labelText: "Excel Sonuç Yükle",
               icon: Icons.upload,
               onPressed: () {
-                Get.toNamed(Constants.routeTrialExamExcelImport, id: 1);
+                Get.toNamed(Constants.routeTrialExamExcelImport);
               },
             ),
           ),

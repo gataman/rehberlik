@@ -49,7 +49,7 @@ class AdminClassesController extends AdminBaseController {
 
   void showClassDetail({required Classes classes, required int index}) {
     selectedIndex.value = index;
-    Get.toNamed(Constants.routeStudents, id: 1);
+    Get.toNamed(Constants.routeStudents);
   }
 
   void editClass(Classes classes) {

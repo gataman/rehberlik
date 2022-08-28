@@ -1,5 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rehberlik/common/constants.dart';
+import 'package:rehberlik/common/navigaton/admin_drawer_menu.dart';
+import 'package:rehberlik/common/widgets/admin_app_bar.dart';
 import 'package:rehberlik/common/widgets/expand_button.dart';
-import 'package:rehberlik/views/admin/admin_main_view/admin_main_view_imports.dart';
+import 'package:rehberlik/responsive.dart';
 import 'package:rehberlik/views/admin/admin_base_controller.dart';
 
 abstract class AdminBaseView<T extends AdminBaseController> extends GetView<T> {
@@ -7,6 +12,7 @@ abstract class AdminBaseView<T extends AdminBaseController> extends GetView<T> {
 
   Widget get firstView;
   Widget get secondView;
+  bool get isBack => false;
 
   @override
   Widget build(BuildContext context) {
@@ -14,38 +20,45 @@ abstract class AdminBaseView<T extends AdminBaseController> extends GetView<T> {
   }
 
   Widget _desktopContent() {
-    return SingleChildScrollView(
-      child: Obx(() {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 4,
-              child: firstView,
-            ),
-            if (!controller.isExpanded.value)
-              const SizedBox(
-                width: 4,
-              ),
-            ExpandButton(
-              onPressed: () {
-                controller.isExpanded.value = !controller.isExpanded.value;
-              },
-              isHorizontal: true,
-              isExpanded: controller.isExpanded.value,
-            ),
-            if (!controller.isExpanded.value)
-              Expanded(
-                flex: 2,
-                child: secondView,
-              ),
-            if (controller.isExpanded.value)
-              const SizedBox(
-                width: 8,
-              ),
-          ],
-        );
-      }),
+    return Scaffold(
+      appBar: AdminAppBar(),
+      drawer: !isBack ? const AdminDrawerMenu() : null,
+      body: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: SingleChildScrollView(
+          child: Obx(() {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: firstView,
+                ),
+                if (!controller.isExpanded.value)
+                  const SizedBox(
+                    width: 4,
+                  ),
+                ExpandButton(
+                  onPressed: () {
+                    controller.isExpanded.value = !controller.isExpanded.value;
+                  },
+                  isHorizontal: true,
+                  isExpanded: controller.isExpanded.value,
+                ),
+                if (!controller.isExpanded.value)
+                  Expanded(
+                    flex: 2,
+                    child: secondView,
+                  ),
+                if (controller.isExpanded.value)
+                  const SizedBox(
+                    width: 8,
+                  ),
+              ],
+            );
+          }),
+        ),
+      ),
     );
   }
 

@@ -2,6 +2,8 @@ library admin_main_view;
 
 import 'dart:developer';
 
+import 'package:rehberlik/common/widgets/profile_card.dart';
+import 'package:rehberlik/common/widgets/search_widget.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_binding.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_binding.dart';
@@ -10,7 +12,7 @@ import 'package:rehberlik/views/admin/admin_trial_exam_detail/components/admin_t
 
 import 'admin_main_view_imports.dart';
 
-part 'components/side_menu.dart';
+//part 'components/side_menu.dart';
 
 part 'components/header.dart';
 
@@ -24,35 +26,42 @@ class AdminMainView extends GetView<AdminMainViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: controller.scaffoldStateKey,
-      drawer: const SideMenu(),
+      //drawer: const SideMenu(),
       body: SafeArea(
         child: Row(
           children: [
             //Left SideMenu
             if (Responsive.isDesktop(context))
-              const Expanded(child: SideMenu()),
-            Expanded(
-              flex: 5,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Header(),
-                  if (Responsive.isMobile(context))
-                    const SizedBox(height: defaultPadding),
-                  if (Responsive.isMobile(context)) const SearchField(),
+              // const Expanded(child: SideMenu()),
+              Expanded(
+                flex: 5,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Header(),
+                    if (Responsive.isMobile(context))
+                      const SizedBox(height: defaultPadding),
+                    /*
+                    if (Responsive.isMobile(context)) const SearchField(),
+
+                     */
+                    /*
                   Expanded(
                     child: _getNavigator(),
                   )
-                ],
+
+                   */
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),
     );
   }
 
+  /*
   Widget _getNavigator() {
     var pageRoute = GetPageRoute(
       page: () => AdminDashboardView(),
@@ -164,6 +173,8 @@ class AdminMainView extends GetView<AdminMainViewController> {
     );
   }
 
+
+   */
   Future<bool> didPopRoute() async {
     final NavigatorState? navigator = _navigatorKey!.currentState;
     assert(navigator != null);

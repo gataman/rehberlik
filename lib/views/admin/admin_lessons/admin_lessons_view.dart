@@ -1,5 +1,7 @@
 library admin_lessons_view;
 
+import 'package:rehberlik/common/navigaton/admin_routes.dart';
+
 import 'admin_lessons_imports.dart';
 
 part 'components/lesson_list_box.dart';

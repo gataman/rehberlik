@@ -18,6 +18,6 @@ class AdminStudentsController extends AdminBaseController {
       _timeTableController.timeTableList.value = null;
     }
     selectedStudent.value = student;
-    Get.toNamed(Constants.routeStudentDetail, id: 1);
+    Get.toNamed(Constants.routeStudentDetail);
   }
 }

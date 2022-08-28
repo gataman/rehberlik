@@ -1,9 +1,7 @@
 part of admin_subjects_view;
 
 class SubjectAddFormBox extends StatefulWidget {
-  final String lessonID;
-
-  const SubjectAddFormBox({Key? key, required this.lessonID}) : super(key: key);
+  const SubjectAddFormBox({Key? key}) : super(key: key);
 
   @override
   State<SubjectAddFormBox> createState() => _SubjectAddFormBoxState();
@@ -194,9 +192,10 @@ class _SubjectAddFormBoxState extends State<SubjectAddFormBox> {
       if (!isValid) {
         return;
       }
+      final params = Get.parameters;
 
       final Subject subject = Subject(
-          lessonID: widget.lessonID,
+          lessonID: params['lessonID'],
           subject: _tfSubjectNameFormController.text);
       _controller.addSubject(subject).then((value) {
         _tfSubjectNameFormController.text = "";

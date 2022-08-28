@@ -18,4 +18,7 @@ class AdminTrialExamResultView
 
   @override
   Widget get secondView => const TrialExamResultUploads();
+
+  @override
+  bool get isBack => true;
 }

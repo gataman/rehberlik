@@ -105,7 +105,7 @@ class TrialExamListBox extends GetView<AdminTrialExamController> {
                   trialExamResultController.getAllTrialExamDetail();
                 }
 
-                Get.toNamed(Constants.routeTrialExamResult, id: 1);
+                Get.toNamed(Constants.routeTrialExamResult);
               },
               child: ListTile(
                   horizontalTitleGap: 0.2,

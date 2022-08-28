@@ -70,12 +70,11 @@ class LessonListBox extends GetView<AdminLessonsController> {
               onTap: () {
                 final _subjectController = Get.put(AdminSubjectsController());
                 _subjectController.subjectList.value = null;
-                final arguments = {
+                final data = {
                   'lessonID': lesson.id!,
                   'lessonName': lesson.lessonName!
                 };
-                Get.toNamed(Constants.routeSubjects,
-                    arguments: arguments, id: 1);
+                Get.toNamed(AdminRoutes.routeSubjects, parameters: data);
               },
               child: ListTile(
                   horizontalTitleGap: 0.2,

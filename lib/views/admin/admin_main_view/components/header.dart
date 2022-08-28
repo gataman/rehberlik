@@ -40,95 +40,14 @@ class Header extends StatelessWidget {
             flex: 1,
           ),
           if (!Responsive.isMobile(context))
+            /*
             const Expanded(
-              child: SearchField(),
+              child: SearchWidget(text: text, onChanged: onChanged, hintText: hintText),
             ),
-          const ProfileCard()
+
+             */
+            const ProfileCard()
         ],
-      ),
-    );
-  }
-}
-
-class ProfileCard extends StatelessWidget {
-  const ProfileCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: defaultPadding),
-      padding: const EdgeInsets.symmetric(
-          horizontal: defaultPadding, vertical: defaultPadding / 2),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-        border: Border.all(color: Colors.white10),
-      ),
-      child: Row(
-        children: [
-          const SizedBox(
-            width: 32,
-            height: 32,
-            child: CircleAvatar(
-              backgroundImage: AssetImage(
-                "${imagesSrc}profile.jpeg",
-              ),
-            ),
-          ),
-          if (!Responsive.isMobile(context))
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Gürcan Ataman"),
-            ),
-          const Icon(Icons.keyboard_arrow_down),
-        ],
-      ),
-    );
-  }
-}
-
-class SearchField extends StatelessWidget {
-  const SearchField({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-      child: TextField(
-        decoration: InputDecoration(
-            hintText: "Öğrenci Arama",
-            hintStyle: const TextStyle(color: Colors.white30),
-            fillColor: secondaryColor,
-            filled: true,
-            border: const OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-            suffixIcon: InkWell(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(defaultPadding * 0.75),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-                decoration: const BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                child: SvgPicture.asset("${iconsSrc}search.svg"),
-                height: 20,
-                width: 40,
-              ),
-            )),
       ),
     );
   }

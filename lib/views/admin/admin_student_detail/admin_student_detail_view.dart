@@ -14,4 +14,7 @@ class AdminStudentDetailView
 
   @override
   Widget get secondView => StudentInfoCard();
+
+  @override
+  bool get isBack => true;
 }

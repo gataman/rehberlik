@@ -1,68 +1,52 @@
 part of admin_subjects_view;
 
 class SubjectListBox extends GetView<AdminSubjectsController> {
-  final String lessonID;
-  final String lessonName;
-
-  const SubjectListBox(
-      {Key? key, required this.lessonID, required this.lessonName})
-      : super(key: key);
+  const SubjectListBox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    _getSubjectList(lessonID: lessonID);
-    return Obx(() {
-      final subjectList = controller.subjectList.value;
-      debugPrint("Obx SubjectList ${subjectList.toString()} ");
-
+    final params = Get.parameters;
+    if (params['lessonID'] == null) {
       return Container(
-        decoration: defaultBoxDecoration,
-        child: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (subjectList == null)
-                const SizedBox(height: 250, child: DefaultCircularProgress()),
-              if (subjectList != null)
-                GestureDetector(
-                  onTap: () {
-                    Get.back(id: 1);
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.arrow_back,
-                        color: Colors.amber,
-                      ),
-                      const SizedBox(
-                        width: defaultPadding,
-                      ),
-                      Expanded(
-                        child: Text(
-                          "$lessonName Dersi Konuları",
-                          style: defaultTitleStyle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              if (subjectList != null && subjectList.isNotEmpty)
-                _getSubjectListBox(subjectList),
-              if (subjectList != null && subjectList.isEmpty)
-                const SizedBox(
-                  height: 250,
-                  child: Padding(
-                    padding: EdgeInsets.all(defaultPadding),
-                    child: Text(
-                        "Bu derse henüz konu eklenmemiş. Lütfen konu ekleyiniz!"),
-                  ),
-                ),
-            ],
-          ),
-        ),
+        child: Text('Bir hata oluştu!'),
       );
-    });
+    } else {
+      _getSubjectList(lessonID: params['lessonID']!);
+      return Obx(() {
+        final subjectList = controller.subjectList.value;
+        debugPrint("Obx SubjectList ${subjectList.toString()} ");
+
+        return Container(
+          decoration: defaultBoxDecoration,
+          child: Padding(
+            padding: const EdgeInsets.all(defaultPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (subjectList == null)
+                  const SizedBox(height: 250, child: DefaultCircularProgress()),
+                if (subjectList != null)
+                  Text(
+                    "${params['lessonName']} Dersi Konuları",
+                    style: defaultTitleStyle,
+                  ),
+                if (subjectList != null && subjectList.isNotEmpty)
+                  _getSubjectListBox(subjectList),
+                if (subjectList != null && subjectList.isEmpty)
+                  const SizedBox(
+                    height: 250,
+                    child: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Text(
+                          "Bu derse henüz konu eklenmemiş. Lütfen konu ekleyiniz!"),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      });
+    }
   }
 
   void _getSubjectList({required String lessonID}) {

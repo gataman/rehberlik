@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/locator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:rehberlik/common/navigaton/app_pages.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';
 import 'package:rehberlik/views/admin/admin_main_view/admin_main_view.dart';
 import 'package:rehberlik/views/admin/admin_main_view/admin_main_view_binding.dart';
@@ -44,32 +45,31 @@ class MyApp extends StatelessWidget {
     //final homeVM = Provider.of<HomeViewModel>(context);
 
     return GetMaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('tr', ''),
-        ],
-        locale: const Locale('tr'),
-        debugShowCheckedModeBanner: false,
-        title: 'Rehberlik - Yönetici Paneli',
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: bgColor,
-          textTheme: GoogleFonts.poppinsTextTheme(
-            Theme.of(context).textTheme.apply(bodyColor: Colors.white),
-          ),
-          canvasColor: secondaryColor,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('tr', ''),
+      ],
+      locale: const Locale('tr'),
+      debugShowCheckedModeBanner: false,
+      title: 'Rehberlik - Yönetici Paneli',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: bgColor,
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme.apply(bodyColor: Colors.white),
         ),
-        initialRoute: "/admin",
-        defaultTransition: Transition.fadeIn,
-        getPages: [
-          GetPage(
-              name: "/admin",
-              page: () => AdminMainView(),
-              binding: AdminMainViewBinding()),
-        ]);
+        appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.transparent, elevation: 0),
+        canvasColor: secondaryColor,
+      ),
+      initialRoute: AppPages.initial,
+      defaultTransition: Transition.fadeIn,
+      getPages: AppPages.adminPages,
+      //onGenerateRoute: AppPages.onGenerateRoute,
+    );
   }
 }
 

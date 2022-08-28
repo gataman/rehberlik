@@ -1,5 +1,8 @@
 library admin_dashboard_view;
 
+import 'package:rehberlik/common/navigaton/admin_drawer_menu.dart';
+import 'package:rehberlik/common/widgets/admin_app_bar.dart';
+
 import 'admin_dashboard_imports.dart';
 import 'package:intl/intl.dart';
 
@@ -35,31 +38,40 @@ class AdminDashboardView extends StatelessWidget {
   }
 
   Widget _desktopContent() {
-    return SingleChildScrollView(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 5,
-            child: Column(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AdminAppBar(),
+        drawer: const AdminDrawerMenu(),
+        body: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: SingleChildScrollView(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SchoolStudentStatsList(
-                  crossAxisCount: 4,
-                  childAspectRatio: 2,
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    children: [
+                      const SchoolStudentStatsList(
+                        crossAxisCount: 4,
+                        childAspectRatio: 2,
+                      ),
+                      const SizedBox(height: defaultPadding),
+                      AgendaBox(),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: defaultPadding),
-                AgendaBox(),
+                const SizedBox(
+                  width: defaultPadding,
+                ),
+                Expanded(
+                  flex: 2,
+                  child: RightSide(denemeList: denemeList),
+                ),
               ],
             ),
           ),
-          const SizedBox(
-            width: defaultPadding,
-          ),
-          Expanded(
-            flex: 2,
-            child: RightSide(denemeList: denemeList),
-          ),
-        ],
+        ),
       ),
     );
   }
