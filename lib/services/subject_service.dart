@@ -10,6 +10,10 @@ class SubjectService implements DBBase<Subject> {
   final _mainRef = "lessons";
   final _subRef = "subjects";
 
+  SubjectService() {
+    print("SubjectService oluştu");
+  }
+
   @override
   Future<String> add({required Subject object}) async {
     final docRef = _db
@@ -81,7 +85,7 @@ class SubjectService implements DBBase<Subject> {
     return batch.commit();
   }
 
-  Future<List<Subject>?> getAll(
+  Future<List<Subject>> getAll(
       {required String lessonID, Map<String, dynamic>? filters}) async {
     var colRef = _db
         .collection(_mainRef)

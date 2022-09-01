@@ -24,10 +24,7 @@ class LoadingButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           primary: backColor,
         ),
-        onPressed: () {
-          loadingListener.value = true;
-          onPressed();
-        },
+        onPressed: onPressed,
         child: Row(
           children: [
             ValueListenableBuilder(

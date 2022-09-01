@@ -1,14 +1,6 @@
 library admin_main_view;
 
-import 'dart:developer';
-
 import 'package:rehberlik/common/widgets/profile_card.dart';
-import 'package:rehberlik/common/widgets/search_widget.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_binding.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_binding.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_view.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/components/admin_trial_exam_excel_import_view.dart';
 
 import 'admin_main_view_imports.dart';
 

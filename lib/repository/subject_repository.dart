@@ -1,9 +1,15 @@
 import 'package:get/get.dart';
+import 'package:rehberlik/common/locator.dart';
 import 'package:rehberlik/models/subject.dart';
 import 'package:rehberlik/services/subject_service.dart';
 
 class SubjectRepository implements SubjectService {
-  final SubjectService _service = Get.put(SubjectService());
+  // final SubjectService _service = Get.put(SubjectService());
+  final SubjectService _service = locator<SubjectService>();
+
+  SubjectRepository() {
+    print("SubjectRepository oluştu");
+  }
 
   @override
   Future<String> add({required Subject object}) => _service.add(object: object);
@@ -17,7 +23,7 @@ class SubjectRepository implements SubjectService {
       _service.delete(objectID: objectID);
 
   @override
-  Future<List<Subject>?> getAll(
+  Future<List<Subject>> getAll(
           {required String lessonID, Map<String, dynamic>? filters}) =>
       _service.getAll(lessonID: lessonID);
 

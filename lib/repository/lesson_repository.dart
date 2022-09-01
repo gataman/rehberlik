@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
+import 'package:rehberlik/common/locator.dart';
 import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/services/lesson_service.dart';
 
 class LessonRepository implements LessonService {
-  final LessonService _service = Get.put(LessonService());
+  final LessonService _service = locator<LessonService>();
 
   @override
   Future<String> add({required Lesson object}) => _service.add(object: object);

@@ -66,11 +66,11 @@ class ClassesService implements DBBase<Classes> {
     return docSnap.data();
   }
 
-  Future<List<Classes>> getAll(
-      {required String schoolID, Map<String, dynamic>? filters}) async {
+  Future<List<Classes>> getAll({Map<String, dynamic>? filters}) async {
     var colRef = _db
         .collection(_mainRef)
-        .where("schoolID", isEqualTo: schoolID)
+        .where("")
+        .orderBy("className")
         .withConverter(
             fromFirestore: Classes.fromFirestore,
             toFirestore: (Classes object, _) => object.toFirestore());

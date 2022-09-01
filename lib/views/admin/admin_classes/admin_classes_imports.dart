@@ -3,7 +3,7 @@ export 'package:get/get.dart';
 export 'package:rehberlik/common/constants.dart';
 export 'package:rehberlik/responsive.dart';
 export 'package:flutter_svg/flutter_svg.dart';
-export 'package:rehberlik/common/widgets/custom_rounded_button.dart';
+export 'package:rehberlik/core/widgets/buttons/app_small_rounded_button.dart';
 export 'package:rehberlik/common/widgets/default_circular_progress.dart';
 export 'package:rehberlik/models/classes.dart';
 export 'package:rehberlik/views/admin/admin_classes/admin_classes_controller.dart';

@@ -5,7 +5,6 @@ import 'package:rehberlik/views/admin/admin_classes/admin_classes_binding.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_view.dart';
 import 'package:rehberlik/views/admin/admin_dashboard/admin_dashboard_binding.dart';
 import 'package:rehberlik/views/admin/admin_dashboard/admin_dashboard_view.dart';
-import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_binding.dart';
 import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_view.dart';
 import 'package:rehberlik/views/admin/admin_messages/admin_message_binding.dart';
 import 'package:rehberlik/views/admin/admin_messages/admin_message_view.dart';
@@ -13,9 +12,7 @@ import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_view.dart';
 import 'package:rehberlik/views/admin/admin_students/admin_students_binding.dart';
 import 'package:rehberlik/views/admin/admin_students/admin_students_view.dart';
-import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_binding.dart';
 import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_view.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam/admin_trial_exam_binding.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam/admin_trial_exam_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_binding.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_view.dart';
@@ -50,12 +47,10 @@ class AppPages {
     GetPage(
       name: AdminRoutes.routeLessons,
       page: () => const AdminLessonsView(),
-      binding: AdminLessonsBinding(),
     ),
     GetPage(
       name: AdminRoutes.routeSubjects,
       page: () => const AdminSubjectsView(),
-      binding: AdminSubjectsBinding(),
     ),
     GetPage(
       name: AdminRoutes.routeMessages,
@@ -70,7 +65,6 @@ class AppPages {
     GetPage(
       name: AdminRoutes.routeTrialExams,
       page: () => const AdminTrialExamView(),
-      binding: AdminTrialExamBinding(),
     ),
     GetPage(
       name: AdminRoutes.routeTrialExamResult,
@@ -123,14 +117,12 @@ class AppPages {
         pageRoute = GetPageRoute(
           routeName: AdminRoutes.routeLessons,
           page: () => const AdminLessonsView(),
-          binding: AdminLessonsBinding(),
         );
         break;
 
       case AdminRoutes.routeSubjects:
         pageRoute = GetPageRoute(
           page: () => Get.put(const AdminSubjectsView()),
-          binding: Get.put(AdminSubjectsBinding()),
         );
         break;
       case AdminRoutes.routeMessages:
@@ -150,7 +142,6 @@ class AppPages {
       case AdminRoutes.routeTrialExams:
         pageRoute = GetPageRoute(
           page: () => const AdminTrialExamView(),
-          binding: AdminTrialExamBinding(),
         );
         break;
 

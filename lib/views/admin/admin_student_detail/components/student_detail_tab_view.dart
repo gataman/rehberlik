@@ -1,38 +1,69 @@
 part of admin_student_detail_view;
 
-class StudentDetailTabView extends GetView<AdminStudentDetailController> {
+class StudentDetailTabView extends StatefulWidget {
   const StudentDetailTabView({Key? key}) : super(key: key);
 
   @override
+  State<StudentDetailTabView> createState() => _StudentDetailTabViewState();
+}
+
+class _StudentDetailTabViewState extends State<StudentDetailTabView>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  Student? _student;
+
+  @override
+  void initState() {
+    var args = Get.arguments;
+
+    if (args != null) {
+      _student = args["student"];
+    }
+
+    _tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: defaultBoxDecoration,
-      child: Column(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
+    if (_student != null) {
+      return Container(
+        decoration: defaultBoxDecoration,
+        child: Column(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+                //color: infoColor,
               ),
-              //color: infoColor,
+              child: TabBar(
+                indicatorColor: Colors.amber,
+                controller: _tabController,
+                tabs: _getTabs(),
+              ),
             ),
-            child: TabBar(
-              indicatorColor: Colors.amber,
-              controller: controller.tabController,
-              tabs: _getTabs(),
-            ),
-          ),
-          SizedBox(
-            height: 400,
-            child: TabBarView(
-              controller: controller.tabController,
-              children: _getTabBarViews(),
-            ),
-          )
-        ],
-      ),
-    );
+            SizedBox(
+              height: 400,
+              child: TabBarView(
+                controller: _tabController,
+                children: _getTabBarViews(),
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   List<Tab> _getTabs() {
@@ -54,15 +85,11 @@ class StudentDetailTabView extends GetView<AdminStudentDetailController> {
   }
 
   List<Widget> _getTabBarViews() {
-    Student? student = controller.studentController.selectedStudent.value;
-    //final _dateNow = DateTime.now();
-
-    //"4Vmdx0gLlcN8N0qaB1PB";
-
     return <Widget>[
       //Text("detail"),
-      if (student != null) StudentProgramDataGridCard(studentID: student.id!),
-      if (student != null) StudentTimeTableCard(student: student),
+      if (_student != null)
+        StudentProgramDataGridCard(studentID: _student!.id!),
+      if (_student != null) StudentTimeTableCard(student: _student!),
       //const Text("istatistik"),
       const Text("Notlar"),
     ];

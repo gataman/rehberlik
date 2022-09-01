@@ -17,12 +17,20 @@ const meetingConferenceColor = Colors.lightBlue;
 const meetingOthersColor = Colors.redAccent;
 
 const defaultPadding = 16.0;
+const minimumBoxHeight = 250.0;
 const mobileWidth = 600;
 const tabletWidth = 850;
 const desktopWidth = 1100;
 
 const imagesSrc = "assets/images/";
 const iconsSrc = "assets/icons/";
+
+// ignore: constant_identifier_names
+const TR_LOCALE = Locale('tr', 'TR');
+// ignore: constant_identifier_names
+const EN_LOCALE = Locale('en', 'EN');
+// ignore: constant_identifier_names
+const LANG_PATH = 'assets/translations';
 
 const defaultInfoStyle = TextStyle(
   color: infoColor,

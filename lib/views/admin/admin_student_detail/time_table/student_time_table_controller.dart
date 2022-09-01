@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as gets;
 import 'package:rehberlik/common/extensions.dart';
 import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
@@ -9,21 +9,22 @@ import 'package:rehberlik/repository/classes_repository.dart';
 import 'package:rehberlik/repository/lesson_repository.dart';
 import 'package:rehberlik/repository/time_table_repository.dart';
 
-class StudentTimeTableController extends GetxController {
+class StudentTimeTableController extends gets.GetxController {
   //region Properties
-  final _timeTableRepository = Get.put(TimeTableRepository());
-  final _lessonRepository = Get.put(LessonRepository());
-  final _classRepository = Get.put(ClassesRepository());
+  final _timeTableRepository = gets.Get.put(TimeTableRepository());
+  final _lessonRepository = gets.Get.put(LessonRepository());
+  final _classRepository = gets.Get.put(ClassesRepository());
 
-  Rxn<Map<int, List<TimeTable>>> timeTableList =
-      Rxn<Map<int, List<TimeTable>>>();
-  final Rxn<TimeTable> selectedTimeTable = Rxn<TimeTable>();
+  gets.Rxn<Map<int, List<TimeTable>>> timeTableList =
+      gets.Rxn<Map<int, List<TimeTable>>>();
+  final gets.Rxn<TimeTable> selectedTimeTable = gets.Rxn<TimeTable>();
 
   final selectedClassLevel = 0.obs;
   var needUpdate = false;
-  final RxList<LessonWithSubject> lessonWithSubjectList =
-      RxList<LessonWithSubject>();
-  final Rxn<LessonWithSubject> selectedLesson = Rxn<LessonWithSubject>();
+  final gets.RxList<LessonWithSubject> lessonWithSubjectList =
+      gets.RxList<LessonWithSubject>();
+  final gets.Rxn<LessonWithSubject> selectedLesson =
+      gets.Rxn<LessonWithSubject>();
 
   //endregion
 
@@ -47,7 +48,7 @@ class StudentTimeTableController extends GetxController {
 
       if (remoteList != null && remoteList.isNotEmpty) {
         for (var _timeTable in remoteList) {
-          var findingTimeTable = _localList.firstWhereOrNull((element) =>
+          var findingTimeTable = _localList.findOrNull((element) =>
               element.day == _timeTable.day &&
               element.order == _timeTable.order);
           if (findingTimeTable != null) {

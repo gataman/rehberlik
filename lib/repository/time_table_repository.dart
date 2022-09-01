@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
+import 'package:rehberlik/common/locator.dart';
 import 'package:rehberlik/models/time_table.dart';
 import 'package:rehberlik/services/time_table_service.dart';
 
 class TimeTableRepository implements TimeTableService {
-  final TimeTableService _service = Get.put(TimeTableService());
+  final TimeTableService _service = locator<TimeTableService>();
 
   @override
   Future<String> add({required TimeTable object}) =>

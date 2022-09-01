@@ -1,9 +1,9 @@
-import 'package:get/get.dart';
+import 'package:rehberlik/common/locator.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/services/trial_exam_service.dart';
 
 class TrialExamRepository implements TrialExamService {
-  final TrialExamService _service = Get.put(TrialExamService());
+  final TrialExamService _service = locator<TrialExamService>();
 
   @override
   Future<String> add({required TrialExam object}) =>

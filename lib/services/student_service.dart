@@ -39,20 +39,18 @@ class StudentService implements DBBase<Student> {
     return ref.update(object.toFirestore());
   }
 
-  Future<List<Student>> getAll(
-      {required String classID, Map<String, dynamic>? filters}) async {
-    var colRef = _db
-        .collection(_mainRef)
-        .where("classID", isEqualTo: classID)
-        .withConverter(
-            fromFirestore: Student.fromFirestore,
-            toFirestore: (Student object, _) => object.toFirestore());
+  Future<List<Student>> getAll({Map<String, dynamic>? filters}) async {
+    var colRef = _db.collection(_mainRef).where("").withConverter(
+        fromFirestore: Student.fromFirestore,
+        toFirestore: (Student object, _) => object.toFirestore());
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
     });
 
     final docSnap = await colRef.get();
     final list = docSnap.docs.map((e) => e.data()).toList();
+    list.sort((a, b) =>
+        int.parse(a.studentNumber!).compareTo(int.parse(b.studentNumber!)));
     return list;
   }
 
@@ -74,7 +72,7 @@ class StudentService implements DBBase<Student> {
     final classesList = classSnap.docs.map((e) => e.data()).toList();
 
     for (var classes in classesList) {
-      final classStudentList = await getAll(classID: classes.id!);
+      final classStudentList = await getAll(filters: {"classID": classes.id!});
       studentList.addAll(classStudentList);
     }
 
@@ -99,7 +97,7 @@ class StudentService implements DBBase<Student> {
     final classesList = classSnap.docs.map((e) => e.data()).toList();
 
     for (var classes in classesList) {
-      final classStudentList = await getAll(classID: classes.id!);
+      final classStudentList = await getAll(filters: {"classID": classes.id!});
       classStudentList.sort((a, b) =>
           int.parse(a.studentNumber!).compareTo(int.parse(b.studentNumber!)));
       StudentWithClass studentWithClass = StudentWithClass(classes: classes);

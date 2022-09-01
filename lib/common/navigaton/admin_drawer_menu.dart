@@ -26,7 +26,7 @@ class AdminDrawerMenu extends StatelessWidget {
                       ? Colors.white12
                       : null,
                   onPress: () {
-                    Get.toNamed(listItem.route);
+                    Get.offNamed(listItem.route);
                   },
                 ),
             ],

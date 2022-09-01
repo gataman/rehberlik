@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
+import 'package:rehberlik/common/locator.dart';
 import 'package:rehberlik/models/study_program.dart';
 import 'package:rehberlik/services/study_program_service.dart';
 
 class StudyProgramRepository implements StudyProgramService {
-  final StudyProgramService _service = Get.put(StudyProgramService());
+  final StudyProgramService _service = locator<StudyProgramService>();
 
   @override
   Future<String> add({required StudyProgram object}) =>

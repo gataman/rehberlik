@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rehberlik/common/locator.dart';
 import 'package:rehberlik/models/student.dart';
 import 'package:rehberlik/models/student_with_class.dart';
 import 'package:rehberlik/services/student_service.dart';
 
 class StudentRepository implements StudentService {
-  final StudentService _service = Get.put(StudentService());
+  final StudentService _service = locator<StudentService>();
 
   @override
   Future<String> add({required Student object}) => _service.add(object: object);
@@ -20,9 +20,8 @@ class StudentRepository implements StudentService {
       _service.update(object: object);
 
   @override
-  Future<List<Student>> getAll(
-          {required String classID, Map<String, dynamic>? filters}) =>
-      _service.getAll(classID: classID, filters: filters);
+  Future<List<Student>> getAll({Map<String, dynamic>? filters}) =>
+      _service.getAll(filters: filters);
 
   @override
   Future<void> addAll({required List<Student> list}) =>

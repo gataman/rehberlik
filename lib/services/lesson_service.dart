@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/models/subject.dart';
@@ -19,6 +20,7 @@ class LessonService implements DBBase<Lesson> {
         )
         .doc();
     await docRef.set(object);
+    debugPrint("Lesson addd id ${docRef.id}");
     return docRef.id;
   }
 

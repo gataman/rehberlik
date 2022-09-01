@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:rehberlik/common/locator.dart';
 import 'package:rehberlik/models/classes.dart';
 import 'package:rehberlik/services/classes_service.dart';
 
 class ClassesRepository implements ClassesService {
-  final ClassesService _service = Get.put(ClassesService());
+  final ClassesService _service = locator<ClassesService>();
 
   @override
   Future<String> add({required Classes object}) => _service.add(object: object);
@@ -18,9 +19,8 @@ class ClassesRepository implements ClassesService {
       _service.update(object: object);
 
   @override
-  Future<List<Classes>> getAll(
-          {required String schoolID, Map<String, dynamic>? filters}) =>
-      _service.getAll(schoolID: schoolID, filters: filters);
+  Future<List<Classes>> getAll({Map<String, dynamic>? filters}) =>
+      _service.getAll(filters: filters);
 
   @override
   Future<void> addAll({required List<Classes> list}) =>
