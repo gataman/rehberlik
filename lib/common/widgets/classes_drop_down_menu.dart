@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/models/classes_category.dart';
+import '../constants.dart';
+import '../models/classes_category.dart';
 
 // ignore: must_be_immutable
 class ClassesDropDownMenu extends StatelessWidget {
@@ -13,10 +13,9 @@ class ClassesDropDownMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<ClassesCategory>(
       decoration: const InputDecoration(
-        contentPadding:
-            EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
+        contentPadding: EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
         hintStyle: TextStyle(color: Colors.white30),
-        fillColor: secondaryColor,
+        fillColor: darkSecondaryColor,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white10),
           borderRadius: BorderRadius.all(
@@ -38,8 +37,7 @@ class ClassesDropDownMenu extends StatelessWidget {
           _selectedCategory = newValue.classLevel;
         }
       },
-      items: classesCategoryList
-          .map<DropdownMenuItem<ClassesCategory>>((ClassesCategory value) {
+      items: classesCategoryList.map<DropdownMenuItem<ClassesCategory>>((ClassesCategory value) {
         return DropdownMenuItem<ClassesCategory>(
           value: value,
           child: Text(
@@ -52,8 +50,6 @@ class ClassesDropDownMenu extends StatelessWidget {
   }
 
   ClassesCategory? getClassesCategory(int classLevel) {
-    return classesCategoryList
-        .where((element) => element.classLevel == classLevel)
-        .first;
+    return classesCategoryList.where((element) => element.classLevel == classLevel).first;
   }
 }

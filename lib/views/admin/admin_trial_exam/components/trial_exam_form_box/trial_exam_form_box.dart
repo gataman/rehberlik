@@ -35,11 +35,10 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
     _selectedIndex = context.read<TrialExamListCubit>().selectedCategory - 5;
     return Container(
       decoration: BoxDecoration(
-          color: secondaryColor,
+          color: darkSecondaryColor,
           border: Border.all(color: Colors.white10),
           borderRadius: const BorderRadius.all(Radius.circular(10))),
-      child: BlocBuilder<TrialExamFormBoxCubit, TrialExamFormBoxState>(
-          builder: (context, state) {
+      child: BlocBuilder<TrialExamFormBoxCubit, TrialExamFormBoxState>(builder: (context, state) {
         _trialExam = state is EditTrialExamState ? state.editTrialExam : null;
 
         if (_trialExam != null) {
@@ -63,9 +62,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
                   _title(),
                   ClassesLevelSelectBox(
                     valueChanged: (index) {
-                      context
-                          .read<TrialExamListCubit>()
-                          .changeCategory(index + 5);
+                      context.read<TrialExamListCubit>().changeCategory(index + 5);
                     },
                     selectedIndex: _selectedIndex,
                   ),
@@ -94,9 +91,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
           Expanded(
             child: AppCancelFormButton(
               onPressed: () {
-                context
-                    .read<TrialExamFormBoxCubit>()
-                    .editTrialExam(trialExam: null);
+                context.read<TrialExamFormBoxCubit>().editTrialExam(trialExam: null);
               },
             ),
           ),
@@ -108,9 +103,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
 
         Expanded(
           child: LoadingButton(
-            text: _trialExam == null
-                ? LocaleKeys.actions_save.locale()
-                : LocaleKeys.actions_update.locale(),
+            text: _trialExam == null ? LocaleKeys.actions_save.locale() : LocaleKeys.actions_update.locale(),
             loadingListener: buttonListener,
             onPressed: () {
               if (_trialExam == null) {
@@ -120,7 +113,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
               }
             },
             backColor: _trialExam == null ? Colors.amber : infoColor,
-            textColor: secondaryColor,
+            textColor: darkSecondaryColor,
           ),
         ),
       ],
@@ -136,9 +129,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
       },
       focusNode: _trialExamNameFocusNode,
       controller: _tfTrialExamFormController,
-      hintText: _trialExam == null
-          ? LocaleKeys.trialExams_trialExamNameHint.locale()
-          : _trialExam?.examName,
+      hintText: _trialExam == null ? LocaleKeys.trialExams_trialExamNameHint.locale() : _trialExam?.examName,
     );
   }
 
@@ -150,9 +141,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
         _saveTrialExam();
       },
       controller: _tfTrialExamCodeFormController,
-      hintText: _trialExam == null
-          ? LocaleKeys.trialExams_trialExamCodeHint.locale()
-          : _trialExam?.examCode,
+      hintText: _trialExam == null ? LocaleKeys.trialExams_trialExamCodeHint.locale() : _trialExam?.examCode,
     );
   }
 
@@ -180,12 +169,18 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
       cubit.addTrialExam(trialExam).then((value) {
         _resetForm();
         buttonListener.value = false;
-        CustomDialog.showSuccessMessage(
-            message: LocaleKeys.trialExams_trialExamSuccessAdded.locale());
+        CustomDialog.showSnackBar(
+          message: LocaleKeys.trialExams_trialExamSuccessAdded.locale(),
+          context: context,
+          type: DialogType.success,
+        );
       }, onError: (e) {
         buttonListener.value = false;
-        CustomDialog.showErrorMessage(
-            message: LocaleKeys.alerts_error.locale([e.toString()]));
+        CustomDialog.showSnackBar(
+          message: LocaleKeys.alerts_error.locale([e.toString()]),
+          context: context,
+          type: DialogType.error,
+        );
       });
     }
 

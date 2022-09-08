@@ -1,9 +1,14 @@
 // Screen sizes:
 import 'package:flutter/material.dart';
 
+import 'models/school_student_stats.dart';
+
 const primaryColor = Colors.teal;
-const secondaryColor = Color(0xFF2A2D3E);
-const bgColor = Color(0xFF212332);
+const darkSecondaryColor = Color(0xFF2A2D3E);
+const darkBackColor = Color(0xFF212332);
+
+const lightSecondaryColor = Color(0xFFF3F3F3);
+const lightBackColor = Color(0xFFD0D0D0);
 
 const infoColor = Colors.teal;
 const titleColor = Colors.amber;
@@ -17,6 +22,7 @@ const meetingConferenceColor = Colors.lightBlue;
 const meetingOthersColor = Colors.redAccent;
 
 const defaultPadding = 16.0;
+const defaultListHeight = 440.0;
 const minimumBoxHeight = 250.0;
 const mobileWidth = 600;
 const tabletWidth = 850;
@@ -65,21 +71,25 @@ const defaultDialogSubValueStyle = TextStyle(
   fontSize: 14,
 );
 
-const defaultTitleStyle =
-    TextStyle(color: titleColor, fontSize: 16, fontWeight: FontWeight.bold);
+const defaultTitleStyle = TextStyle(color: titleColor, fontSize: 16, fontWeight: FontWeight.bold);
 
 const studentListSmallStyle = TextStyle(fontSize: 12);
 
 var defaultBoxDecoration = BoxDecoration(
-  color: secondaryColor,
+  color: darkSecondaryColor,
   border: Border.all(color: Colors.white10),
   borderRadius: const BorderRadius.all(
     Radius.circular(10),
   ),
 );
 
+var tableBoxDecoration = const BoxDecoration(
+  color: darkSecondaryColor,
+  border: Border(left: BorderSide(color: Colors.white10), top: BorderSide(color: Colors.white10)),
+);
+
 const defaultDividerDecoration = BoxDecoration(
-  color: secondaryColor,
+  color: darkSecondaryColor,
   border: Border(bottom: BorderSide(color: Colors.white10)),
 );
 
@@ -95,8 +105,7 @@ class Constants {
   static const String routeUploads = "/admin_uploads";
   static const String routeTrialExams = "/admin_trial_exams";
   static const String routeTrialExamResult = "/admin_trial_exam_result";
-  static const String routeTrialExamExcelImport =
-      "/admin_trial_exam_result_exam_import";
+  static const String routeTrialExamExcelImport = "/admin_trial_exam_result_exam_import";
 }
 
 const meetingTypeList = <String>[

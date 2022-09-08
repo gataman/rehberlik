@@ -11,14 +11,20 @@ abstract class  LocaleKeys {
   static const dashboard_trialExamBoxTitle = 'dashboard.trialExamBoxTitle';
   static const dashboard = 'dashboard';
   static const classes_classListBoxTitle = 'classes.classListBoxTitle';
-  static const classes_classFormBoxTitle = 'classes.classFormBoxTitle';
+  static const classes_classFormBoxTitleAdd = 'classes.classFormBoxTitleAdd';
+  static const classes_classFormBoxTitleUpdate = 'classes.classFormBoxTitleUpdate';
+  static const classes_classNameEmptyAlert = 'classes.classNameEmptyAlert';
   static const classes_classNameHint = 'classes.classNameHint';
   static const classes_classListEmptyAlert = 'classes.classListEmptyAlert';
+  static const classes_classSuccessAdded = 'classes.classSuccessAdded';
+  static const classes_classSuccessUpdated = 'classes.classSuccessUpdated';
+  static const classes_classDeleteAlert = 'classes.classDeleteAlert';
   static const classes = 'classes';
   static const students_className = 'students.className';
   static const students_classSelectTitle = 'students.classSelectTitle';
   static const students_studentListEmptyAlert = 'students.studentListEmptyAlert';
   static const students_classListEmptyAlert = 'students.classListEmptyAlert';
+  static const students_studentDeleteAlert = 'students.studentDeleteAlert';
   static const students = 'students';
   static const studentDetail_studyProgramTitle = 'studentDetail.studyProgramTitle';
   static const studentDetail_timeTableTitle = 'studentDetail.timeTableTitle';
@@ -81,6 +87,7 @@ abstract class  LocaleKeys {
   static const actions = 'actions';
   static const alerts_error = 'alerts.error';
   static const alerts_noChange = 'alerts.noChange';
+  static const alerts_delete_success = 'alerts.delete_success';
   static const alerts = 'alerts';
 
 }

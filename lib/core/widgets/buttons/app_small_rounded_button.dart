@@ -22,6 +22,7 @@ class AppSmallRoundedButton extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         hoverColor: Colors.white54,
         splashColor: Colors.black26,
+        onTap: onPressed,
         // inkwell color
         child: SizedBox(
             width: 28,
@@ -31,7 +32,6 @@ class AppSmallRoundedButton extends StatelessWidget {
               size: 16,
               //color: secondaryColor,
             )),
-        onTap: onPressed,
       ),
     );
   }

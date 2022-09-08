@@ -1,85 +1,66 @@
 part of admin_trial_exam_result_view;
 
-class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
-  TrialExamResultDataGrid({Key? key}) : super(key: key);
-  final TrialExamResultDataSource _trialExamResultDataSource =
-      TrialExamResultDataSource();
+class TrialExamResultDataGrid extends StatefulWidget {
+  final List<TrialExamResult> trialExamResultList;
+
+  const TrialExamResultDataGrid({Key? key, required this.trialExamResultList}) : super(key: key);
+
+  @override
+  State<TrialExamResultDataGrid> createState() => _TrialExamResultDataGridState();
+}
+
+class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
+  late TrialExamResultDataSource _trialExamResultDataSource;
 
   final String _dogruLabel = "Doğ";
-
   final String _yanlisLabel = "Yan";
-
   final String _netLabel = "Net";
+  late List<TrialExamResult> _trialExamResultList;
+  int _rowsPerPage = 15;
+
+  @override
+  void initState() {
+    _trialExamResultList = widget.trialExamResultList;
+    _trialExamResultDataSource = TrialExamResultDataSource(trialExamResultList: _trialExamResultList);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    //_getTrialExamResultList();
-    final trialExam = controller.selectedTrialExam;
-    return Obx(() {
-      final trialExamResultList = controller.trialExamResultList.value;
-      debugPrint("Obx çalıştı Liste ${trialExamResultList.toString()}");
-
-      if (trialExamResultList.isNotEmpty) {
-        _trialExamResultDataSource.updateList(
-            trialExamResultList: trialExamResultList);
-      }
-
-      return Container(
-        decoration: defaultBoxDecoration,
-        child: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (trialExamResultList == null)
-                const SizedBox(height: 250, child: DefaultCircularProgress()),
-              if (trialExamResultList != null)
-                GestureDetector(
-                  onTap: () {
-                    Get.back(id: 1);
-                  },
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "${trialExam?.examName.toString()} ${trialExam?.classLevel.toString()} . Sınıf Deneme Sonucu",
-                          style: defaultTitleStyle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              if (trialExamResultList != null && trialExamResultList.isNotEmpty)
-                _getTrialExamDataGrid(trialExamResultList),
-              if (trialExamResultList != null && trialExamResultList.isEmpty)
-                const SizedBox(
-                  height: 250,
-                  child: Padding(
-                    padding: EdgeInsets.all(defaultPadding),
-                    child: Text("Sınav sonuçları henüz girilmemiş!"),
-                  ),
-                ),
-            ],
-          ),
+    debugPrint("Build çalıştı");
+    return Padding(
+      padding: const EdgeInsets.all(defaultPadding),
+      child: Container(
+        decoration: tableBoxDecoration,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _getTrialExamDataGrid(widget.trialExamResultList),
+            _buildDataPager(),
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 
   Widget _getTrialExamDataGrid(List<TrialExamResult> trialExamResultList) {
     //subjectList.sort((a, b) => a.subject!.compareTo(b.subject!));
-    return SfDataGrid(
-      shrinkWrapRows: true,
-      verticalScrollPhysics: const NeverScrollableScrollPhysics(),
-      frozenColumnsCount: 3,
-      gridLinesVisibility: GridLinesVisibility.both,
-      headerGridLinesVisibility: GridLinesVisibility.both,
-      headerRowHeight: 30,
-      defaultColumnWidth: 35,
-      rowHeight: 40,
-      stackedHeaderRows: _getStackedHeaderRows(),
-      source: _trialExamResultDataSource,
-      columns: _getColumns(),
+    return SizedBox(
+      height: 450,
+      child: SfDataGrid(
+        columnWidthMode: _getWidthMode(),
+        frozenColumnsCount: 3,
+        gridLinesVisibility: GridLinesVisibility.both,
+        headerGridLinesVisibility: GridLinesVisibility.both,
+        headerRowHeight: 30,
+        defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
+        rowHeight: 40,
+        rowsPerPage: _rowsPerPage,
+        //footerFrozenRowsCount: 1,
+        stackedHeaderRows: _getStackedHeaderRows(),
+        source: _trialExamResultDataSource,
+        columns: _getColumns(),
+      ),
     );
   }
 
@@ -87,11 +68,9 @@ class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
     List<StackedHeaderRow> stackedHeaderRows;
     stackedHeaderRows = <StackedHeaderRow>[
       StackedHeaderRow(cells: <StackedHeaderCell>[
-        StackedHeaderCell(columnNames: <String>[
-          'student_no',
-          'student_name',
-          'student_class'
-        ], child: _getWidgetForStackedHeaderCell('')),
+        StackedHeaderCell(
+            columnNames: <String>['student_no', 'student_name', 'student_class'],
+            child: _getWidgetForStackedHeaderCell('')),
         StackedHeaderCell(columnNames: <String>[
           'turDog',
           'turYan',
@@ -133,8 +112,7 @@ class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
         alignment: Alignment.center,
         child: Text(
           title,
-          style: const TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.amber),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.amber),
         ));
   }
 
@@ -145,7 +123,7 @@ class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
         label: _getLabelTitleText("No"),
       ),
       GridColumn(
-        width: 100,
+        width: Responsive.isMobile(context) ? 100 : 150,
         columnName: 'student_name',
         label: _getLabelTitleText("Öğrenci Adı"),
       ),
@@ -174,6 +152,32 @@ class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
     ];
   }
 
+  Widget _buildDataPager() {
+    var pageCount = _trialExamResultList.length / _rowsPerPage;
+    if (pageCount % _rowsPerPage != 0) {
+      pageCount = pageCount + 1;
+    }
+    return SfDataPagerTheme(
+      data: SfDataPagerThemeData(
+        brightness: Brightness.dark,
+        selectedItemColor: Colors.amber,
+      ),
+      child: SfDataPager(
+        delegate: _trialExamResultDataSource,
+        availableRowsPerPage: const <int>[15, 20, 25],
+        pageCount: pageCount,
+        onRowsPerPageChanged: (int? rowsPerPage) {
+          setState(() {
+            _rowsPerPage = rowsPerPage!;
+          });
+        },
+      ),
+    );
+  }
+
+  ColumnWidthMode _getWidthMode() =>
+      Responsive.isMobile(context) ? ColumnWidthMode.none : ColumnWidthMode.fill;
+
   Widget _getLabelTitleText(String value) {
     return Container(
       alignment: Alignment.center,
@@ -186,7 +190,7 @@ class TrialExamResultDataGrid extends GetView<AdminTrialExamResultController> {
   }
 
   void _getTrialExamResultList() {
-    controller.getAllTrialExamDetail();
+    //controller.getAllTrialExamDetail();
   }
 }
 
@@ -196,42 +200,38 @@ class TrialExamResultDataSource extends DataGridSource {
   @override
   List<DataGridRow> get rows => _tiralExamResultDataGridRowList;
 
-  void updateList({required List<TrialExamResult> trialExamResultList}) {
-    if (trialExamResultList.isNotEmpty) {
-      _tiralExamResultDataGridRowList = trialExamResultList
-          .map(
-            (e) => DataGridRow(
-              cells: [
-                DataGridCell<String>(
-                    columnName: 'student_no', value: e.studentNumber),
-                DataGridCell<String>(
-                    columnName: 'student_name', value: e.studentName),
-                DataGridCell<String>(
-                    columnName: 'student_class', value: e.className),
-                DataGridCell<int>(columnName: 'turDog', value: e.turDog),
-                DataGridCell<int>(columnName: 'turYan', value: e.turYan),
-                DataGridCell<double>(columnName: 'turNet', value: e.turNet),
-                DataGridCell<int>(columnName: 'matDog', value: e.matDog),
-                DataGridCell<int>(columnName: 'matYan', value: e.matYan),
-                DataGridCell<double>(columnName: 'matNet', value: e.matNet),
-                DataGridCell<int>(columnName: 'fenDog', value: e.fenDog),
-                DataGridCell<int>(columnName: 'fenYan', value: e.fenYan),
-                DataGridCell<double>(columnName: 'fenNet', value: e.fenNet),
-                DataGridCell<int>(columnName: 'sosDog', value: e.sosDog),
-                DataGridCell<int>(columnName: 'sosYan', value: e.sosYan),
-                DataGridCell<double>(columnName: 'sosNet', value: e.sosNet),
-                DataGridCell<int>(columnName: 'ingDog', value: e.ingDog),
-                DataGridCell<int>(columnName: 'ingYan', value: e.ingYan),
-                DataGridCell<double>(columnName: 'ingNet', value: e.ingNet),
-                DataGridCell<int>(columnName: 'dinDog', value: e.dinDog),
-                DataGridCell<int>(columnName: 'dinYan', value: e.dinYan),
-                DataGridCell<double>(columnName: 'dinNet', value: e.dinNet),
-              ],
-            ),
-          )
-          .toList();
-    }
-    notifyListeners();
+  TrialExamResultDataSource({required List<TrialExamResult> trialExamResultList}) {
+    _tiralExamResultDataGridRowList = trialExamResultList
+        .map(
+          (e) => DataGridRow(
+            cells: [
+              DataGridCell<String>(columnName: 'student_no', value: e.studentNumber),
+              DataGridCell<String>(columnName: 'student_name', value: e.studentName),
+              DataGridCell<String>(columnName: 'student_class', value: e.className),
+              DataGridCell<int>(columnName: 'turDog', value: e.turDog),
+              DataGridCell<int>(columnName: 'turYan', value: e.turYan),
+              DataGridCell<String>(columnName: 'turNet', value: _getNumberFormat(e.turNet)),
+              DataGridCell<int>(columnName: 'matDog', value: e.matDog),
+              DataGridCell<int>(columnName: 'matYan', value: e.matYan),
+              DataGridCell<String>(columnName: 'matNet', value: _getNumberFormat(e.matNet)),
+              DataGridCell<int>(columnName: 'fenDog', value: e.fenDog),
+              DataGridCell<int>(columnName: 'fenYan', value: e.fenYan),
+              DataGridCell<String>(columnName: 'fenNet', value: _getNumberFormat(e.fenNet)),
+              DataGridCell<int>(columnName: 'sosDog', value: e.sosDog),
+              DataGridCell<int>(columnName: 'sosYan', value: e.sosYan),
+              DataGridCell<String>(columnName: 'sosNet', value: _getNumberFormat(e.sosNet)),
+              DataGridCell<int>(columnName: 'ingDog', value: e.ingDog),
+              DataGridCell<int>(columnName: 'ingYan', value: e.ingYan),
+              DataGridCell<String>(columnName: 'ingNet', value: _getNumberFormat(e.ingNet)),
+              DataGridCell<int>(columnName: 'dinDog', value: e.dinDog),
+              DataGridCell<int>(columnName: 'dinYan', value: e.dinYan),
+              DataGridCell<String>(columnName: 'dinNet', value: _getNumberFormat(e.dinNet)),
+            ],
+          ),
+        )
+        .toList();
+
+    //_tiralExamResultDataGridRowList.add(_getFooter());
   }
 
   @override
@@ -240,20 +240,77 @@ class TrialExamResultDataSource extends DataGridSource {
         cells: row.getCells().map<Widget>((e) {
       return Container(
         alignment: Alignment.center,
-        child: Text(
+        child: AutoSizeText(
           e.value == null ? '  ' : e.value.toString(),
-          style: TextStyle(
-              fontSize: 14,
-              color: (e.columnName == 'student_name' ||
-                      e.columnName == 'student_no' ||
-                      e.columnName == 'student_class')
-                  ? Colors.amber
-                  : (e.columnName == 'turNet' || e.columnName == 'matNet')
-                      ? Colors.teal
-                      : Colors.white),
-          overflow: TextOverflow.ellipsis,
+          style: _getNetTextStyle(e),
         ),
       );
     }).toList());
+  }
+
+  String _getNumberFormat(double? turNet) {
+    if (turNet != null) {
+      final format = NumberFormat('#.00').format(turNet);
+      return format;
+    } else {
+      return "0";
+    }
+  }
+
+  TextStyle _getNetTextStyle(DataGridCell e) {
+    if (e.columnName == 'student_name' || e.columnName == 'student_no' || e.columnName == 'student_class') {
+      return const TextStyle(
+        fontSize: 12,
+        color: Colors.amber,
+        fontWeight: FontWeight.normal,
+        overflow: TextOverflow.ellipsis,
+      );
+    } else {
+      if (e.columnName == 'turNet' ||
+          e.columnName == 'matNet' ||
+          e.columnName == 'fenNet' ||
+          e.columnName == 'ingNet' ||
+          e.columnName == 'sosNet' ||
+          e.columnName == 'dinNet') {
+        return const TextStyle(
+          fontSize: 12,
+          color: Colors.amber,
+          overflow: TextOverflow.ellipsis,
+        );
+      } else {
+        return const TextStyle(
+          fontSize: 12,
+          overflow: TextOverflow.ellipsis,
+        );
+      }
+    }
+  }
+
+  DataGridRow _getFooter() {
+    return const DataGridRow(
+      cells: [
+        DataGridCell<String>(columnName: 'student_no', value: ''),
+        DataGridCell<String>(columnName: 'student_name', value: 'Ortalama'),
+        DataGridCell<String>(columnName: 'student_class', value: ''),
+        DataGridCell<int>(columnName: 'turDog', value: 1),
+        DataGridCell<int>(columnName: 'turYan', value: 2),
+        DataGridCell<String>(columnName: 'turNet', value: '3,2'),
+        DataGridCell<int>(columnName: 'matDog', value: 3),
+        DataGridCell<int>(columnName: 'matYan', value: 4),
+        DataGridCell<String>(columnName: 'matNet', value: '3,2'),
+        DataGridCell<int>(columnName: 'fenDog', value: 5),
+        DataGridCell<int>(columnName: 'fenYan', value: 6),
+        DataGridCell<String>(columnName: 'fenNet', value: '3,2'),
+        DataGridCell<int>(columnName: 'sosDog', value: 7),
+        DataGridCell<int>(columnName: 'sosYan', value: 7),
+        DataGridCell<String>(columnName: 'sosNet', value: '3,2'),
+        DataGridCell<int>(columnName: 'ingDog', value: 7),
+        DataGridCell<int>(columnName: 'ingYan', value: 7),
+        DataGridCell<String>(columnName: 'ingNet', value: '3,2'),
+        DataGridCell<int>(columnName: 'dinDog', value: 7),
+        DataGridCell<int>(columnName: 'dinYan', value: 7),
+        DataGridCell<String>(columnName: 'dinNet', value: '3,2'),
+      ],
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
+
+import '../constants.dart';
 
 class SearchWidget extends StatefulWidget {
   final String text;
@@ -32,7 +33,7 @@ class _SearchWidgetState extends State<SearchWidget> {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(0),
           prefixIcon: Icon(Icons.search, color: style.color),
           suffixIcon: widget.text.isNotEmpty
               ? GestureDetector(
@@ -46,7 +47,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               : null,
           hintStyle: const TextStyle(color: Colors.white30, fontSize: 14),
           hintText: "Öğrenci Arama",
-          fillColor: secondaryColor,
+          fillColor: darkSecondaryColor,
           filled: true,
           border: const OutlineInputBorder(
             borderSide: BorderSide.none,

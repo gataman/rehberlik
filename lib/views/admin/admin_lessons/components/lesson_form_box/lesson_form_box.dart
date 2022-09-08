@@ -35,7 +35,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
     _selectedIndex = context.read<LessonListCubit>().selectedCategory - 5;
     return Container(
         decoration: BoxDecoration(
-            color: secondaryColor,
+            color: darkSecondaryColor,
             border: Border.all(color: Colors.white10),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: BlocBuilder<LessonFormBoxCubit, LessonFormBoxState>(
@@ -44,8 +44,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
             if (_lesson != null) {
               _lessonNameFocusNode.requestFocus();
               _tfLessonNameFormController.text = _lesson!.lessonName!;
-              _tfLessonTimeFormController.text =
-                  _lesson!.lessonTime!.toString();
+              _tfLessonTimeFormController.text = _lesson!.lessonTime!.toString();
             } else {
               _clearForm();
             }
@@ -63,9 +62,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
                       _title(),
                       ClassesLevelSelectBox(
                         valueChanged: (_index) {
-                          context
-                              .read<LessonListCubit>()
-                              .changeCategory(_index + 5);
+                          context.read<LessonListCubit>().changeCategory(_index + 5);
                         },
                         selectedIndex: _selectedIndex,
                       ),
@@ -104,9 +101,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
           ),
         Expanded(
           child: LoadingButton(
-            text: _lesson == null
-                ? LocaleKeys.actions_save.locale()
-                : LocaleKeys.actions_update.locale(),
+            text: _lesson == null ? LocaleKeys.actions_save.locale() : LocaleKeys.actions_update.locale(),
             loadingListener: buttonListener,
             onPressed: () {
               if (_lesson == null) {
@@ -116,7 +111,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
               }
             },
             backColor: _lesson == null ? Colors.amber : infoColor,
-            textColor: secondaryColor,
+            textColor: darkSecondaryColor,
           ),
         ),
       ],
@@ -132,9 +127,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
       },
       focusNode: _lessonNameFocusNode,
       controller: _tfLessonNameFormController,
-      hintText: _lesson == null
-          ? LocaleKeys.lessons_lessonNameHint.locale()
-          : _lesson?.lessonName,
+      hintText: _lesson == null ? LocaleKeys.lessons_lessonNameHint.locale() : _lesson!.lessonName ?? '',
     );
   }
 
@@ -147,9 +140,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
         _saveLesson();
       },
       controller: _tfLessonTimeFormController,
-      hintText: _lesson == null
-          ? LocaleKeys.lessons_lessonTimeHint.locale()
-          : _lesson?.lessonTime.toString(),
+      hintText: _lesson == null ? LocaleKeys.lessons_lessonTimeHint.locale() : _lesson?.lessonTime.toString(),
     );
   }
 
@@ -178,12 +169,18 @@ class _LessonFormBoxState extends State<LessonFormBox> {
       cubit.addLesson(lesson).then((value) {
         buttonListener.value = false;
         _clearForm();
-        CustomDialog.showSuccessMessage(
-            message: LocaleKeys.lessons_lessonSuccessAdded.locale());
+        CustomDialog.showSnackBar(
+          message: LocaleKeys.lessons_lessonSuccessAdded.locale(),
+          context: context,
+          type: DialogType.success,
+        );
       }, onError: (e) {
         buttonListener.value = false;
-        CustomDialog.showErrorMessage(
-            message: LocaleKeys.alerts_error.locale([e.toString()]));
+        CustomDialog.showSnackBar(
+          message: LocaleKeys.alerts_error.locale([e.toString()]),
+          context: context,
+          type: DialogType.error,
+        );
       });
     }
   }
@@ -196,8 +193,11 @@ class _LessonFormBoxState extends State<LessonFormBox> {
         if (lesson.lessonName == _tfLessonNameFormController.text &&
             lesson.classLevel == cubit.selectedCategory &&
             lesson.lessonTime.toString() == _tfLessonTimeFormController.text) {
-          CustomDialog.showWarningMessage(
-              message: LocaleKeys.alerts_noChange.locale());
+          CustomDialog.showSnackBar(
+            message: LocaleKeys.alerts_noChange.locale(),
+            context: context,
+            type: DialogType.warning,
+          );
           buttonListener.value = false;
         } else {
           lesson.lessonName = _tfLessonNameFormController.text;
@@ -207,12 +207,18 @@ class _LessonFormBoxState extends State<LessonFormBox> {
           lesson.classLevel = cubit.selectedCategory;
           cubit.updateLesson(lesson, oldClass!).then((value) {
             buttonListener.value = false;
-            CustomDialog.showSuccessMessage(
-                message: LocaleKeys.lessons_lessonSuccessUpdated.locale());
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.lessons_lessonSuccessUpdated.locale(),
+              context: context,
+              type: DialogType.success,
+            );
           }, onError: (e) {
             buttonListener.value = false;
-            CustomDialog.showErrorMessage(
-                message: LocaleKeys.alerts_error.locale([e.toString()]));
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_error.locale([e.toString()]),
+              context: context,
+              type: DialogType.error,
+            );
           });
         }
       }

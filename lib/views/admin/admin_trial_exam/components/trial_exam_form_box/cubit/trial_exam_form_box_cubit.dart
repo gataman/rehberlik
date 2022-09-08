@@ -1,6 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:rehberlik/models/trial_exam.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../models/trial_exam.dart';
 
 part 'trial_exam_form_box_state.dart';
 

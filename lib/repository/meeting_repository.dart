@@ -1,32 +1,26 @@
-import 'package:get/get.dart';
-import 'package:rehberlik/models/meetings.dart';
-import 'package:rehberlik/services/meetings_service.dart';
+import '../common/locator.dart';
+import '../models/meeting.dart';
+import '../services/meeting_service.dart';
 
 class MeetingReposityory implements MeetingService {
-  final MeetingService _service = Get.put(MeetingService());
+  final MeetingService _service = locator<MeetingService>();
 
   @override
-  Future<String> add({required Meetings object}) =>
-      _service.add(object: object);
+  Future<String> add({required Meeting object}) => _service.add(object: object);
 
   @override
-  Future<void> addAll({required List<Meetings> list}) =>
-      _service.addAll(list: list);
+  Future<void> addAll({required List<Meeting> list}) => _service.addAll(list: list);
 
   @override
-  Future<void> delete({required String objectID}) =>
-      _service.delete(objectID: objectID);
+  Future<void> delete({required String objectID}) => _service.delete(objectID: objectID);
 
   @override
-  Future<List<Meetings>> getAll({Map<String, dynamic>? filters}) =>
-      _service.getAll();
+  Future<List<Meeting>> getAll({Map<String, dynamic>? filters}) => _service.getAll();
 
   @override
-  Future<void> update({required Meetings object}) =>
-      _service.update(object: object);
+  Future<void> update({required Meeting object}) => _service.update(object: object);
 
   @override
-  Future<List<Meetings>> getAllWithTime(
-          {required DateTime startTime, required DateTime endTime}) =>
+  Future<List<Meeting>> getAllWithTime({required DateTime startTime, required DateTime endTime}) =>
       _service.getAllWithTime(startTime: startTime, endTime: endTime);
 }

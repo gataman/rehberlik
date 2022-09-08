@@ -1,9 +1,12 @@
 library admin_students_view;
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/constants.dart';
+import 'package:rehberlik/common/custom_dialog.dart';
+import 'package:rehberlik/common/navigaton/admin_routes.dart';
+import 'package:rehberlik/common/navigaton/app_router.dart';
 import 'package:rehberlik/common/widgets/default_circular_progress.dart';
 import 'package:rehberlik/core/init/extentions.dart';
 import 'package:rehberlik/core/init/locale_keys.g.dart';

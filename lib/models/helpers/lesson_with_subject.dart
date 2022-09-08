@@ -1,5 +1,5 @@
-import 'package:rehberlik/models/lesson.dart';
-import 'package:rehberlik/models/subject.dart';
+import '../lesson.dart';
+import '../subject.dart';
 
 class LessonWithSubject {
   Lesson lesson;

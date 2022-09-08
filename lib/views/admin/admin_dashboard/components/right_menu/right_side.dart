@@ -14,7 +14,7 @@ class RightSide extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding),
       height: 500,
       decoration: BoxDecoration(
-        color: secondaryColor,
+        color: darkSecondaryColor,
         border: Border.all(color: Colors.white10),
         borderRadius: const BorderRadius.all(
           Radius.circular(10),

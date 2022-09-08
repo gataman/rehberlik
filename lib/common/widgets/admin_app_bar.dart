@@ -1,8 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/common/navigaton/admin_routes.dart';
-import 'package:rehberlik/common/widgets/profile_card.dart';
-import 'package:rehberlik/common/widgets/search_widget.dart';
+
+import '../navigaton/admin_routes.dart';
+import 'profile_card.dart';
 
 class AdminAppBar extends AppBar {
   @override
@@ -20,18 +20,15 @@ class _AdminAppBarTitle extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              if (Get.currentRoute != AdminRoutes.routeDashboard) {
-                Get.toNamed(AdminRoutes.routeDashboard);
+              if (context.router.currentPath != AdminRoutes.routeDashboard) {
+                context.router.replaceNamed(AdminRoutes.routeDashboard);
               }
             },
             child: Column(
               children: const [
                 Text(
                   "Rehberlik Servisi",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.amber),
                 ),
                 Text(
                   "Yönetici Paneli",
@@ -44,6 +41,7 @@ class _AdminAppBarTitle extends StatelessWidget {
         const Spacer(
           flex: 1,
         ),
+        /*
         Expanded(
           child: SearchWidget(
               text: 'Öğrenci Arama',
@@ -58,6 +56,8 @@ class _AdminAppBarTitle extends StatelessWidget {
               },
               hintText: 'Öğrenci Arama'),
         ),
+
+         */
         const ProfileCard()
       ],
     );
@@ -67,7 +67,7 @@ class _AdminAppBarTitle extends StatelessWidget {
     final dialog = showDialog(
         context: context,
         builder: (ctx) {
-          return AlertDialog();
+          return const AlertDialog();
         });
 
     return dialog;

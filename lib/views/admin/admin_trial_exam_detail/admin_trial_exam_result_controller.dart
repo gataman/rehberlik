@@ -1,15 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/models/trial_exam_result.dart';
-import 'package:rehberlik/repository/trial_exam_result_repository.dart';
-import 'package:rehberlik/views/admin/admin_base_controller.dart';
+import '../../../models/trial_exam.dart';
+import '../../../models/trial_exam_result.dart';
+import '../../../repository/trial_exam_result_repository.dart';
 
+/*
 class AdminTrialExamResultController extends AdminBaseController {
   final _trialExamResultRepository = Get.put(TrialExamResultRepository());
   TrialExam? selectedTrialExam;
@@ -19,8 +17,7 @@ class AdminTrialExamResultController extends AdminBaseController {
   void getAllTrialExamDetail() async {
     if (selectedTrialExam != null) {
       debugPrint("ListeResult ${selectedTrialExam!.id.toString()}");
-      final list = await _trialExamResultRepository
-          .getAll(filters: {'examID': selectedTrialExam!.id!});
+      final list = await _trialExamResultRepository.getAll(filters: {'examID': selectedTrialExam!.id!});
       if (list != null) {
         debugPrint("Liste ID ${list.hashCode}");
         trialExamResultList.clear();
@@ -58,6 +55,8 @@ class AdminTrialExamResultController extends AdminBaseController {
   }
 
   void _decodeExcelFile(Uint8List bytes) {
-    var decoder = Excel.decodeBytes(bytes);
+    // var decoder = Excel.decodeBytes(bytes);
   }
 }
+
+ */

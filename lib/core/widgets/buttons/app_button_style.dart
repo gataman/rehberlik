@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/core/init/extentions.dart';
-import 'package:rehberlik/core/init/locale_keys.g.dart';
+
+import '../../../common/constants.dart';
 
 class AppButtonStyle {
-  static get deleteButtonStyle =>
-      ElevatedButton.styleFrom(primary: warningColor);
+  static get deleteButtonStyle => ElevatedButton.styleFrom(primary: warningColor);
 
-  static get cancelButtonStyle =>
-      ElevatedButton.styleFrom(primary: warningColor);
+  static get cancelButtonStyle => ElevatedButton.styleFrom(primary: warningColor);
 
   static get icDelete => const Icon(
         Icons.delete,

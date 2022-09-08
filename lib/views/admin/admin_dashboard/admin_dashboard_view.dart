@@ -1,8 +1,14 @@
 library admin_dashboard_view;
 
-import 'package:rehberlik/common/navigaton/admin_drawer_menu.dart';
-import 'package:rehberlik/common/widgets/admin_app_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/widgets/default_circular_progress.dart';
+import 'package:rehberlik/views/admin/admin_base/admin_base_views.dart';
+import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import 'package:rehberlik/views/admin/admin_dashboard/components/agenda_box/agenda_meeting_detail_dialog.dart';
+import 'package:rehberlik/views/admin/admin_dashboard/components/agenda_box/cubit/agenda_box_cubit.dart';
 
+import '../../../common/custom_dialog.dart';
+import '../../../common/models/school_student_stats.dart';
 import 'admin_dashboard_imports.dart';
 import 'package:intl/intl.dart';
 
@@ -18,23 +24,32 @@ part 'components/right_menu/right_side.dart';
 part 'components/right_menu/right_side_bar_chart.dart';
 part 'components/right_menu/trial_exams_list.dart';
 
-class AdminDashboardView extends StatelessWidget {
+class AdminDashboardView extends AdminBaseViews {
   AdminDashboardView({Key? key}) : super(key: key);
 
-  final denemeList = <String>[
-    "Hız Yayınları 1",
-    "Özdebir 1",
-    "Startfen",
-    "Özdebir 2"
-  ];
+  final denemeList = <String>["Hız Yayınları 1", "Özdebir 1", "Startfen", "Özdebir 2"];
 
+  @override
+  Widget get firstView => Column(children: [
+        const SchoolStudentStatsList(
+          crossAxisCount: 4,
+          childAspectRatio: 2,
+        ),
+        const SizedBox(height: defaultPadding),
+        AgendaBox(),
+      ]);
+
+  @override
+  Widget get secondView => RightSide(denemeList: denemeList);
+
+  @override
+  bool get isDashboard => true;
+
+/*
   @override
   Widget build(BuildContext context) {
     //final Size _size = MediaQuery.of(context).size;
-    return Responsive(
-        mobile: _mobileContent(context),
-        tablet: _tabletContent(),
-        desktop: _desktopContent());
+    return Responsive(mobile: _mobileContent(context), tablet: _tabletContent(), desktop: _desktopContent());
   }
 
   Widget _desktopContent() {
@@ -128,4 +143,6 @@ class AdminDashboardView extends StatelessWidget {
       ),
     );
   }
+
+   */
 }

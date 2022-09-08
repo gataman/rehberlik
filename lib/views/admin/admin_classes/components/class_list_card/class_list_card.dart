@@ -1,29 +1,23 @@
 part of admin_classes_view;
 
-class ClassListCard extends GetView<AdminClassesController> {
+class ClassListCard extends StatelessWidget {
   const ClassListCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AppListBoxContainer(child: _getClassesListBox());
+    return AppBoxContainer(child: _getClassesListBox());
   }
 
   Widget _getClassesListBox() {
     return BlocBuilder<ClassListCubit, ClassListState>(
       builder: (context, state) {
         debugPrint("Classes List builder çalıştı...............");
-        final studentWithClassList = state.studentWithClassList;
         return Column(children: [
           _getTitle(state),
           const Divider(),
-          if (state.isLoading)
-            const SizedBox(
-                height: minimumBoxHeight, child: DefaultCircularProgress()),
-          if (studentWithClassList != null && !state.isLoading)
-            _getClassesListView(studentWithClassList),
-          if (studentWithClassList == null && !state.isLoading)
-            const AppEmptyWarningText(
-                text: LocaleKeys.classes_classListEmptyAlert)
+          if (state is ClassListLoadingState)
+            const SizedBox(height: minimumBoxHeight, child: DefaultCircularProgress()),
+          if (state is ClassListLoadedState) _getClassesListView(state),
         ]);
       },
     );
@@ -35,46 +29,60 @@ class ClassListCard extends GetView<AdminClassesController> {
     );
   }
 
-  ListView _getClassesListView(List<StudentWithClass> classesList) {
-    return ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: classesList.length,
-        itemBuilder: (context, index) {
-          final classes = classesList[index].classes;
-          return AppListTile(
-            svgData: "${iconsSrc}menu_classroom.svg",
-            title: classes.className ?? '',
-            detailOnPressed: () {
-              _showClassDetail(context: context, index: index);
-            },
-            editOnPressed: () {},
-            deleteOnPressed: () {
-              _deleteClass(classes);
-            },
-          );
-        });
+  Widget _getClassesListView(ClassListLoadedState state) {
+    if (state.studentWithClassList != null && state.studentWithClassList!.isNotEmpty) {
+      final classesList = state.studentWithClassList!;
+      return SizedBox(
+        height: defaultListHeight,
+        child: ListView.builder(
+            itemCount: classesList.length,
+            itemBuilder: (context, index) {
+              final classes = classesList[index].classes;
+              return AppListTile(
+                svgData: "${iconsSrc}menu_classroom.svg",
+                title: classes.className ?? '',
+                detailOnPressed: () {
+                  _showClassDetail(context: context, index: index);
+                },
+                editOnPressed: () {
+                  context.read<ClassFormBoxCubit>().editClass(classes: classes);
+                },
+                deleteOnPressed: () {
+                  _deleteClass(classes, context);
+                },
+              );
+            }),
+      );
+    } else {
+      return const AppEmptyWarningText(text: LocaleKeys.classes_classListEmptyAlert);
+    }
   }
 
-  void _deleteClass(Classes classes) {
-    Get.defaultDialog(
-      title: "Uyarı",
-      middleText:
-          "${classes.className} adlı sınıfı silmek istediğinizden emin misiniz?",
-      contentPadding: const EdgeInsets.all(defaultPadding),
-      onConfirm: () {
-        controller.deleteClass(classes);
-        Get.back();
-      },
-      onCancel: () => Get.back(),
-      textConfirm: "Sil",
-      textCancel: "İptal",
-    );
+  void _deleteClass(Classes classes, BuildContext context) {
+    CustomDialog.showDeleteAlertDialog(
+        context: context,
+        message: LocaleKeys.classes_classDeleteAlert.locale([classes.className!]),
+        onConfirm: () {
+          context.read<ClassListCubit>().deleteClass(classes).then((value) {
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_delete_success.locale(['Sınıf']),
+              context: context,
+              type: DialogType.success,
+            );
+            Navigator.pop(context);
+          }, onError: (e) {
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_error.locale([e.toString()]),
+              context: context,
+              type: DialogType.error,
+            );
+          });
+        });
   }
 
   void _showClassDetail({required BuildContext context, required int index}) {
     //selectedIndex.value = index;
     context.read<StudentListCubit>().selectIndex(selectedIndex: index);
-    Get.toNamed(Constants.routeStudents);
+    context.router.replaceNamed(AdminRoutes.routeStudents);
   }
 }

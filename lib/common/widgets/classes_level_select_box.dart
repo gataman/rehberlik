@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/models/classes_category.dart';
+import '../constants.dart';
+import '../models/classes_category.dart';
 
 class ClassesLevelSelectBox extends StatelessWidget {
   final ValueChanged<int> valueChanged;
   final int selectedIndex;
 
-  const ClassesLevelSelectBox(
-      {Key? key, required this.valueChanged, required this.selectedIndex})
+  const ClassesLevelSelectBox({Key? key, required this.valueChanged, required this.selectedIndex})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<ClassesCategory>(
       decoration: const InputDecoration(
-        contentPadding:
-            EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
+        contentPadding: EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
         hintStyle: TextStyle(color: Colors.white30),
-        fillColor: secondaryColor,
+        fillColor: darkSecondaryColor,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white10),
           borderRadius: BorderRadius.all(
@@ -36,8 +34,7 @@ class ClassesLevelSelectBox extends StatelessWidget {
       onChanged: (ClassesCategory? newValue) {
         valueChanged(classesCategoryList.indexOf(newValue!));
       },
-      items: classesCategoryList
-          .map<DropdownMenuItem<ClassesCategory>>((ClassesCategory value) {
+      items: classesCategoryList.map<DropdownMenuItem<ClassesCategory>>((ClassesCategory value) {
         return DropdownMenuItem<ClassesCategory>(
           value: value,
           child: Text(

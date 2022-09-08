@@ -1,110 +1,108 @@
 part of admin_student_detail_view;
 
-class StudentInfoCard extends GetView<AdminStudentDetailController> {
-  StudentInfoCard({Key? key}) : super(key: key);
-  final pdfBuilder = Get.put(StudentDetailPdfBuilder());
+class StudentInfoCard extends StatelessWidget {
+  final Student? student;
+
+  StudentInfoCard({Key? key, this.student}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final student = controller.studentController.selectedStudent.value;
-      if (student != null) {
-        return Column(
-          children: [
-            Container(
-              decoration: defaultBoxDecoration,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
+    debugPrint(context.toString());
+    var pdfBuilder = StudentDetailPdfBuilder(context);
+    if (student != null) {
+      return Column(
+        children: [
+          Container(
+            decoration: defaultBoxDecoration,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  child: Text(
+                    student!.studentName.toString(),
+                    textAlign: TextAlign.center,
+                    style: defaultTitleStyle,
+                  ),
+                ),
+                Container(
+                  color: Colors.amber,
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(defaultPadding / 3),
+                        child: SizedBox(
+                            height: 80, width: 80, child: _setStudentProfileImage(student!.photoUrl)),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(defaultPadding / 2),
+                  child: Table(
+                    defaultColumnWidth: const IntrinsicColumnWidth(),
+                    children: [
+                      buildRow(
+                        label: "T.C. Kimlik No",
+                        value: "123456789",
+                      ),
+                      buildRow(
+                        label: "Sınıfı",
+                        value: student!.className ?? '',
+                      ),
+                      buildRow(
+                        label: "Numarası",
+                        value: student!.studentNumber ?? '',
+                      ),
+                      buildRow(
+                        label: "Baba Adı",
+                        value: student!.fatherName ?? '',
+                      ),
+                      buildRow(
+                        label: "Anne Adı",
+                        value: student!.motherName ?? '',
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: defaultPadding,
+          ),
+          Container(
+            decoration: defaultBoxDecoration,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(defaultPadding),
+                  child: Text(
+                    "Raporlar",
+                    style: defaultTitleStyle,
+                  ),
+                ),
+                Padding(
                     padding: const EdgeInsets.all(defaultPadding),
-                    child: Text(
-                      student.studentName.toString(),
-                      textAlign: TextAlign.center,
-                      style: defaultTitleStyle,
-                    ),
-                  ),
-                  Container(
-                    color: Colors.amber,
-                    child: Row(
-                      children: [
-                        const Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.all(defaultPadding / 3),
-                          child: SizedBox(
-                              height: 80,
-                              width: 80,
-                              child: _setStudentProfileImage(student.photoUrl)),
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(defaultPadding / 2),
-                    child: Table(
-                      defaultColumnWidth: const IntrinsicColumnWidth(),
-                      children: [
-                        buildRow(
-                          label: "T.C. Kimlik No",
-                          value: "123456789",
-                        ),
-                        buildRow(
-                          label: "Sınıfı",
-                          value: student.className.toString(),
-                        ),
-                        buildRow(
-                          label: "Numarası",
-                          value: student.studentNumber.toString(),
-                        ),
-                        buildRow(
-                          label: "Baba Adı",
-                          value: student.fatherName.toString(),
-                        ),
-                        buildRow(
-                          label: "Anne Adı",
-                          value: student.motherName.toString(),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                    child: LoadingButton(
+                        text: "Pdf Oluştur",
+                        textColor: darkSecondaryColor,
+                        iconData: Icons.download,
+                        loadingListener: pdfBuilder.notifier,
+                        onPressed: () {
+                          pdfBuilder.build(student!);
+                        })),
+              ],
             ),
-            const SizedBox(
-              height: defaultPadding,
-            ),
-            Container(
-              decoration: defaultBoxDecoration,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(defaultPadding),
-                    child: Text(
-                      "Raporlar",
-                      style: defaultTitleStyle,
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.all(defaultPadding),
-                      child: LoadingButton(
-                          text: "Pdf Oluştur",
-                          textColor: secondaryColor,
-                          iconData: Icons.download,
-                          loadingListener: pdfBuilder.notifier,
-                          onPressed: () {
-                            pdfBuilder.build(student);
-                          })),
-                ],
-              ),
-            ),
-          ],
-        );
-      } else {
-        return Container();
-      }
-    });
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 
   TableRow buildRow({required String label, required String value}) {

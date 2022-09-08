@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rehberlik/models/subject.dart';
+
+import '../../../../../../models/subject.dart';
 
 part 'edit_subject_state.dart';
 

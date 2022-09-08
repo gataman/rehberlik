@@ -1,16 +1,15 @@
 library admin_lessons_view;
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
-import 'package:rehberlik/common/navigaton/admin_routes.dart';
+import 'package:rehberlik/common/navigaton/app_router.dart';
 import 'package:rehberlik/common/widgets/classes_level_select_box.dart';
 import 'package:rehberlik/core/widgets/buttons/app_cancel_form_button.dart';
 import 'package:rehberlik/common/widgets/default_circular_progress.dart';
 import 'package:rehberlik/common/widgets/loading_button.dart';
-import 'package:rehberlik/common/widgets/locale_text.dart';
 import 'package:rehberlik/core/init/extentions.dart';
 import 'package:rehberlik/core/init/locale_keys.g.dart';
 import 'package:rehberlik/core/widgets/list_tiles/app_liste_tile.dart';

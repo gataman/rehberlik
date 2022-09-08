@@ -1,13 +1,13 @@
 part of admin_subjects_view;
 
 class SubjectListCard extends StatelessWidget {
-  const SubjectListCard({Key? key}) : super(key: key);
+  final String lessonName;
+
+  const SubjectListCard({Key? key, required this.lessonName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final params = Get.parameters;
-    return BlocBuilder<SubjectListCubit, SubjectListState>(
-        builder: (cubit, state) {
+    return BlocBuilder<SubjectListCubit, SubjectListState>(builder: (cubit, state) {
       return Container(
         decoration: defaultBoxDecoration,
         child: Padding(
@@ -17,15 +17,11 @@ class SubjectListCard extends StatelessWidget {
             children: [
               if (state is SubjectListLoadingState)
                 const SizedBox(height: 250, child: DefaultCircularProgress()),
-              if (state is SubjectListLoadedState)
-                AppBoxTitle(title: "${params['lessonName']} Dersi Konuları"),
-              if (state is SubjectListLoadedState &&
-                  state.subjectList.isNotEmpty)
+              if (state is SubjectListLoadedState) AppBoxTitle(title: lessonName),
+              if (state is SubjectListLoadedState && state.subjectList.isNotEmpty)
                 _getSubjectListBox(state.subjectList),
               if (state is SubjectListLoadedState && state.subjectList.isEmpty)
-                const AppEmptyWarningText(
-                    text:
-                        "Bu derse henüz konu eklenmemiş. Lütfen konu ekleyiniz!")
+                const AppEmptyWarningText(text: "Bu derse henüz konu eklenmemiş. Lütfen konu ekleyiniz!")
             ],
           ),
         ),
@@ -54,23 +50,25 @@ class SubjectListCard extends StatelessWidget {
         });
   }
 
-  void _deleteSubject(
-      {required Subject subject,
-      required int index,
-      required BuildContext context}) {
-    Get.defaultDialog(
-      title: "Uyarı",
-      middleText:
-          "${subject.subject} adlı konuyu silmek istediğinizden emin misiniz?",
-      contentPadding: const EdgeInsets.all(defaultPadding),
-      onConfirm: () {
-        context.read<SubjectListCubit>().deleteSubject(subject);
-
-        Get.back();
-      },
-      onCancel: () => Get.back(),
-      textConfirm: "Sil",
-      textCancel: "İptal",
-    );
+  void _deleteSubject({required Subject subject, required int index, required BuildContext context}) {
+    CustomDialog.showDeleteAlertDialog(
+        context: context,
+        message: "${subject.subject} adlı konuyu silmek istediğinizden emin misiniz?",
+        onConfirm: () {
+          context.read<SubjectListCubit>().deleteSubject(subject).then((value) {
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_delete_success.locale(['Konu']),
+              context: context,
+              type: DialogType.success,
+            );
+            Navigator.pop(context);
+          }, onError: (e) {
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_error.locale([e.toString()]),
+              context: context,
+              type: DialogType.error,
+            );
+          });
+        });
   }
 }

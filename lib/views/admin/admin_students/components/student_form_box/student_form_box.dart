@@ -8,24 +8,18 @@ class StudentFormBox extends StatelessWidget {
     return Container(
       decoration: defaultBoxDecoration,
       child: Padding(
-          padding: const EdgeInsets.only(
-              left: defaultPadding,
-              right: defaultPadding,
-              bottom: defaultPadding),
-          child: BlocBuilder<ClassListCubit, ClassListState>(
-              builder: (context, classState) {
-            final List<StudentWithClass>? classesList =
-                classState.studentWithClassList;
-            if (classState.isLoading) {
-              return const SizedBox(
-                  height: minimumBoxHeight, child: DefaultCircularProgress());
-            } else {
+          padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding, bottom: defaultPadding),
+          child: BlocBuilder<ClassListCubit, ClassListState>(builder: (context, classState) {
+            if (classState is ClassListLoadedState) {
+              final List<StudentWithClass>? classesList = classState.studentWithClassList;
               return Column(
                 children: [
                   _title(),
                   _getDropDownMenu(classesList),
                 ],
               );
+            } else {
+              return const SizedBox(height: minimumBoxHeight, child: DefaultCircularProgress());
             }
           })),
     );
@@ -39,12 +33,9 @@ class StudentFormBox extends StatelessWidget {
 
   Widget _getDropDownMenu(List<StudentWithClass>? classesList) {
     if (classesList != null && classesList.isNotEmpty) {
-      return BlocBuilder<StudentListCubit, StudentListState>(
-          builder: (context, state) {
-        final selectedIndex =
-            state is SelectedIndexState ? state.selectedIndex : 0;
-        return _buildDropdownButtonFormField(
-            classesList, selectedIndex, context);
+      return BlocBuilder<StudentListCubit, StudentListState>(builder: (context, state) {
+        final selectedIndex = state is SelectedIndexState ? state.selectedIndex : 0;
+        return _buildDropdownButtonFormField(classesList, selectedIndex, context);
       });
     } else {
       return const AppEmptyWarningText(text: "Sınıf listesi yüklenemedi!");
@@ -52,15 +43,12 @@ class StudentFormBox extends StatelessWidget {
   }
 
   DropdownButtonFormField<StudentWithClass> _buildDropdownButtonFormField(
-      List<StudentWithClass> classesList,
-      int selectedIndex,
-      BuildContext context) {
+      List<StudentWithClass> classesList, int selectedIndex, BuildContext context) {
     return DropdownButtonFormField<StudentWithClass>(
       decoration: const InputDecoration(
-        contentPadding:
-            EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
+        contentPadding: EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
         hintStyle: TextStyle(color: Colors.white30),
-        fillColor: secondaryColor,
+        fillColor: darkSecondaryColor,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white10),
           borderRadius: BorderRadius.all(
@@ -78,15 +66,12 @@ class StudentFormBox extends StatelessWidget {
       icon: const Icon(Icons.keyboard_arrow_down),
       onChanged: (StudentWithClass? newValue) {
         if (newValue != null) {
-          context
-              .read<StudentListCubit>()
-              .selectIndex(selectedIndex: classesList.indexOf(newValue));
+          context.read<StudentListCubit>().selectIndex(selectedIndex: classesList.indexOf(newValue));
           //valueChanged(newValue.classLevel);
           //_selectedCategory = newValue.classLevel;
         }
       },
-      items: classesList
-          .map<DropdownMenuItem<StudentWithClass>>((StudentWithClass value) {
+      items: classesList.map<DropdownMenuItem<StudentWithClass>>((StudentWithClass value) {
         return DropdownMenuItem<StudentWithClass>(
           value: value,
           child: Text(

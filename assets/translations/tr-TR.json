@@ -14,17 +14,22 @@
 
   "classes" : {
     "classListBoxTitle" : "SINIFLAR",
-    "classFormBoxTitle" :"Sınıf Ekle",
+    "classFormBoxTitleAdd" : "Sınıf Ekle",
+    "classFormBoxTitleUpdate" : "Sınıf Düzenle",
+    "classNameEmptyAlert" : "Lütfen sınıf adını yazınız!",
     "classNameHint" : "Sınıf Adı",
-    "classListEmptyAlert" : "Henüz sınıf eklenmemiş. Lütfen sınıf ekleyin"
-
+    "classListEmptyAlert" : "Henüz sınıf eklenmemiş. Lütfen sınıf ekleyin",
+    "classSuccessAdded" : "Sınıf başarıyla eklendi.",
+    "classSuccessUpdated" : "Sınıf başarıyla güncellendi.",
+    "classDeleteAlert" : "{} adlı sınıfı silmek istediğinizden emin misiniz?"
   },
 
   "students" : {
     "className" : "{} Sınıfı",
     "classSelectTitle" : "Sınıf Seç",
     "studentListEmptyAlert" : "Henüz öğrenci eklenmemiş. Lütfen ekleyin",
-    "classListEmptyAlert" : "Sınıf listesi getirilemedi. Sınıflar eklenmemişse önce sınıf ekleyiniz"
+    "classListEmptyAlert" : "Sınıf listesi getirilemedi. Sınıflar eklenmemişse önce sınıf ekleyiniz",
+    "studentDeleteAlert" : "{} adlı öğrenciyi silmek istediğinizden emin misiniz?"
   },
 
   "studentDetail" : {
@@ -100,7 +105,8 @@
   },
   "alerts": {
     "error": "Bir hata oluştu! Hata: {}",
-    "noChange": "Herhangi bir değişiklik yapmadınız!"
+    "noChange": "Herhangi bir değişiklik yapmadınız!",
+    "delete_success": "{} başarıyla silindi"
   }
 
 }

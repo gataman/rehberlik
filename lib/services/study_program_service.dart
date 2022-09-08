@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:rehberlik/models/study_program.dart';
-import 'package:rehberlik/services/base/db_base.dart';
+
+import '../models/study_program.dart';
+import 'base/db_base.dart';
 
 class StudyProgramService implements DBBase<StudyProgram> {
   final _db = FirebaseFirestore.instance;
@@ -23,23 +23,13 @@ class StudyProgramService implements DBBase<StudyProgram> {
     return docRef.id;
   }
 
-  Future<void> deleteWithStudent(
-      {required String objectID, required String studentID}) {
-    return _db
-        .collection(_mainRef)
-        .doc(studentID)
-        .collection(_subRef)
-        .doc(objectID)
-        .delete();
+  Future<void> deleteWithStudent({required String objectID, required String studentID}) {
+    return _db.collection(_mainRef).doc(studentID).collection(_subRef).doc(objectID).delete();
   }
 
   @override
   Future<void> update({required StudyProgram object}) {
-    final ref = _db
-        .collection(_mainRef)
-        .doc(object.studentID)
-        .collection(_subRef)
-        .doc(object.id);
+    final ref = _db.collection(_mainRef).doc(object.studentID).collection(_subRef).doc(object.id);
     return ref.update(object.toFirestore());
   }
 
@@ -72,19 +62,14 @@ class StudyProgramService implements DBBase<StudyProgram> {
   }
 
   Future<List<StudyProgram>?> getAll(
-      {required String studentID,
-      required DateTime startTime,
-      required DateTime endTime,
-      Map<String, dynamic>? filters}) async {
+      {required String studentID, required DateTime startTime, required DateTime endTime, Map<String, dynamic>? filters}) async {
     var colRef = _db
         .collection(_mainRef)
         .doc(studentID)
         .collection(_subRef)
         .where("date", isGreaterThanOrEqualTo: startTime)
         .where("date", isLessThanOrEqualTo: endTime)
-        .withConverter(
-            fromFirestore: StudyProgram.fromFirestore,
-            toFirestore: (StudyProgram object, _) => object.toFirestore());
+        .withConverter(fromFirestore: StudyProgram.fromFirestore, toFirestore: (StudyProgram object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);

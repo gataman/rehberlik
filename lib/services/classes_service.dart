@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/services/base/db_base.dart';
+import 'package:rehberlik/common/locator.dart';
+import 'package:rehberlik/services/student_service.dart';
+
+import '../models/classes.dart';
+import 'base/db_base.dart';
 
 class ClassesService implements DBBase<Classes> {
   final _db = FirebaseFirestore.instance;
+  final StudentService _studentService = locator<StudentService>();
   final _mainRef = "classes";
 
   @override
@@ -20,8 +24,12 @@ class ClassesService implements DBBase<Classes> {
   }
 
   @override
-  Future<void> delete({required String objectID}) {
-    return _db.collection(_mainRef).doc(objectID).delete();
+  Future<void> delete({required String objectID}) async {
+    return _db
+        .collection(_mainRef)
+        .doc(objectID)
+        .delete()
+        .then((value) => _studentService.deleteWithClassID(classID: objectID));
   }
 
   @override
@@ -58,8 +66,7 @@ class ClassesService implements DBBase<Classes> {
 
   Future<Classes?> get({required String classID}) async {
     var docRef = _db.collection(_mainRef).doc(classID).withConverter(
-        fromFirestore: Classes.fromFirestore,
-        toFirestore: (Classes object, _) => object.toFirestore());
+        fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
 
     final docSnap = await docRef.get();
 
@@ -67,13 +74,8 @@ class ClassesService implements DBBase<Classes> {
   }
 
   Future<List<Classes>> getAll({Map<String, dynamic>? filters}) async {
-    var colRef = _db
-        .collection(_mainRef)
-        .where("")
-        .orderBy("className")
-        .withConverter(
-            fromFirestore: Classes.fromFirestore,
-            toFirestore: (Classes object, _) => object.toFirestore());
+    var colRef = _db.collection(_mainRef).where("").orderBy("className").withConverter(
+        fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
@@ -91,8 +93,7 @@ class ClassesService implements DBBase<Classes> {
         .where("schoolID", isEqualTo: schoolID)
         .orderBy("className")
         .withConverter(
-            fromFirestore: Classes.fromFirestore,
-            toFirestore: (Classes object, _) => object.toFirestore())
+            fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore())
         .snapshots();
 
     return data;

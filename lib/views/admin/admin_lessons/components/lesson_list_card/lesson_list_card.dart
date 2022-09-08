@@ -10,9 +10,7 @@ class LessonListCard extends StatelessWidget {
         decoration: defaultBoxDecoration,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: minimumBoxHeight),
-          child: Padding(
-              padding: const EdgeInsets.only(bottom: defaultPadding),
-              child: _getLessonListBox()),
+          child: Padding(padding: const EdgeInsets.only(bottom: defaultPadding), child: _getLessonListBox()),
         ));
   }
 
@@ -27,14 +25,10 @@ class LessonListCard extends StatelessWidget {
         return Column(children: [
           _getTitle(state),
           const Divider(),
-          if (state.isLoading)
-            const SizedBox(
-                height: minimumBoxHeight, child: DefaultCircularProgress()),
-          if (lessonList != null && !state.isLoading)
-            _getLessonListView(lessonList),
+          if (state.isLoading) const SizedBox(height: minimumBoxHeight, child: DefaultCircularProgress()),
+          if (lessonList != null && !state.isLoading) _getLessonListView(lessonList),
           if (lessonList == null && !state.isLoading)
-            const AppEmptyWarningText(
-                text: LocaleKeys.lessons_lessonListEmptyAlert)
+            const AppEmptyWarningText(text: LocaleKeys.lessons_lessonListEmptyAlert)
         ]);
       },
     );
@@ -42,8 +36,7 @@ class LessonListCard extends StatelessWidget {
 
   Widget _getTitle(LessonListState state) {
     return AppBoxTitle(
-      title: LocaleKeys.lessons_lessonListTitle
-          .locale([state.selectedCategory.toString()]),
+      title: LocaleKeys.lessons_lessonListTitle.locale([state.selectedCategory.toString()]),
     );
   }
 
@@ -58,7 +51,7 @@ class LessonListCard extends StatelessWidget {
           iconData: Icons.menu_book,
           title: lesson.lessonName!,
           detailOnPressed: () {
-            _goSubjectsPage(lesson);
+            _goSubjectsPage(lesson, context);
           },
           editOnPressed: () {
             context.read<LessonFormBoxCubit>().editLesson(lesson: lesson);
@@ -71,23 +64,32 @@ class LessonListCard extends StatelessWidget {
     );
   }
 
-  void _goSubjectsPage(Lesson lesson) {
+  void _goSubjectsPage(Lesson lesson, BuildContext context) {
     final params = {'lessonID': lesson.id!, 'lessonName': lesson.lessonName!};
-    Get.toNamed(AdminRoutes.routeSubjects, parameters: params);
+    context.router.navigate(AdminSubjectsRoute(lesson: lesson));
+    //Get.toNamed(AdminRoutes.routeSubjects, parameters: params);
     //Navigator.pushNamed(context, AdminRoutes.routeSubjects,)
   }
 
   void _deleteLesson(Lesson lesson, BuildContext context) {
     CustomDialog.showDeleteAlertDialog(
-        message:
-            LocaleKeys.lessons_lessonDeleteAlert.locale([lesson.lessonName!]),
+        context: context,
+        message: LocaleKeys.lessons_lessonDeleteAlert.locale([lesson.lessonName!]),
         onConfirm: () {
-          context.read<LessonListCubit>().deleteLesson(lesson: lesson).then(
-              (value) {
-            Get.back();
+          context.read<LessonListCubit>().deleteLesson(lesson: lesson).then((value) {
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_delete_success.locale(['Ders']),
+              context: context,
+              type: DialogType.success,
+            );
+
+            Navigator.pop(context);
           }, onError: (e) {
-            CustomDialog.showErrorMessage(
-                message: LocaleKeys.alerts_error.locale([e.toString()]));
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_error.locale([e.toString()]),
+              context: context,
+              type: DialogType.error,
+            );
           });
         });
   }

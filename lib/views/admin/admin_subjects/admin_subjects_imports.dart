@@ -1,4 +1,3 @@
-export 'package:get/get.dart';
 export 'package:flutter/material.dart';
 export 'package:rehberlik/models/subject.dart';
 

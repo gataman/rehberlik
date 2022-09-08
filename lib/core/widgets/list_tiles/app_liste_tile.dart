@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/core/init/extentions.dart';
-import 'package:rehberlik/core/widgets/buttons/app_small_rounded_button.dart';
+
+import '../../../common/constants.dart';
+import '../../init/extentions.dart';
+import '../buttons/app_small_rounded_button.dart';
 
 class AppListTile extends StatelessWidget {
   final String title;
@@ -30,7 +31,7 @@ class AppListTile extends StatelessWidget {
         child: InkWell(
           mouseCursor: SystemMouseCursors.click,
           hoverColor: Colors.white.withOpacity(0.04),
-          splashColor: bgColor,
+          splashColor: darkBackColor,
           onTap: detailOnPressed,
           child: ListTile(
               horizontalTitleGap: 0.3,

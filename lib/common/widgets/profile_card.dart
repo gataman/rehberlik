@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/responsive.dart';
+
+import '../../responsive.dart';
+import '../constants.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({
@@ -14,7 +15,7 @@ class ProfileCard extends StatelessWidget {
       margin: const EdgeInsets.only(left: defaultPadding),
       padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
       decoration: BoxDecoration(
-        color: secondaryColor,
+        color: darkSecondaryColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ),

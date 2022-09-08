@@ -1,0 +1,1 @@
+enum PrefKeys { schoolID }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
+
+import '../../../common/constants.dart';
 
 class AppOutlineTextFormField extends StatelessWidget {
   const AppOutlineTextFormField(
@@ -27,9 +28,7 @@ class AppOutlineTextFormField extends StatelessWidget {
       validator: (text) {
         if (text == null || text.trim().isEmpty) {
           return validateText;
-        } else if (isNumeric != null &&
-            isNumeric! &&
-            int.tryParse(text) == null) {
+        } else if (isNumeric != null && isNumeric! && int.tryParse(text) == null) {
           return "Sayısal bir değer girmeniz gerekiyor";
         }
         return null;

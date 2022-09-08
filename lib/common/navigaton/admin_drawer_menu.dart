@@ -1,17 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/navigaton/admin_drawer_list_tile.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/common/navigaton/admin_drawer_model.dart';
+import '../constants.dart';
+import 'admin_drawer_list_tile.dart';
+import 'admin_drawer_model.dart';
 
 class AdminDrawerMenu extends StatelessWidget {
   const AdminDrawerMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: _width < 500 ? _width * 0.7 : null,
+      width: width < 500 ? width * 0.7 : null,
       child: Drawer(
         child: SingleChildScrollView(
           controller: ScrollController(),
@@ -22,11 +22,9 @@ class AdminDrawerMenu extends StatelessWidget {
                 AdminDrawerListTile(
                   title: listItem.title,
                   iconSrc: listItem.iconSrc,
-                  tileColor: Get.currentRoute == listItem.route
-                      ? Colors.white12
-                      : null,
+                  tileColor: context.router.current.path == listItem.route ? Colors.white12 : null,
                   onPress: () {
-                    Get.offNamed(listItem.route);
+                    context.router.replaceNamed(listItem.route);
                   },
                 ),
             ],

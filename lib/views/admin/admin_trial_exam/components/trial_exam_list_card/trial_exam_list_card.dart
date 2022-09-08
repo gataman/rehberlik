@@ -53,22 +53,15 @@ class TrialExamListCard extends StatelessWidget {
   }
 
   Widget _getTrialExamListBox() {
-    return BlocBuilder<TrialExamListCubit, TrialExamListState>(
-        builder: (context, state) {
+    return BlocBuilder<TrialExamListCubit, TrialExamListState>(builder: (context, state) {
       final trialExamList = state.trialExamList;
       return Column(
         children: [
           _getTitle(state),
-          if (state.isLoading)
-            const SizedBox(
-                height: minimumBoxHeight, child: DefaultCircularProgress()),
-          if (trialExamList != null && !state.isLoading)
-            _getTrialExamListView(trialExamList),
-          if (trialExamList != null &&
-              trialExamList.isEmpty &&
-              !state.isLoading)
-            const AppEmptyWarningText(
-                text: LocaleKeys.trialExams_trialExamListEmptyAlert)
+          if (state.isLoading) const SizedBox(height: minimumBoxHeight, child: DefaultCircularProgress()),
+          if (trialExamList != null && !state.isLoading) _getTrialExamListView(trialExamList),
+          if (trialExamList != null && trialExamList.isEmpty && !state.isLoading)
+            const AppEmptyWarningText(text: LocaleKeys.trialExams_trialExamListEmptyAlert)
         ],
       );
     });
@@ -76,8 +69,7 @@ class TrialExamListCard extends StatelessWidget {
 
   Widget _getTitle(TrialExamListState state) {
     return AppBoxTitle(
-        title: LocaleKeys.trialExams_trialExamListTitle
-            .locale([state.selectedCategory.toString()]));
+        title: LocaleKeys.trialExams_trialExamListTitle.locale([state.selectedCategory.toString()]));
   }
 
   Widget _getTrialExamListView(List<TrialExam> trialExamList) {
@@ -91,12 +83,10 @@ class TrialExamListCard extends StatelessWidget {
           return AppListTile(
             title: trialExam.examName!,
             detailOnPressed: () {
-              _goTrialExamDetail(trialExam);
+              _goTrialExamDetail(trialExam, context);
             },
             editOnPressed: () {
-              context
-                  .read<TrialExamFormBoxCubit>()
-                  .editTrialExam(trialExam: trialExam);
+              context.read<TrialExamFormBoxCubit>().editTrialExam(trialExam: trialExam);
             },
             deleteOnPressed: () {
               _deleteTrialExam(trialExam, context);
@@ -106,7 +96,8 @@ class TrialExamListCard extends StatelessWidget {
         });
   }
 
-  void _goTrialExamDetail(TrialExam trialExam) {
+  void _goTrialExamDetail(TrialExam trialExam, BuildContext context) {
+    /*
     final trialExamResultController = Get.put(AdminTrialExamResultController());
     if (trialExamResultController.selectedTrialExam != trialExam) {
       trialExamResultController.selectedTrialExam = trialExam;
@@ -114,21 +105,29 @@ class TrialExamListCard extends StatelessWidget {
     }
 
     Get.toNamed(Constants.routeTrialExamResult);
+
+     */
+    context.router.push(AdminTrialExamResultRoute(trialExam: trialExam));
   }
 
   void _deleteTrialExam(TrialExam trialExam, BuildContext context) {
     CustomDialog.showDeleteAlertDialog(
-        message: LocaleKeys.trialExams_trialExamDeleteAlert
-            .locale([trialExam.examName!]),
+        context: context,
+        message: LocaleKeys.trialExams_trialExamDeleteAlert.locale([trialExam.examName!]),
         onConfirm: () {
-          context
-              .read<TrialExamListCubit>()
-              .deleteTrialExam(trialExam: trialExam)
-              .then((value) {
-            Get.back();
+          context.read<TrialExamListCubit>().deleteTrialExam(trialExam: trialExam).then((value) {
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_delete_success.locale(['Deneme Sınavı']),
+              context: context,
+              type: DialogType.success,
+            );
+            Navigator.pop(context);
           }, onError: (e) {
-            CustomDialog.showErrorMessage(
-                message: LocaleKeys.alerts_error.locale([e.toString()]));
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_error.locale([e.toString()]),
+              context: context,
+              type: DialogType.error,
+            );
           });
         });
   }

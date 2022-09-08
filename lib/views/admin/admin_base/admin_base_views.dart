@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/navigaton/admin_drawer_menu.dart';
-import 'package:rehberlik/common/widgets/admin_app_bar.dart';
-import 'package:rehberlik/common/widgets/expand_button.dart';
-import 'package:rehberlik/core/init/utils.dart';
-import 'package:rehberlik/responsive.dart';
-import 'package:rehberlik/views/admin/admin_subjects/components/subject_form_box/cubit/edit_subject_cubit.dart';
-import 'package:rehberlik/views/admin/admin_subjects/components/subject_list_card/cubit/subject_list_cubit.dart';
-import 'package:rehberlik/views/admin/admin_base/cubit/admin_base_cubit.dart';
+
+import '../../../common/constants.dart';
+import '../../../common/navigaton/admin_drawer_menu.dart';
+import '../../../common/widgets/admin_app_bar.dart';
+import '../../../common/widgets/expand_button.dart';
+import '../../../responsive.dart';
+import 'cubit/admin_base_cubit.dart';
 
 abstract class AdminBaseViews extends StatelessWidget {
   const AdminBaseViews({Key? key}) : super(key: key);
 
   Widget get firstView;
+
   Widget get secondView;
+
   bool get isBack => false;
+
+  bool get isDashboard => false;
+
   List<BlocProvider<StateStreamableSource<Object?>>>? get providers => null;
-  String? get refreshRoute => null;
+
+  bool get isFullPage => false;
 
   @override
   Widget build(BuildContext context) {
-    if (refreshRoute != null) {
-      Utils.checkRouteArg(context: context, route: refreshRoute!);
-    }
     return providers != null
         ? MultiBlocProvider(
             providers: providers!,
@@ -41,11 +42,12 @@ abstract class AdminBaseViews extends StatelessWidget {
         child: SingleChildScrollView(
           child: BlocProvider(
             create: (context) => AdminBaseCubit(),
-            child: BlocBuilder<AdminBaseCubit, AdminBaseState>(
-                builder: (context, state) {
+            child: BlocBuilder<AdminBaseCubit, AdminBaseState>(builder: (context, state) {
               bool isExpanded = (state as AdminBaseExpandedState).isExpanded;
               return Responsive(
-                  mobile: _getMobileContent(isExpanded, context),
+                  mobile: isDashboard
+                      ? _getMobileDashboardContent(isExpanded, context)
+                      : _getMobileContent(isExpanded, context),
                   desktop: _getDesktopContent(isExpanded, context));
             }),
           ),
@@ -64,19 +66,20 @@ abstract class AdminBaseViews extends StatelessWidget {
         const SizedBox(
           width: 4,
         ),
-      ExpandButton(
-        onPressed: () {
-          context.read<AdminBaseCubit>().changeExpanded();
-        },
-        isHorizontal: true,
-        isExpanded: isExpanded,
-      ),
-      if (!isExpanded)
+      if (!isFullPage)
+        ExpandButton(
+          onPressed: () {
+            context.read<AdminBaseCubit>().changeExpanded();
+          },
+          isHorizontal: true,
+          isExpanded: isExpanded,
+        ),
+      if (!isExpanded && !isFullPage)
         Expanded(
           flex: 2,
           child: secondView,
         ),
-      if (isExpanded)
+      if (isExpanded && !isFullPage)
         const SizedBox(
           width: 8,
         ),
@@ -88,7 +91,28 @@ abstract class AdminBaseViews extends StatelessWidget {
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (!isExpanded) secondView,
+        if (!isExpanded && !isFullPage) secondView,
+        if (!isFullPage)
+          Center(
+            child: ExpandButton(
+              onPressed: () {
+                context.read<AdminBaseCubit>().changeExpanded();
+              },
+              isHorizontal: false,
+              isExpanded: isExpanded,
+            ),
+          ),
+        firstView
+      ],
+    ));
+  }
+
+  Widget _getMobileDashboardContent(bool isExpanded, BuildContext context) {
+    return SingleChildScrollView(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (!isExpanded) firstView,
         Center(
           child: ExpandButton(
             onPressed: () {
@@ -98,7 +122,7 @@ abstract class AdminBaseViews extends StatelessWidget {
             isExpanded: isExpanded,
           ),
         ),
-        firstView,
+        secondView
       ],
     ));
   }

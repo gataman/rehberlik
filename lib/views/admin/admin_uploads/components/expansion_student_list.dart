@@ -1,4 +1,6 @@
-part of admin_uploads_view;
+import 'package:flutter/material.dart';
+import 'package:rehberlik/common/constants.dart';
+import 'package:rehberlik/models/student.dart';
 
 class ExpansionStudentList extends StatefulWidget {
   final Map<String, List<Student>> data;
@@ -32,7 +34,7 @@ class _ExpansionStudentListState extends State<ExpansionStudentList> {
       var i = 0;
       data.forEach((key, studentList) {
         var classExpansionPanel = ExpansionPanel(
-            backgroundColor: secondaryColor,
+            backgroundColor: darkSecondaryColor,
             headerBuilder: (context, isOpen) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -51,7 +53,7 @@ class _ExpansionStudentListState extends State<ExpansionStudentList> {
 
       return Container(
         decoration: BoxDecoration(
-          color: secondaryColor,
+          color: darkSecondaryColor,
           border: Border.all(color: Colors.white10),
           borderRadius: const BorderRadius.all(
             Radius.circular(10),
@@ -63,8 +65,7 @@ class _ExpansionStudentListState extends State<ExpansionStudentList> {
             dividerColor: Colors.white10,
             elevation: 0,
             children: classesPanelList,
-            expansionCallback: (i, isOpen) =>
-                setState(() => _isExpandedList[i] = !isOpen),
+            expansionCallback: (i, isOpen) => setState(() => _isExpandedList[i] = !isOpen),
           ),
         ),
       );
@@ -81,8 +82,7 @@ class _ExpansionStudentListState extends State<ExpansionStudentList> {
       const DataColumn(label: Text("Baba Adı", style: studentListSmallStyle)),
       const DataColumn(label: Text("Anne Adı", style: studentListSmallStyle)),
       const DataColumn(label: Text("Cinsiyet", style: studentListSmallStyle)),
-      const DataColumn(
-          label: Text("Doğum Tarihi", style: studentListSmallStyle)),
+      const DataColumn(label: Text("Doğum Tarihi", style: studentListSmallStyle)),
     ];
 
     final rowList = <DataRow>[];
@@ -93,28 +93,22 @@ class _ExpansionStudentListState extends State<ExpansionStudentList> {
           style: studentListSmallStyle,
         )),
         DataCell(
-          Text(student.studentName != null ? student.studentName! : "",
-              style: studentListSmallStyle),
+          Text(student.studentName != null ? student.studentName! : "", style: studentListSmallStyle),
         ),
         DataCell(
-          Text(student.className != null ? student.className! : "",
-              style: studentListSmallStyle),
+          Text(student.className != null ? student.className! : "", style: studentListSmallStyle),
         ),
         DataCell(
-          Text(student.fatherName != null ? student.fatherName! : "",
-              style: studentListSmallStyle),
+          Text(student.fatherName != null ? student.fatherName! : "", style: studentListSmallStyle),
         ),
         DataCell(
-          Text(student.motherName != null ? student.motherName! : "",
-              style: studentListSmallStyle),
+          Text(student.motherName != null ? student.motherName! : "", style: studentListSmallStyle),
         ),
         DataCell(
-          Text(student.gender != null ? student.gender! : "",
-              style: studentListSmallStyle),
+          Text(student.gender != null ? student.gender! : "", style: studentListSmallStyle),
         ),
         DataCell(
-          Text(student.birthDay != null ? student.birthDay! : "",
-              style: studentListSmallStyle),
+          Text(student.birthDay != null ? student.birthDay! : "", style: studentListSmallStyle),
         ),
       ]);
 

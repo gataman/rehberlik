@@ -1,7 +1,7 @@
-import 'package:bloc/bloc.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/repository/trial_exam_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../common/locator.dart';
+import '../../../../../../models/trial_exam.dart';
+import '../../../../../../repository/trial_exam_repository.dart';
 
 part 'trial_exam_list_state.dart';
 
@@ -14,8 +14,7 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   List<TrialExam>? _trialExamList;
 
   void fetchTrialExamList() async {
-    final _remoteList = await _trialExamRepository
-        .getAll(filters: {'classLevel': selectedCategory});
+    final _remoteList = await _trialExamRepository.getAll(filters: {'classLevel': selectedCategory});
     _trialExamList = _remoteList;
     _refreshList();
   }
@@ -26,10 +25,7 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   }
 
   void _refreshList() {
-    emit(TrialExamListState(
-        selectedCategory: selectedCategory,
-        trialExamList: _trialExamList,
-        isLoading: false));
+    emit(TrialExamListState(selectedCategory: selectedCategory, trialExamList: _trialExamList, isLoading: false));
   }
 
   Future<String> addTrialExam(TrialExam trialExam) async {
@@ -41,9 +37,7 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   }
 
   Future<void> deleteTrialExam({required TrialExam trialExam}) async {
-    return _trialExamRepository
-        .delete(objectID: trialExam.id!)
-        .whenComplete(() {
+    return _trialExamRepository.delete(objectID: trialExam.id!).whenComplete(() {
       // editingLesson.value = null;
       _deleteTrialExamInLocalList(trialExam: trialExam);
     });

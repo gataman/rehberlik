@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
+
+import '../../../common/constants.dart';
 
 class AppBoxTitle extends StatelessWidget {
   final String title;
   final Color? color;
 
-  const AppBoxTitle({Key? key, required this.title, this.color})
-      : super(key: key);
+  const AppBoxTitle({Key? key, required this.title, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

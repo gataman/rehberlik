@@ -1,29 +1,31 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rehberlik/common/helper.dart';
-import 'package:rehberlik/common/helper/pdf_creator/pdf_helper.dart';
-import 'package:rehberlik/common/helper/save_file_mobile.dart'
-    if (dart.library.html) 'package:rehberlik/common/helper/save_file_web.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
+import 'package:rehberlik/common/extensions.dart';
+import 'package:rehberlik/views/admin/admin_student_detail/components/student_detail_tab_view/study_program/cubit/study_program_list_cubit.dart';
+import 'package:rehberlik/views/admin/admin_student_detail/components/student_detail_tab_view/time_table/cubit/time_table_list_cubit.dart';
+import '../../helper.dart';
+import 'pdf_helper.dart';
+import '../save_file_mobile.dart' if (dart.library.html) 'package:rehberlik/common/helper/save_file_web.dart';
+import '../../../models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/study_program.dart';
 import 'package:rehberlik/models/subject.dart';
 import 'package:rehberlik/models/time_table.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/study_program/admin_study_program_controller.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/time_table/student_time_table_controller.dart';
 
 class StudentDetailPdfBuilder {
   final ValueNotifier<bool> notifier = ValueNotifier(false);
-  final _timeTableController = Get.put(StudentTimeTableController());
-  final _programController = Get.put(AdminStudyProgramController());
+  final BuildContext context;
+
+  StudentDetailPdfBuilder(this.context);
 
   Future<void> build(Student student) async {
-    var timeTableList = _timeTableController.timeTableList.value;
-    timeTableList ??=
-        await _timeTableController.getAllTimeTable(student: student);
+    final timeTableListCubit = context.read<TimeTableListCubit>();
+    final programListCubit = context.read<StudyProgramListCubit>();
+    var timeTableList = timeTableListCubit.timeTableList;
+    timeTableList ??= await timeTableListCubit.fetchTimeTableList(student: student);
 
-    var programList = _programController.programList.value;
-    programList ??=
-        await _programController.getAllPrograms(studentID: student.id!);
+    var programList = programListCubit.studyProgramList;
+    programList ??= await programListCubit.fetchStudyProgramList(studentID: student.id!);
 
     final PdfDocument pdfDocument = PdfDocument();
     pdfDocument.pageSettings.orientation = PdfPageOrientation.landscape;
@@ -35,8 +37,7 @@ class StudentDetailPdfBuilder {
     //final PdfGrid grid = _getGrid();
 
     page.graphics.drawRectangle(
-        bounds: Rect.fromLTWH(0, 0, pageSize.width, pageSize.height),
-        pen: PdfPen(PdfColor(142, 170, 219)));
+        bounds: Rect.fromLTWH(0, 0, pageSize.width, pageSize.height), pen: PdfPen(PdfColor(142, 170, 219)));
 
     //Başlık
     await _drawHeader(page, pageSize);
@@ -44,30 +45,26 @@ class StudentDetailPdfBuilder {
     await _drawStudentInfoBox(page, student);
     //await _drawStudentTarget(page);
 
-    await _drawStudentProgram(page, programList);
+    await _drawStudentProgram(page, programList!);
     if (timeTableList != null) {
       await _drawStudentTimeTable(page, timeTableList);
     }
 
     final List<int> bytes = await pdfDocument.save();
     pdfDocument.dispose();
-    await FileSaveHelper.saveAndLaunchFile(
-        bytes, '${student.studentNumber}.pdf');
+    await FileSaveHelper.saveAndLaunchFile(bytes, '${student.studentNumber}.pdf');
     notifier.value = false;
   }
 
   Future<void> _drawHeader(PdfPage page, Size pageSize) async {
     page.graphics.drawRectangle(
-        brush: PdfSolidBrush(PdfColor(91, 126, 215)),
-        bounds: Rect.fromLTWH(0, 0, pageSize.width, 40));
+        brush: PdfSolidBrush(PdfColor(91, 126, 215)), bounds: Rect.fromLTWH(0, 0, pageSize.width, 40));
     //Draw string
-    page.graphics.drawString('HAFTALIK ÇALIŞMA PLANIM',
-        await PdfHelper.getPdfFont(size: 18, isBold: true),
+    page.graphics.drawString('HAFTALIK ÇALIŞMA PLANIM', await PdfHelper.getPdfFont(size: 18, isBold: true),
         brush: PdfBrushes.white,
         bounds: Rect.fromLTWH(0, 0, pageSize.width, 40),
-        format: PdfStringFormat(
-            lineAlignment: PdfVerticalAlignment.middle,
-            alignment: PdfTextAlignment.center));
+        format:
+            PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle, alignment: PdfTextAlignment.center));
   }
 
   Future<void> _drawStudentInfoBox(PdfPage page, Student student) async {
@@ -84,14 +81,12 @@ class StudentDetailPdfBuilder {
 
     // Add rows to the grid.
     //Cell Style
-    PdfGridCellStyle cellTitleStyle =
-        await PdfHelper.cellValueStyle(size: 10, isBold: true);
+    PdfGridCellStyle cellTitleStyle = await PdfHelper.cellValueStyle(size: 10, isBold: true);
 
     PdfGridCellStyle cellTitleStyleCenter =
         await PdfHelper.cellValueStyle(size: 10, isBold: true, isCenter: true);
 
-    PdfGridCellStyle cellValueStyle =
-        await PdfHelper.cellValueStyle(size: 10, isBold: false);
+    PdfGridCellStyle cellValueStyle = await PdfHelper.cellValueStyle(size: 10, isBold: false);
 
     PdfGridCellStyle cellValueStyleCenter =
         await PdfHelper.cellValueStyle(size: 10, isBold: false, isCenter: true);
@@ -103,8 +98,7 @@ class StudentDetailPdfBuilder {
     row.cells[1].style = cellValueStyle;
     row.cells[2].value = '';
     row.cells[2].style = cellValueStyle;
-    row.cells[3].value =
-        student.targetSchoolID != null ? 'HEDEFİM -  Puanı' : '';
+    row.cells[3].value = student.targetSchoolID != null ? 'HEDEFİM -  Puanı' : '';
     row.cells[3].style = cellTitleStyleCenter;
     row.cells[3].columnSpan = 2;
 
@@ -137,21 +131,18 @@ class StudentDetailPdfBuilder {
     grid.style.cellPadding = PdfPaddings(left: 5, top: 5);
     // Draw table in the PDF page.
     grid.draw(
-        page: page,
-        bounds: Rect.fromLTWH(
-            1, 41, page.getClientSize().width, page.getClientSize().height));
+        page: page, bounds: Rect.fromLTWH(1, 41, page.getClientSize().width, page.getClientSize().height));
   }
 
-  Future<void> _drawStudentProgram(
-      PdfPage page, List<StudyProgram> programList) async {
+  Future<void> _drawStudentProgram(PdfPage page, List<StudyProgram> programList) async {
     final PdfGrid grid = PdfGrid();
     int columnCount = 26;
     grid.columns.add(count: columnCount);
 
     // Add rows to the grid.
     //Cell Style
-    PdfGridCellStyle cellTitleStyle = await PdfHelper.cellValueStyle(
-        size: 8, isBold: true, isCenter: true, isBorder: true);
+    PdfGridCellStyle cellTitleStyle =
+        await PdfHelper.cellValueStyle(size: 8, isBold: true, isCenter: true, isBorder: true);
 
     /*
     PdfGridCellStyle cellValueStyle = await PdfHelper.cellValueStyle(
@@ -240,11 +231,7 @@ class StudentDetailPdfBuilder {
       row = grid.rows.add();
       for (var i = 0; i < columnCount; i++) {
         //set cell value
-        await _setRowValues(
-            row: row,
-            index: i,
-            studyProgram: studyProgram,
-            style: cellTitleStyle);
+        await _setRowValues(row: row, index: i, studyProgram: studyProgram, style: cellTitleStyle);
       }
     }
 
@@ -252,8 +239,7 @@ class StudentDetailPdfBuilder {
     // Draw table in the PDF page.
     grid.draw(
         page: page,
-        bounds: Rect.fromLTWH(10, 120, page.getClientSize().width - 10,
-            page.getClientSize().height));
+        bounds: Rect.fromLTWH(10, 120, page.getClientSize().width - 10, page.getClientSize().height));
   }
 
   Future<void> _setRowValues({
@@ -265,15 +251,11 @@ class StudentDetailPdfBuilder {
     String value = "";
     switch (index) {
       case 0:
-        value = studyProgram.date != null
-            ? DateFormat("dd.MM.yyyy").format(studyProgram.date!)
-            : 'Tarih';
+        value = studyProgram.date != null ? DateFormat("dd.MM.yyyy").format(studyProgram.date!) : 'Tarih';
         break;
 
       case 1:
-        value = studyProgram.date != null
-            ? DateFormat("EEEE", 'tr').format(studyProgram.date!)
-            : 'Tarih';
+        value = studyProgram.date != null ? DateFormat("EEEE", 'tr').format(studyProgram.date!) : 'Tarih';
         break;
 
       case 2:
@@ -363,19 +345,18 @@ class StudentDetailPdfBuilder {
     return data != null ? data.toString() : '';
   }
 
-  Future<void> _drawStudentTimeTable(
-      PdfPage page, Map<int, List<TimeTable>> timeTableMap) async {
+  Future<void> _drawStudentTimeTable(PdfPage page, Map<int, List<TimeTable>> timeTableMap) async {
     final PdfGrid grid = PdfGrid();
 
     grid.columns.add(count: 7);
 
     // Add rows to the grid.
     //Cell Style
-    PdfGridCellStyle cellTitleStyle = await PdfHelper.cellValueStyle(
-        size: 8, isBold: true, isCenter: true, isBorder: true);
+    PdfGridCellStyle cellTitleStyle =
+        await PdfHelper.cellValueStyle(size: 8, isBold: true, isCenter: true, isBorder: true);
 
-    PdfGridCellStyle cellStyle = await PdfHelper.cellValueStyle(
-        size: 8, isBold: false, isCenter: true, isBorder: false);
+    PdfGridCellStyle cellStyle =
+        await PdfHelper.cellValueStyle(size: 8, isBold: false, isCenter: true, isBorder: false);
 
     _setHeaderRow(grid, cellTitleStyle);
 
@@ -396,8 +377,7 @@ class StudentDetailPdfBuilder {
     // Draw table in the PDF page.
     grid.draw(
         page: page,
-        bounds: Rect.fromLTWH(10, 300, page.getClientSize().width - 10,
-            page.getClientSize().height));
+        bounds: Rect.fromLTWH(10, 300, page.getClientSize().width - 10, page.getClientSize().height));
   }
 
   void _setHeaderRow(PdfGrid grid, PdfGridCellStyle cellTitleStyle) {
@@ -430,8 +410,7 @@ class StudentDetailPdfBuilder {
     innerGrid.columns.add(count: 1);
     PdfGridRow innerRow = innerGrid.rows.add();
     innerRow.height = 12;
-    innerRow.cells[0].value =
-        _getTimeTableDay(timeTable.startTime, timeTable.endTime);
+    innerRow.cells[0].value = _getTimeTableDay(timeTable.startTime, timeTable.endTime);
     innerRow.cells[0].style = cellStyle;
 
     innerRow = innerGrid.rows.add();
@@ -439,8 +418,7 @@ class StudentDetailPdfBuilder {
     innerRow.cells[0].style = cellStyle;
 
     innerRow = innerGrid.rows.add();
-    innerRow.cells[0].value = _getSubjectName(
-        lessonID: timeTable.lessonID, subjectID: timeTable.subjectID);
+    innerRow.cells[0].value = _getSubjectName(lessonID: timeTable.lessonID, subjectID: timeTable.subjectID);
     innerRow.cells[0].style = cellStyle;
 
     innerGrid.style.cellPadding = PdfPaddings(left: 5, right: 5);
@@ -457,29 +435,35 @@ class StudentDetailPdfBuilder {
   }
 
   String _getLessonNameText({String? lessonID}) {
-    final _lessonList = _timeTableController.lessonWithSubjectList;
-    if (lessonID != null) {
-      LessonWithSubject? lessonWithSubject = _lessonList
-          .firstWhereOrNull((element) => element.lesson.id == lessonID);
-      if (lessonWithSubject != null) {
-        return lessonWithSubject.lesson.lessonName!;
+    final timeTableListCubit = context.read<TimeTableListCubit>();
+    final lessonList = timeTableListCubit.lessonWithSubjectList;
+    if (lessonList != null && lessonList.isNotEmpty) {
+      if (lessonID != null) {
+        LessonWithSubject? lessonWithSubject =
+            lessonList.findOrNull((element) => element.lesson.id == lessonID);
+        if (lessonWithSubject != null) {
+          return lessonWithSubject.lesson.lessonName!;
+        }
       }
     }
+
     return "";
   }
 
-  String _getSubjectName(
-      {required String? lessonID, required String? subjectID}) {
-    final _lessonList = _timeTableController.lessonWithSubjectList;
-    if (lessonID != null) {
-      LessonWithSubject? lessonWithSubject = _lessonList
-          .firstWhereOrNull((element) => element.lesson.id == lessonID);
-      if (lessonWithSubject != null) {
-        if (lessonWithSubject.subjectList != null) {
-          Subject? subject = lessonWithSubject.subjectList!
-              .firstWhereOrNull((subject) => subject.id == subjectID);
-          if (subject != null) {
-            return subject.subject!;
+  String _getSubjectName({required String? lessonID, required String? subjectID}) {
+    final timeTableListCubit = context.read<TimeTableListCubit>();
+    final lessonList = timeTableListCubit.lessonWithSubjectList;
+    if (lessonList != null && lessonList.isNotEmpty) {
+      if (lessonID != null) {
+        LessonWithSubject? lessonWithSubject =
+            lessonList.findOrNull((element) => element.lesson.id == lessonID);
+        if (lessonWithSubject != null) {
+          if (lessonWithSubject.subjectList != null) {
+            Subject? subject =
+                lessonWithSubject.subjectList!.findOrNull((subject) => subject.id == subjectID);
+            if (subject != null) {
+              return subject.subject!;
+            }
           }
         }
       }

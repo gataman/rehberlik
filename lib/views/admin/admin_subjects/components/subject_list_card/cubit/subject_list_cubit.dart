@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/models/subject.dart';
-import 'package:rehberlik/repository/subject_repository.dart';
+
+import '../../../../../../common/locator.dart';
+import '../../../../../../models/subject.dart';
+import '../../../../../../repository/subject_repository.dart';
 
 part 'subject_list_state.dart';
 
@@ -36,9 +36,7 @@ class SubjectListCubit extends Cubit<SubjectListState> {
   }
 
   Future<void> deleteSubject(Subject subject) {
-    return _subjectRepository
-        .deleteWithLessonID(objectID: subject.id!, lessonID: subject.lessonID!)
-        .then((value) {
+    return _subjectRepository.deleteWithLessonID(objectID: subject.id!, lessonID: subject.lessonID!).then((value) {
       if (_subjectList != null) {
         _subjectList!.remove(subject);
         emit(SubjectListLoadedState(_subjectList!));

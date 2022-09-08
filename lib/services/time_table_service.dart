@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:rehberlik/models/time_table.dart';
-import 'package:rehberlik/services/base/db_base.dart';
+
+import '../models/time_table.dart';
+import 'base/db_base.dart';
 
 class TimeTableService implements DBBase<TimeTable> {
   final _db = FirebaseFirestore.instance;
@@ -53,9 +53,10 @@ class TimeTableService implements DBBase<TimeTable> {
   }
 
   Future<List<TimeTable>?> getAll({Map<String, dynamic>? filters}) async {
-    var colRef = _db.collection(_mainRef).where('').withConverter(
-        fromFirestore: TimeTable.fromFirestore,
-        toFirestore: (TimeTable object, _) => object.toFirestore());
+    var colRef = _db
+        .collection(_mainRef)
+        .where('')
+        .withConverter(fromFirestore: TimeTable.fromFirestore, toFirestore: (TimeTable object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);

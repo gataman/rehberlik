@@ -2,10 +2,10 @@ import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/models/lesson.dart';
-import 'package:rehberlik/repository/lesson_repository.dart';
+import '../../../../../../common/extensions.dart';
+import '../../../../../../common/locator.dart';
+import '../../../../../../models/lesson.dart';
+import '../../../../../../repository/lesson_repository.dart';
 
 part 'lesson_list_state.dart';
 
@@ -21,8 +21,7 @@ class LessonListCubit extends Cubit<LessonListState> {
       debugPrint("fetchLessonList çalıştı");
       _lessonsRepository.getAll().then((_lessonList) {
         final lastList = _lessonList.groupBy((lesson) => lesson.classLevel);
-        final sortedList = SplayTreeMap<int, List<Lesson>>.from(
-            lastList, (a, b) => a.compareTo(b));
+        final sortedList = SplayTreeMap<int, List<Lesson>>.from(lastList, (a, b) => a.compareTo(b));
 
         lessonList = sortedList;
         _refreshList();
@@ -80,16 +79,10 @@ class LessonListCubit extends Cubit<LessonListState> {
       }
     }
 
-    emit(LessonListState(
-        selectedCategory: selectedCategory,
-        lessonList: lessonList![selectedCategory],
-        isLoading: false));
+    emit(LessonListState(selectedCategory: selectedCategory, lessonList: lessonList![selectedCategory], isLoading: false));
   }
 
   void _refreshList() {
-    emit(LessonListState(
-        selectedCategory: selectedCategory,
-        lessonList: lessonList![selectedCategory],
-        isLoading: false));
+    emit(LessonListState(selectedCategory: selectedCategory, lessonList: lessonList![selectedCategory], isLoading: false));
   }
 }

@@ -1,4 +1,5 @@
-import 'package:rehberlik/views/admin/admin_main_view/admin_main_view_imports.dart';
+import 'package:flutter/material.dart';
+import 'package:rehberlik/common/constants.dart';
 
 class ExpandButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -6,10 +7,7 @@ class ExpandButton extends StatelessWidget {
   final bool isExpanded;
 
   const ExpandButton(
-      {Key? key,
-      required this.onPressed,
-      required this.isHorizontal,
-      required this.isExpanded})
+      {Key? key, required this.onPressed, required this.isHorizontal, required this.isExpanded})
       : super(key: key);
 
   @override
@@ -29,7 +27,7 @@ class ExpandButton extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: secondaryColor,
+                color: darkSecondaryColor,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(isExpanded
                         ? isHorizontal

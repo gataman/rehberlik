@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/widgets/locale_text.dart';
-import 'package:rehberlik/core/init/locale_keys.g.dart';
+
+import '../../../common/constants.dart';
+import '../../../common/widgets/locale_text.dart';
+import '../../init/locale_keys.g.dart';
 
 class AppCancelFormButton extends StatelessWidget {
-  const AppCancelFormButton({Key? key, required this.onPressed})
-      : super(key: key);
+  const AppCancelFormButton({Key? key, required this.onPressed}) : super(key: key);
 
   final VoidCallback onPressed;
 
@@ -20,13 +20,13 @@ class AppCancelFormButton extends StatelessWidget {
         children: const [
           Icon(
             Icons.cancel,
-            color: secondaryColor,
+            color: darkSecondaryColor,
           ),
           Expanded(
             child: Center(
               child: LocaleText(
                 text: LocaleKeys.actions_cancel,
-                color: secondaryColor,
+                color: darkSecondaryColor,
                 fontWeight: FontWeight.w500,
               ),
             ),

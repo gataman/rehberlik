@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
 
-class AppListBoxContainer extends StatelessWidget {
-  const AppListBoxContainer({Key? key, required this.child}) : super(key: key);
+import '../../../common/constants.dart';
+
+class AppBoxContainer extends StatelessWidget {
+  const AppBoxContainer({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 
@@ -12,10 +13,7 @@ class AppListBoxContainer extends StatelessWidget {
         decoration: defaultBoxDecoration,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: minimumBoxHeight),
-          child: Padding(
-              padding: const EdgeInsets.only(bottom: defaultPadding),
-              child: child),
+          child: Padding(padding: const EdgeInsets.only(bottom: defaultPadding), child: child),
         ));
-    ;
   }
 }
