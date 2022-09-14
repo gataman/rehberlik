@@ -29,3 +29,5 @@ class TrialExamResultUploadedState extends TrialExamResultState {
 
   TrialExamResultUploadedState({this.trialExamResultParsedList, this.wrongRowList, this.wrongStudentList});
 }
+
+class TrialExamResultStaticsState extends TrialExamResultState {}

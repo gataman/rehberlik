@@ -1,13 +1,9 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
 import 'package:rehberlik/common/custom_result.dart';
 import 'package:rehberlik/common/extensions.dart';
 import 'package:rehberlik/common/locator.dart';
@@ -15,6 +11,7 @@ import 'package:rehberlik/models/student.dart';
 import 'package:rehberlik/repository/trial_exam_result_repository.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 
+import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 import '../../../../models/trial_exam.dart';
 import '../../../../models/trial_exam_result.dart';
 
@@ -22,11 +19,16 @@ part 'trial_exam_result_state.dart';
 
 class TrialExamResultCubit extends Cubit<TrialExamResultState> {
   TrialExamResultCubit() : super(TrialExamResultListLoadingState());
+
   TrialExam? trialExam;
-  final _trialExamResultRepository = locator<TrialExamResultRepository>();
+  List<TrialExamResult>? trialExamResultParsedList;
+  List<TrialExamResult>? trialExamResultList;
+  List<TrialExamGraph> trialExamGraphList = [];
+
   final List<int> wrongRowList = <int>[];
   final List<int> wrongStudentList = <int>[];
-  List<TrialExamResult>? trialExamResultList;
+
+  final _trialExamResultRepository = locator<TrialExamResultRepository>();
 
   void fetchTrialExamResult({required TrialExam exam}) async {
     trialExam = exam;
@@ -34,15 +36,17 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
     if (list == null || list.isEmpty) {
       emit(TrialExamResultListEmptyState());
     } else {
+      trialExamResultList = list;
+      _setTrialExamGraphList();
       emit(TrialExamResultListLoadedState(trialExamResultList: list));
     }
   }
 
   Future<CustomResult> saveTrialExamResult() async {
     final customResult = CustomResult();
-    if (trialExamResultList != null) {
+    if (trialExamResultParsedList != null) {
       try {
-        await _trialExamResultRepository.addAll(list: trialExamResultList!);
+        await _trialExamResultRepository.addAll(list: trialExamResultParsedList!);
         return customResult;
       } catch (e) {
         customResult.message = 'Bir hata oluştu. Hata kodu: ${e.toString()}';
@@ -58,8 +62,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
 
   void selectExcelFile({required ClassListCubit classCubit, required int classLevel}) async {
     final schoolStatsList = classCubit.schoolStatsList;
-    final studentList =
-        schoolStatsList.findOrNull((element) => element.classLevel == classLevel)?.studentList;
+    final studentList = schoolStatsList.findOrNull((element) => element.classLevel == classLevel)?.studentList;
     if (studentList != null && studentList.isNotEmpty) {
       emit(TrialExamResultUploadingState());
       final result = await FilePicker.platform.pickFiles(
@@ -107,8 +110,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
           var studentNo = row[0];
 
           if (studentNo != null && studentNo.value is int && studentNo.value > 0) {
-            final student =
-                studentList.findOrNull((element) => element.studentNumber == studentNo.value.toString());
+            final student = studentList.findOrNull((element) => element.studentNumber == studentNo.value.toString());
             if (student != null) {
               if (_checkData(row)) {
                 final trialExamResult = TrialExamResult(
@@ -153,7 +155,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
     }
 
     if (examResultList.isNotEmpty) {
-      trialExamResultList = examResultList;
+      trialExamResultParsedList = examResultList;
     }
 
     emit(TrialExamResultUploadedState(
@@ -195,6 +197,63 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
         _checkIntData(row, 13);
   }
 
-  bool _checkIntData(List<Data?> row, int i) =>
-      row[i] != null && row[i]!.value != null && row[i]!.value is int;
+  bool _checkIntData(List<Data?> row, int i) => row[i] != null && row[i]!.value != null && row[i]!.value is int;
+
+  void showTrialExamStatics() {
+    emit(TrialExamResultStaticsState());
+  }
+
+  void _setTrialExamGraphList() {
+    if (trialExamResultList != null) {
+      trialExamResultList!.sort((a, b) => a.className.compareTo(b.className));
+      final groupedList = trialExamResultList!.groupBy((trialExamResult) => trialExamResult.className);
+
+      final turGraph = TrialExamGraph(graphLabelName: 'Türkçe', lessonType: LessonType.twenty);
+      final matGraph = TrialExamGraph(graphLabelName: 'Matematik', lessonType: LessonType.twenty);
+      final fenGraph = TrialExamGraph(graphLabelName: 'Fen Bilimleri', lessonType: LessonType.twenty);
+      final sosGraph = TrialExamGraph(graphLabelName: 'Sosyal Bilgiler', lessonType: LessonType.ten);
+      final ingGraph = TrialExamGraph(graphLabelName: 'İngilizce', lessonType: LessonType.ten);
+      final dinGraph = TrialExamGraph(graphLabelName: 'Din Kültürü', lessonType: LessonType.ten);
+
+      groupedList.forEach((className, list) {
+        double turTotalNet = 0;
+        double matTotalNet = 0;
+        double fenTotalNet = 0;
+        double sosTotalNet = 0;
+        double ingTotalNet = 0;
+        double dinTotalNet = 0;
+        var i = 0;
+
+        for (var trialExamResult in list) {
+          turTotalNet = turTotalNet + trialExamResult.turNet!;
+          matTotalNet = matTotalNet + trialExamResult.matNet!;
+          fenTotalNet = fenTotalNet + trialExamResult.fenNet!;
+          sosTotalNet = sosTotalNet + trialExamResult.sosNet!;
+          ingTotalNet = ingTotalNet + trialExamResult.ingNet!;
+          dinTotalNet = dinTotalNet + trialExamResult.dinNet!;
+          i++;
+        }
+        var turAvg = double.parse((turTotalNet / i).toStringAsFixed(2));
+        var matAvg = double.parse((matTotalNet / i).toStringAsFixed(2));
+        var fenAvg = double.parse((fenTotalNet / i).toStringAsFixed(2));
+        var sosAvg = double.parse((sosTotalNet / i).toStringAsFixed(2));
+        var dinAvg = double.parse((dinTotalNet / i).toStringAsFixed(2));
+        var ingAvg = double.parse((ingTotalNet / i).toStringAsFixed(2));
+
+        turGraph.itemList.add(TrialExamGraphItem(itemName: className, value: turAvg));
+        matGraph.itemList.add(TrialExamGraphItem(itemName: className, value: matAvg));
+        fenGraph.itemList.add(TrialExamGraphItem(itemName: className, value: fenAvg));
+        sosGraph.itemList.add(TrialExamGraphItem(itemName: className, value: sosAvg));
+        ingGraph.itemList.add(TrialExamGraphItem(itemName: className, value: ingAvg));
+        dinGraph.itemList.add(TrialExamGraphItem(itemName: className, value: dinAvg));
+      });
+
+      trialExamGraphList.add(turGraph);
+      trialExamGraphList.add(matGraph);
+      trialExamGraphList.add(fenGraph);
+      trialExamGraphList.add(sosGraph);
+      trialExamGraphList.add(ingGraph);
+      trialExamGraphList.add(dinGraph);
+    }
+  }
 }

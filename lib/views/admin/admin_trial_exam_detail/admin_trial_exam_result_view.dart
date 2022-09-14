@@ -8,6 +8,7 @@ import 'package:rehberlik/common/widgets/button_with_icon.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/views/admin/admin_base/admin_base_views.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
+import 'package:rehberlik/views/admin/admin_trial_exam_detail/components/states/trial_exam_result_default_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/cubit/trial_exam_result_cubit.dart';
 import 'package:syncfusion_flutter_core/localizations.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -15,10 +16,12 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../core/widgets/containers/app_list_box_container.dart';
 import '../../../core/widgets/text/app_box_title.dart';
+import '../../../models/helpers/trial_exam_average.dart';
 import '../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import 'admin_trial_exam_result_imports.dart';
+import 'components/states/trial_exam_result_statics_view.dart';
 
-part 'components/trial_exam_result_data_grid.dart';
+part 'components/states/trial_exam_result_data_grid.dart';
 
 part 'components/trial_exam_result_menu.dart';
 

@@ -7,6 +7,7 @@ import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_view.dart';
 import 'package:rehberlik/views/admin/admin_dashboard/admin_dashboard_view.dart';
 import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_view.dart';
+import 'package:rehberlik/views/admin/admin_messages/admin_message_view.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_view.dart';
 import 'package:rehberlik/views/admin/admin_students/admin_students_view.dart';
 import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_view.dart';
@@ -26,26 +27,13 @@ part 'app_router.gr.dart';
         path: AdminRoutes.routeDashboard,
         transitionsBuilder: TransitionsBuilders.fadeIn,
         initial: true),
+    CustomRoute(page: AdminClassesView, transitionsBuilder: TransitionsBuilders.fadeIn, path: AdminRoutes.routeClasses),
     CustomRoute(
-        page: AdminClassesView,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-        path: AdminRoutes.routeClasses),
+        page: AdminStudentsView, transitionsBuilder: TransitionsBuilders.fadeIn, path: AdminRoutes.routeStudents),
+    CustomRoute(page: AdminLessonsView, transitionsBuilder: TransitionsBuilders.fadeIn, path: AdminRoutes.routeLessons),
     CustomRoute(
-        page: AdminStudentsView,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-        path: AdminRoutes.routeStudents),
-    CustomRoute(
-        page: AdminLessonsView,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-        path: AdminRoutes.routeLessons),
-    CustomRoute(
-        page: AdminTrialExamView,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-        path: AdminRoutes.routeTrialExams),
-    CustomRoute(
-        page: AdminUploadsView,
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-        path: AdminRoutes.routeUploads),
+        page: AdminTrialExamView, transitionsBuilder: TransitionsBuilders.fadeIn, path: AdminRoutes.routeTrialExams),
+    CustomRoute(page: AdminUploadsView, transitionsBuilder: TransitionsBuilders.fadeIn, path: AdminRoutes.routeUploads),
     CustomRoute<Lesson>(
         page: AdminSubjectsView,
         transitionsBuilder: TransitionsBuilders.fadeIn,
@@ -61,6 +49,11 @@ part 'app_router.gr.dart';
         transitionsBuilder: TransitionsBuilders.fadeIn,
         path: AdminRoutes.routeTrialExamResult,
         guards: [ArgumentsGuard]),
+    CustomRoute(
+      page: AdminMessageView,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+      path: AdminRoutes.routeMessages,
+    ),
   ],
 )
 class AppRouter extends _$AppRouter {

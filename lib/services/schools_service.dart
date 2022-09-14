@@ -70,7 +70,8 @@ class SchoolService implements DBBase<School> {
     return list;
   }
 
-  Future<int> getStudentCount({required String schoolID, required int classLevel, Map<String, dynamic>? filters}) async {
+  Future<int> getStudentCount(
+      {required String schoolID, required int classLevel, Map<String, dynamic>? filters}) async {
     var studentTotalCount = 0;
     var classList = await _getClassList(schoolID, classLevel);
     for (var classes in classList) {

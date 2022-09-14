@@ -46,9 +46,7 @@ class RightSideBarChart extends StatelessWidget {
               ),
               BarChartGroupData(
                 x: 3,
-                barRods: [
-                  BarChartRodData(toY: 55, color: Colors.lightBlueAccent)
-                ],
+                barRods: [BarChartRodData(toY: 55, color: Colors.lightBlueAccent)],
               ),
               BarChartGroupData(
                 x: 4,
@@ -66,15 +64,13 @@ class RightSideBarChart extends StatelessWidget {
             titlesData: FlTitlesData(
               show: true,
               leftTitles: AxisTitles(
-                sideTitles: SideTitles(
-                    showTitles: true, interval: 25, reservedSize: 32),
+                sideTitles: SideTitles(showTitles: true, interval: 25, reservedSize: 32),
               ),
               topTitles: AxisTitles(
                 sideTitles: SideTitles(showTitles: false),
               ),
               bottomTitles: AxisTitles(
-                sideTitles:
-                    SideTitles(showTitles: true, getTitlesWidget: getTitles),
+                sideTitles: SideTitles(showTitles: true, getTitlesWidget: getTitles),
               ),
               rightTitles: AxisTitles(
                 sideTitles: SideTitles(showTitles: false),

@@ -5,6 +5,28 @@ class TrialExamResultContainerView extends StatelessWidget {
 
   final ValueNotifier<bool> buttonListener = ValueNotifier(false);
 
+  Widget _loadingState(String message) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(width: defaultPadding, height: defaultPadding, child: DefaultCircularProgress()),
+        const SizedBox(
+          height: defaultPadding,
+        ),
+        Text(message),
+      ],
+    );
+  }
+
+  void _saveData(BuildContext context) async {
+    buttonListener.value = true;
+    final result = await context.read<TrialExamResultCubit>().saveTrialExamResult();
+
+    buttonListener.value = false;
+    CustomDialog.showSnackBar(
+        context: context, message: result.message, type: result.isSuccess ? DialogType.success : DialogType.error);
+  }
+
   @override
   Widget build(BuildContext context) {
     final trialExam = context.read<TrialExamResultCubit>().trialExam;
@@ -19,10 +41,12 @@ class TrialExamResultContainerView extends StatelessWidget {
             } else if (state is TrialExamResultUploadingState) {
               return _loadingState('Dosya yükleniyor... Lütfen bekleyin!');
             } else if (state is TrialExamResultErrorState) {
-              return _defaultState(
-                  context: context, classLevel: trialExam.classLevel!, message: state.message);
+              return TrialExamResultDefaultView(
+                classLevel: trialExam.classLevel!,
+                message: state.message,
+              );
             } else if (state is TrialExamResultListLoadedState) {
-              return _listLoadedState(state);
+              return TrialExamResultDataGrid(trialExamResultList: state.trialExamResultList);
             } else if (state is TrialExamResultUploadedState) {
               return TrialExamResultUploadedView(
                   classLevel: trialExam.classLevel ?? 5,
@@ -31,81 +55,17 @@ class TrialExamResultContainerView extends StatelessWidget {
                   onClick: () {
                     _saveData(context);
                   });
+            } else if (state is TrialExamResultStaticsState) {
+              return const TrialExamResultStaticsView();
             } else {
-              return _defaultState(
-                  context: context,
-                  classLevel: trialExam.classLevel!,
-                  message: 'Sonuç bulunamadı. Yüklemek için tıklayınız.');
+              return TrialExamResultDefaultView(
+                classLevel: trialExam.classLevel!,
+                message: 'Sonuç bulunamadı, yüklemek için tıklayın!',
+              );
             }
           }),
         ],
       ),
     );
-  }
-
-  Widget _loadingState(String message) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(width: defaultPadding, height: defaultPadding, child: const DefaultCircularProgress()),
-        const SizedBox(
-          height: defaultPadding,
-        ),
-        Text(message),
-      ],
-    );
-  }
-
-  Widget _listLoadedState(TrialExamResultListLoadedState state) {
-    return TrialExamResultDataGrid(trialExamResultList: state.trialExamResultList);
-  }
-
-  Widget _defaultState({required BuildContext context, required int classLevel, required String message}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(
-          height: defaultPadding * 3,
-        ),
-        const Center(child: Text("Sonuç bulunamadı. Yüklemek için tıklayınız.")),
-        const SizedBox(
-          height: defaultPadding,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(primary: Colors.amber),
-              onPressed: () {
-                final classCubit = context.read<ClassListCubit>();
-                context
-                    .read<TrialExamResultCubit>()
-                    .selectExcelFile(classCubit: classCubit, classLevel: classLevel);
-              },
-              icon: const Icon(
-                Icons.upload,
-                color: darkBackColor,
-              ),
-              label: const Text(
-                'Sınav Sonuçları Yükle',
-                style: TextStyle(color: darkBackColor),
-              ),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
-  void _saveData(BuildContext context) async {
-    buttonListener.value = true;
-    final result = await context.read<TrialExamResultCubit>().saveTrialExamResult();
-
-    buttonListener.value = false;
-    CustomDialog.showSnackBar(
-        context: context,
-        message: result.message,
-        type: result.isSuccess ? DialogType.success : DialogType.error);
   }
 }

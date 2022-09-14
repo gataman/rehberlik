@@ -53,10 +53,8 @@ class TrialExamResultService implements DBBase<TrialExamResult> {
   }
 
   Future<List<TrialExamResult>?> getAll({Map<String, dynamic>? filters}) async {
-    var colRef = _db
-        .collection(_mainRef)
-        .where('')
-        .withConverter(fromFirestore: TrialExamResult.fromFirestore, toFirestore: (TrialExamResult object, _) => object.toFirestore());
+    var colRef = _db.collection(_mainRef).where('').withConverter(
+        fromFirestore: TrialExamResult.fromFirestore, toFirestore: (TrialExamResult object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
@@ -89,6 +87,22 @@ class TrialExamResultService implements DBBase<TrialExamResult> {
       count++;
     }
 
+    return batch.commit();
+  }
+
+  Future<void> deleteWithParentID({required String parentID}) async {
+    var batch = _db.batch();
+    final colRef = _db.collection(_mainRef).where('examID', isEqualTo: parentID);
+    var count = 1;
+    final docSnap = await colRef.get();
+    for (var doc in docSnap.docs) {
+      batch.delete(doc.reference);
+      if (count % 500 == 0) {
+        await batch.commit();
+        batch.delete(doc.reference);
+      }
+      count++;
+    }
     return batch.commit();
   }
 }

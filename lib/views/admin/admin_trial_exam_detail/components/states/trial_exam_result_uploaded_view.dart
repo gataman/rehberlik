@@ -7,11 +7,7 @@ class TrialExamResultUploadedView extends StatelessWidget {
   final int classLevel;
 
   const TrialExamResultUploadedView(
-      {Key? key,
-      required this.state,
-      required this.buttonListener,
-      required this.onClick,
-      required this.classLevel})
+      {Key? key, required this.state, required this.buttonListener, required this.onClick, required this.classLevel})
       : super(key: key);
 
   @override

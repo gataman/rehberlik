@@ -22,4 +22,7 @@ class TrialExamResultRepository implements TrialExamResultService {
 
   @override
   Future<void> deleteAll({required List<TrialExamResult> list}) => _service.deleteAll(list: list);
+
+  @override
+  Future<void> deleteWithParentID({required String parentID}) => _service.deleteWithParentID(parentID: parentID);
 }

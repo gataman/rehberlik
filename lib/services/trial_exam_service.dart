@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rehberlik/services/trial_exam_result_service.dart';
 
+import '../common/locator.dart';
 import '../models/trial_exam.dart';
 import 'base/db_base.dart';
 
 class TrialExamService implements DBBase<TrialExam> {
   final _db = FirebaseFirestore.instance;
   final _mainRef = "trial_exams";
+  final TrialExamResultService _trialExamResultService = locator<TrialExamResultService>();
 
   @override
   Future<String> add({required TrialExam object}) async {
@@ -53,10 +56,8 @@ class TrialExamService implements DBBase<TrialExam> {
   }
 
   Future<List<TrialExam>?> getAll({Map<String, dynamic>? filters}) async {
-    var colRef = _db
-        .collection(_mainRef)
-        .where('')
-        .withConverter(fromFirestore: TrialExam.fromFirestore, toFirestore: (TrialExam object, _) => object.toFirestore());
+    var colRef = _db.collection(_mainRef).where('').withConverter(
+        fromFirestore: TrialExam.fromFirestore, toFirestore: (TrialExam object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
@@ -69,7 +70,11 @@ class TrialExamService implements DBBase<TrialExam> {
 
   @override
   Future<void> delete({required String objectID}) {
-    return _db.collection(_mainRef).doc(objectID).delete();
+    return _db
+        .collection(_mainRef)
+        .doc(objectID)
+        .delete()
+        .then((value) => _trialExamResultService.deleteWithParentID(parentID: objectID));
   }
 
   Future<void> deleteAll({required List<TrialExam> list}) async {

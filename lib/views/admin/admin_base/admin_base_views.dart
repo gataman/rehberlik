@@ -23,16 +23,6 @@ abstract class AdminBaseViews extends StatelessWidget {
 
   bool get isFullPage => false;
 
-  @override
-  Widget build(BuildContext context) {
-    return providers != null
-        ? MultiBlocProvider(
-            providers: providers!,
-            child: _content(),
-          )
-        : _content();
-  }
-
   Widget _content() {
     return Scaffold(
       appBar: AdminAppBar(),
@@ -87,8 +77,7 @@ abstract class AdminBaseViews extends StatelessWidget {
   }
 
   Widget _getMobileContent(bool isExpanded, BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!isExpanded && !isFullPage) secondView,
@@ -104,12 +93,11 @@ abstract class AdminBaseViews extends StatelessWidget {
           ),
         firstView
       ],
-    ));
+    );
   }
 
   Widget _getMobileDashboardContent(bool isExpanded, BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!isExpanded) firstView,
@@ -124,6 +112,16 @@ abstract class AdminBaseViews extends StatelessWidget {
         ),
         secondView
       ],
-    ));
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return providers != null
+        ? MultiBlocProvider(
+            providers: providers!,
+            child: _content(),
+          )
+        : _content();
   }
 }

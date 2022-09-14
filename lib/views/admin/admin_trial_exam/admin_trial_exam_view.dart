@@ -19,7 +19,6 @@ import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/views/admin/admin_base/admin_base_views.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam/components/trial_exam_form_box/cubit/trial_exam_form_box_cubit.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam/components/trial_exam_list_card/cubit/trial_exam_list_cubit.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_controller.dart';
 import 'package:flutter/material.dart';
 
 part 'components/trial_exam_list_card/trial_exam_list_card.dart';

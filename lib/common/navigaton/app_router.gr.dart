@@ -103,7 +103,16 @@ class _$AppRouter extends RootStackRouter {
           transitionsBuilder: TransitionsBuilders.fadeIn,
           opaque: true,
           barrierDismissible: false);
-    }
+    },
+    //Messages
+    AdminMessageRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+          routeData: routeData,
+          child: const AdminMessageView(),
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          opaque: true,
+          barrierDismissible: false);
+    },
   };
 
   @override
@@ -117,8 +126,12 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(AdminUploadsRoute.name, path: '/admin_uploads'),
         RouteConfig(AdminSubjectsRoute.name, path: '/admin_subject', guards: [argumentsGuard]),
         RouteConfig(AdminStudentDetailRoute.name, path: '/admin_student_detail', guards: [argumentsGuard]),
-        RouteConfig(AdminTrialExamResultRoute.name,
-            path: '/admin_trial_exam_result', guards: [argumentsGuard])
+        RouteConfig(
+          AdminTrialExamResultRoute.name,
+          path: '/admin_trial_exam_result',
+          guards: [argumentsGuard],
+        ),
+        RouteConfig(AdminMessageRoute.name, path: '/admin_messages'),
       ];
 }
 
@@ -186,8 +199,7 @@ class AdminUploadsRoute extends PageRouteInfo<void> {
 /// [AdminSubjectsView]
 class AdminSubjectsRoute extends PageRouteInfo<AdminSubjectsRouteArgs> {
   AdminSubjectsRoute({required Lesson lesson, Key? key})
-      : super(AdminSubjectsRoute.name,
-            path: '/admin_subject', args: AdminSubjectsRouteArgs(lesson: lesson, key: key));
+      : super(AdminSubjectsRoute.name, path: '/admin_subject', args: AdminSubjectsRouteArgs(lesson: lesson, key: key));
 
   static const String name = 'AdminSubjectsRoute';
 }
@@ -233,8 +245,7 @@ class AdminStudentDetailRouteArgs {
 class AdminTrialExamResultRoute extends PageRouteInfo<AdminTrialExamResultRouteArgs> {
   AdminTrialExamResultRoute({required TrialExam trialExam, Key? key})
       : super(AdminTrialExamResultRoute.name,
-            path: '/admin_trial_exam_result',
-            args: AdminTrialExamResultRouteArgs(trialExam: trialExam, key: key));
+            path: '/admin_trial_exam_result', args: AdminTrialExamResultRouteArgs(trialExam: trialExam, key: key));
 
   static const String name = 'AdminTrialExamResultRoute';
 }
@@ -250,4 +261,12 @@ class AdminTrialExamResultRouteArgs {
   String toString() {
     return 'AdminTrialExamResultArgs{trialExam: $trialExam, key: $key}';
   }
+}
+
+/// generated route for
+/// [AdminMessageView]
+class AdminMessageRoute extends PageRouteInfo<void> {
+  const AdminMessageRoute() : super(AdminMessageRoute.name, path: '/admin_messages');
+
+  static const String name = 'AdminMessageRoute';
 }
