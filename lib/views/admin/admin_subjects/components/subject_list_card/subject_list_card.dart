@@ -8,22 +8,16 @@ class SubjectListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SubjectListCubit, SubjectListState>(builder: (cubit, state) {
-      return Container(
-        decoration: defaultBoxDecoration,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: defaultPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (state is SubjectListLoadingState)
-                const SizedBox(height: 250, child: DefaultCircularProgress()),
-              if (state is SubjectListLoadedState) AppBoxTitle(title: lessonName),
-              if (state is SubjectListLoadedState && state.subjectList.isNotEmpty)
-                _getSubjectListBox(state.subjectList),
-              if (state is SubjectListLoadedState && state.subjectList.isEmpty)
-                const AppEmptyWarningText(text: "Bu derse henüz konu eklenmemiş. Lütfen konu ekleyiniz!")
-            ],
-          ),
+      return AppBoxContainer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (state is SubjectListLoadingState) const SizedBox(height: 250, child: DefaultCircularProgress()),
+            if (state is SubjectListLoadedState) AppBoxTitle(isBack: true, title: lessonName),
+            if (state is SubjectListLoadedState && state.subjectList.isNotEmpty) _getSubjectListBox(state.subjectList),
+            if (state is SubjectListLoadedState && state.subjectList.isEmpty)
+              const AppEmptyWarningText(text: "Bu derse henüz konu eklenmemiş. Lütfen konu ekleyiniz!")
+          ],
         ),
       );
     });

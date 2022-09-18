@@ -69,7 +69,7 @@ class TrialExamListCard extends StatelessWidget {
 
   Widget _getTitle(TrialExamListState state) {
     return AppBoxTitle(
-        title: LocaleKeys.trialExams_trialExamListTitle.locale([state.selectedCategory.toString()]));
+        isBack: false, title: LocaleKeys.trialExams_trialExamListTitle.locale([state.selectedCategory.toString()]));
   }
 
   Widget _getTrialExamListView(List<TrialExam> trialExamList) {

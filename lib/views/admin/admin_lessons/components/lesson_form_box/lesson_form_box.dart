@@ -49,34 +49,29 @@ class _LessonFormBoxState extends State<LessonFormBox> {
               _clearForm();
             }
 
-            return Padding(
-              padding: const EdgeInsets.all(defaultPadding),
-              child: Form(
-                key: _formKey,
-                child: SizedBox(
-                  child: Wrap(
-                    spacing: 16,
-                    runSpacing: 16,
-                    direction: Axis.horizontal,
-                    children: [
-                      _title(),
-                      ClassesLevelSelectBox(
-                        valueChanged: (_index) {
-                          context.read<LessonListCubit>().changeCategory(_index + 5);
-                        },
-                        selectedIndex: _selectedIndex,
-                      ),
-                      _lessonNameInput(),
-                      _lessonTimeInput(),
-                      _actionButtons(),
-                    ],
+            return Column(
+              children: [
+                _title(),
+                AppFormBoxElements(formKey: _formKey, children: [
+                  ClassesLevelSelectBox(
+                    valueChanged: (index) {
+                      context.read<LessonListCubit>().changeCategory(index + 5);
+                    },
+                    selectedIndex: _selectedIndex,
                   ),
-                ),
-              ),
+                  _lessonNameInput(),
+                  _lessonTimeInput(),
+                  _actionButtons(),
+                ]),
+              ],
             );
           },
         ));
   }
+
+  /*
+    
+  */
 
   void _clearForm() {
     _tfLessonNameFormController.text = "";
@@ -149,7 +144,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
         ? LocaleKeys.lessons_lessonFormBoxTitleAdd.locale()
         : LocaleKeys.lessons_lessonFormBoxTitleUpdate.locale();
 
-    return AppBoxTitle(
+    return AppMenuTitle(
       title: title,
       color: _lesson == null ? Colors.amber : infoColor,
     );

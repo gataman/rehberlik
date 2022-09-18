@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/core/init/pref_keys.dart';
 import 'package:rehberlik/views/admin/admin_dashboard/components/agenda_box/cubit/agenda_box_cubit.dart';
-import 'package:rehberlik/views/admin/admin_main/admin_main_view.dart';
-
+import 'package:rehberlik/views/app_main/app_main_view.dart';
 import 'common/constants.dart';
 import 'common/locator.dart';
 import 'core/init/locale_manager.dart';
 import 'views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import 'views/admin/admin_lessons/components/lesson_list_card/cubit/lesson_list_cubit.dart';
 import 'views/admin/admin_students/components/student_list_card/cubit/student_list_cubit.dart';
+import 'views/app_main/app_main_view.dart';
 
 void main() async {
   await _init();
@@ -28,29 +28,11 @@ void main() async {
   await SharedPrefs.instance.setString(PrefKeys.schoolID.toString(), 'w7WZvgcVPKVheXnhxMHE');
 
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<LessonListCubit>(
-          create: (_) => LessonListCubit()..fetchLessonList(),
-        ),
-        BlocProvider<ClassListCubit>(
-          create: (_) => ClassListCubit()..fetchClassList(),
-          lazy: false,
-        ),
-        BlocProvider<StudentListCubit>(
-          create: (_) => StudentListCubit(),
-        ),
-        BlocProvider<AgendaBoxCubit>(
-          create: (_) => AgendaBoxCubit()..fetchAllMeetings(),
-          lazy: false,
-        ),
-      ],
-      child: EasyLocalization(
-        path: LANG_PATH,
-        supportedLocales: const [TR_LOCALE],
-        fallbackLocale: TR_LOCALE,
-        child: AdminMainView(),
-      ),
+    EasyLocalization(
+      path: LANG_PATH,
+      supportedLocales: const [TR_LOCALE],
+      fallbackLocale: TR_LOCALE,
+      child: AppMainView(),
     ),
   );
 }
@@ -69,7 +51,7 @@ Future<void> setupFirebaseOptions() async {
         //web options
         options: const FirebaseOptions(
             apiKey: "AIzaSyBXzMyeobl0HH0qD36Kk6JgoY162U8LJlo",
-            authDomain: "rehberlik-810e1.firebaseapp.com",
+            authDomain: "rehberlik-810e1.web.app",
             projectId: "rehberlik-810e1",
             storageBucket: "rehberlik-810e1.appspot.com",
             messagingSenderId: "628522179079",

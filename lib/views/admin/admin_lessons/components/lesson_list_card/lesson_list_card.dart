@@ -6,6 +6,7 @@ class LessonListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(context.router.currentPath);
     return Container(
         decoration: defaultBoxDecoration,
         child: ConstrainedBox(
@@ -36,6 +37,7 @@ class LessonListCard extends StatelessWidget {
 
   Widget _getTitle(LessonListState state) {
     return AppBoxTitle(
+      isBack: false,
       title: LocaleKeys.lessons_lessonListTitle.locale([state.selectedCategory.toString()]),
     );
   }

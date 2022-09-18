@@ -48,30 +48,20 @@ class _ClassFormBoxState extends State<ClassFormBox> {
             _tfClassNameFormController.text = "";
           }
 
-          return Padding(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: Form(
-              key: _formKey,
-              child: SizedBox(
-                child: Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  direction: Axis.horizontal,
-                  children: [
-                    _title(),
-                    //const ClassesCategorySelectBox(),
-                    ClassesLevelSelectBox(
-                      valueChanged: (index) {
-                        _selectedIndex = index;
-                      },
-                      selectedIndex: _selectedIndex,
-                    ),
-                    _classNameInput(),
-                    _actionButtons(),
-                  ],
+          return Column(
+            children: [
+              _title(),
+              AppFormBoxElements(formKey: _formKey, children: [
+                ClassesLevelSelectBox(
+                  valueChanged: (index) {
+                    _selectedIndex = index;
+                  },
+                  selectedIndex: _selectedIndex,
                 ),
-              ),
-            ),
+                _classNameInput(),
+                _actionButtons(),
+              ]),
+            ],
           );
         },
       ),
@@ -130,7 +120,7 @@ class _ClassFormBoxState extends State<ClassFormBox> {
         ? LocaleKeys.classes_classFormBoxTitleAdd.locale()
         : LocaleKeys.classes_classFormBoxTitleUpdate.locale();
 
-    return AppBoxTitle(
+    return AppMenuTitle(
       title: title,
       color: _classes == null ? Colors.amber : infoColor,
     );
@@ -143,8 +133,8 @@ class _ClassFormBoxState extends State<ClassFormBox> {
       buttonListener.value = true;
       final schoolID = SharedPrefs.instance.getString(PrefKeys.schoolID.toString()); //_box.read("schoolID");
 
-      final Classes classes = Classes(
-          schoolID: schoolID, className: _tfClassNameFormController.text, classLevel: _selectedIndex + 5);
+      final Classes classes =
+          Classes(schoolID: schoolID, className: _tfClassNameFormController.text, classLevel: _selectedIndex + 5);
 
       cubit.addClass(classes).then((value) {
         buttonListener.value = false;
@@ -170,8 +160,7 @@ class _ClassFormBoxState extends State<ClassFormBox> {
     if (!buttonListener.value && _checkFormElement()) {
       buttonListener.value = true;
       if (classes != null) {
-        if (classes.className == _tfClassNameFormController.text &&
-            classes.classLevel == _selectedIndex + 5) {
+        if (classes.className == _tfClassNameFormController.text && classes.classLevel == _selectedIndex + 5) {
           CustomDialog.showSnackBar(
             message: LocaleKeys.alerts_noChange.locale(),
             context: context,

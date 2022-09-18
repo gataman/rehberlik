@@ -14,9 +14,8 @@ class StudentListBox extends StatelessWidget {
         final classesList = classListState.studentWithClassList;
         return BlocBuilder<StudentListCubit, StudentListState>(builder: (context, state) {
           final selectedIndex = state is SelectedIndexState ? state.selectedIndex : 0;
-          final String className = classesList != null && classesList.isNotEmpty
-              ? classesList[selectedIndex].classes.className ?? ''
-              : '';
+          final String className =
+              classesList != null && classesList.isNotEmpty ? classesList[selectedIndex].classes.className ?? '' : '';
 
           final List<Student>? studentList =
               classesList != null && classesList.isNotEmpty ? classesList[selectedIndex].studentList : null;
@@ -40,6 +39,7 @@ class StudentListBox extends StatelessWidget {
 
   Widget _getTitle(String className) {
     return AppBoxTitle(
+      isBack: false,
       title: LocaleKeys.students_className.locale([className]),
     );
   }

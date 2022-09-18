@@ -34,7 +34,7 @@ class TrialExamResultContainerView extends StatelessWidget {
     return AppBoxContainer(
       child: Column(
         children: [
-          AppBoxTitle(title: trialExam!.examName ?? ''),
+          AppBoxTitle(isBack: true, title: trialExam!.examName ?? ''),
           BlocBuilder<TrialExamResultCubit, TrialExamResultState>(builder: (context, state) {
             if (state is TrialExamResultListLoadingState) {
               return _loadingState('Sonuçlar kontrol ediliyor... Lütfen bekleyin!');

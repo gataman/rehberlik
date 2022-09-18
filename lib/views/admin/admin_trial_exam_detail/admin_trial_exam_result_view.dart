@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
 import 'package:rehberlik/common/widgets/button_with_icon.dart';
 import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/views/admin/admin_base/admin_base_views.dart';
+import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/components/states/trial_exam_result_default_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/cubit/trial_exam_result_cubit.dart';
@@ -29,7 +29,7 @@ part 'components/trial_exam_result_container_view.dart';
 
 part 'components/states/trial_exam_result_uploaded_view.dart';
 
-class AdminTrialExamResultView extends AdminBaseViews {
+class AdminTrialExamResultView extends AdminBaseView {
   final TrialExam trialExam;
 
   const AdminTrialExamResultView({required this.trialExam, Key? key}) : super(key: key);

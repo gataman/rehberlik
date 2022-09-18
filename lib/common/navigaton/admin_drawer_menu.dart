@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'admin_drawer_list_tile.dart';
 import 'admin_drawer_model.dart';
+import 'app_router/app_router.dart';
 
 class AdminDrawerMenu extends StatelessWidget {
   const AdminDrawerMenu({Key? key}) : super(key: key);
@@ -22,8 +25,9 @@ class AdminDrawerMenu extends StatelessWidget {
                 AdminDrawerListTile(
                   title: listItem.title,
                   iconSrc: listItem.iconSrc,
-                  tileColor: context.router.current.path == listItem.route ? Colors.white12 : null,
+                  tileColor: context.router.currentPath == '/admin/${listItem.route}' ? Colors.white12 : null,
                   onPress: () {
+                    Navigator.pop(context);
                     context.router.replaceNamed(listItem.route);
                   },
                 ),

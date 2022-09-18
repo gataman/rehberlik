@@ -49,30 +49,21 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
           _resetForm();
         }
 
-        return Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Form(
-            key: _formKey,
-            child: SizedBox(
-              child: Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                direction: Axis.horizontal,
-                children: [
-                  _title(),
-                  ClassesLevelSelectBox(
-                    valueChanged: (index) {
-                      context.read<TrialExamListCubit>().changeCategory(index + 5);
-                    },
-                    selectedIndex: _selectedIndex,
-                  ),
-                  _trialExamNameInput(),
-                  _trialExamCodeInput(),
-                  _actionButtons(),
-                ],
+        return Column(
+          children: [
+            _title(),
+            AppFormBoxElements(formKey: _formKey, children: [
+              ClassesLevelSelectBox(
+                valueChanged: (index) {
+                  context.read<TrialExamListCubit>().changeCategory(index + 5);
+                },
+                selectedIndex: _selectedIndex,
               ),
-            ),
-          ),
+              _trialExamNameInput(),
+              _trialExamCodeInput(),
+              _actionButtons(),
+            ]),
+          ],
         );
       }),
     );
@@ -149,7 +140,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
     String title = _trialExam == null
         ? LocaleKeys.trialExams_trialExamFormBoxTitleAdd.locale()
         : LocaleKeys.trialExams_trialExamtFormBoxTitleUpdate.locale();
-    return AppBoxTitle(
+    return AppMenuTitle(
       title: title,
       color: _trialExam == null ? Colors.amber : infoColor,
     );

@@ -34,38 +34,30 @@ class _SubjectAddFormBoxState extends State<SubjectAddFormBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-            color: darkSecondaryColor,
-            border: Border.all(color: Colors.white10),
-            borderRadius: const BorderRadius.all(Radius.circular(10))),
-        child: BlocBuilder<EditSubjectCubit, EditSubjectState>(builder: (context, state) {
-          _subject = (state as EditSubjectInitial).editSubject;
-          if (_subject != null) {
-            _subjectNameFocusNode.requestFocus();
-            _tfSubjectNameFormController.text = _subject!.subject!;
-          } else {
-            _tfSubjectNameFormController.text = "";
-          }
+      decoration: BoxDecoration(
+          color: darkSecondaryColor,
+          border: Border.all(color: Colors.white10),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      child: BlocBuilder<EditSubjectCubit, EditSubjectState>(builder: (context, state) {
+        _subject = (state as EditSubjectInitial).editSubject;
+        if (_subject != null) {
+          _subjectNameFocusNode.requestFocus();
+          _tfSubjectNameFormController.text = _subject!.subject!;
+        } else {
+          _tfSubjectNameFormController.text = "";
+        }
 
-          return Padding(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: Form(
-              key: _formKey,
-              child: SizedBox(
-                child: Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  direction: Axis.horizontal,
-                  children: [
-                    _title(),
-                    _subjectNameInput(),
-                    _actionButtons(),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }));
+        return Column(
+          children: [
+            _title(),
+            AppFormBoxElements(formKey: _formKey, children: [
+              _subjectNameInput(),
+              _actionButtons(),
+            ]),
+          ],
+        );
+      }),
+    );
   }
 
   Widget _actionButtons() {
@@ -120,7 +112,7 @@ class _SubjectAddFormBoxState extends State<SubjectAddFormBox> {
     String title = _subject == null
         ? LocaleKeys.subjects_subjectFormBoxTitleAdd.locale()
         : LocaleKeys.subjects_subjectFormBoxTitleUpdate.locale();
-    return AppBoxTitle(
+    return AppMenuTitle(
       title: title,
       color: _subject == null ? Colors.amber : infoColor,
     );

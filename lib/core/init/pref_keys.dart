@@ -1,1 +1,1 @@
-enum PrefKeys { schoolID }
+enum PrefKeys { schoolID, userID }

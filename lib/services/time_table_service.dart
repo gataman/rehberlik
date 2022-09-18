@@ -5,7 +5,7 @@ import 'base/db_base.dart';
 
 class TimeTableService implements DBBase<TimeTable> {
   final _db = FirebaseFirestore.instance;
-  final _mainRef = "time_tables";
+  final _mainRef = 'time_table';
 
   @override
   Future<String> add({required TimeTable object}) async {
@@ -25,6 +25,9 @@ class TimeTableService implements DBBase<TimeTable> {
     final ref = _db.collection(_mainRef).doc(object.id);
     return ref.update(object.toFirestore());
   }
+
+  @override
+  Future<void> delete({required String objectID}) => _db.collection(_mainRef).doc(objectID).delete();
 
   @override
   Future<void> addAll({required List<TimeTable> list}) async {
@@ -48,15 +51,12 @@ class TimeTableService implements DBBase<TimeTable> {
 
       count++;
     }
-
     return batch.commit();
   }
 
   Future<List<TimeTable>?> getAll({Map<String, dynamic>? filters}) async {
-    var colRef = _db
-        .collection(_mainRef)
-        .where('')
-        .withConverter(fromFirestore: TimeTable.fromFirestore, toFirestore: (TimeTable object, _) => object.toFirestore());
+    var colRef = _db.collection(_mainRef).where('').withConverter(
+        fromFirestore: TimeTable.fromFirestore, toFirestore: (TimeTable object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
@@ -65,11 +65,6 @@ class TimeTableService implements DBBase<TimeTable> {
     final docSnap = await colRef.get();
     final list = docSnap.docs.map((e) => e.data()).toList();
     return list;
-  }
-
-  @override
-  Future<void> delete({required String objectID}) {
-    return _db.collection(_mainRef).doc(objectID).delete();
   }
 
   Future<void> deleteAll({required List<TimeTable> list}) async {
@@ -87,7 +82,6 @@ class TimeTableService implements DBBase<TimeTable> {
 
       count++;
     }
-
     return batch.commit();
   }
 }

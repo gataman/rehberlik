@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 
-import '../admin_routes.dart';
+import '../app_routes.dart';
 
 class ArgumentsGuard extends AutoRouteGuard {
   @override
@@ -8,18 +8,18 @@ class ArgumentsGuard extends AutoRouteGuard {
     if (resolver.route.args != null) {
       resolver.next(true);
     } else {
-      var refreshRoute = AdminRoutes.routeDashboard;
+      var refreshRoute = AppRoutes.routeAdminDashboard;
       switch (resolver.route.path) {
-        case AdminRoutes.routeStudentDetail:
-          refreshRoute = AdminRoutes.routeStudents;
+        case AppRoutes.routeAdminStudentDetail:
+          refreshRoute = AppRoutes.routeAdminStudents;
           break;
 
-        case AdminRoutes.routeSubjects:
-          refreshRoute = AdminRoutes.routeLessons;
+        case AppRoutes.routeAdminSubjects:
+          refreshRoute = AppRoutes.routeAdminLessons;
           break;
 
-        case AdminRoutes.routeTrialExamResult:
-          refreshRoute = AdminRoutes.routeTrialExams;
+        case AppRoutes.routeAdminTrialExamResult:
+          refreshRoute = AppRoutes.routeAdminTrialExams;
           break;
       }
 

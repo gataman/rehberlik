@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../navigaton/admin_routes.dart';
+import '../navigaton/app_router/app_routes.dart';
 import 'profile_card.dart';
 
 class AdminAppBar extends AppBar {
@@ -20,8 +20,8 @@ class _AdminAppBarTitle extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              if (context.router.currentPath != AdminRoutes.routeDashboard) {
-                context.router.replaceNamed(AdminRoutes.routeDashboard);
+              if (context.router.currentPath != AppRoutes.routeAdminDashboard) {
+                context.router.replaceNamed(AppRoutes.routeAdminDashboard);
               }
             },
             child: Column(

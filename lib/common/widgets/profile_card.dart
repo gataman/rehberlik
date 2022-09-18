@@ -1,5 +1,10 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
+import 'package:rehberlik/core/init/pref_keys.dart';
 
+import '../../core/init/locale_manager.dart';
 import '../../responsive.dart';
 import '../constants.dart';
 
@@ -40,9 +45,19 @@ class ProfileCard extends StatelessWidget {
                 style: TextStyle(fontSize: 14),
               ),
             ),
-          const Icon(Icons.keyboard_arrow_down),
+          InkWell(
+              onTap: () async {
+                _signOut(context);
+              },
+              child: const Icon(Icons.keyboard_arrow_down)),
         ],
       ),
     );
+  }
+
+  void _signOut(BuildContext context) async {
+    await SharedPrefs.instance.remove(PrefKeys.userID.toString());
+    await FirebaseAuth.instance.signOut();
+    context.router.replaceNamed(AppRoutes.routeMainAuth);
   }
 }

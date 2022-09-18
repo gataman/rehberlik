@@ -1,4 +1,4 @@
-import 'admin_routes.dart';
+import 'app_router/app_routes.dart';
 
 class AdminDrawerModel {
   String title;
@@ -10,13 +10,13 @@ class AdminDrawerModel {
   }
 
   static final getAdminDrawerList = [
-    AdminDrawerModel(title: "Ana Sayfa", iconSrc: 'menu_dashboard.svg', route: AdminRoutes.routeDashboard),
-    AdminDrawerModel(title: "Sınıflar", iconSrc: 'menu_classroom.svg', route: AdminRoutes.routeClasses),
-    AdminDrawerModel(title: "Öğrenciler", iconSrc: 'menu_classroom.svg', route: AdminRoutes.routeStudents),
-    AdminDrawerModel(title: "Dersler", iconSrc: 'menu_lesson.svg', route: AdminRoutes.routeLessons),
-    AdminDrawerModel(title: "Denemeler", iconSrc: 'menu_meeting.svg', route: AdminRoutes.routeTrialExams),
-    AdminDrawerModel(title: "Randevular", iconSrc: 'menu_meeting.svg', route: AdminRoutes.routeTrialExams),
-    AdminDrawerModel(title: "Mesajlar", iconSrc: 'menu_mail.svg', route: AdminRoutes.routeMessages),
-    AdminDrawerModel(title: "Yüklemeler", iconSrc: 'menu_mail.svg', route: AdminRoutes.routeUploads),
+    AdminDrawerModel(title: "Ana Sayfa", iconSrc: 'menu_dashboard.svg', route: AppRoutes.routeAdminDashboard),
+    AdminDrawerModel(title: "Sınıflar", iconSrc: 'menu_classroom.svg', route: AppRoutes.routeAdminClasses),
+    AdminDrawerModel(title: "Öğrenciler", iconSrc: 'menu_classroom.svg', route: AppRoutes.routeAdminStudents),
+    AdminDrawerModel(title: "Dersler", iconSrc: 'menu_lesson.svg', route: AppRoutes.routeAdminLessons),
+    AdminDrawerModel(title: "Denemeler", iconSrc: 'menu_meeting.svg', route: AppRoutes.routeAdminTrialExams),
+    AdminDrawerModel(title: "Randevular", iconSrc: 'menu_meeting.svg', route: AppRoutes.routeAdminTrialExams),
+    AdminDrawerModel(title: "Mesajlar", iconSrc: 'menu_mail.svg', route: AppRoutes.routeAdminMessages),
+    AdminDrawerModel(title: "Yüklemeler", iconSrc: 'menu_mail.svg', route: AppRoutes.routeAdminUploads),
   ];
 }

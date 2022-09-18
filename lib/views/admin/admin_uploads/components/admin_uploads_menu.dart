@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/widgets/button_with_icon.dart';
 import 'package:rehberlik/core/widgets/containers/app_list_box_container.dart';
-import 'package:rehberlik/core/widgets/text/app_box_title.dart';
+import 'package:rehberlik/core/widgets/text/app_menu_title.dart';
 import 'package:rehberlik/views/admin/admin_uploads/components/cubit/admin_uploads_cubit.dart';
 import 'package:rehberlik/views/admin/admin_uploads/components/cubit/uploads_type.dart';
 
@@ -18,7 +18,7 @@ class AdminUploadsMenu extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding),
       child: Column(
         children: [
-          const AppBoxTitle(title: "İşlemler"),
+          const AppMenuTitle(title: "İşlemler"),
           ButtonWithIcon(
             labelText: "E-Okul Excel'den Yükle",
             icon: Icons.upload_file,

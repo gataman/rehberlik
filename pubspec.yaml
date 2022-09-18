@@ -57,10 +57,12 @@ dependencies:
   auto_size_text: ^3.0.0
   shared_preferences: ^2.0.15
   auto_route: ^5.0.1
-  excel: ^2.0.0-null-safety-3
+  #excel: ^2.0.0-null-safety-3
   animated_text_kit: ^4.2.2
   syncfusion_flutter_core: ^20.2.48
   syncfusion_localizations: ^20.2.48
+  meta: ^1.8.0
+  firebase_auth: ^3.9.0
 
 
   ##excel_to_json: ^0.0.2-dev.1
@@ -70,8 +72,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #auto_route_generator: ^5.0.2
-  #build_runner: ^2.2.0
+  auto_route_generator: ^5.0.2
+  build_runner: ^2.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

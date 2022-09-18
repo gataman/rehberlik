@@ -9,8 +9,9 @@ enum DialogType { success, warning, error }
 
 class CustomDialog {
   static void showSnackBar(
-      {required BuildContext context, required String message, required DialogType type}) {
+      {required BuildContext context, required String message, required DialogType type, Duration? duration}) {
     final snackBar = SnackBar(
+      duration: duration ?? const Duration(seconds: 3),
       backgroundColor: type == DialogType.success
           ? Colors.green
           : type == DialogType.warning
@@ -55,11 +56,9 @@ class CustomDialog {
               actionsPadding: const EdgeInsets.all(defaultPadding),
               elevation: 10,
               shape: const RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white10),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              title: Center(
-                  child:
-                      Text(LocaleKeys.actions_warning.locale(), style: const TextStyle(color: titleColor))),
+                  side: BorderSide(color: Colors.white10), borderRadius: BorderRadius.all(Radius.circular(10))),
+              title:
+                  Center(child: Text(LocaleKeys.actions_warning.locale(), style: const TextStyle(color: titleColor))),
               backgroundColor: darkSecondaryColor,
               content: Text(
                 message,

@@ -15,6 +15,9 @@ class StudentFormBox extends StatelessWidget {
               return Column(
                 children: [
                   _title(),
+                  const SizedBox(
+                    height: defaultPadding,
+                  ),
                   _getDropDownMenu(classesList),
                 ],
               );
@@ -26,7 +29,7 @@ class StudentFormBox extends StatelessWidget {
   }
 
   Widget _title() {
-    return AppBoxTitle(
+    return AppMenuTitle(
       title: LocaleKeys.students_classSelectTitle.locale(),
     );
   }

@@ -2,7 +2,8 @@ library admin_dashboard_view;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/widgets/default_circular_progress.dart';
-import 'package:rehberlik/views/admin/admin_base/admin_base_views.dart';
+import 'package:rehberlik/core/widgets/text/app_menu_title.dart';
+import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import 'package:rehberlik/views/admin/admin_dashboard/components/agenda_box/agenda_meeting_detail_dialog.dart';
 import 'package:rehberlik/views/admin/admin_dashboard/components/agenda_box/cubit/agenda_box_cubit.dart';
@@ -24,7 +25,7 @@ part 'components/right_menu/right_side.dart';
 part 'components/right_menu/right_side_bar_chart.dart';
 part 'components/right_menu/trial_exams_list.dart';
 
-class AdminDashboardView extends AdminBaseViews {
+class AdminDashboardView extends AdminBaseView {
   AdminDashboardView({Key? key}) : super(key: key);
 
   final denemeList = <String>["Hız Yayınları 1", "Özdebir 1", "Startfen", "Özdebir 2"];

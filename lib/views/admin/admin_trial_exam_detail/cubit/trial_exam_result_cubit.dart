@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:excel/excel.dart';
+//import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,6 +61,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
   }
 
   void selectExcelFile({required ClassListCubit classCubit, required int classLevel}) async {
+    /*
     final schoolStatsList = classCubit.schoolStatsList;
     final studentList = schoolStatsList.findOrNull((element) => element.classLevel == classLevel)?.studentList;
     if (studentList != null && studentList.isNotEmpty) {
@@ -92,7 +93,10 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
     } else {
       emit(TrialExamResultErrorState(message: 'Öğrenci listesi boş! Lütfen önce öğrenci ekleyin.'));
     }
+    */
   }
+
+  /*
 
   void _decodeExcelFile(Uint8List bytes, List<Student> studentList) {
     //final decoder = SpreadsheetDecoder.decodeBytes(bytes, update: false);
@@ -198,7 +202,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
   }
 
   bool _checkIntData(List<Data?> row, int i) => row[i] != null && row[i]!.value != null && row[i]!.value is int;
-
+*/
   void showTrialExamStatics() {
     emit(TrialExamResultStaticsState());
   }

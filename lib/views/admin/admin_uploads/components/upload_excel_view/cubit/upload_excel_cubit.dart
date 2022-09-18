@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:excel/excel.dart';
+//import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,6 +56,7 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
 
   // Excel Parse Methods
   Future<void> selectExcelFile({required bool isEokul}) async {
+    /*
     _refreshList(isLoading: true);
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -88,8 +89,10 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
         }
       }
     }
+    */
   }
 
+/*
   Future<Map<String, List<Student>>?> _decodeEokulFullExcelFile(Uint8List bytes) async {
     //final decoder = SpreadsheetDecoder.decodeBytes(bytes, update: false);
     var decoder = Excel.decodeBytes(bytes);
@@ -192,6 +195,7 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
     return sortedList;
   }
 
+*/
   String fixItClassName(String? className) {
     if (className != null) {
       const first = ". Sınıf / ";

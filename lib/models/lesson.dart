@@ -8,11 +8,7 @@ class Lesson {
   String? schoolID;
 
   Lesson(
-      {this.id,
-      required this.classLevel,
-      required this.lessonName,
-      required this.lessonTime,
-      required this.schoolID});
+      {this.id, required this.classLevel, required this.lessonName, required this.lessonTime, required this.schoolID});
 
   factory Lesson.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,

@@ -22,10 +22,7 @@ class RightSide extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text(
-            "Deneme Sınavları",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-          ),
+          const AppMenuTitle(title: 'Deneme Sınavları'),
           const SizedBox(
             height: defaultPadding,
           ),

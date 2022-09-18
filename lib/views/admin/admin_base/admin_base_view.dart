@@ -8,8 +8,8 @@ import '../../../common/widgets/expand_button.dart';
 import '../../../responsive.dart';
 import 'cubit/admin_base_cubit.dart';
 
-abstract class AdminBaseViews extends StatelessWidget {
-  const AdminBaseViews({Key? key}) : super(key: key);
+abstract class AdminBaseView extends StatelessWidget {
+  const AdminBaseView({Key? key}) : super(key: key);
 
   Widget get firstView;
 
@@ -24,23 +24,19 @@ abstract class AdminBaseViews extends StatelessWidget {
   bool get isFullPage => false;
 
   Widget _content() {
-    return Scaffold(
-      appBar: AdminAppBar(),
-      drawer: !isBack ? const AdminDrawerMenu() : null,
-      body: Padding(
-        padding: const EdgeInsets.all(defaultPadding),
-        child: SingleChildScrollView(
-          child: BlocProvider(
-            create: (context) => AdminBaseCubit(),
-            child: BlocBuilder<AdminBaseCubit, AdminBaseState>(builder: (context, state) {
-              bool isExpanded = (state as AdminBaseExpandedState).isExpanded;
-              return Responsive(
-                  mobile: isDashboard
-                      ? _getMobileDashboardContent(isExpanded, context)
-                      : _getMobileContent(isExpanded, context),
-                  desktop: _getDesktopContent(isExpanded, context));
-            }),
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(defaultPadding),
+      child: SingleChildScrollView(
+        child: BlocProvider(
+          create: (context) => AdminBaseCubit(),
+          child: BlocBuilder<AdminBaseCubit, AdminBaseState>(builder: (context, state) {
+            bool isExpanded = (state as AdminBaseExpandedState).isExpanded;
+            return Responsive(
+                mobile: isDashboard
+                    ? _getMobileDashboardContent(isExpanded, context)
+                    : _getMobileContent(isExpanded, context),
+                desktop: _getDesktopContent(isExpanded, context));
+          }),
         ),
       ),
     );

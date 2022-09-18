@@ -25,6 +25,7 @@ class ClassListCard extends StatelessWidget {
 
   Widget _getTitle(ClassListState state) {
     return AppBoxTitle(
+      isBack: false,
       title: LocaleKeys.classes_classListBoxTitle.locale(),
     );
   }
@@ -83,6 +84,6 @@ class ClassListCard extends StatelessWidget {
   void _showClassDetail({required BuildContext context, required int index}) {
     //selectedIndex.value = index;
     context.read<StudentListCubit>().selectIndex(selectedIndex: index);
-    context.router.replaceNamed(AdminRoutes.routeStudents);
+    context.router.replaceNamed(AppRoutes.routeAdminStudents);
   }
 }

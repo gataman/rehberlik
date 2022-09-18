@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:rehberlik/repository/auth_repository.dart';
+import 'package:rehberlik/services/auth_service.dart';
 
 import '../repository/classes_repository.dart';
 import '../repository/lesson_repository.dart';
@@ -63,4 +65,8 @@ void setupLocator() {
   //StudyProgram:
   locator.registerLazySingleton(() => StudyProgramService());
   locator.registerLazySingleton(() => StudyProgramRepository());
+
+  //AuthServie
+  locator.registerLazySingleton(() => AuthService());
+  locator.registerLazySingleton(() => AuthRepository());
 }
