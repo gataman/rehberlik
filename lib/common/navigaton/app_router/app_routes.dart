@@ -19,4 +19,8 @@ abstract class AppRoutes {
   static const String routeAdminTrialExams = "trial_exams";
   static const String routeAdminTrialExamResult = "trial_exam_result";
   static const String routeAdminTrialExamExcelImport = "trial_exam_result_exam_import";
+  static const String routeAdminStudentsPassword = "students_password";
+
+  //* Student Routes
+  static const String routeStudentDashboard = "dashboard";
 }

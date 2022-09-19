@@ -15,11 +15,14 @@ part of 'app_router.dart';
 class _$AppRouter extends RootStackRouter {
   _$AppRouter({
     GlobalKey<NavigatorState>? navigatorKey,
-    required this.authGuard,
+    required this.teacherAuthGuard,
+    required this.studentAuthGuard,
     required this.argumentsGuard,
   }) : super(navigatorKey);
 
-  final AuthGuard authGuard;
+  final TeacherAuthGuard teacherAuthGuard;
+
+  final StudentAuthGuard studentAuthGuard;
 
   final ArgumentsGuard argumentsGuard;
 
@@ -34,10 +37,28 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    StudentMainRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const StudentMainView()),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     AdminMainRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const AdminMainView()),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    StudentDashboardRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const StudentDashboardView(),
         transitionsBuilder: TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -147,6 +168,15 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    AdminStudentsPasswordRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const AdminStudentsPasswordView(),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
   };
 
   @override
@@ -160,12 +190,32 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           AuthRoute.name,
           path: '/auth',
-          guards: [authGuard],
+          guards: [teacherAuthGuard],
+        ),
+        RouteConfig(
+          StudentMainRoute.name,
+          path: '/student',
+          guards: [studentAuthGuard],
+          children: [
+            RouteConfig(
+              '#redirect',
+              path: '',
+              parent: StudentMainRoute.name,
+              redirectTo: 'dashboard',
+              fullMatch: true,
+            ),
+            RouteConfig(
+              StudentDashboardRoute.name,
+              path: 'dashboard',
+              parent: StudentMainRoute.name,
+              guards: [studentAuthGuard],
+            ),
+          ],
         ),
         RouteConfig(
           AdminMainRoute.name,
           path: '/admin',
-          guards: [authGuard],
+          guards: [teacherAuthGuard],
           children: [
             RouteConfig(
               '#redirect',
@@ -178,37 +228,37 @@ class _$AppRouter extends RootStackRouter {
               AdminDashboardRoute.name,
               path: 'dashboard',
               parent: AdminMainRoute.name,
-              guards: [authGuard],
+              guards: [teacherAuthGuard],
             ),
             RouteConfig(
               AdminClassesRoute.name,
               path: 'classes',
               parent: AdminMainRoute.name,
-              guards: [authGuard],
+              guards: [teacherAuthGuard],
             ),
             RouteConfig(
               AdminStudentsRoute.name,
               path: 'students',
               parent: AdminMainRoute.name,
-              guards: [authGuard],
+              guards: [teacherAuthGuard],
             ),
             RouteConfig(
               AdminLessonsRoute.name,
               path: 'lessons',
               parent: AdminMainRoute.name,
-              guards: [authGuard],
+              guards: [teacherAuthGuard],
             ),
             RouteConfig(
               AdminTrialExamRoute.name,
               path: 'trial_exams',
               parent: AdminMainRoute.name,
-              guards: [authGuard],
+              guards: [teacherAuthGuard],
             ),
             RouteConfig(
               AdminUploadsRoute.name,
               path: 'uploads',
               parent: AdminMainRoute.name,
-              guards: [authGuard],
+              guards: [teacherAuthGuard],
             ),
             RouteConfig(
               AdminSubjectsRoute.name,
@@ -216,7 +266,7 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [
                 argumentsGuard,
-                authGuard,
+                teacherAuthGuard,
               ],
             ),
             RouteConfig(
@@ -225,7 +275,7 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [
                 argumentsGuard,
-                authGuard,
+                teacherAuthGuard,
               ],
             ),
             RouteConfig(
@@ -234,14 +284,20 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [
                 argumentsGuard,
-                authGuard,
+                teacherAuthGuard,
               ],
             ),
             RouteConfig(
               AdminMessageRoute.name,
               path: 'messages',
               parent: AdminMainRoute.name,
-              guards: [authGuard],
+              guards: [teacherAuthGuard],
+            ),
+            RouteConfig(
+              AdminStudentsPasswordRoute.name,
+              path: 'students_password',
+              parent: AdminMainRoute.name,
+              guards: [teacherAuthGuard],
             ),
           ],
         ),
@@ -261,6 +317,19 @@ class AuthRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [StudentMainView]
+class StudentMainRoute extends PageRouteInfo<void> {
+  const StudentMainRoute({List<PageRouteInfo>? children})
+      : super(
+          StudentMainRoute.name,
+          path: '/student',
+          initialChildren: children,
+        );
+
+  static const String name = 'StudentMainRoute';
+}
+
+/// generated route for
 /// [AdminMainView]
 class AdminMainRoute extends PageRouteInfo<void> {
   const AdminMainRoute({List<PageRouteInfo>? children})
@@ -271,6 +340,18 @@ class AdminMainRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AdminMainRoute';
+}
+
+/// generated route for
+/// [StudentDashboardView]
+class StudentDashboardRoute extends PageRouteInfo<void> {
+  const StudentDashboardRoute()
+      : super(
+          StudentDashboardRoute.name,
+          path: 'dashboard',
+        );
+
+  static const String name = 'StudentDashboardRoute';
 }
 
 /// generated route for
@@ -471,4 +552,16 @@ class AdminMessageRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AdminMessageRoute';
+}
+
+/// generated route for
+/// [AdminStudentsPasswordView]
+class AdminStudentsPasswordRoute extends PageRouteInfo<void> {
+  const AdminStudentsPasswordRoute()
+      : super(
+          AdminStudentsPasswordRoute.name,
+          path: 'students_password',
+        );
+
+  static const String name = 'AdminStudentsPasswordRoute';
 }

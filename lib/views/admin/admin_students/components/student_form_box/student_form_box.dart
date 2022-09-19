@@ -1,7 +1,24 @@
-part of admin_students_view;
+import 'dart:js';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/core/init/extentions.dart';
+import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_imports.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/widgets/default_circular_progress.dart';
+import '../../../../../core/init/locale_keys.g.dart';
+import '../../../../../core/widgets/text/app_empty_warning_text.dart';
+import '../../../../../core/widgets/text/app_menu_title.dart';
+import '../../../../../models/student_with_class.dart';
+import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import '../student_list_card/cubit/student_list_cubit.dart';
 
 class StudentFormBox extends StatelessWidget {
-  const StudentFormBox({Key? key}) : super(key: key);
+  final bool hasPasswordMenu;
+
+  StudentFormBox({Key? key, required this.hasPasswordMenu}) : super(key: key);
+  final ValueNotifier<bool> buttonListener = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +36,19 @@ class StudentFormBox extends StatelessWidget {
                     height: defaultPadding,
                   ),
                   _getDropDownMenu(classesList),
+                  if (hasPasswordMenu)
+                    const SizedBox(
+                      height: defaultPadding,
+                    ),
+                  if (hasPasswordMenu)
+                    LoadingButton(
+                      text: 'Tüm Sınıflara Şifre Oluştur',
+                      loadingListener: buttonListener,
+                      onPressed: () {
+                        _generateAllStudentPassword(context);
+                      },
+                      textColor: darkBackColor,
+                    ),
                 ],
               );
             } else {
@@ -84,5 +114,9 @@ class StudentFormBox extends StatelessWidget {
         );
       }).toList(),
     );
+  }
+
+  void _generateAllStudentPassword(BuildContext context) {
+    context.read<ClassListCubit>().updateAllStudentPassword();
   }
 }

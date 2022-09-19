@@ -15,7 +15,7 @@ class AdminDrawerModel {
     AdminDrawerModel(title: "Öğrenciler", iconSrc: 'menu_classroom.svg', route: AppRoutes.routeAdminStudents),
     AdminDrawerModel(title: "Dersler", iconSrc: 'menu_lesson.svg', route: AppRoutes.routeAdminLessons),
     AdminDrawerModel(title: "Denemeler", iconSrc: 'menu_meeting.svg', route: AppRoutes.routeAdminTrialExams),
-    AdminDrawerModel(title: "Randevular", iconSrc: 'menu_meeting.svg', route: AppRoutes.routeAdminTrialExams),
+    AdminDrawerModel(title: "Şifre İşlemleri", iconSrc: 'ic_student.svg', route: AppRoutes.routeAdminStudentsPassword),
     AdminDrawerModel(title: "Mesajlar", iconSrc: 'menu_mail.svg', route: AppRoutes.routeAdminMessages),
     AdminDrawerModel(title: "Yüklemeler", iconSrc: 'menu_mail.svg', route: AppRoutes.routeAdminUploads),
   ];

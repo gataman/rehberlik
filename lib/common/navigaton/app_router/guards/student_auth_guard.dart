@@ -6,14 +6,12 @@ import '../../../../core/init/locale_manager.dart';
 import '../../../../core/init/pref_keys.dart';
 import '../app_routes.dart';
 
-class AuthGuard extends AutoRouteGuard {
+class StudentAuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
     if (_checkUser()) {
-      debugPrint("Path ${resolver.route.path}");
       if (resolver.route.path == AppRoutes.routeMainAuth) {
-        debugPrint("..........");
-        router.replaceNamed(AppRoutes.routeMainAdmin);
+        router.replaceNamed(AppRoutes.routeMainStudent);
       } else {
         resolver.next(true);
       }
@@ -28,9 +26,10 @@ class AuthGuard extends AutoRouteGuard {
 
   bool _checkUser() {
     final userID = SharedPrefs.instance.getString(PrefKeys.userID.toString());
+    final userType = SharedPrefs.instance.getInt(PrefKeys.userType.toString());
     debugPrint('Chek User ${FirebaseAuth.instance.currentUser.toString()}');
 
-    if (userID != null) {
+    if (userID != null && userType != null && userType == 2) {
       return true;
     } else {
       if (FirebaseAuth.instance.currentUser != null) {

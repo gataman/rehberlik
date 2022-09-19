@@ -51,7 +51,7 @@ Future<void> setupFirebaseOptions() async {
         //web options
         options: const FirebaseOptions(
             apiKey: "AIzaSyBXzMyeobl0HH0qD36Kk6JgoY162U8LJlo",
-            authDomain: "rehberlik-810e1.web.app",
+            authDomain: "rehberlik-810e1.firebaseapp.com",
             projectId: "rehberlik-810e1",
             storageBucket: "rehberlik-810e1.appspot.com",
             messagingSenderId: "628522179079",

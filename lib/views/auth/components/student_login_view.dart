@@ -1,8 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/custom_dialog.dart';
 import 'package:rehberlik/core/widgets/text_form_fields/app_login_text_form_field.dart';
+import 'package:rehberlik/views/auth/cubit/auth_cubit.dart';
 
 import '../../../common/constants.dart';
+import '../../../common/navigaton/app_router/app_routes.dart';
 import '../../../common/widgets/loading_button.dart';
+import '../../../core/init/locale_manager.dart';
+import '../../../core/init/pref_keys.dart';
 import '../../../core/widgets/containers/app_form_box_elements.dart';
 
 class StudentLoginView extends StatefulWidget {
@@ -44,6 +51,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
   }
 
   Widget _studentNumberInput() {
+    _tfStudentNumberController.text = '248';
     return AppLoginTextFormField(
       iconData: Icons.person,
       validateText: 'Öğrenci Numarası boş olamaz',
@@ -58,6 +66,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
   }
 
   Widget _studentPasswordInput() {
+    _tfStudentPasswordController.text = 'LFDNLG';
     return AppLoginTextFormField(
       iconData: Icons.password,
       validateText: 'Şifre boş olamaz',
@@ -87,8 +96,23 @@ class _StudentLoginViewState extends State<StudentLoginView> {
     if (!_buttonListener.value && _checkFormElement()) {
       _buttonListener.value = true;
 
-      await Future.delayed(const Duration(seconds: 3));
-      _buttonListener.value = false;
+      final number = _tfStudentNumberController.text;
+      final password = _tfStudentPasswordController.text;
+
+      context.read<AuthCubit>().studentLogin(number: number, password: password).then((result) async {
+        _buttonListener.value = false;
+        if (result.isSuccess) {
+          await SharedPrefs.instance.setString(PrefKeys.userID.toString(), result.student!.id!);
+          await SharedPrefs.instance.setInt(PrefKeys.userType.toString(), 2);
+
+          CustomDialog.showSnackBar(
+              context: context, message: 'Başarıyla giriş yapıldı! Yönlendiriliyorsunuz...', type: DialogType.success);
+          await Future.delayed(const Duration(seconds: 1));
+          context.router.replaceNamed(AppRoutes.routeMainStudent);
+        } else {
+          CustomDialog.showSnackBar(context: context, message: result.message, type: DialogType.error);
+        }
+      });
     }
   }
 

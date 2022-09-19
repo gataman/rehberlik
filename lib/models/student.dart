@@ -14,6 +14,7 @@ class Student {
   String? motherPhone;
   String? className;
   String? targetSchoolID;
+  String? password;
 
   Student({
     this.id,
@@ -29,6 +30,7 @@ class Student {
     this.motherPhone,
     this.className,
     this.targetSchoolID,
+    this.password,
   });
 
   factory Student.fromFirestore(
@@ -50,6 +52,7 @@ class Student {
       motherPhone: data?['motherPhone'],
       className: data?['className'],
       targetSchoolID: data?['targetSchoolID'],
+      password: data?['password'],
     );
   }
 
@@ -67,11 +70,12 @@ class Student {
       if (motherPhone != null) "motherPhone": motherPhone,
       if (className != null) "className": className,
       if (targetSchoolID != null) "targetSchoolID": targetSchoolID,
+      "password": password,
     };
   }
 
   @override
   String toString() {
-    return 'Student{id: $id, classID: $classID, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className, targetSchoolID: $targetSchoolID}';
+    return 'Student{id: $id, classID: $classID, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className, targetSchoolID: $targetSchoolID,password: $password}';
   }
 }

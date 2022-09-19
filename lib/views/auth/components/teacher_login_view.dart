@@ -105,10 +105,10 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
       try {
         final credential = await context
             .read<AuthCubit>()
-            .login(email: _tfTeacherEmailController.text, password: _tfTeacherPasswordController.text);
+            .teacherLogin(email: _tfTeacherEmailController.text, password: _tfTeacherPasswordController.text);
         _buttonListener.value = false;
         await SharedPrefs.instance.setString(PrefKeys.userID.toString(), credential.user!.uid);
-
+        await SharedPrefs.instance.setInt(PrefKeys.userType.toString(), 1);
         CustomDialog.showSnackBar(
             context: context,
             message: 'Başarıyla giriş yapıldı! Yönlendiriliyorsunuz...',

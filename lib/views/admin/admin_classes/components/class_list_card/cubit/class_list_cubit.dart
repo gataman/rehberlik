@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/helper.dart';
 import 'package:rehberlik/common/models/school_student_stats.dart';
 import 'package:rehberlik/core/init/locale_manager.dart';
 import 'package:rehberlik/core/init/pref_keys.dart';
@@ -129,16 +130,25 @@ class ClassListCubit extends Cubit<ClassListState> {
       }
     }
 
-    schoolStatsList.add(
-        SchoolStudentStats(classLevel: 5, classColor: Colors.redAccent, studentList: fifthGradeStudentList));
+    schoolStatsList
+        .add(SchoolStudentStats(classLevel: 5, classColor: Colors.redAccent, studentList: fifthGradeStudentList));
+
+    schoolStatsList.add(SchoolStudentStats(classLevel: 6, classColor: Colors.lime, studentList: sixthGradeStudentList));
 
     schoolStatsList
-        .add(SchoolStudentStats(classLevel: 6, classColor: Colors.lime, studentList: sixthGradeStudentList));
+        .add(SchoolStudentStats(classLevel: 7, classColor: Colors.lightBlue, studentList: seventhGradeStudentList));
 
-    schoolStatsList.add(SchoolStudentStats(
-        classLevel: 7, classColor: Colors.lightBlue, studentList: seventhGradeStudentList));
+    schoolStatsList
+        .add(SchoolStudentStats(classLevel: 8, classColor: Colors.amber, studentList: eighthGradeStudentList));
+  }
 
-    schoolStatsList.add(
-        SchoolStudentStats(classLevel: 8, classColor: Colors.amber, studentList: eighthGradeStudentList));
+  Future<void> updateAllStudentPassword() async {
+    if (allStudentList.isNotEmpty) {
+      for (var student in allStudentList) {
+        student.password = Helper.getRandomString(6);
+      }
+
+      _studentRepository.updateAll(list: allStudentList).then((value) => _refreshList());
+    }
   }
 }

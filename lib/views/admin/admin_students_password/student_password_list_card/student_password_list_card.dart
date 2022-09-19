@@ -3,21 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/core/init/extentions.dart';
 
-import '../../../../../common/constants.dart';
-import '../../../../../common/custom_dialog.dart';
-import '../../../../../common/navigaton/app_router/app_router.dart';
-import '../../../../../common/widgets/default_circular_progress.dart';
-import '../../../../../core/init/locale_keys.g.dart';
-import '../../../../../core/widgets/buttons/app_small_rounded_button.dart';
-import '../../../../../core/widgets/containers/app_list_box_container.dart';
-import '../../../../../core/widgets/text/app_box_title.dart';
-import '../../../../../core/widgets/text/app_empty_warning_text.dart';
-import '../../../../../models/student.dart';
-import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
-import 'cubit/student_list_cubit.dart';
+import '../../../../common/constants.dart';
+import '../../../../common/custom_dialog.dart';
+import '../../../../common/navigaton/app_router/app_router.dart';
+import '../../../../common/widgets/default_circular_progress.dart';
+import '../../../../core/init/locale_keys.g.dart';
+import '../../../../core/widgets/buttons/app_small_rounded_button.dart';
+import '../../../../core/widgets/containers/app_list_box_container.dart';
+import '../../../../core/widgets/text/app_box_title.dart';
+import '../../../../core/widgets/text/app_empty_warning_text.dart';
+import '../../../../models/student.dart';
+import '../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import '../../admin_students/components/student_list_card/cubit/student_list_cubit.dart';
 
-class StudentListBox extends StatelessWidget {
-  const StudentListBox({Key? key}) : super(key: key);
+class StudentPasswordListCard extends StatefulWidget {
+  const StudentPasswordListCard({Key? key}) : super(key: key);
+
+  @override
+  State<StudentPasswordListCard> createState() => _StudentPasswordListCardState();
+}
+
+class _StudentPasswordListCardState extends State<StudentPasswordListCard> {
+  bool _showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +45,37 @@ class StudentListBox extends StatelessWidget {
           if (classesList != null && classesList.isNotEmpty) {
             return Column(children: [
               _getTitle(className),
+              ListTile(
+                // horizontalTitleGap: 0.3,
+                leading: const Text(''),
+
+                title: Row(
+                  children: [
+                    const SizedBox(
+                      width: 150,
+                      child: Text(
+                        'Öğrenci Bilgileri',
+                        overflow: TextOverflow.ellipsis,
+                        style: defaultTitleStyle,
+                      ),
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                      child: Text(
+                        _showPassword ? 'Şifreyi Gizle' : 'Şifreyi Göster',
+                        style: defaultTitleStyle,
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+                trailing: const Text('İşlemler', style: defaultTitleStyle),
+              ),
               const Divider(),
               if (studentList != null && studentList.isNotEmpty) _getStudentListView(studentList, context),
               if (studentList == null || studentList.isEmpty)
@@ -85,9 +123,29 @@ class StudentListBox extends StatelessWidget {
                   child: ListTile(
                     // horizontalTitleGap: 0.3,
                     leading: _setStudentLeading(student.photoUrl),
-                    title: Text(student.studentName!,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+
+                    title: Row(
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: Text(
+                            student.studentName!,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          student.password == null
+                              ? 'Şifre Oluşturulmamış'
+                              : !_showPassword
+                                  ? '******'
+                                  : student.password!,
+                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
                     subtitle: Text(
                       "No: ${student.studentNumber.toString()}",
                       style: defaultSubtitleStyle,
