@@ -7,7 +7,7 @@ import '../repository/lesson_repository.dart';
 import '../repository/meeting_repository.dart';
 import '../repository/school_repository.dart';
 import '../repository/student_repository.dart';
-import '../repository/study_program_repository.dart';
+import '../repository/question_follow_repository.dart';
 import '../repository/subject_repository.dart';
 import '../repository/time_table_repository.dart';
 import '../repository/trial_exam_repository.dart';
@@ -17,7 +17,7 @@ import '../services/lesson_service.dart';
 import '../services/meeting_service.dart';
 import '../services/schools_service.dart';
 import '../services/student_service.dart';
-import '../services/study_program_service.dart';
+import '../services/question_follow_service.dart';
 import '../services/subject_service.dart';
 import '../services/time_table_service.dart';
 import '../services/trial_exam_result_service.dart';
@@ -62,9 +62,9 @@ void setupLocator() {
   locator.registerLazySingleton(() => MeetingService());
   locator.registerLazySingleton(() => MeetingReposityory());
 
-  //StudyProgram:
-  locator.registerLazySingleton(() => StudyProgramService());
-  locator.registerLazySingleton(() => StudyProgramRepository());
+  //QuestionFollow:
+  locator.registerLazySingleton(() => QuestionFollowService());
+  locator.registerLazySingleton(() => QuestionFollowRepository());
 
   //AuthServie
   locator.registerLazySingleton(() => AuthService());

@@ -1,4 +1,11 @@
-part of student_detail_tab_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+
+import '../../../../../../../core/widgets/containers/app_time_table_card_item.dart';
+import '../../../../../../../models/time_table.dart';
+import '../cubit/time_table_list_cubit.dart';
+import '../student_time_table_add_dialog.dart';
 
 class StudentTimeTableDataSource extends DataGridSource {
   //final Map<int, List<TimeTable>> _timeTableList = {};

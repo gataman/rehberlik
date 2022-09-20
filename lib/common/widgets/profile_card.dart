@@ -5,6 +5,7 @@ import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
 import 'package:rehberlik/core/init/pref_keys.dart';
 
 import '../../core/init/locale_manager.dart';
+import '../../models/student.dart';
 import '../../responsive.dart';
 import '../constants.dart';
 
@@ -15,6 +16,7 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Student? student = Student.getStudentFormLocal();
     return Container(
       height: 40,
       margin: const EdgeInsets.only(left: defaultPadding),
@@ -28,21 +30,27 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const SizedBox(
+          SizedBox(
             width: 32,
             height: 32,
-            child: CircleAvatar(
-              backgroundImage: AssetImage(
-                "${imagesSrc}profile.jpeg",
-              ),
-            ),
+            child: student != null
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      student.photoUrl!,
+                    ),
+                  )
+                : const CircleAvatar(
+                    backgroundImage: AssetImage(
+                      "${imagesSrc}profile.jpeg",
+                    ),
+                  ),
           ),
           if (!Responsive.isMobile(context))
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
               child: Text(
-                "Gürcan Ataman",
-                style: TextStyle(fontSize: 14),
+                student != null ? student.studentName! : '',
+                style: const TextStyle(fontSize: 14),
               ),
             ),
           InkWell(

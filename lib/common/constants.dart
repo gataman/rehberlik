@@ -85,7 +85,10 @@ var defaultBoxDecoration = BoxDecoration(
 
 var tableBoxDecoration = const BoxDecoration(
   color: darkSecondaryColor,
-  border: Border(left: BorderSide(color: Colors.white10), top: BorderSide(color: Colors.white10)),
+  border: Border(
+      left: BorderSide(color: Colors.white10),
+      top: BorderSide(color: Colors.white10),
+      bottom: BorderSide(color: Colors.white10)),
 );
 
 const defaultDividerDecoration = BoxDecoration(
@@ -99,7 +102,7 @@ class Constants {
   static const String routeStudents = "/admin_students";
   static const String routeStudentDetail = "/admin_student_detail";
   static const String routeLessons = "/admin_lessons";
-  static const String routeStudyProgram = "/admin_study_program";
+  static const String routeQuestionFollow = "/admin_question_follow";
   static const String routeSubjects = "/admin_subject";
   static const String routeMessages = "/admin_messages";
   static const String routeUploads = "/admin_uploads";

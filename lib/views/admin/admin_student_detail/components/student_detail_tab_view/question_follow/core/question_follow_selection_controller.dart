@@ -1,8 +1,8 @@
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:flutter/material.dart';
 
-class StudyProgramSelectionController extends RowSelectionManager {
-  StudyProgramSelectionController({required this.onChanged});
+class QuestionFollowSelectionController extends RowSelectionManager {
+  QuestionFollowSelectionController({required this.onChanged});
 
   //region Properties
   final ValueChanged<RowColumnIndex> onChanged;

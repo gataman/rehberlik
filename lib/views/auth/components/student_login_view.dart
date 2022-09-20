@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,6 +106,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
         if (result.isSuccess) {
           await SharedPrefs.instance.setString(PrefKeys.userID.toString(), result.student!.id!);
           await SharedPrefs.instance.setInt(PrefKeys.userType.toString(), 2);
+          await SharedPrefs.instance.setString(PrefKeys.student.toString(), json.encode(result.student));
 
           CustomDialog.showSnackBar(
               context: context, message: 'Başarıyla giriş yapıldı! Yönlendiriliyorsunuz...', type: DialogType.success);

@@ -1,10 +1,17 @@
-part of student_detail_tab_view;
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/extensions.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class StudyProgramDataSource extends DataGridSource {
+import '../../../../../../../models/question_follow.dart';
+import '../cubit/question_follow_list_cubit.dart';
+
+class QuestionFollowDataSource extends DataGridSource {
   //region Properties
-  List<DataGridRow> _programsDataGridRows = [];
+  List<DataGridRow> _questionFollowDataGridRows = [];
   BuildContext? _context;
-  List<StudyProgram> _programList = [];
+  List<QuestionFollow> _questionFollowList = [];
   TextEditingController editingController = TextEditingController();
   dynamic _newCellValue;
 
@@ -12,7 +19,7 @@ class StudyProgramDataSource extends DataGridSource {
 
   //region Overrides
   @override
-  List<DataGridRow> get rows => _programsDataGridRows;
+  List<DataGridRow> get rows => _questionFollowDataGridRows;
 
   @override
   DataGridRowAdapter? buildRow(DataGridRow row) {
@@ -23,8 +30,7 @@ class StudyProgramDataSource extends DataGridSource {
         child: Text(
           e.value == null ? '  ' : e.value.toString(),
           style: TextStyle(
-              fontSize: 14,
-              color: (e.columnName == 'tarih' || e.columnName == 'gun') ? Colors.amber : Colors.white54),
+              fontSize: 14, color: (e.columnName == 'tarih' || e.columnName == 'gun') ? Colors.amber : Colors.white54),
           overflow: TextOverflow.ellipsis,
         ),
       );
@@ -49,16 +55,17 @@ class StudyProgramDataSource extends DataGridSource {
         .findOrNull((DataGridCell dataGridCell) => dataGridCell.columnName == column.columnName)
         ?.value;
 
-    final int dataRowIndex = _programsDataGridRows.indexOf(dataGridRow);
+    final int dataRowIndex = _questionFollowDataGridRows.indexOf(dataGridRow);
 
     if (oldValue == _newCellValue) {
       return;
     }
 
-    _programsDataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+    _questionFollowDataGridRows[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
         DataGridCell<int>(columnName: column.columnName, value: _newCellValue);
 
-    _chageProgramValue(program: _programList[rowColumnIndex.rowIndex], columnName: column.columnName);
+    _chageQuestionFollowValue(
+        questionFollow: _questionFollowList[rowColumnIndex.rowIndex], columnName: column.columnName);
   }
 
   @override
@@ -77,11 +84,11 @@ class StudyProgramDataSource extends DataGridSource {
   //endregion
 
   //region Methods
-  void updateList({required List<StudyProgram> programList, required BuildContext context}) {
+  void updateList({required List<QuestionFollow> questionFollowList, required BuildContext context}) {
     _context = context;
-    if (programList.isNotEmpty) {
-      _programList = programList;
-      _programsDataGridRows = programList
+    if (questionFollowList.isNotEmpty) {
+      _questionFollowList = questionFollowList;
+      _questionFollowDataGridRows = questionFollowList
           .map(
             (e) => DataGridRow(
               cells: [
@@ -119,91 +126,91 @@ class StudyProgramDataSource extends DataGridSource {
     notifyListeners();
   }
 
-  void _chageProgramValue({required StudyProgram program, required String columnName}) {
+  void _chageQuestionFollowValue({required QuestionFollow questionFollow, required String columnName}) {
     switch (columnName) {
       case 'turTarget':
-        program.turTarget = _newCellValue;
+        questionFollow.turTarget = _newCellValue;
         break;
       case 'turSolved':
-        program.turSolved = _newCellValue;
+        questionFollow.turSolved = _newCellValue;
         break;
       case 'turCorrect':
-        program.turCorrect = _newCellValue;
+        questionFollow.turCorrect = _newCellValue;
         break;
       case 'turIncorrect':
-        program.turIncorrect = _newCellValue;
+        questionFollow.turIncorrect = _newCellValue;
         break;
 
       case 'matTarget':
-        program.matTarget = _newCellValue;
+        questionFollow.matTarget = _newCellValue;
         break;
       case 'matSolved':
-        program.matSolved = _newCellValue;
+        questionFollow.matSolved = _newCellValue;
         break;
       case 'matCorrect':
-        program.matCorrect = _newCellValue;
+        questionFollow.matCorrect = _newCellValue;
         break;
       case 'matIncorrect':
-        program.matIncorrect = _newCellValue;
+        questionFollow.matIncorrect = _newCellValue;
         break;
 
       case 'fenTarget':
-        program.fenTarget = _newCellValue;
+        questionFollow.fenTarget = _newCellValue;
         break;
       case 'fenSolved':
-        program.fenSolved = _newCellValue;
+        questionFollow.fenSolved = _newCellValue;
         break;
       case 'fenCorrect':
-        program.fenCorrect = _newCellValue;
+        questionFollow.fenCorrect = _newCellValue;
         break;
       case 'fenIncorrect':
-        program.fenIncorrect = _newCellValue;
+        questionFollow.fenIncorrect = _newCellValue;
         break;
 
       case 'inkTarget':
-        program.inkTarget = _newCellValue;
+        questionFollow.inkTarget = _newCellValue;
         break;
       case 'inkSolved':
-        program.inkSolved = _newCellValue;
+        questionFollow.inkSolved = _newCellValue;
         break;
       case 'inkCorrect':
-        program.inkCorrect = _newCellValue;
+        questionFollow.inkCorrect = _newCellValue;
         break;
       case 'inkIncorrect':
-        program.inkIncorrect = _newCellValue;
+        questionFollow.inkIncorrect = _newCellValue;
         break;
 
       case 'ingTarget':
-        program.ingTarget = _newCellValue;
+        questionFollow.ingTarget = _newCellValue;
         break;
       case 'ingSolved':
-        program.ingSolved = _newCellValue;
+        questionFollow.ingSolved = _newCellValue;
         break;
       case 'ingCorrect':
-        program.ingCorrect = _newCellValue;
+        questionFollow.ingCorrect = _newCellValue;
         break;
       case 'ingIncorrect':
-        program.ingIncorrect = _newCellValue;
+        questionFollow.ingIncorrect = _newCellValue;
         break;
 
       case 'dinTarget':
-        program.dinTarget = _newCellValue;
+        questionFollow.dinTarget = _newCellValue;
         break;
       case 'dinSolved':
-        program.dinSolved = _newCellValue;
+        questionFollow.dinSolved = _newCellValue;
         break;
       case 'dinCorrect':
-        program.dinCorrect = _newCellValue;
+        questionFollow.dinCorrect = _newCellValue;
         break;
       case 'dinIncorrect':
-        program.dinIncorrect = _newCellValue;
+        questionFollow.dinIncorrect = _newCellValue;
         break;
     }
 
     if (_context != null) {
-      _context!.read<StudyProgramListCubit>().changeProgram(studyProgram: program).then((value) {
+      _context!.read<QuestionFollowListCubit>().changeQuestionFollow(questionFollow: questionFollow).then((value) {
         if (value != null) {
-          program.id = value;
+          questionFollow.id = value;
           notifyListeners();
         }
       });
@@ -239,8 +246,7 @@ class StudyProgramDataSource extends DataGridSource {
           },
           style: const TextStyle(fontSize: 14, color: Colors.white54),
           autofocus: true,
-          decoration: const InputDecoration(
-              border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.all(0)),
+          decoration: const InputDecoration(border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.all(0)),
           textAlign: TextAlign.center,
           controller: editingController..text = displayText,
         ),

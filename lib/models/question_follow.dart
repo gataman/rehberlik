@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class StudyProgram {
+class QuestionFollow {
   String? id;
   String? studentID;
   DateTime? date;
@@ -29,7 +29,7 @@ class StudyProgram {
   int? dinCorrect;
   int? dinIncorrect;
 
-  StudyProgram({
+  QuestionFollow({
     this.id,
     required this.studentID,
     required this.date,
@@ -59,12 +59,12 @@ class StudyProgram {
     this.dinIncorrect,
   });
 
-  factory StudyProgram.fromFirestore(
+  factory QuestionFollow.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return StudyProgram(
+    return QuestionFollow(
       id: snapshot.id,
       studentID: data?['studentID'],
       date: (data?['date'] as Timestamp).toDate(),
@@ -128,6 +128,6 @@ class StudyProgram {
 
   @override
   String toString() {
-    return 'StudyProgram{id: $id, studentID: $studentID, date: $date, turTarget: $turTarget, turSolved: $turSolved, turCorrect: $turCorrect, turIncorrect: $turIncorrect, matTarget: $matTarget, matSolved: $matSolved, matCorrect: $matCorrect, matIncorrect: $matIncorrect, fenTarget: $fenTarget, fenSolved: $fenSolved, fenCorrect: $fenCorrect, fenIncorrect: $fenIncorrect, inkTarget: $inkTarget, inkSolved: $inkSolved, inkCorrect: $inkCorrect, inkIncorrect: $inkIncorrect, ingTarget: $ingTarget, ingSolved: $ingSolved, ingCorrect: $ingCorrect, ingIncorrect: $ingIncorrect, dinTarget: $dinTarget, dinSolved: $dinSolved, dinCorrect: $dinCorrect, dinIncorrect: $dinIncorrect}';
+    return 'QuestionFollow{id: $id, studentID: $studentID, date: $date, turTarget: $turTarget, turSolved: $turSolved, turCorrect: $turCorrect, turIncorrect: $turIncorrect, matTarget: $matTarget, matSolved: $matSolved, matCorrect: $matCorrect, matIncorrect: $matIncorrect, fenTarget: $fenTarget, fenSolved: $fenSolved, fenCorrect: $fenCorrect, fenIncorrect: $fenIncorrect, inkTarget: $inkTarget, inkSolved: $inkSolved, inkCorrect: $inkCorrect, inkIncorrect: $inkIncorrect, ingTarget: $ingTarget, ingSolved: $ingSolved, ingCorrect: $ingCorrect, ingIncorrect: $ingIncorrect, dinTarget: $dinTarget, dinSolved: $dinSolved, dinCorrect: $dinCorrect, dinIncorrect: $dinIncorrect}';
   }
 }

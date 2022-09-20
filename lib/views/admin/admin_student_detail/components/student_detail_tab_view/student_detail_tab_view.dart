@@ -1,27 +1,9 @@
-library student_detail_tab_view;
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/widgets/default_circular_progress.dart';
-import 'package:rehberlik/core/widgets/containers/app_time_table_card_item.dart';
-import 'package:rehberlik/models/study_program.dart';
-import 'package:rehberlik/models/time_table.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-
 import 'package:rehberlik/models/student.dart';
-import 'study_program/core/study_program_selection_controller.dart';
-import 'study_program/cubit/study_program_list_cubit.dart';
-import 'time_table/cubit/time_table_list_cubit.dart';
-import 'time_table/student_time_table_add_dialog.dart';
-
-part 'study_program/student_program_card.dart';
-part 'study_program/core/study_program_data_source.dart';
-part 'time_table/student_time_table_card.dart';
-part 'time_table/core/student_time_table_data_source.dart';
+import 'question_follow/question_follow_list_card.dart';
+import 'time_table/student_time_table_card.dart';
 
 class StudentDetailTabView extends StatefulWidget {
   final Student student;
@@ -132,7 +114,7 @@ class _StudentDetailTabViewState extends State<StudentDetailTabView> with Single
 
   List<Widget> _getTabBarViews() {
     return <Widget>[
-      StudentProgramCard(studentID: student.id!),
+      QuestionFollowListCard(studentID: student.id!),
       StudentTimeTableCard(student: student),
       //const Text("istatistik"),
       const Text("Notlar"),

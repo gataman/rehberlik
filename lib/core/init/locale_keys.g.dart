@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const app_title = 'app.title';
   static const app_subtitle = 'app.subtitle';
   static const app_studentSearch = 'app.studentSearch';
@@ -26,7 +26,7 @@ abstract class  LocaleKeys {
   static const students_classListEmptyAlert = 'students.classListEmptyAlert';
   static const students_studentDeleteAlert = 'students.studentDeleteAlert';
   static const students = 'students';
-  static const studentDetail_studyProgramTitle = 'studentDetail.studyProgramTitle';
+  static const studentDetail_questionFollowTitle = 'studentDetail.questionFollowTitle';
   static const studentDetail_timeTableTitle = 'studentDetail.timeTableTitle';
   static const studentDetail_notesTitle = 'studentDetail.notesTitle';
   static const studentDetail_tcKimlikLabel = 'studentDetail.tcKimlikLabel';
@@ -89,5 +89,4 @@ abstract class  LocaleKeys {
   static const alerts_noChange = 'alerts.noChange';
   static const alerts_delete_success = 'alerts.delete_success';
   static const alerts = 'alerts';
-
 }

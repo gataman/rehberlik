@@ -4,17 +4,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/core/init/pref_keys.dart';
-import 'package:rehberlik/views/admin/admin_dashboard/components/agenda_box/cubit/agenda_box_cubit.dart';
 import 'package:rehberlik/views/app_main/app_main_view.dart';
 import 'common/constants.dart';
 import 'common/locator.dart';
 import 'core/init/locale_manager.dart';
-import 'views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
-import 'views/admin/admin_lessons/components/lesson_list_card/cubit/lesson_list_cubit.dart';
-import 'views/admin/admin_students/components/student_list_card/cubit/student_list_cubit.dart';
-import 'views/app_main/app_main_view.dart';
 
 void main() async {
   await _init();

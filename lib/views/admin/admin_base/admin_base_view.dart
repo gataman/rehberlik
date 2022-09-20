@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/constants.dart';
 import '../../../common/widgets/expand_button.dart';
 import '../../../responsive.dart';
-import 'cubit/admin_base_cubit.dart';
+import 'cubit/expanded_cubit.dart';
 
 abstract class AdminBaseView extends StatelessWidget {
   const AdminBaseView({Key? key}) : super(key: key);
@@ -26,9 +26,9 @@ abstract class AdminBaseView extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding),
       child: SingleChildScrollView(
         child: BlocProvider(
-          create: (context) => AdminBaseCubit(),
-          child: BlocBuilder<AdminBaseCubit, AdminBaseState>(builder: (context, state) {
-            bool isExpanded = (state as AdminBaseExpandedState).isExpanded;
+          create: (context) => ExpandedCubit(),
+          child: BlocBuilder<ExpandedCubit, ExpandedState>(builder: (context, state) {
+            bool isExpanded = state.isExpanded;
             return Responsive(
                 mobile: isDashboard
                     ? _getMobileDashboardContent(isExpanded, context)
@@ -53,7 +53,7 @@ abstract class AdminBaseView extends StatelessWidget {
       if (!isFullPage)
         ExpandButton(
           onPressed: () {
-            context.read<AdminBaseCubit>().changeExpanded();
+            context.read<ExpandedCubit>().changeExpanded();
           },
           isHorizontal: true,
           isExpanded: isExpanded,
@@ -79,7 +79,7 @@ abstract class AdminBaseView extends StatelessWidget {
           Center(
             child: ExpandButton(
               onPressed: () {
-                context.read<AdminBaseCubit>().changeExpanded();
+                context.read<ExpandedCubit>().changeExpanded();
               },
               isHorizontal: false,
               isExpanded: isExpanded,
@@ -98,7 +98,7 @@ abstract class AdminBaseView extends StatelessWidget {
         Center(
           child: ExpandButton(
             onPressed: () {
-              context.read<AdminBaseCubit>().changeExpanded();
+              context.read<ExpandedCubit>().changeExpanded();
             },
             isHorizontal: false,
             isExpanded: isExpanded,

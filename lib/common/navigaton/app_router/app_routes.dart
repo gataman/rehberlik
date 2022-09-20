@@ -11,7 +11,7 @@ abstract class AppRoutes {
   static const String routeAdminStudents = "students";
   static const String routeAdminStudentDetail = "student_detail";
   static const String routeAdminLessons = "lessons";
-  static const String routeAdminStudyProgram = "study_program";
+  static const String routeAdminQuestionFollow = "questionFollow";
   static const String routeAdminSubjects = "subjects";
   //static const String routeSubjects = "/subject/:lessonID";
   static const String routeAdminMessages = "messages";

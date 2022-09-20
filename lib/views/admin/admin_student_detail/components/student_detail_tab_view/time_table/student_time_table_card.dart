@@ -1,4 +1,14 @@
-part of student_detail_tab_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/responsive.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+
+import '../../../../../../common/constants.dart';
+import '../../../../../../common/widgets/default_circular_progress.dart';
+import '../../../../../../models/student.dart';
+import '../../../../admin_base/cubit/expanded_cubit.dart';
+import 'core/student_time_table_data_source.dart';
+import 'cubit/time_table_list_cubit.dart';
 
 class StudentTimeTableCard extends StatelessWidget {
   final Student student;
@@ -19,9 +29,10 @@ class StudentTimeTableCard extends StatelessWidget {
           _timeTableDataSource.updateList(timeTableMap: state.timeTableList!, context: context);
           return Column(
             children: [
-              SizedBox(
+              Container(
                 height: 350,
-                child: _timeTableDataGridCard(),
+                decoration: tableBoxDecoration,
+                child: _timeTableDataGridCard(context),
               ),
             ],
           );
@@ -32,29 +43,27 @@ class StudentTimeTableCard extends StatelessWidget {
     });
   }
 
-  SfDataGrid _timeTableDataGridCard() {
-    return SfDataGrid(
-        shrinkWrapRows: true,
-        verticalScrollPhysics: const NeverScrollableScrollPhysics(),
-        gridLinesVisibility: GridLinesVisibility.both,
-        headerGridLinesVisibility: GridLinesVisibility.both,
-        columnWidthMode: ColumnWidthMode.fill,
-        headerRowHeight: 30,
-        defaultColumnWidth: 50,
-        rowHeight: 80,
-        source: _timeTableDataSource,
-        columns: _getColumns());
+  Widget _timeTableDataGridCard(BuildContext context) {
+    return BlocBuilder<ExpandedCubit, ExpandedState>(
+      builder: (context, state) {
+        return SfDataGrid(
+            shrinkWrapRows: true,
+            verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+            gridLinesVisibility: GridLinesVisibility.both,
+            headerGridLinesVisibility: GridLinesVisibility.both,
+            columnWidthMode: ColumnWidthMode.fill,
+            headerRowHeight: 30,
+            defaultColumnWidth: 50,
+            rowHeight: 80,
+            source: _timeTableDataSource,
+            columns: _getColumns(state.isExpanded, context));
+      },
+    );
   }
 
-  List<GridColumn> _getColumns() {
-    /*
-    double width =
-        _detailController.isExpanded.value && !Responsive.isMobile(context)
-            ? double.nan
-            : 100;
+  List<GridColumn> _getColumns(bool isExpanded, BuildContext context) {
+    double width = !Responsive.isMobile(context) ? double.nan : 100;
 
-     */
-    double width = 100;
     return <GridColumn>[
       GridColumn(columnName: 'monday', label: _getLabelTitleText("Pazartesi"), width: width),
       GridColumn(columnName: 'tuesday', label: _getLabelTitleText("Salı"), width: width),

@@ -32,8 +32,7 @@ class StudentInfoCard extends StatelessWidget {
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.all(defaultPadding / 3),
-                        child: SizedBox(
-                            height: 80, width: 80, child: _setStudentProfileImage(student!.photoUrl)),
+                        child: SizedBox(height: 80, width: 80, child: _setStudentProfileImage(student!.photoUrl)),
                       ),
                       const Spacer(),
                     ],
@@ -46,7 +45,7 @@ class StudentInfoCard extends StatelessWidget {
                     children: [
                       buildRow(
                         label: "T.C. Kimlik No",
-                        value: "123456789",
+                        value: "",
                       ),
                       buildRow(
                         label: "Sınıfı",
@@ -88,7 +87,7 @@ class StudentInfoCard extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.all(defaultPadding),
                     child: LoadingButton(
-                        text: "Pdf Oluştur",
+                        text: 'Çalışma Programı İndir',
                         textColor: darkSecondaryColor,
                         iconData: Icons.download,
                         loadingListener: pdfBuilder.notifier,

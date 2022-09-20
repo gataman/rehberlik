@@ -1,14 +1,21 @@
-part of student_detail_tab_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/constants.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-class StudentProgramCard extends StatelessWidget {
-  StudentProgramCard({Key? key, required this.studentID}) : super(key: key);
+import '../../../../../../common/widgets/default_circular_progress.dart';
+import 'core/question_follow_data_source.dart';
+import 'core/question_follow_selection_controller.dart';
+import 'cubit/question_follow_list_cubit.dart';
+
+class QuestionFollowListCard extends StatelessWidget {
+  QuestionFollowListCard({Key? key, required this.studentID}) : super(key: key);
   DateTime? _startTime;
   final String studentID;
 
   //region Properties
-  //final _controller = Get.put(AdminStudyProgramController());
 
-  final StudyProgramDataSource _programDataSource = StudyProgramDataSource();
+  final QuestionFollowDataSource _questionFollowDataSource = QuestionFollowDataSource();
 
   final DataGridController _dataGridController = DataGridController();
 
@@ -23,7 +30,7 @@ class StudentProgramCard extends StatelessWidget {
   //endregion
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StudyProgramListCubit, StudyProgramListState>(
+    return BlocBuilder<QuestionFollowListCubit, QuestionFollowListState>(
       builder: (context, state) {
         if (state.isLoading) {
           return const SizedBox(
@@ -31,45 +38,22 @@ class StudentProgramCard extends StatelessWidget {
             child: Center(child: DefaultCircularProgress()),
           );
         } else {
-          if (state.studyProgramList != null) {
-            _programDataSource.updateList(programList: state.studyProgramList!, context: context);
+          if (state.quuestionFollowList != null) {
+            _questionFollowDataSource.updateList(questionFollowList: state.quuestionFollowList!, context: context);
           }
           return Column(
             children: [
-              if (state.studyProgramList != null) _programDataGridCard(context),
+              if (state.quuestionFollowList != null) _questionFollowDataGridCard(context),
             ],
           );
         }
       },
     );
-    /*
-    if (_controller.programList.value == null) {
-      _getStudentAllPrograms(studentID: widget.studentID);
-    }
-
-    return Obx(() {
-      if (_controller.programList.value != null) {
-        _programDataSource.updateList(
-            programList: _controller.programList.value!);
-      }
-      return Column(
-        children: [
-          if (_controller.programList.value != null) _programDataGridCard(),
-          if (_controller.programList.value == null)
-            const SizedBox(
-              height: 200,
-              child: Center(child: DefaultCircularProgress()),
-            ),
-        ],
-      );
-    });
-
-     */
   }
 
   //endregion
 
-  SfDataGrid _programDataGridCard(BuildContext context) {
+  SfDataGrid _questionFollowDataGridCard(BuildContext context) {
     return SfDataGrid(
         shrinkWrapRows: true,
         verticalScrollPhysics: const NeverScrollableScrollPhysics(),
@@ -85,10 +69,10 @@ class StudentProgramCard extends StatelessWidget {
         selectionMode: SelectionMode.single,
         stackedHeaderRows: _getStackedHeaderRows(),
         controller: _dataGridController,
-        selectionManager: StudyProgramSelectionController(onChanged: (_rowIndex) {
+        selectionManager: QuestionFollowSelectionController(onChanged: (_rowIndex) {
           _dataGridController.beginEdit(_rowIndex);
         }),
-        source: _programDataSource,
+        source: _questionFollowDataSource,
         columns: _getColumns(context));
   }
 
@@ -153,11 +137,7 @@ class StudentProgramCard extends StatelessWidget {
 
   List<GridColumn> _getColumns(BuildContext context) {
     return <GridColumn>[
-      GridColumn(
-          width: 100,
-          columnName: 'tarih',
-          label: _getLabelDateTitleText(context, "Tarih"),
-          allowEditing: false),
+      GridColumn(width: 100, columnName: 'tarih', label: _getLabelDateTitleText(context, "Tarih"), allowEditing: false),
       GridColumn(width: 100, columnName: 'gun', label: _getLabelTitleText("Gün"), allowEditing: false),
       GridColumn(columnName: 'turTarget', label: _getLabelTitleText(_targetLabel)),
       GridColumn(columnName: 'turSolved', label: _getLabelTitleText(_solvedLabel)),
@@ -202,9 +182,7 @@ class StudentProgramCard extends StatelessWidget {
       onPressed: () async {
         await _pickDate(context).then((newDate) {
           if (newDate != null) {
-            context
-                .read<StudyProgramListCubit>()
-                .fetchStudyProgramList(studentID: studentID, startTime: newDate);
+            context.read<QuestionFollowListCubit>().fetchQuestionFollowList(studentID: studentID, startTime: newDate);
           }
         });
       },

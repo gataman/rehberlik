@@ -1,5 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+import '../core/init/locale_manager.dart';
+import '../core/init/pref_keys.dart';
+
+part 'student.g.dart';
+
+@JsonSerializable()
 class Student {
   final String? id;
   String? classID;
@@ -74,8 +83,21 @@ class Student {
     };
   }
 
+  factory Student.fromJson(Map<String, dynamic> json) => _$StudentFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StudentToJson(this);
+
   @override
   String toString() {
     return 'Student{id: $id, classID: $classID, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className, targetSchoolID: $targetSchoolID,password: $password}';
+  }
+
+  static Student? getStudentFormLocal() {
+    final studentPref = SharedPrefs.instance.getString(PrefKeys.student.toString());
+    if (studentPref != null) {
+      return Student.fromJson(jsonDecode(studentPref));
+    } else {
+      return null;
+    }
   }
 }

@@ -1,22 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/study_program.dart';
+import '../models/question_follow.dart';
 import 'base/db_base.dart';
 
-class StudyProgramService implements DBBase<StudyProgram> {
+class QuestionFollowService implements DBBase<QuestionFollow> {
   final _db = FirebaseFirestore.instance;
-  final _mainRef = "study_programs";
-  final _subRef = "student_programs";
+  final _mainRef = "question_follows";
+  final _subRef = "student_question_follows";
 
   @override
-  Future<String> add({required StudyProgram object}) async {
+  Future<String> add({required QuestionFollow object}) async {
     final docRef = _db
         .collection(_mainRef)
         .doc(object.studentID)
         .collection(_subRef)
         .withConverter(
-          fromFirestore: StudyProgram.fromFirestore,
-          toFirestore: (StudyProgram object, options) => object.toFirestore(),
+          fromFirestore: QuestionFollow.fromFirestore,
+          toFirestore: (QuestionFollow object, options) => object.toFirestore(),
         )
         .doc();
     await docRef.set(object);
@@ -28,24 +28,24 @@ class StudyProgramService implements DBBase<StudyProgram> {
   }
 
   @override
-  Future<void> update({required StudyProgram object}) {
+  Future<void> update({required QuestionFollow object}) {
     final ref = _db.collection(_mainRef).doc(object.studentID).collection(_subRef).doc(object.id);
     return ref.update(object.toFirestore());
   }
 
   @override
-  Future<void> addAll({required List<StudyProgram> list}) async {
+  Future<void> addAll({required List<QuestionFollow> list}) async {
     var batch = _db.batch();
     var count = 1;
 
-    for (StudyProgram object in list) {
+    for (QuestionFollow object in list) {
       var docRef = _db
           .collection(_mainRef)
           .doc(object.studentID)
           .collection(_subRef)
           .withConverter(
-            fromFirestore: StudyProgram.fromFirestore,
-            toFirestore: (StudyProgram object, options) => object.toFirestore(),
+            fromFirestore: QuestionFollow.fromFirestore,
+            toFirestore: (QuestionFollow object, options) => object.toFirestore(),
           )
           .doc();
       batch.set(docRef, object);
@@ -61,15 +61,20 @@ class StudyProgramService implements DBBase<StudyProgram> {
     return batch.commit();
   }
 
-  Future<List<StudyProgram>?> getAll(
-      {required String studentID, required DateTime startTime, required DateTime endTime, Map<String, dynamic>? filters}) async {
+  Future<List<QuestionFollow>?> getAll(
+      {required String studentID,
+      required DateTime startTime,
+      required DateTime endTime,
+      Map<String, dynamic>? filters}) async {
     var colRef = _db
         .collection(_mainRef)
         .doc(studentID)
         .collection(_subRef)
         .where("date", isGreaterThanOrEqualTo: startTime)
         .where("date", isLessThanOrEqualTo: endTime)
-        .withConverter(fromFirestore: StudyProgram.fromFirestore, toFirestore: (StudyProgram object, _) => object.toFirestore());
+        .withConverter(
+            fromFirestore: QuestionFollow.fromFirestore,
+            toFirestore: (QuestionFollow object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);

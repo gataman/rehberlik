@@ -33,7 +33,7 @@
   },
 
   "studentDetail" : {
-    "studyProgramTitle" : "Soru Takibi",
+    "questionFollowTitle" : "Soru Takibi",
     "timeTableTitle" : "Çalışma Programı",
     "notesTitle": "Notlar",
     "tcKimlikLabel": "T.C. Kimlik No",

@@ -63,6 +63,8 @@ dependencies:
   syncfusion_localizations: ^20.2.48
   meta: ^1.8.0
   firebase_auth: ^3.9.0
+  json_annotation: ^4.6.0
+  
 
 
   ##excel_to_json: ^0.0.2-dev.1
@@ -74,6 +76,7 @@ dev_dependencies:
     sdk: flutter
   auto_route_generator: ^5.0.2
   build_runner: ^2.2.0
+  json_serializable: ^6.3.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

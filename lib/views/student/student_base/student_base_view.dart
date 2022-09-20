@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/views/admin/admin_base/cubit/expanded_cubit.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/widgets/expand_button.dart';
 import '../../../responsive.dart';
-import 'cubit/student_base_cubit.dart';
 
 abstract class StudentBaseView extends StatelessWidget {
   const StudentBaseView({Key? key}) : super(key: key);
@@ -26,9 +26,9 @@ abstract class StudentBaseView extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding),
       child: SingleChildScrollView(
         child: BlocProvider(
-          create: (context) => StudentBaseCubit(),
-          child: BlocBuilder<StudentBaseCubit, StudentBaseState>(builder: (context, state) {
-            bool isExpanded = (state as StudentBaseExpandedState).isExpanded;
+          create: (context) => ExpandedCubit(),
+          child: BlocBuilder<ExpandedCubit, ExpandedState>(builder: (context, state) {
+            bool isExpanded = state.isExpanded;
             return Responsive(
                 mobile: isDashboard
                     ? _getMobileDashboardContent(isExpanded, context)
@@ -53,7 +53,7 @@ abstract class StudentBaseView extends StatelessWidget {
       if (!isFullPage)
         ExpandButton(
           onPressed: () {
-            context.read<StudentBaseCubit>().changeExpanded();
+            context.read<ExpandedCubit>().changeExpanded();
           },
           isHorizontal: true,
           isExpanded: isExpanded,
@@ -79,7 +79,7 @@ abstract class StudentBaseView extends StatelessWidget {
           Center(
             child: ExpandButton(
               onPressed: () {
-                context.read<StudentBaseCubit>().changeExpanded();
+                context.read<ExpandedCubit>().changeExpanded();
               },
               isHorizontal: false,
               isExpanded: isExpanded,
@@ -98,7 +98,7 @@ abstract class StudentBaseView extends StatelessWidget {
         Center(
           child: ExpandButton(
             onPressed: () {
-              context.read<StudentBaseCubit>().changeExpanded();
+              context.read<ExpandedCubit>().changeExpanded();
             },
             isHorizontal: false,
             isExpanded: isExpanded,
