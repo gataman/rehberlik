@@ -52,19 +52,58 @@ class CustomDialog {
         context: context,
         builder: (ctx) {
           return AlertDialog(
-              contentPadding: const EdgeInsets.all(defaultPadding),
+              //contentPadding: const EdgeInsets.all(defaultPadding),
               actionsPadding: const EdgeInsets.all(defaultPadding),
-              elevation: 10,
-              shape: const RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white10), borderRadius: BorderRadius.all(Radius.circular(10))),
-              title:
-                  Center(child: Text(LocaleKeys.actions_warning.locale(), style: const TextStyle(color: titleColor))),
-              backgroundColor: darkSecondaryColor,
-              content: Text(
-                message,
-                style: const TextStyle(color: lightSecondaryColor),
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Theme.of(context).dividerColor),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              titlePadding: EdgeInsets.zero,
+              title: Center(
+                  child: Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Theme.of(context).colorScheme.primary,
+                    )),
+              )),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    LocaleKeys.actions_warning.locale(),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 20),
+                  ),
+                  const SizedBox(
+                    height: defaultPadding,
+                  ),
+                  Text(
+                    message,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
               ),
-              actions: [const AppCancelDeleteButton(), AppDeleteButton(onConfirm: onConfirm)]);
+              actionsAlignment: MainAxisAlignment.center,
+              actions: [
+                Expanded(
+                  child: AppDeleteButton(onConfirm: () {
+                    onConfirm();
+                    Navigator.of(ctx).pop();
+                  }),
+                )
+              ]);
         });
   }
 }
+
+/*
+Expanded(
+                      child: Text(LocaleKeys.actions_warning.locale(),
+                          textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleLarge)),
+                 
+*/

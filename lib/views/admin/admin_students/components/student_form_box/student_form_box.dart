@@ -1,16 +1,11 @@
-import 'dart:js';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/core/init/extentions.dart';
-import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_imports.dart';
-
-import '../../../../../common/constants.dart';
-import '../../../../../common/widgets/default_circular_progress.dart';
+import '../../../../../core/init/extentions.dart';
 import '../../../../../core/init/locale_keys.g.dart';
+import '../../../../../core/widgets/drop_down/drop_down_class_list.dart';
 import '../../../../../core/widgets/text/app_empty_warning_text.dart';
 import '../../../../../core/widgets/text/app_menu_title.dart';
 import '../../../../../models/student_with_class.dart';
+import '../../../admin_subjects/admin_subjects_imports.dart';
 import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import '../student_list_card/cubit/student_list_cubit.dart';
 
@@ -22,8 +17,7 @@ class StudentFormBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: defaultBoxDecoration,
+    return Card(
       child: Padding(
           padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding, bottom: defaultPadding),
           child: BlocBuilder<ClassListCubit, ClassListState>(builder: (context, classState) {
@@ -47,7 +41,6 @@ class StudentFormBox extends StatelessWidget {
                       onPressed: () {
                         _generateAllStudentPassword(context);
                       },
-                      textColor: darkBackColor,
                     ),
                 ],
               );
@@ -67,7 +60,7 @@ class StudentFormBox extends StatelessWidget {
   Widget _getDropDownMenu(List<StudentWithClass>? classesList) {
     if (classesList != null && classesList.isNotEmpty) {
       return BlocBuilder<StudentListCubit, StudentListState>(builder: (context, state) {
-        final selectedIndex = state is SelectedIndexState ? state.selectedIndex : 0;
+        final selectedIndex = state is SelectedIndexState ? state.classIndex : 0;
         return _buildDropdownButtonFormField(classesList, selectedIndex, context);
       });
     } else {
@@ -75,44 +68,15 @@ class StudentFormBox extends StatelessWidget {
     }
   }
 
-  DropdownButtonFormField<StudentWithClass> _buildDropdownButtonFormField(
-      List<StudentWithClass> classesList, int selectedIndex, BuildContext context) {
-    return DropdownButtonFormField<StudentWithClass>(
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
-        hintStyle: TextStyle(color: Colors.white30),
-        fillColor: darkSecondaryColor,
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white10),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-      ),
-      value: classesList[selectedIndex],
-      icon: const Icon(Icons.keyboard_arrow_down),
-      onChanged: (StudentWithClass? newValue) {
+  Widget _buildDropdownButtonFormField(List<StudentWithClass> classesList, int selectedIndex, BuildContext context) {
+    return DropDownClassList(
+      classesList: classesList,
+      selectedIndex: selectedIndex,
+      onChanged: (newValue) {
         if (newValue != null) {
-          context.read<StudentListCubit>().selectIndex(selectedIndex: classesList.indexOf(newValue));
-          //valueChanged(newValue.classLevel);
-          //_selectedCategory = newValue.classLevel;
+          context.read<StudentListCubit>().selectClass(selectedIndex: classesList.indexOf(newValue));
         }
       },
-      items: classesList.map<DropdownMenuItem<StudentWithClass>>((StudentWithClass value) {
-        return DropdownMenuItem<StudentWithClass>(
-          value: value,
-          child: Text(
-            value.classes.className!,
-            style: const TextStyle(fontSize: 14),
-          ),
-        );
-      }).toList(),
     );
   }
 

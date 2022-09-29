@@ -11,7 +11,6 @@ class ClassListCard extends StatelessWidget {
   Widget _getClassesListBox() {
     return BlocBuilder<ClassListCubit, ClassListState>(
       builder: (context, state) {
-        debugPrint("Classes List builder çalıştı...............");
         return Column(children: [
           _getTitle(state),
           const Divider(),
@@ -35,22 +34,25 @@ class ClassListCard extends StatelessWidget {
       final classesList = state.studentWithClassList!;
       return SizedBox(
         height: defaultListHeight,
-        child: ListView.builder(
+        child: ListView.separated(
             itemCount: classesList.length,
+            separatorBuilder: (context, index) => const Divider(height: 0),
             itemBuilder: (context, index) {
               final classes = classesList[index].classes;
-              return AppListTile(
-                svgData: "${iconsSrc}menu_classroom.svg",
-                title: classes.className ?? '',
-                detailOnPressed: () {
-                  _showClassDetail(context: context, index: index);
-                },
-                editOnPressed: () {
-                  context.read<ClassFormBoxCubit>().editClass(classes: classes);
-                },
-                deleteOnPressed: () {
-                  _deleteClass(classes, context);
-                },
+              return SizedBox(
+                child: AppListTile(
+                  svgData: "${iconsSrc}menu_classroom.svg",
+                  title: classes.className ?? '',
+                  detailOnPressed: () {
+                    _showClassDetail(context: context, index: index);
+                  },
+                  editOnPressed: () {
+                    context.read<ClassFormBoxCubit>().editClass(classes: classes);
+                  },
+                  deleteOnPressed: () {
+                    _deleteClass(classes, context);
+                  },
+                ),
               );
             }),
       );
@@ -70,7 +72,6 @@ class ClassListCard extends StatelessWidget {
               context: context,
               type: DialogType.success,
             );
-            Navigator.pop(context);
           }, onError: (e) {
             CustomDialog.showSnackBar(
               message: LocaleKeys.alerts_error.locale([e.toString()]),
@@ -83,7 +84,7 @@ class ClassListCard extends StatelessWidget {
 
   void _showClassDetail({required BuildContext context, required int index}) {
     //selectedIndex.value = index;
-    context.read<StudentListCubit>().selectIndex(selectedIndex: index);
+    context.read<StudentListCubit>().selectClass(selectedIndex: index);
     context.router.replaceNamed(AppRoutes.routeAdminStudents);
   }
 }

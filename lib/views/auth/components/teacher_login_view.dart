@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
   }
 
   Widget _teacherEmailInput() {
+    _tfTeacherEmailController.text = 'gurcanataman@gmail.com';
     return AppLoginTextFormField(
       iconData: Icons.person,
       validateText: 'E-posta adresi boş olamaz',
@@ -70,6 +73,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
   }
 
   Widget _teacherPasswordInput() {
+    _tfTeacherPasswordController.text = '112233i_';
     return AppLoginTextFormField(
       iconData: Icons.password,
       validateText: 'Şifre boş olamaz',
@@ -93,41 +97,28 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
       onPressed: () {
         _login();
       },
-      backColor: Colors.amber,
-      textColor: darkSecondaryColor,
     );
   }
 
   void _login() async {
     if (!_buttonListener.value && _checkFormElement()) {
       _buttonListener.value = true;
+      final result = await context
+          .read<AuthCubit>()
+          .teacherLogin(email: _tfTeacherEmailController.text, password: _tfTeacherPasswordController.text);
+      _buttonListener.value = false;
 
-      try {
-        final credential = await context
-            .read<AuthCubit>()
-            .teacherLogin(email: _tfTeacherEmailController.text, password: _tfTeacherPasswordController.text);
-        _buttonListener.value = false;
-        await SharedPrefs.instance.setString(PrefKeys.userID.toString(), credential.user!.uid);
+      if (result.isSuccess) {
+        await SharedPrefs.instance.setString(PrefKeys.userID.toString(), result.teacher!.id!);
         await SharedPrefs.instance.setInt(PrefKeys.userType.toString(), 1);
+        await SharedPrefs.instance.setString(PrefKeys.teacher.toString(), json.encode(result.teacher));
+
         CustomDialog.showSnackBar(
-            context: context,
-            message: 'Başarıyla giriş yapıldı! Yönlendiriliyorsunuz...',
-            type: DialogType.success,
-            duration: const Duration(seconds: 1));
+            context: context, message: 'Başarıyla giriş yapıldı! Yönlendiriliyorsunuz...', type: DialogType.success);
         await Future.delayed(const Duration(seconds: 1));
         context.router.replaceNamed(AppRoutes.routeMainAdmin);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          _buttonListener.value = false;
-
-          CustomDialog.showSnackBar(
-              context: context, message: 'Bu e-posta adresine kayıtlı kullanıcı bulunamadı', type: DialogType.error);
-        } else if (e.code == 'wrong-password') {
-          _buttonListener.value = false;
-
-          CustomDialog.showSnackBar(
-              context: context, message: 'Şifre yanlış lütfen kontrol edin!', type: DialogType.error);
-        }
+      } else {
+        CustomDialog.showSnackBar(context: context, message: result.message, type: DialogType.error);
       }
     }
   }

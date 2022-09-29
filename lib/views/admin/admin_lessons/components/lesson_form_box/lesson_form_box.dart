@@ -33,40 +33,37 @@ class _LessonFormBoxState extends State<LessonFormBox> {
   @override
   Widget build(BuildContext context) {
     _selectedIndex = context.read<LessonListCubit>().selectedCategory - 5;
-    return Container(
-        decoration: BoxDecoration(
-            color: darkSecondaryColor,
-            border: Border.all(color: Colors.white10),
-            borderRadius: const BorderRadius.all(Radius.circular(10))),
-        child: BlocBuilder<LessonFormBoxCubit, LessonFormBoxState>(
-          builder: (context, state) {
-            _lesson = state is EditLessonState ? state.editLesson : null;
-            if (_lesson != null) {
-              _lessonNameFocusNode.requestFocus();
-              _tfLessonNameFormController.text = _lesson!.lessonName!;
-              _tfLessonTimeFormController.text = _lesson!.lessonTime!.toString();
-            } else {
-              _clearForm();
-            }
+    return Card(
+      child: BlocBuilder<LessonFormBoxCubit, LessonFormBoxState>(
+        builder: (context, state) {
+          _lesson = state is EditLessonState ? state.editLesson : null;
+          if (_lesson != null) {
+            _lessonNameFocusNode.requestFocus();
+            _tfLessonNameFormController.text = _lesson!.lessonName!;
+            _tfLessonTimeFormController.text = _lesson!.lessonTime!.toString();
+          } else {
+            _clearForm();
+          }
 
-            return Column(
-              children: [
-                _title(),
-                AppFormBoxElements(formKey: _formKey, children: [
-                  ClassesLevelSelectBox(
-                    valueChanged: (index) {
-                      context.read<LessonListCubit>().changeCategory(index + 5);
-                    },
-                    selectedIndex: _selectedIndex,
-                  ),
-                  _lessonNameInput(),
-                  _lessonTimeInput(),
-                  _actionButtons(),
-                ]),
-              ],
-            );
-          },
-        ));
+          return Column(
+            children: [
+              _title(),
+              AppFormBoxElements(formKey: _formKey, children: [
+                ClassesLevelSelectBox(
+                  valueChanged: (index) {
+                    context.read<LessonListCubit>().changeCategory(index + 5);
+                  },
+                  selectedIndex: _selectedIndex,
+                ),
+                _lessonNameInput(),
+                _lessonTimeInput(),
+                _actionButtons(),
+              ]),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   /*
@@ -105,8 +102,6 @@ class _LessonFormBoxState extends State<LessonFormBox> {
                 _editLesson(_lesson);
               }
             },
-            backColor: _lesson == null ? Colors.amber : infoColor,
-            textColor: darkSecondaryColor,
           ),
         ),
       ],

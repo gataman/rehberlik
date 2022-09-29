@@ -33,11 +33,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
   @override
   Widget build(BuildContext context) {
     _selectedIndex = context.read<TrialExamListCubit>().selectedCategory - 5;
-    return Container(
-      decoration: BoxDecoration(
-          color: darkSecondaryColor,
-          border: Border.all(color: Colors.white10),
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
+    return Card(
       child: BlocBuilder<TrialExamFormBoxCubit, TrialExamFormBoxState>(builder: (context, state) {
         _trialExam = state is EditTrialExamState ? state.editTrialExam : null;
 
@@ -103,8 +99,6 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
                 _editSubject(_trialExam);
               }
             },
-            backColor: _trialExam == null ? Colors.amber : infoColor,
-            textColor: darkSecondaryColor,
           ),
         ),
       ],

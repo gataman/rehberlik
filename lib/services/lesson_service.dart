@@ -21,7 +21,6 @@ class LessonService implements DBBase<Lesson> {
         )
         .doc();
     await docRef.set(object);
-    debugPrint("Lesson addd id ${docRef.id}");
     return docRef.id;
   }
 

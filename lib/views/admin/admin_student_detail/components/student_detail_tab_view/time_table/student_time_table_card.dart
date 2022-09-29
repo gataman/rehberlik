@@ -29,9 +29,12 @@ class StudentTimeTableCard extends StatelessWidget {
           _timeTableDataSource.updateList(timeTableMap: state.timeTableList!, context: context);
           return Column(
             children: [
-              Container(
-                height: 350,
-                decoration: tableBoxDecoration,
+              Card(
+                elevation: 0,
+                shape: Constants.getBorder(
+                  borderColor: Theme.of(context).dividerColor,
+                  radius: 0,
+                ),
                 child: _timeTableDataGridCard(context),
               ),
             ],
@@ -65,22 +68,22 @@ class StudentTimeTableCard extends StatelessWidget {
     double width = !Responsive.isMobile(context) ? double.nan : 100;
 
     return <GridColumn>[
-      GridColumn(columnName: 'monday', label: _getLabelTitleText("Pazartesi"), width: width),
-      GridColumn(columnName: 'tuesday', label: _getLabelTitleText("Salı"), width: width),
-      GridColumn(columnName: 'wednesday', label: _getLabelTitleText("Çarşamba"), width: width),
-      GridColumn(columnName: 'thursday', label: _getLabelTitleText("Perşembe"), width: width),
-      GridColumn(columnName: 'friday', label: _getLabelTitleText("Cuma"), width: width),
-      GridColumn(columnName: 'saturday', label: _getLabelTitleText("Cumartesi"), width: width),
-      GridColumn(columnName: 'sunday', label: _getLabelTitleText("Pazar"), width: width)
+      GridColumn(columnName: 'monday', label: _getLabelTitleText("Pazartesi", context), width: width),
+      GridColumn(columnName: 'tuesday', label: _getLabelTitleText("Salı", context), width: width),
+      GridColumn(columnName: 'wednesday', label: _getLabelTitleText("Çarşamba", context), width: width),
+      GridColumn(columnName: 'thursday', label: _getLabelTitleText("Perşembe", context), width: width),
+      GridColumn(columnName: 'friday', label: _getLabelTitleText("Cuma", context), width: width),
+      GridColumn(columnName: 'saturday', label: _getLabelTitleText("Cumartesi", context), width: width),
+      GridColumn(columnName: 'sunday', label: _getLabelTitleText("Pazar", context), width: width)
     ];
   }
 
-  Widget _getLabelTitleText(String value) {
+  Widget _getLabelTitleText(String value, BuildContext context) {
     return Container(
       alignment: Alignment.center,
       child: Text(
         value,
-        style: defaultDataTableTitleStyle,
+        style: Theme.of(context).textTheme.labelMedium,
         overflow: TextOverflow.ellipsis,
       ),
     );

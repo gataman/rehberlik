@@ -37,7 +37,7 @@ class AppOutlineTextFormField extends StatelessWidget {
       focusNode: focusNode,
       textInputAction: TextInputAction.go,
       controller: controller,
-      style: TextStyle(color: isStyleDifferent ? Colors.amber : infoColor),
+      style: isStyleDifferent ? Theme.of(context).textTheme.bodyLarge : Theme.of(context).textTheme.labelLarge,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(0),

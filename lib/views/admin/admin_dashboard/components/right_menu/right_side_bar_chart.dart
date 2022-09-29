@@ -8,7 +8,7 @@ class RightSideBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
+      height: 150,
       child: BarChart(
         BarChartData(
             gridData: FlGridData(
@@ -59,7 +59,7 @@ class RightSideBarChart extends StatelessWidget {
             ],
             borderData: FlBorderData(
                 border: Border.all(
-              color: Colors.white10,
+              color: Theme.of(context).dividerColor,
             )),
             titlesData: FlTitlesData(
               show: true,

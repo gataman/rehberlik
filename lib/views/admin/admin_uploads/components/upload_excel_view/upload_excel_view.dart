@@ -40,16 +40,18 @@ class UploadExcelView extends StatelessWidget {
   Column _defaultState(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [_excelUploadInfo(), _uploadButton(context)],
+      children: [_excelUploadInfo(context), _uploadButton(context)],
     );
   }
 
-  Widget _excelUploadInfo() {
+  Widget _excelUploadInfo(BuildContext context) {
     if (isEokul) {
-      return const Text(
-          "E-okul Öğrenci İşlemleri kısmından aldığınız Fotoğraflı Kimlik Bilgili Öğrenci listesini "
-          "önce excelden açınız ve xlsx formatına dönüştürdükten sonra "
-          "bu alana yükleyiniz!");
+      return Text(
+        "E-okul Öğrenci İşlemleri kısmından aldığınız Fotoğraflı Kimlik Bilgili Öğrenci listesini "
+        "önce excelden açınız ve xlsx formatına dönüştürdükten sonra "
+        "bu alana yükleyiniz!",
+        style: Theme.of(context).textTheme.bodyLarge,
+      );
     } else {
       return Column(
         children: [
@@ -63,8 +65,10 @@ class UploadExcelView extends StatelessWidget {
                       'https://firebasestorage.googleapis.com/v0/b/rehberlik-810e1.appspot.com/o/documents%2Fsablon_liste.xlsx?alt=media&token=f3fdf075-8aa6-4159-a69e-197fdac4f9cd');
                 }),
           ),
-          const Text(
-              "Yukarıdaki excel şablonunu bilgisayarınıza indirip öğrencileri doldurun ve bu alana yükleyin")
+          Text(
+            "Yukarıdaki excel şablonunu bilgisayarınıza indirip öğrencileri doldurun ve bu alana yükleyin",
+            style: Theme.of(context).textTheme.bodyLarge,
+          )
         ],
       );
     }
@@ -74,7 +78,7 @@ class UploadExcelView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(defaultPadding),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Colors.amber),
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
         onPressed: () {
           context.read<UploadExcelCubit>().selectExcelFile(isEokul: isEokul);
         },
@@ -89,16 +93,19 @@ class UploadExcelView extends StatelessWidget {
   Widget _excelParsedState(UploadExcelParsedState state, BuildContext context) {
     if (state.isLoading) {
       return Column(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
             width: defaultPadding,
             height: defaultPadding,
             child: DefaultCircularProgress(),
           ),
-          SizedBox(
+          const SizedBox(
             height: defaultPadding,
           ),
-          Text("Dosya yükleniyor lütfen bekleyin!")
+          Text(
+            "Dosya yükleniyor lütfen bekleyin!",
+            style: Theme.of(context).textTheme.bodyLarge,
+          )
         ],
       );
     } else {
@@ -109,7 +116,7 @@ class UploadExcelView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(defaultPadding),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.amber),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
                 onPressed: () {
                   context.read<UploadExcelCubit>().addAllStudentListWithClass();
                 },
@@ -142,7 +149,7 @@ class UploadExcelView extends StatelessWidget {
           style: defaultTitleStyle,
         );
       } else {
-        return const Text("Sistemde bit hata oluştu!");
+        return const Text("Sistemde bir hata oluştu!");
       }
     }
   }

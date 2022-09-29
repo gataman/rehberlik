@@ -83,7 +83,6 @@ class AgendaMeetingDetailDialog extends StatelessWidget {
               context: context,
               type: DialogType.success,
             );
-            Navigator.pop(context);
           });
         });
   }

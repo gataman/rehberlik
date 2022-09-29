@@ -2,8 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
 
-import '../../../common/constants.dart';
-
 class TrialExamBarChart extends StatelessWidget {
   final TrialExamGraph trialExamGraph;
 
@@ -11,12 +9,15 @@ class TrialExamBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: defaultBoxDecoration,
+    return Card(
+      elevation: 10,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(trialExamGraph.graphLabelName),
+          Text(
+            trialExamGraph.graphLabelName,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           SizedBox(
             height: 180,
             child: BarChart(

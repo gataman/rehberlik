@@ -25,52 +25,46 @@ class AppListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: defaultDividerDecoration,
-      child: Material(
-        child: InkWell(
-          mouseCursor: SystemMouseCursors.click,
-          hoverColor: Colors.white.withOpacity(0.04),
-          splashColor: darkBackColor,
-          onTap: detailOnPressed,
-          child: ListTile(
-              horizontalTitleGap: 0.3,
-              leading: iconData != null
-                  ? Icon(
-                      iconData,
-                      size: 20,
+    return InkWell(
+      mouseCursor: SystemMouseCursors.click,
+      hoverColor: Theme.of(context).dividerColor,
+      //splashColor: darkBackColor,
+      onTap: detailOnPressed,
+      child: ListTile(
+          leading: iconData != null
+              ? Icon(
+                  iconData,
+                  size: 20,
+                  color: infoColor,
+                )
+              : svgData != null
+                  ? SvgPicture.asset(
+                      svgData ?? "${iconsSrc}menu_classroom.svg",
                       color: infoColor,
+                      height: 16,
                     )
-                  : svgData != null
-                      ? SvgPicture.asset(
-                          svgData ?? "${iconsSrc}menu_classroom.svg",
-                          color: infoColor,
-                          height: 16,
-                        )
-                      : null,
-              title: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                style: context.normalTextStyle,
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (editOnPressed != null)
-                    AppSmallRoundedButton(
-                      onPressed: editOnPressed!,
-                    ),
-                  const SizedBox(width: defaultPadding),
-                  if (deleteOnPressed != null)
-                    AppSmallRoundedButton(
-                      bgColor: Colors.redAccent,
-                      iconData: Icons.delete,
-                      onPressed: deleteOnPressed!,
-                    ),
-                ],
-              )),
-        ),
-      ),
+                  : null,
+          title: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (editOnPressed != null)
+                AppSmallRoundedButton(
+                  onPressed: editOnPressed!,
+                ),
+              const SizedBox(width: defaultPadding),
+              if (deleteOnPressed != null)
+                AppSmallRoundedButton(
+                  bgColor: Colors.redAccent,
+                  iconData: Icons.delete,
+                  onPressed: deleteOnPressed!,
+                ),
+            ],
+          )),
     );
   }
 }

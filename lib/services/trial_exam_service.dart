@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rehberlik/services/trial_exam_class_result_service.dart';
 import 'package:rehberlik/services/trial_exam_result_service.dart';
 
 import '../common/locator.dart';
@@ -9,6 +10,7 @@ class TrialExamService implements DBBase<TrialExam> {
   final _db = FirebaseFirestore.instance;
   final _mainRef = "trial_exams";
   final TrialExamResultService _trialExamResultService = locator<TrialExamResultService>();
+  final TrialExamClassResultService _trialExamClassResultService = locator<TrialExamClassResultService>();
 
   @override
   Future<String> add({required TrialExam object}) async {
@@ -70,11 +72,10 @@ class TrialExamService implements DBBase<TrialExam> {
 
   @override
   Future<void> delete({required String objectID}) {
-    return _db
-        .collection(_mainRef)
-        .doc(objectID)
-        .delete()
-        .then((value) => _trialExamResultService.deleteWithParentID(parentID: objectID));
+    return _db.collection(_mainRef).doc(objectID).delete().then((value) {
+      _trialExamResultService.deleteWithParentID(parentID: objectID);
+      _trialExamClassResultService.deleteWithParentID(parentID: objectID);
+    });
   }
 
   Future<void> deleteAll({required List<TrialExam> list}) async {

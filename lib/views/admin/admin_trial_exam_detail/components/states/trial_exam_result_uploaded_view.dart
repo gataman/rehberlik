@@ -24,7 +24,7 @@ class TrialExamResultUploadedView extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(right: defaultPadding),
                     child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(primary: Colors.amber),
+                      style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
                       onPressed: () {
                         final classCubit = context.read<ClassListCubit>();
                         context
@@ -47,7 +47,6 @@ class TrialExamResultUploadedView extends StatelessWidget {
                     text: 'Sisteme Kaydet',
                     loadingListener: buttonListener,
                     onPressed: onClick,
-                    textColor: darkBackColor,
                   ),
                 ),
               ],

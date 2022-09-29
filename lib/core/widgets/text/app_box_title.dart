@@ -23,7 +23,7 @@ class AppBoxTitle extends StatelessWidget {
               },
               child: Icon(
                 Icons.arrow_back_ios_new_outlined,
-                color: Colors.amber,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           if (isBack)
@@ -33,11 +33,7 @@ class AppBoxTitle extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: color ?? titleColor,
-              ),
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
           ),

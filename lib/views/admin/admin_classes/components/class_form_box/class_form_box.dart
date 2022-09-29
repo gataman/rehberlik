@@ -32,11 +32,7 @@ class _ClassFormBoxState extends State<ClassFormBox> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: darkSecondaryColor,
-          border: Border.all(color: Colors.white10),
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
+    return Card(
       child: BlocBuilder<ClassFormBoxCubit, ClassFormBoxState>(
         builder: (context, state) {
           _classes = state is EditClassState ? state.editedClass : null;
@@ -95,8 +91,6 @@ class _ClassFormBoxState extends State<ClassFormBox> {
                 _editClasses(_classes);
               }
             },
-            backColor: _classes == null ? Colors.amber : infoColor,
-            textColor: darkSecondaryColor,
           ),
         ),
       ],
@@ -127,7 +121,6 @@ class _ClassFormBoxState extends State<ClassFormBox> {
   }
 
   void _saveClass() {
-    //debugPrint("Save basıldı ${_checkFormElement()}");
     if (!buttonListener.value && _checkFormElement()) {
       ClassListCubit cubit = context.read<ClassListCubit>();
       buttonListener.value = true;
@@ -170,7 +163,6 @@ class _ClassFormBoxState extends State<ClassFormBox> {
         } else {
           classes.className = _tfClassNameFormController.text;
           //final lessonTime = int.tryParse( _tfLessonTimeFormController.text);
-          debugPrint("Selected Index $_selectedIndex");
           classes.classLevel = _selectedIndex + 5;
           cubit.updateClasses(classes).then((value) {
             buttonListener.value = false;

@@ -13,14 +13,7 @@ class AppMenuTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(defaultPadding / 2),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: color ?? titleColor,
-        ),
-      ),
+      child: Text(title, style: Theme.of(context).textTheme.titleLarge),
     );
   }
 }

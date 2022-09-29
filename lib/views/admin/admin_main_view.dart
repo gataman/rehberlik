@@ -2,9 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/navigaton/admin_drawer_menu.dart';
-import 'package:rehberlik/common/widgets/admin_app_bar.dart';
+import 'package:rehberlik/common/widgets/custom_app_bar.dart';
 
-import '../../common/navigaton/app_router/app_routes.dart';
 import 'admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import 'admin_dashboard/components/agenda_box/cubit/agenda_box_cubit.dart';
 import 'admin_lessons/components/lesson_list_card/cubit/lesson_list_cubit.dart';
@@ -16,7 +15,9 @@ class AdminMainView extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminAppBar(),
+      appBar: CustomAppBar(
+        context: context,
+      ),
       drawer: const AdminDrawerMenu(),
       body: const AutoRouter(),
     );

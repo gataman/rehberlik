@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
+import 'package:rehberlik/common/themes/custom_theme.dart';
 import 'package:rehberlik/core/init/pref_keys.dart';
+import 'package:rehberlik/views/app_main/cubit/app_main_cubit.dart';
 
 import '../../core/init/locale_manager.dart';
 import '../../models/student.dart';
@@ -30,20 +33,25 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SizedBox(
-            width: 32,
-            height: 32,
-            child: student != null
-                ? CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      student.photoUrl!,
+          InkWell(
+            onTap: () {
+              context.read<AppMainCubit>().changeTheme();
+            },
+            child: SizedBox(
+              width: 32,
+              height: 32,
+              child: student != null
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        student.photoUrl!,
+                      ),
+                    )
+                  : const CircleAvatar(
+                      backgroundImage: AssetImage(
+                        "${imagesSrc}profile.jpeg",
+                      ),
                     ),
-                  )
-                : const CircleAvatar(
-                    backgroundImage: AssetImage(
-                      "${imagesSrc}profile.jpeg",
-                    ),
-                  ),
+            ),
           ),
           if (!Responsive.isMobile(context))
             Padding(

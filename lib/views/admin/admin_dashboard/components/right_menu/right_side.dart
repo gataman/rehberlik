@@ -10,31 +10,25 @@ class RightSide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(defaultPadding),
-      height: 500,
-      decoration: BoxDecoration(
-        color: darkSecondaryColor,
-        border: Border.all(color: Colors.white10),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Column(
+          children: [
+            const AppMenuTitle(title: 'Deneme Sınavları'),
+            const SizedBox(
+              height: defaultPadding,
+            ),
+            ClassesDropDownMenu(
+              valueChanged: (index) {},
+            ),
+            const SizedBox(
+              height: defaultPadding,
+            ),
+            const RightSideBarChart(),
+            TrialExamsList(denemeList: denemeList)
+          ],
         ),
-      ),
-      child: Column(
-        children: [
-          const AppMenuTitle(title: 'Deneme Sınavları'),
-          const SizedBox(
-            height: defaultPadding,
-          ),
-          ClassesDropDownMenu(
-            valueChanged: (index) {},
-          ),
-          const SizedBox(
-            height: defaultPadding,
-          ),
-          const RightSideBarChart(),
-          TrialExamsList(denemeList: denemeList)
-        ],
       ),
     );
   }

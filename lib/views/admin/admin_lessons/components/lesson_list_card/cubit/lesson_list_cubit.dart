@@ -18,7 +18,6 @@ class LessonListCubit extends Cubit<LessonListState> {
 
   void fetchLessonList() async {
     if (lessonList == null) {
-      debugPrint("fetchLessonList çalıştı");
       _lessonsRepository.getAll().then((_lessonList) {
         final lastList = _lessonList.groupBy((lesson) => lesson.classLevel);
         final sortedList = SplayTreeMap<int, List<Lesson>>.from(lastList, (a, b) => a.compareTo(b));
@@ -79,10 +78,12 @@ class LessonListCubit extends Cubit<LessonListState> {
       }
     }
 
-    emit(LessonListState(selectedCategory: selectedCategory, lessonList: lessonList![selectedCategory], isLoading: false));
+    emit(LessonListState(
+        selectedCategory: selectedCategory, lessonList: lessonList![selectedCategory], isLoading: false));
   }
 
   void _refreshList() {
-    emit(LessonListState(selectedCategory: selectedCategory, lessonList: lessonList![selectedCategory], isLoading: false));
+    emit(LessonListState(
+        selectedCategory: selectedCategory, lessonList: lessonList![selectedCategory], isLoading: false));
   }
 }

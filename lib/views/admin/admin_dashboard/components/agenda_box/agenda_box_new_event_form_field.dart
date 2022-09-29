@@ -21,10 +21,11 @@ class AgendaBoxNewEventFormField extends StatelessWidget {
       keyboardType: TextInputType.multiline,
       maxLines: 3,
       controller: _subjectController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: "Randevu Konusu",
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(
+          borderSide: BorderSide(color: Theme.of(context).dividerColor),
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
         ),

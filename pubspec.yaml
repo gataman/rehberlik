@@ -64,6 +64,10 @@ dependencies:
   meta: ^1.8.0
   firebase_auth: ^3.9.0
   json_annotation: ^4.6.0
+  excel:
+    git:
+      url: https://github.com/justkawal/excel.git
+      ref: eb091ba # branch name
   
 
 

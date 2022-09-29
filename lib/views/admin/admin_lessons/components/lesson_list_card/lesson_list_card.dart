@@ -6,19 +6,16 @@ class LessonListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(context.router.currentPath);
-    return Container(
-        decoration: defaultBoxDecoration,
+    return Card(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: minimumBoxHeight),
-          child: Padding(padding: const EdgeInsets.only(bottom: defaultPadding), child: _getLessonListBox()),
-        ));
+      constraints: const BoxConstraints(minHeight: minimumBoxHeight),
+      child: Padding(padding: const EdgeInsets.only(bottom: defaultPadding), child: _getLessonListBox()),
+    ));
   }
 
   Widget _getLessonListBox() {
     return BlocBuilder<LessonListCubit, LessonListState>(
       builder: (context, state) {
-        debugPrint("LessonList builder çalıştı...............");
         final lessonList = state.lessonList;
         if (lessonList != null) {
           lessonList.sort((a, b) => b.lessonTime!.compareTo(a.lessonTime!));
@@ -43,10 +40,11 @@ class LessonListCard extends StatelessWidget {
   }
 
   ListView _getLessonListView(List<Lesson> lessonList) {
-    return ListView.builder(
+    return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: lessonList.length,
+      separatorBuilder: (context, index) => const Divider(height: 0),
       itemBuilder: (context, index) {
         final lesson = lessonList[index];
         return AppListTile(
@@ -84,8 +82,6 @@ class LessonListCard extends StatelessWidget {
               context: context,
               type: DialogType.success,
             );
-
-            Navigator.pop(context);
           }, onError: (e) {
             CustomDialog.showSnackBar(
               message: LocaleKeys.alerts_error.locale([e.toString()]),

@@ -8,19 +8,19 @@ class MeetingTypeSelectBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
-        hintStyle: TextStyle(color: Colors.white30),
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
+        hintStyle: const TextStyle(color: Colors.white30),
         fillColor: darkSecondaryColor,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white10),
-          borderRadius: BorderRadius.all(
+          borderSide: BorderSide(color: Theme.of(context).dividerColor),
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.all(
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
         ),

@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 import 'dart:typed_data';
 
-//import 'package:excel/excel.dart';
+import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +48,7 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
       await _classesRepository.add(object: classes).then((classID) async {
         for (Student student in list) {
           student.classID = classID;
+          student.classLevel = classLevel;
         }
         await _studentRepository.addAll(list: list);
       });
@@ -56,7 +57,6 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
 
   // Excel Parse Methods
   Future<void> selectExcelFile({required bool isEokul}) async {
-    /*
     _refreshList(isLoading: true);
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -71,8 +71,7 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
         //Web
         final bytes = result.files.first.bytes;
         if (bytes != null) {
-          parsedStudentList =
-              isEokul ? await _decodeEokulFullExcelFile(bytes) : await _decodeTemplateExcelFile(bytes);
+          parsedStudentList = isEokul ? await _decodeEokulFullExcelFile(bytes) : await _decodeTemplateExcelFile(bytes);
 
           _refreshList(isLoading: false);
         }
@@ -81,18 +80,15 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
         final path = result.files.first.path;
         if (path != null) {
           var mobileBytes = await File(path).readAsBytes();
-          parsedStudentList = isEokul
-              ? await _decodeEokulFullExcelFile(mobileBytes)
-              : await _decodeTemplateExcelFile(mobileBytes);
+          parsedStudentList =
+              isEokul ? await _decodeEokulFullExcelFile(mobileBytes) : await _decodeTemplateExcelFile(mobileBytes);
 
           _refreshList(isLoading: false);
         }
       }
     }
-    */
   }
 
-/*
   Future<Map<String, List<Student>>?> _decodeEokulFullExcelFile(Uint8List bytes) async {
     //final decoder = SpreadsheetDecoder.decodeBytes(bytes, update: false);
     var decoder = Excel.decodeBytes(bytes);
@@ -195,7 +191,6 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
     return sortedList;
   }
 
-*/
   String fixItClassName(String? className) {
     if (className != null) {
       const first = ". Sınıf / ";

@@ -4,8 +4,7 @@ class AgendaBoxNewEventAlertDialog extends StatefulWidget {
   final CalendarTapDetails details;
   final AgendaBoxCubit cubit;
 
-  const AgendaBoxNewEventAlertDialog({Key? key, required this.details, required this.cubit})
-      : super(key: key);
+  const AgendaBoxNewEventAlertDialog({Key? key, required this.details, required this.cubit}) : super(key: key);
 
   @override
   State<AgendaBoxNewEventAlertDialog> createState() => _AgendaBoxNewEventDialogFormState();
@@ -40,18 +39,17 @@ class _AgendaBoxNewEventDialogFormState extends State<AgendaBoxNewEventAlertDial
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: darkBackColor,
       scrollable: true,
       title: Center(
           child: Column(
         children: [
-          const Text(
+          Text(
             "Yeni Randevu / İş Ekle",
-            style: defaultTitleStyle,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           Text(
             _dateText,
-            style: const TextStyle(color: Colors.teal, fontSize: 12),
+            style: Theme.of(context).textTheme.labelMedium,
           ),
         ],
       )),
@@ -86,26 +84,29 @@ class _AgendaBoxNewEventDialogFormState extends State<AgendaBoxNewEventAlertDial
           )),
       actions: <Widget>[
         ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Kapat')),
+            child: Text('Kapat', style: TextStyle(color: Theme.of(context).colorScheme.onError))),
         ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Colors.lightGreen),
+            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.tertiary),
             onPressed: () {
               if (_saveEvent()) {
                 Navigator.of(context).pop();
               }
             },
-            child: const Text('Kaydet'))
+            child: Text('Kaydet',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onTertiary,
+                )))
       ],
     );
   }
 
   TableRow _getStartTimeText(BuildContext context) {
     return TableRow(children: [
-      const SizedBox(height: 40, child: Text("Başlangıç Saati", style: defaultInfoTitle)),
+      SizedBox(height: 40, child: Text("Başlangıç Saati", style: Theme.of(context).textTheme.labelLarge)),
       const Text(":", style: defaultInfoTitle),
       GestureDetector(
         onTap: () async {
@@ -133,7 +134,7 @@ class _AgendaBoxNewEventDialogFormState extends State<AgendaBoxNewEventAlertDial
 
   TableRow _getEndTimeText(BuildContext context) {
     return TableRow(children: [
-      const Text("Bitiş Saati", style: defaultInfoTitle),
+      Text("Bitiş Saati", style: Theme.of(context).textTheme.labelLarge),
       const Text(":", style: defaultInfoTitle),
       GestureDetector(
         onTap: () async {
@@ -176,11 +177,10 @@ class _AgendaBoxNewEventDialogFormState extends State<AgendaBoxNewEventAlertDial
       DateTime newStartTime =
           DateTime(startDate.year, startDate.month, startDate.day, startTime.hour, startTime.minute);
 
-      DateTime newEndTime =
-          DateTime(startDate.year, startDate.month, startDate.day, endTime.hour, endTime.minute);
+      DateTime newEndTime = DateTime(startDate.year, startDate.month, startDate.day, endTime.hour, endTime.minute);
 
-      widget.cubit.addMeeting(Meeting(
-          eventName: _subjectController.text, from: newStartTime, to: newEndTime, type: meetingTypeIndex));
+      widget.cubit.addMeeting(
+          Meeting(eventName: _subjectController.text, from: newStartTime, to: newEndTime, type: meetingTypeIndex));
 
       return true;
     } else {

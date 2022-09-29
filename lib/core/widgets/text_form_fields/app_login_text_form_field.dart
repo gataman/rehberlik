@@ -57,7 +57,6 @@ class AppLoginTextFormField extends StatelessWidget {
       focusNode: focusNode,
       textInputAction: TextInputAction.go,
       controller: controller,
-      style: const TextStyle(color: Colors.amber),
       textAlign: TextAlign.center,
       obscuringCharacter: '*',
       decoration: InputDecoration(

@@ -16,6 +16,7 @@ class StudentTimeTableDataSource extends DataGridSource {
   List<DataGridRow> get rows => _timeTableDataGridRows;
 
   void updateList({required BuildContext context, required Map<int, List<TimeTable>> timeTableMap}) async {
+    _timeTableDataGridRows.clear();
     timeTableMap.forEach((key, timeTableList) {
       _context = context;
       final cells = <DataGridCell<TimeTable>>[];
@@ -49,8 +50,6 @@ class StudentTimeTableDataSource extends DataGridSource {
                     TimeTableListCubit cubit = _context!.read<TimeTableListCubit>();
                     return TimeTableAddAlertDialog(timeTable: timeTable, cubit: cubit);
                   });
-
-              debugPrint("Tıklanan Time table ${timeTable.toString()}");
             } else {
               debugPrint("Context null");
             }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
@@ -26,31 +28,43 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: darkBackColor,
       scrollable: true,
-      title: const Center(
+      title: Center(
         child: Text(
           "Ders ve Konu Ekle",
-          style: defaultTitleStyle,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
       content: Column(
         children: [_getNewTimeTableValues(context)],
       ),
+      actionsAlignment: MainAxisAlignment.center,
       actions: <Widget>[
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+        ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Kapat')),
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                primary: widget.timeTable.id == null ? Colors.lightGreen : Colors.blueAccent),
+            icon: Icon(
+              Icons.close,
+              size: 16,
+              color: Theme.of(context).colorScheme.onError,
+            ),
+            label: Text(
+              'Kapat',
+              style: TextStyle(color: Theme.of(context).colorScheme.onError),
+            )),
+        ElevatedButton.icon(
             onPressed: () async {
               await _saveTimeTable(context: context);
             },
-            child: Text(widget.timeTable.id == null ? 'Kaydet' : 'Güncelle'))
+            icon: Icon(
+              Icons.save,
+              size: 16,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            label: Text(widget.timeTable.id == null ? 'Kaydet' : 'Güncelle',
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)))
       ],
     );
   }
@@ -115,8 +129,7 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
               _showSubjectDialog();
             },
             child: _getSubValueTextLabel(
-                text: _getSubjectName(
-                    lessonID: widget.timeTable.lessonID, subjectID: widget.timeTable.subjectID),
+                text: _getSubjectName(lessonID: widget.timeTable.lessonID, subjectID: widget.timeTable.subjectID),
                 type: 3),
           ),
         ]),
@@ -143,7 +156,7 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
             : type == 2
                 ? text ?? 'Ders Seçiniz'
                 : text ?? 'Konu Seçiniz',
-        style: defaultDialogSubValueStyle,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }
@@ -236,13 +249,9 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
     } else {
       return const Text("Lütfen ders ekleyin!");
     }
-
-    debugPrint("Alerd Dialog context = ${context.toString()}");
-    return Center();
   }
 
   void _selectLesson({required LessonWithSubject lessonWithSubject}) {
-    debugPrint("Seçilen Ders ${lessonWithSubject.toString()}");
     setState(() {
       widget.timeTable.lessonID = lessonWithSubject.lesson.id;
       selectedSubjectList = lessonWithSubject.subjectList;
@@ -270,11 +279,14 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
               content: SizedBox(width: 100, height: 200, child: _getSubjectListWiew(selectedSubjectList)),
               actions: <Widget>[
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+                  style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Kapat'),
+                  child: Text(
+                    'Kapat',
+                    style: TextStyle(color: Theme.of(context).colorScheme.onError),
+                  ),
                 )
               ],
             );
@@ -290,8 +302,7 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
 
   _getSubjectListWiew(List<Subject>? subjectList) {
     if (subjectList == null || subjectList.isEmpty) {
-      return const Text(
-          "Bu derse ait konu eklenmemiş görünüyor. Sistemde bir hata yoksa lütfen konu ekleyiniz.");
+      return const Text("Bu derse ait konu eklenmemiş görünüyor. Sistemde bir hata yoksa lütfen konu ekleyiniz.");
     } else {
       return ListView.builder(
           //shrinkWrap: true,
@@ -393,8 +404,7 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
   String? _getLessonName({required String? lessonID}) {
     final lessonList = widget.cubit.lessonWithSubjectList;
     if (lessonList != null && lessonList.isNotEmpty && lessonID != null) {
-      LessonWithSubject? lessonWithSubject =
-          lessonList.findOrNull((element) => element.lesson.id == lessonID);
+      LessonWithSubject? lessonWithSubject = lessonList.findOrNull((element) => element.lesson.id == lessonID);
       if (lessonWithSubject != null) {
         return lessonWithSubject.lesson.lessonName;
       }
@@ -405,8 +415,7 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
   String? _getSubjectName({required String? lessonID, required String? subjectID}) {
     final lessonList = widget.cubit.lessonWithSubjectList;
     if (lessonList != null && lessonList.isNotEmpty && lessonID != null) {
-      LessonWithSubject? lessonWithSubject =
-          lessonList.findOrNull((element) => element.lesson.id == lessonID);
+      LessonWithSubject? lessonWithSubject = lessonList.findOrNull((element) => element.lesson.id == lessonID);
       if (lessonWithSubject != null) {
         if (lessonWithSubject.subjectList != null) {
           Subject? subject = lessonWithSubject.subjectList!.findOrNull((subject) => subject.id == subjectID);

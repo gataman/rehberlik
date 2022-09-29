@@ -27,7 +27,6 @@ class StudentAuthGuard extends AutoRouteGuard {
   bool _checkUser() {
     final userID = SharedPrefs.instance.getString(PrefKeys.userID.toString());
     final userType = SharedPrefs.instance.getInt(PrefKeys.userType.toString());
-    debugPrint('Chek User ${FirebaseAuth.instance.currentUser.toString()}');
 
     if (userID != null && userType != null && userType == 2) {
       return true;

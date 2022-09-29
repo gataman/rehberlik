@@ -13,21 +13,20 @@ class AppCancelFormButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: warningColor,
+        backgroundColor: Theme.of(context).colorScheme.error,
       ),
       onPressed: onPressed,
       child: Row(
-        children: const [
+        children: [
           Icon(
             Icons.cancel,
-            color: darkSecondaryColor,
+            color: Theme.of(context).colorScheme.onError,
           ),
           Expanded(
             child: Center(
               child: LocaleText(
                 text: LocaleKeys.actions_cancel,
-                color: darkSecondaryColor,
-                fontWeight: FontWeight.w500,
+                textStyle: TextStyle(color: Theme.of(context).colorScheme.onError),
               ),
             ),
           ),

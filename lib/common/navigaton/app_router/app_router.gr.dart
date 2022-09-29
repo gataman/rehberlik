@@ -64,6 +64,15 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    StudentQuestionFollowRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const StudentQuestionFollowView(),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     AdminDashboardRoute.name: (routeData) {
       final args = routeData.argsAs<AdminDashboardRouteArgs>(
           orElse: () => const AdminDashboardRouteArgs());
@@ -168,6 +177,15 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    AdminStudentsTrialExamDetailRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const AdminStudentsTrialExamDetailView(),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     AdminStudentsPasswordRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
@@ -207,6 +225,12 @@ class _$AppRouter extends RootStackRouter {
             RouteConfig(
               StudentDashboardRoute.name,
               path: 'dashboard',
+              parent: StudentMainRoute.name,
+              guards: [studentAuthGuard],
+            ),
+            RouteConfig(
+              StudentQuestionFollowRoute.name,
+              path: 'soru_takibi',
               parent: StudentMainRoute.name,
               guards: [studentAuthGuard],
             ),
@@ -294,6 +318,12 @@ class _$AppRouter extends RootStackRouter {
               guards: [teacherAuthGuard],
             ),
             RouteConfig(
+              AdminStudentsTrialExamDetailRoute.name,
+              path: 'students_trial_exam_detail',
+              parent: AdminMainRoute.name,
+              guards: [teacherAuthGuard],
+            ),
+            RouteConfig(
               AdminStudentsPasswordRoute.name,
               path: 'students_password',
               parent: AdminMainRoute.name,
@@ -352,6 +382,18 @@ class StudentDashboardRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'StudentDashboardRoute';
+}
+
+/// generated route for
+/// [StudentQuestionFollowView]
+class StudentQuestionFollowRoute extends PageRouteInfo<void> {
+  const StudentQuestionFollowRoute()
+      : super(
+          StudentQuestionFollowRoute.name,
+          path: 'soru_takibi',
+        );
+
+  static const String name = 'StudentQuestionFollowRoute';
 }
 
 /// generated route for
@@ -552,6 +594,18 @@ class AdminMessageRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AdminMessageRoute';
+}
+
+/// generated route for
+/// [AdminStudentsTrialExamDetailView]
+class AdminStudentsTrialExamDetailRoute extends PageRouteInfo<void> {
+  const AdminStudentsTrialExamDetailRoute()
+      : super(
+          AdminStudentsTrialExamDetailRoute.name,
+          path: 'students_trial_exam_detail',
+        );
+
+  static const String name = 'AdminStudentsTrialExamDetailRoute';
 }
 
 /// generated route for

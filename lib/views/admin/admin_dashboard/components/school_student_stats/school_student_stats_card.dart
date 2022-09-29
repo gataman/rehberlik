@@ -15,18 +15,8 @@ class SchoolStudentStatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        debugPrint("....");
-      },
-      child: Container(
-        padding: const EdgeInsets.all(defaultPadding / 4),
-        decoration: BoxDecoration(
-          color: darkSecondaryColor,
-          border: Border.all(color: Colors.white10),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
+      onTap: () {},
+      child: Card(
         child: Row(
           children: [
             Expanded(

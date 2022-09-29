@@ -1,6 +1,7 @@
 library admin_student_detail_view;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/core/widgets/text/app_box_title.dart';
 
 import '../admin_base/admin_base_view.dart';
 import 'admin_student_detail_imports.dart';

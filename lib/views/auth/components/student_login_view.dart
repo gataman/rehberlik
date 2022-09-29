@@ -89,8 +89,6 @@ class _StudentLoginViewState extends State<StudentLoginView> {
       onPressed: () {
         _login();
       },
-      backColor: Colors.amber,
-      textColor: darkSecondaryColor,
     );
   }
 

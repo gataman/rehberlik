@@ -5,16 +5,16 @@ import '../constants.dart';
 class ButtonWithIcon extends StatelessWidget {
   final String labelText;
   final IconData icon;
-  final Color backgroundColor;
-  final Color textColor;
+  final Color? backgroundColor;
+  final Color? textColor;
   final VoidCallback onPressed;
 
   const ButtonWithIcon(
       {Key? key,
       required this.labelText,
       required this.icon,
-      this.backgroundColor = Colors.amber,
-      this.textColor = darkSecondaryColor,
+      this.backgroundColor,
+      this.textColor,
       required this.onPressed})
       : super(key: key);
 
@@ -23,21 +23,18 @@ class ButtonWithIcon extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: defaultPadding / 4),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: backgroundColor,
-        ),
         onPressed: onPressed,
         child: Row(
           children: [
             Icon(
               icon,
-              color: textColor,
+              color: textColor ?? Theme.of(context).colorScheme.onPrimary,
             ),
             Expanded(
               child: Center(
                 child: Text(
                   labelText,
-                  style: TextStyle(color: textColor),
+                  style: TextStyle(color: textColor ?? Theme.of(context).colorScheme.onPrimary),
                 ),
               ),
             ),

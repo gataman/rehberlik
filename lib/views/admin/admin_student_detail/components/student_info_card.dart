@@ -7,13 +7,12 @@ class StudentInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(context.toString());
     var pdfBuilder = StudentDetailPdfBuilder(context);
     if (student != null) {
       return Column(
         children: [
-          Container(
-            decoration: defaultBoxDecoration,
+          Card(
+            margin: EdgeInsets.zero,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -22,11 +21,11 @@ class StudentInfoCard extends StatelessWidget {
                   child: Text(
                     student!.studentName.toString(),
                     textAlign: TextAlign.center,
-                    style: defaultTitleStyle,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 Container(
-                  color: Colors.amber,
+                  color: Theme.of(context).primaryColor,
                   child: Row(
                     children: [
                       const Spacer(),
@@ -43,25 +42,14 @@ class StudentInfoCard extends StatelessWidget {
                   child: Table(
                     defaultColumnWidth: const IntrinsicColumnWidth(),
                     children: [
-                      buildRow(
-                        label: "T.C. Kimlik No",
-                        value: "",
-                      ),
-                      buildRow(
-                        label: "Sınıfı",
-                        value: student!.className ?? '',
-                      ),
-                      buildRow(
-                        label: "Numarası",
-                        value: student!.studentNumber ?? '',
-                      ),
-                      buildRow(
-                        label: "Baba Adı",
-                        value: student!.fatherName ?? '',
-                      ),
+                      buildRow(label: "T.C. Kimlik No", value: "", context: context),
+                      buildRow(label: "Sınıfı", value: student!.className ?? '', context: context),
+                      buildRow(label: "Numarası", value: student!.studentNumber ?? '', context: context),
+                      buildRow(label: "Baba Adı", value: student!.fatherName ?? '', context: context),
                       buildRow(
                         label: "Anne Adı",
                         value: student!.motherName ?? '',
+                        context: context,
                       ),
                     ],
                   ),
@@ -72,23 +60,21 @@ class StudentInfoCard extends StatelessWidget {
           const SizedBox(
             height: defaultPadding,
           ),
-          Container(
-            decoration: defaultBoxDecoration,
+          Card(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Padding(
                   padding: EdgeInsets.all(defaultPadding),
-                  child: Text(
-                    "Raporlar",
-                    style: defaultTitleStyle,
+                  child: AppBoxTitle(
+                    title: 'Raporlar',
+                    isBack: false,
                   ),
                 ),
                 Padding(
                     padding: const EdgeInsets.all(defaultPadding),
                     child: LoadingButton(
                         text: 'Çalışma Programı İndir',
-                        textColor: darkSecondaryColor,
                         iconData: Icons.download,
                         loadingListener: pdfBuilder.notifier,
                         onPressed: () {
@@ -104,21 +90,24 @@ class StudentInfoCard extends StatelessWidget {
     }
   }
 
-  TableRow buildRow({required String label, required String value}) {
+  TableRow buildRow({required String label, required String value, required BuildContext context}) {
     return TableRow(
       children: [
         SizedBox(
           height: 30,
           child: Text(
             label,
-            style: defaultInfoTitle,
+            style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
-        const Text(
+        Text(
           ":",
-          style: defaultInfoTitle,
+          style: Theme.of(context).textTheme.labelLarge,
         ),
-        Text(value),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
       ],
     );
   }

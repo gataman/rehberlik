@@ -4,7 +4,8 @@ part of 'student_list_cubit.dart';
 abstract class StudentListState {}
 
 class SelectedIndexState extends StudentListState {
-  final int selectedIndex;
+  final int classIndex;
+  final int studentIndex;
 
-  SelectedIndexState({required this.selectedIndex});
+  SelectedIndexState({required this.classIndex, this.studentIndex = 0});
 }

@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/navigaton/app_router/student/student_drawer_menu.dart';
+import 'package:rehberlik/common/widgets/custom_app_bar.dart';
 import 'package:rehberlik/common/widgets/student_app_bar.dart';
 
 import '../../core/init/locale_manager.dart';
@@ -20,7 +21,10 @@ class StudentMainView extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StudentAppBar(),
+      appBar: CustomAppBar(
+        context: context,
+        isStudent: true,
+      ),
       drawer: const StudentDrawerMenu(),
       body: const AutoRouter(),
     );

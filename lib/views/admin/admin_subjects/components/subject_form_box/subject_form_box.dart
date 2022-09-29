@@ -33,11 +33,7 @@ class _SubjectAddFormBoxState extends State<SubjectAddFormBox> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: darkSecondaryColor,
-          border: Border.all(color: Colors.white10),
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
+    return Card(
       child: BlocBuilder<EditSubjectCubit, EditSubjectState>(builder: (context, state) {
         _subject = (state as EditSubjectInitial).editSubject;
         if (_subject != null) {
@@ -87,8 +83,6 @@ class _SubjectAddFormBoxState extends State<SubjectAddFormBox> {
                 _editSubject(_subject);
               }
             },
-            backColor: _subject == null ? Colors.amber : infoColor,
-            textColor: darkSecondaryColor,
           ),
         ),
       ],

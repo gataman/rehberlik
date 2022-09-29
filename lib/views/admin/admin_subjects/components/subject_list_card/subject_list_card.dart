@@ -25,10 +25,13 @@ class SubjectListCard extends StatelessWidget {
 
   Widget _getSubjectListBox(List<Subject> subjectList) {
     subjectList.sort((a, b) => a.subject!.compareTo(b.subject!));
-    return ListView.builder(
+    return ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: subjectList.length,
+        separatorBuilder: (context, index) => const Divider(
+              height: 0,
+            ),
         itemBuilder: (context, index) {
           final subject = subjectList[index];
           return AppListTile(
@@ -55,7 +58,6 @@ class SubjectListCard extends StatelessWidget {
               context: context,
               type: DialogType.success,
             );
-            Navigator.pop(context);
           }, onError: (e) {
             CustomDialog.showSnackBar(
               message: LocaleKeys.alerts_error.locale([e.toString()]),

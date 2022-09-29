@@ -9,57 +9,51 @@ class AgendaBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       height: 400,
-      padding: const EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
-        color: darkSecondaryColor,
-        border: Border.all(color: Colors.white10),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+      child: Card(
+        child: Column(
+          children: [
+            const Text(
+              "Randevular - Ajanda",
+              style: TextStyle(fontSize: 16),
+            ),
+            const Divider(),
+            BlocBuilder<AgendaBoxCubit, AgendaBoxState>(builder: (context, state) {
+              final list = (state as AgendaBoxInitial).meetingList;
+              if (list != null) {
+                _meetingDataSource = MeetingDataSource(list);
+              }
+
+              return Expanded(
+                child: SfCalendar(
+                  view: CalendarView.week,
+                  dataSource: _meetingDataSource,
+                  showNavigationArrow: true,
+                  showDatePickerButton: true,
+                  firstDayOfWeek: 1,
+                  appointmentTextStyle: TextStyle(
+                      letterSpacing: -0.2,
+                      fontWeight: FontWeight.w500,
+                      fontSize: size.width <= 600 ? 7 : 10,
+                      color: darkBackColor),
+                  onTap: (CalendarTapDetails details) {
+                    _showCalendarDialog(context, details);
+                  },
+                  onViewChanged: (view) {
+                    //DateTime startTime = view.visibleDates.first;
+                    //DateTime endTime = view.visibleDates.last;
+
+                    //controller.getAllMeetingsWithTime(startTime, endTime);
+                  },
+                  timeSlotViewSettings: const TimeSlotViewSettings(dateFormat: 'dd', timeFormat: 'HH.mm'),
+                  monthViewSettings: const MonthViewSettings(
+                      appointmentDisplayMode: MonthAppointmentDisplayMode.appointment, agendaViewHeight: 200),
+                ),
+              );
+            }),
+          ],
         ),
-      ),
-      child: Column(
-        children: [
-          const Text(
-            "Randevular - Ajanda",
-            style: TextStyle(fontSize: 16),
-          ),
-          const Divider(),
-          BlocBuilder<AgendaBoxCubit, AgendaBoxState>(builder: (context, state) {
-            final list = (state as AgendaBoxInitial).meetingList;
-            if (list != null) {
-              _meetingDataSource = MeetingDataSource(list);
-            }
-
-            return Expanded(
-              child: SfCalendar(
-                view: CalendarView.week,
-                dataSource: _meetingDataSource,
-                showNavigationArrow: true,
-                showDatePickerButton: true,
-                firstDayOfWeek: 1,
-                appointmentTextStyle: TextStyle(
-                    letterSpacing: -0.2,
-                    fontWeight: FontWeight.w500,
-                    fontSize: size.width <= 600 ? 7 : 10,
-                    color: darkBackColor),
-                onTap: (CalendarTapDetails details) {
-                  _showCalendarDialog(context, details);
-                },
-                onViewChanged: (view) {
-                  //DateTime startTime = view.visibleDates.first;
-                  //DateTime endTime = view.visibleDates.last;
-
-                  //controller.getAllMeetingsWithTime(startTime, endTime);
-                },
-                timeSlotViewSettings: const TimeSlotViewSettings(dateFormat: 'dd', timeFormat: 'HH.mm'),
-                monthViewSettings: const MonthViewSettings(
-                    appointmentDisplayMode: MonthAppointmentDisplayMode.appointment, agendaViewHeight: 200),
-              ),
-            );
-          }),
-        ],
       ),
     );
   }

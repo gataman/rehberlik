@@ -40,8 +40,7 @@ class TrialExamListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // _addAllExamResult();
-    return Container(
-      decoration: defaultBoxDecoration,
+    return Card(
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: minimumBoxHeight),
         child: Padding(
@@ -74,10 +73,11 @@ class TrialExamListCard extends StatelessWidget {
 
   Widget _getTrialExamListView(List<TrialExam> trialExamList) {
     //subjectList.sort((a, b) => a.subject!.compareTo(b.subject!));
-    return ListView.builder(
+    return ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: trialExamList.length,
+        separatorBuilder: (context, index) => const Divider(height: 0),
         itemBuilder: (context, index) {
           final trialExam = trialExamList[index];
           return AppListTile(
@@ -121,7 +121,6 @@ class TrialExamListCard extends StatelessWidget {
               context: context,
               type: DialogType.success,
             );
-            Navigator.pop(context);
           }, onError: (e) {
             CustomDialog.showSnackBar(
               message: LocaleKeys.alerts_error.locale([e.toString()]),

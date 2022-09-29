@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/models/teacher_login_result.dart';
 import 'package:rehberlik/models/student.dart';
 import 'package:rehberlik/repository/auth_repository.dart';
 
@@ -21,7 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<UserCredential> teacherLogin({required String email, required String password}) {
+  Future<TeacherLoginResult> teacherLogin({required String email, required String password}) {
     return _authRepository.teacherLogin(email: email, password: password);
   }
 

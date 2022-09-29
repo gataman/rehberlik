@@ -29,7 +29,7 @@ class StudentListBox extends StatelessWidget {
       if (classListState is ClassListLoadedState) {
         final classesList = classListState.studentWithClassList;
         return BlocBuilder<StudentListCubit, StudentListState>(builder: (context, state) {
-          final selectedIndex = state is SelectedIndexState ? state.selectedIndex : 0;
+          final selectedIndex = state is SelectedIndexState ? state.classIndex : 0;
           final String className =
               classesList != null && classesList.isNotEmpty ? classesList[selectedIndex].classes.className ?? '' : '';
 
@@ -60,54 +60,46 @@ class StudentListBox extends StatelessWidget {
     );
   }
 
-  Widget _getStudentListView(List<Student> studentList, BuildContext context) {
+  Widget _getStudentListView(List<Student> studentList, BuildContext buildContext) {
     return SizedBox(
       height: defaultListHeight,
-      child: ListView.builder(
+      child: ListView.separated(
           itemCount: studentList.length,
+          separatorBuilder: (context, index) => const Divider(
+                height: 0,
+              ),
           itemBuilder: (context, index) {
             final student = studentList[index];
-            return Container(
-              decoration: defaultDividerDecoration,
-              child: Material(
-                child: InkWell(
-                  mouseCursor: SystemMouseCursors.click,
-                  hoverColor: Colors.white10,
-                  splashColor: darkBackColor,
-                  onHover: (isHover) {
-                    if (isHover) {
-                      //debugPrint("Hover");
-                    }
-                  },
-                  onTap: () {
-                    showStudentDetail(student, context);
-                  },
-                  child: ListTile(
-                    // horizontalTitleGap: 0.3,
-                    leading: _setStudentLeading(student.photoUrl),
-                    title: Text(student.studentName!,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
-                    subtitle: Text(
-                      "No: ${student.studentNumber.toString()}",
-                      style: defaultSubtitleStyle,
+            return InkWell(
+              mouseCursor: SystemMouseCursors.click,
+              hoverColor: Theme.of(context).dividerColor,
+              onTap: () {
+                showStudentDetail(student, context);
+              },
+              child: ListTile(
+                // horizontalTitleGap: 0.3,
+                leading: _setStudentLeading(student.photoUrl),
+                title: Text(student.studentName!,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(buildContext).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500)),
+                subtitle: Text(
+                  "No: ${student.studentNumber.toString()}",
+                  style: Theme.of(buildContext).textTheme.labelMedium,
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AppSmallRoundedButton(onPressed: () {}),
+                    const SizedBox(
+                      width: defaultPadding / 2,
                     ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AppSmallRoundedButton(onPressed: () {}),
-                        const SizedBox(
-                          width: defaultPadding / 2,
-                        ),
-                        AppSmallRoundedButton(
-                            bgColor: Colors.redAccent,
-                            iconData: Icons.delete,
-                            onPressed: () {
-                              _deleteStudent(student, context);
-                            })
-                      ],
-                    ),
-                  ),
+                    AppSmallRoundedButton(
+                        bgColor: Colors.redAccent,
+                        iconData: Icons.delete,
+                        onPressed: () {
+                          _deleteStudent(student, context);
+                        })
+                  ],
                 ),
               ),
             );
@@ -141,7 +133,6 @@ class StudentListBox extends StatelessWidget {
               context: context,
               type: DialogType.success,
             );
-            Navigator.pop(context);
           }, onError: (e) {
             CustomDialog.showSnackBar(
               message: LocaleKeys.alerts_error.locale([e.toString()]),

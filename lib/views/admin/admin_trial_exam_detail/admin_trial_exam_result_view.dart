@@ -1,9 +1,13 @@
 library admin_trial_exam_result_view;
 
+import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
+import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
+import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
 import 'package:rehberlik/common/widgets/button_with_icon.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
@@ -20,6 +24,7 @@ import '../../../models/helpers/trial_exam_average.dart';
 import '../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import 'admin_trial_exam_result_imports.dart';
 import 'components/states/trial_exam_result_statics_view.dart';
+import 'init/trial_exam_result_data_source.dart';
 
 part 'components/states/trial_exam_result_data_grid.dart';
 
@@ -54,6 +59,7 @@ class AdminTrialExamResultView extends AdminBaseView {
         lazy: false,
       ),
     ];
+
     return providers;
   }
 }

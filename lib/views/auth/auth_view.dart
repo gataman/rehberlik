@@ -83,11 +83,8 @@ class _AuthViewState extends State<AuthView> {
               label: 'Yönetici Girişi',
             ),
           ],
-          selectedItemColor: Colors.amber,
-          unselectedItemColor: Colors.white,
           currentIndex: state.activeIndex,
           onTap: (index) {
-            debugPrint("Tıklanan Index $index");
             context.read<AuthCubit>().changeActiveIndex(index: index);
           },
         ),

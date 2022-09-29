@@ -9,6 +9,7 @@ import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_view.dart';
 import 'package:rehberlik/views/admin/admin_main_view.dart';
 import 'package:rehberlik/views/admin/admin_messages/admin_message_view.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_view.dart';
+import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view.dart/admin_students_trial_exam_detail_view.dart';
 import 'package:rehberlik/views/admin/admin_students/admin_students_view.dart';
 import 'package:rehberlik/views/admin/admin_students_password/admin_students_pasword_view.dart';
 import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_view.dart';
@@ -16,11 +17,11 @@ import 'package:rehberlik/views/admin/admin_trial_exam/admin_trial_exam_view.dar
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_view.dart';
 import 'package:rehberlik/views/admin/admin_uploads/admin_uploads_view.dart';
 import 'package:rehberlik/views/auth/auth_view.dart';
-import 'package:rehberlik/views/splash_view.dart';
 import 'package:rehberlik/views/student/student_main_view.dart';
 
 import '../../../models/student.dart';
 import '../../../views/student/student_dashboard/student_dashboard_view.dart';
+import '../../../views/student/student_question_follow/student_question_follow_view.dart';
 import 'app_routes.dart';
 import 'guards/arguments_guard.dart';
 import 'guards/student_auth_guard.dart';
@@ -50,6 +51,11 @@ part 'app_router.gr.dart';
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [StudentAuthGuard],
               initial: true),
+          CustomRoute(
+              page: StudentQuestionFollowView,
+              path: AppRoutes.routeStudentQuestionFollow,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              guards: [StudentAuthGuard]),
         ]),
     CustomRoute(
         page: AdminMainView,
@@ -109,6 +115,12 @@ part 'app_router.gr.dart';
             page: AdminMessageView,
             transitionsBuilder: TransitionsBuilders.fadeIn,
             path: AppRoutes.routeAdminMessages,
+            guards: [TeacherAuthGuard],
+          ),
+          CustomRoute(
+            page: AdminStudentsTrialExamDetailView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            path: AppRoutes.routeAdminStudentsTrialExamDetailView,
             guards: [TeacherAuthGuard],
           ),
           CustomRoute(

@@ -30,7 +30,7 @@ class AppSmallRoundedButton extends StatelessWidget {
             child: Icon(
               iconData,
               size: 16,
-              //color: secondaryColor,
+              color: Theme.of(context).colorScheme.onPrimary.withOpacity(.7),
             )),
       ),
     );

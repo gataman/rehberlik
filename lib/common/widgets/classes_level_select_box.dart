@@ -6,25 +6,22 @@ class ClassesLevelSelectBox extends StatelessWidget {
   final ValueChanged<int> valueChanged;
   final int selectedIndex;
 
-  const ClassesLevelSelectBox({Key? key, required this.valueChanged, required this.selectedIndex})
-      : super(key: key);
+  const ClassesLevelSelectBox({Key? key, required this.valueChanged, required this.selectedIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<ClassesCategory>(
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
-        hintStyle: TextStyle(color: Colors.white30),
-        fillColor: darkSecondaryColor,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white10),
-          borderRadius: BorderRadius.all(
+          borderSide: BorderSide(color: Theme.of(context).dividerColor),
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor),
-          borderRadius: BorderRadius.all(
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
         ),
@@ -39,7 +36,7 @@ class ClassesLevelSelectBox extends StatelessWidget {
           value: value,
           child: Text(
             value.className,
-            style: const TextStyle(fontSize: 14),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         );
       }).toList(),

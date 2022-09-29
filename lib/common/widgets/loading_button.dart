@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LoadingButton extends StatelessWidget {
-  final Color backColor;
-  final Color textColor;
+  final Color? backColor;
+  final Color? textColor;
   final String text;
   final IconData iconData;
   final ValueNotifier<bool> loadingListener;
@@ -10,8 +10,8 @@ class LoadingButton extends StatelessWidget {
 
   const LoadingButton(
       {Key? key,
-      this.backColor = Colors.amber,
-      this.textColor = Colors.white,
+      this.backColor,
+      this.textColor,
       this.iconData = Icons.save,
       required this.text,
       required this.loadingListener,
@@ -22,7 +22,7 @@ class LoadingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: backColor,
+          backgroundColor: backColor ?? Theme.of(context).primaryColor,
         ),
         onPressed: onPressed,
         child: Row(
@@ -35,13 +35,13 @@ class LoadingButton extends StatelessWidget {
                         width: 16,
                         height: 16,
                         child: CircularProgressIndicator(
-                          color: textColor,
+                          color: textColor ?? Theme.of(context).colorScheme.onPrimary,
                         ));
                   } else {
                     return SizedBox(
                         child: Icon(
                       iconData,
-                      color: textColor,
+                      color: textColor ?? Theme.of(context).colorScheme.onPrimary,
                     ));
                   }
                 }),
@@ -49,8 +49,8 @@ class LoadingButton extends StatelessWidget {
               child: Center(
                 child: Text(
                   text,
-                  style:
-                      TextStyle(color: textColor, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      color: textColor ?? Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

@@ -36,7 +36,7 @@ class _StudentPasswordListCardState extends State<StudentPasswordListCard> {
       if (classListState is ClassListLoadedState) {
         final classesList = classListState.studentWithClassList;
         return BlocBuilder<StudentListCubit, StudentListState>(builder: (context, state) {
-          final selectedIndex = state is SelectedIndexState ? state.selectedIndex : 0;
+          final selectedIndex = state is SelectedIndexState ? state.classIndex : 0;
           final String className =
               classesList != null && classesList.isNotEmpty ? classesList[selectedIndex].classes.className ?? '' : '';
 
@@ -51,12 +51,12 @@ class _StudentPasswordListCardState extends State<StudentPasswordListCard> {
 
                 title: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 150,
                       child: Text(
                         'Öğrenci Bilgileri',
                         overflow: TextOverflow.ellipsis,
-                        style: defaultTitleStyle,
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
                     const Spacer(),
@@ -68,13 +68,13 @@ class _StudentPasswordListCardState extends State<StudentPasswordListCard> {
                       },
                       child: Text(
                         _showPassword ? 'Şifreyi Gizle' : 'Şifreyi Göster',
-                        style: defaultTitleStyle,
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
                     const Spacer(),
                   ],
                 ),
-                trailing: const Text('İşlemler', style: defaultTitleStyle),
+                trailing: Text('İşlemler', style: Theme.of(context).textTheme.labelLarge),
               ),
               const Divider(),
               if (studentList != null && studentList.isNotEmpty) _getStudentListView(studentList, context),
@@ -113,9 +113,7 @@ class _StudentPasswordListCardState extends State<StudentPasswordListCard> {
                   hoverColor: Colors.white10,
                   splashColor: darkBackColor,
                   onHover: (isHover) {
-                    if (isHover) {
-                      //debugPrint("Hover");
-                    }
+                    if (isHover) {}
                   },
                   onTap: () {
                     showStudentDetail(student, context);
@@ -199,7 +197,6 @@ class _StudentPasswordListCardState extends State<StudentPasswordListCard> {
               context: context,
               type: DialogType.success,
             );
-            Navigator.pop(context);
           }, onError: (e) {
             CustomDialog.showSnackBar(
               message: LocaleKeys.alerts_error.locale([e.toString()]),

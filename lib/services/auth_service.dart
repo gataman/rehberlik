@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:rehberlik/common/models/teacher_login_result.dart';
+import 'package:rehberlik/models/teacher.dart';
 
 import '../common/models/student_login_result.dart';
 import '../models/student.dart';
@@ -10,23 +11,39 @@ class AuthService {
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
 
-  Future<UserCredential> teacherLogin({required String email, required String password}) {
-    return _auth.signInWithEmailAndPassword(email: email, password: password);
-    /*
+  Future<TeacherLoginResult> teacherLogin({required String email, required String password}) async {
+    TeacherLoginResult loginResult = TeacherLoginResult(isSuccess: false, message: 'Bir hata oluştu');
+    UserCredential credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
     try {
-      final credential =  _auth.signInWithEmailAndPassword(email: email, password: password);
+      final credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      if (credential.user != null) {
+        final teacherUID = credential.user!.uid;
+        final colRef = _db.collection('teachers').doc(teacherUID).withConverter(
+              fromFirestore: Teacher.fromFirestore,
+              toFirestore: (Teacher object, _) => object.toFirestore(),
+            );
 
+        final teacherData = await colRef.get();
+        final teacher = teacherData.data();
 
-      debugPrint(credential.toString());
-      debugPrint(credential.user?.uid);
+        if (teacher != null) {
+          loginResult.teacher = teacher;
+          loginResult.isSuccess = true;
+          loginResult.message = 'Başarıyla giriş yapıldı. Yönlendiriliyorsunuz...';
+        } else {
+          loginResult.message = 'Giriş yapıldı ancak kullanıcı bilgisi alınamadı';
+        }
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        loginResult.message = 'Bu email adresine kayıtlı kullanıcı bulunamadı';
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        loginResult.message = 'Lütfen şifrenizi kontrol edin!';
+      } else {
+        loginResult.message = ' Bir hata oluştu. Hata kodu: ${e.code}';
       }
     }
-    */
+    return loginResult;
   }
 
   Future<StudentLoginResult> studentLogin({required String number, required String password}) async {
@@ -39,7 +56,6 @@ class AuthService {
     final list = docSnap.docs.map((e) => e.data()).toList();
     if (list.isNotEmpty) {
       final Student student = list.first;
-      debugPrint("Öğrenci ${student.toString()}");
       if (student.password == password) {
         return StudentLoginResult(message: 'Başarıyla giriş yapıldı!', isSuccess: true, student: student);
       } else {

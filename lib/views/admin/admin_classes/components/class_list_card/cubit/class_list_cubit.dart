@@ -98,7 +98,6 @@ class ClassListCubit extends Cubit<ClassListState> {
   }
 
   Future<void> _addStudentList() async {
-    debugPrint("_addStudentList() çalıştı");
     schoolStatsList.clear();
 
     List<Student> fifthGradeStudentList = [];
@@ -152,3 +151,15 @@ class ClassListCubit extends Cubit<ClassListState> {
     }
   }
 }
+
+ /*
+    if (allStudentList.isNotEmpty) {
+      for (var student in allStudentList) {
+        final classLevel = int.parse(student.className![0]);
+        student.classLevel = classLevel;
+      }
+
+      _studentRepository.updateAll(list: allStudentList).then((value) => _refreshList());
+    
+    }
+      */

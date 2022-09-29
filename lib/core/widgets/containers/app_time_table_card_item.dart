@@ -33,27 +33,21 @@ class AppTimeTableCardItem extends StatelessWidget {
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 10),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Text(
                         _getLessonNameText(lessonID: timeTable.lessonID, context: context),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style:
-                            const TextStyle(color: Colors.amber, fontWeight: FontWeight.w500, fontSize: 14),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
-                        _getSubjectName(
-                            lessonID: timeTable.lessonID, subjectID: timeTable.subjectID, context: context),
+                        _getSubjectName(lessonID: timeTable.lessonID, subjectID: timeTable.subjectID, context: context),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white54,
-                          letterSpacing: 0.3,
-                          fontSize: 10,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(letterSpacing: 0.3),
                       ),
                     ],
                   ),
@@ -69,8 +63,7 @@ class AppTimeTableCardItem extends StatelessWidget {
   String _getLessonNameText({String? lessonID, required BuildContext context}) {
     final lessonList = context.read<TimeTableListCubit>().lessonWithSubjectList;
     if (lessonList != null && lessonID != null) {
-      LessonWithSubject? lessonWithSubject =
-          lessonList.findOrNull((element) => element.lesson.id == lessonID);
+      LessonWithSubject? lessonWithSubject = lessonList.findOrNull((element) => element.lesson.id == lessonID);
       if (lessonWithSubject != null) {
         return lessonWithSubject.lesson.lessonName!;
       }
@@ -78,17 +71,14 @@ class AppTimeTableCardItem extends StatelessWidget {
     return "";
   }
 
-  String _getSubjectName(
-      {required String? lessonID, required String? subjectID, required BuildContext context}) {
+  String _getSubjectName({required String? lessonID, required String? subjectID, required BuildContext context}) {
     if (lessonID != null) {
       final lessonList = context.read<TimeTableListCubit>().lessonWithSubjectList;
       if (lessonList != null) {
-        LessonWithSubject? lessonWithSubject =
-            lessonList.findOrNull((element) => element.lesson.id == lessonID);
+        LessonWithSubject? lessonWithSubject = lessonList.findOrNull((element) => element.lesson.id == lessonID);
         if (lessonWithSubject != null) {
           if (lessonWithSubject.subjectList != null) {
-            Subject? subject =
-                lessonWithSubject.subjectList!.findOrNull((subject) => subject.id == subjectID);
+            Subject? subject = lessonWithSubject.subjectList!.findOrNull((subject) => subject.id == subjectID);
             if (subject != null) {
               return subject.subject!;
             }

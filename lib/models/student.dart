@@ -12,6 +12,7 @@ part 'student.g.dart';
 class Student {
   final String? id;
   String? classID;
+  int? classLevel;
   String? studentName;
   String? studentNumber;
   String? fatherName;
@@ -28,6 +29,7 @@ class Student {
   Student({
     this.id,
     this.classID,
+    this.classLevel,
     this.studentName,
     this.studentNumber,
     this.fatherName,
@@ -50,6 +52,7 @@ class Student {
     return Student(
       id: snapshot.id,
       classID: data?['classID'],
+      classLevel: data?['classLevel'],
       studentName: data?['studentName'],
       studentNumber: data?['studentNumber'],
       fatherName: data?['fatherName'],
@@ -68,6 +71,7 @@ class Student {
   Map<String, dynamic> toFirestore() {
     return {
       if (classID != null) "classID": classID,
+      if (classLevel != null) "classLevel": classLevel,
       if (studentName != null) "studentName": studentName,
       if (studentNumber != null) "studentNumber": studentNumber,
       if (fatherName != null) "fatherName": fatherName,
@@ -89,7 +93,7 @@ class Student {
 
   @override
   String toString() {
-    return 'Student{id: $id, classID: $classID, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className, targetSchoolID: $targetSchoolID,password: $password}';
+    return 'Student{id: $id, classID: $classID, classLevel: $classLevel, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className, targetSchoolID: $targetSchoolID,password: $password}';
   }
 
   static Student? getStudentFormLocal() {
