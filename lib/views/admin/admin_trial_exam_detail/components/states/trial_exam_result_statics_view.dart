@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/core/widgets/bar_charts/trial_exam_bar_chart.dart';
+import 'package:rehberlik/core/widgets/charts/bar_charts/trial_exam_bar_chart.dart';
 import 'package:rehberlik/responsive.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/cubit/trial_exam_result_cubit.dart';
 

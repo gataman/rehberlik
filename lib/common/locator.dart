@@ -17,6 +17,7 @@ import '../repository/subject_repository.dart';
 import '../repository/time_table_repository.dart';
 import '../repository/trial_exam_repository.dart';
 import '../repository/trial_exam_result_repository.dart';
+import '../repository/trial_exam_student_result_repository.dart';
 import '../services/classes_service.dart';
 import '../services/lesson_service.dart';
 import '../services/meeting_service.dart';
@@ -27,6 +28,8 @@ import '../services/subject_service.dart';
 import '../services/time_table_service.dart';
 import '../services/trial_exam_result_service.dart';
 import '../services/trial_exam_service.dart';
+import '../services/trial_exam_student_result_service.dart';
+import '../views/admin/admin_trial_exam_detail/helper/trial_exam_student_result_helper.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -83,6 +86,11 @@ void setupLocator() {
   locator.registerLazySingleton(() => TrialExamClassResultService());
   locator.registerLazySingleton(() => TrialExamClassResultRepository());
 
+  //TrialExamStudentResultService
+  locator.registerLazySingleton(() => TrialExamStudentResultService());
+  locator.registerLazySingleton(() => TrialExamStudentResultRepository());
+
   //Helper
   locator.registerLazySingleton(() => TrialExamResultHelper());
+  locator.registerLazySingleton(() => TrialExamStudentResultHelper());
 }

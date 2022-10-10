@@ -13,7 +13,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
   final _formKey = GlobalKey<FormState>();
   late FocusNode _trialExamNameFocusNode;
   TrialExam? _trialExam;
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
   final ValueNotifier<bool> buttonListener = ValueNotifier(false);
 
   @override

@@ -57,6 +57,14 @@ class TrialExamService implements DBBase<TrialExam> {
     return batch.commit();
   }
 
+  Future<TrialExam?> get({required String id}) async {
+    var colRef = _db.collection(_mainRef).doc(id).withConverter(
+        fromFirestore: TrialExam.fromFirestore, toFirestore: (TrialExam object, _) => object.toFirestore());
+
+    final docSnap = await colRef.get();
+    return docSnap.data();
+  }
+
   Future<List<TrialExam>?> getAll({Map<String, dynamic>? filters}) async {
     var colRef = _db.collection(_mainRef).where('').withConverter(
         fromFirestore: TrialExam.fromFirestore, toFirestore: (TrialExam object, _) => object.toFirestore());

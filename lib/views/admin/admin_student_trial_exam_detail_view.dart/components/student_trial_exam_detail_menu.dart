@@ -78,6 +78,7 @@ class StudentTrialExamDetailMenu extends StatelessWidget {
           onChanged: (newValue) {
             if (newValue != null) {
               context.read<StudentListCubit>().selectClass(selectedIndex: classesList.indexOf(newValue));
+              context.read<StudentTrialExamDetailCubit>().selectStudent(null);
             }
           },
         ),

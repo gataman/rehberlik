@@ -14,7 +14,7 @@ class LessonListCubit extends Cubit<LessonListState> {
   final _lessonsRepository = locator<LessonRepository>();
 
   Map<int, List<Lesson>>? lessonList;
-  int selectedCategory = 5;
+  int selectedCategory = 8;
 
   void fetchLessonList() async {
     if (lessonList == null) {

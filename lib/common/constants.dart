@@ -1,8 +1,6 @@
 // Screen sizes:
 import 'package:flutter/material.dart';
 
-import 'models/school_student_stats.dart';
-
 const primaryColor = Colors.teal;
 const darkSecondaryColor = Color(0xFF2A2D3E);
 const darkBackColor = Color(0xFF212332);

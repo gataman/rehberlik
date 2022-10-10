@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import '../core/init/extentions.dart';
 import '../core/init/locale_keys.g.dart';
-import '../core/widgets/buttons/app_cancel_delete_button.dart';
 import '../core/widgets/buttons/app_delete_button.dart';
 
 enum DialogType { success, warning, error }

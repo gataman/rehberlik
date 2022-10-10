@@ -4,6 +4,7 @@ import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/models/trial_exam_student_result.dart';
 import '../../../../common/extensions.dart';
 import '../../../../common/custom_result.dart';
 import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
@@ -13,9 +14,12 @@ import '../../../../models/trial_exam.dart';
 import '../../../../models/trial_exam_class_result.dart';
 import '../../../../models/trial_exam_result.dart';
 import '../../../../repository/trial_exam_class_result_repository.dart';
+import '../../../../repository/trial_exam_repository.dart';
 import '../../../../repository/trial_exam_result_repository.dart';
+import '../../../../repository/trial_exam_student_result_repository.dart';
 import '../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import '../helper/trial_exam_result_helper.dart';
+import '../helper/trial_exam_student_result_helper.dart';
 
 part 'trial_exam_result_state.dart';
 
@@ -31,9 +35,12 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
   final List<int> wrongRowList = <int>[];
   final List<int> wrongStudentList = <int>[];
 
+  final _trialExamRepository = locator<TrialExamRepository>();
   final _trialExamResultRepository = locator<TrialExamResultRepository>();
   final _trialExamClassResultRepository = locator<TrialExamClassResultRepository>();
-  final _helper = locator<TrialExamResultHelper>();
+  final _trialExamStudentResultRepository = locator<TrialExamStudentResultRepository>();
+  final _helperStudentResult = locator<TrialExamStudentResultHelper>();
+  final _helperResult = locator<TrialExamResultHelper>();
 
   void fetchTrialExamResult({required TrialExam exam}) async {
     trialExam = exam;
@@ -79,7 +86,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
 
     if (list != null) {
       trialExamClassResultList = list;
-      trialExamGraphList = _helper.getTrialExamGraphList(trialExamClassResultList: list);
+      trialExamGraphList = _helperResult.getTrialExamGraphList(trialExamClassResultList: list);
     }
   }
 
@@ -135,7 +142,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
             final student = studentList.findOrNull((element) => element.studentNumber == studentNo.value.toString());
             if (student != null) {
               if (_checkData(row)) {
-                TrialExamResult trialExamResult = _helper.buildTrialExamResult(row, student, trialExam!);
+                TrialExamResult trialExamResult = _helperResult.buildTrialExamResult(row, student, trialExam!);
                 examResultList.add(trialExamResult);
               } else {
                 wrongRowList.add(i);
@@ -181,7 +188,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
 
   void _saveAllClassResult() {
     if (trialExamResultParsedList != null) {
-      final list = _helper.getTrialExamClassResultList(
+      final list = _helperResult.getTrialExamClassResultList(
         trialExamResultList: trialExamResultParsedList,
         trialExam: trialExam!,
       );
@@ -206,5 +213,28 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
         classRank++;
       }
     });
+  }
+
+  void calculateAllStudentRanks(int classLevel) async {
+    final List<TrialExamResult> trialExamAllResultList = [];
+
+    // Sınıf seviyesine göre bütün sınavlar çekildi:
+    final trialExamList = await _trialExamRepository.getAll(filters: {'classLevel': classLevel});
+
+    if (trialExamList != null && trialExamList.isNotEmpty) {
+      for (var exam in trialExamList) {
+        final examResultList = await _trialExamResultRepository.getAll(filters: {'examID': exam.id!});
+        if (examResultList != null && examResultList.isNotEmpty) {
+          // Bütün listeler dolduruldu.
+          trialExamAllResultList.addAll(examResultList);
+        }
+      }
+    }
+
+    if (trialExamAllResultList.isNotEmpty) {
+      final trialExamStudentResultList = _helperStudentResult.createTrialExamStudentResultList(
+          trialExamAllResultList: trialExamAllResultList, classLevel: classLevel);
+      _trialExamStudentResultRepository.addAll(list: trialExamStudentResultList);
+    }
   }
 }

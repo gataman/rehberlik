@@ -1,7 +1,5 @@
 //Group By
 //final lastNameMap = listOfPeople.groupBy((person) => person.lastName);
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 
 extension Iterables<E> on Iterable<E> {
   Map<K, List<E>> groupBy<K>(K Function(E) keyFunction) => fold(<K, List<E>>{},
@@ -22,5 +20,11 @@ extension EmailValidator on String {
     return RegExp(
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(this);
+  }
+}
+
+extension DecimalCount on double {
+  double decimalCount(int count) {
+    return double.parse(toStringAsFixed(count));
   }
 }

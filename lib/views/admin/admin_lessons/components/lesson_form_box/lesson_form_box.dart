@@ -13,7 +13,7 @@ class _LessonFormBoxState extends State<LessonFormBox> {
   final _formKey = GlobalKey<FormState>();
   late FocusNode _lessonNameFocusNode;
   Lesson? _lesson;
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
   final ValueNotifier<bool> buttonListener = ValueNotifier(false);
 
   @override

@@ -13,7 +13,7 @@ class TrialExamGraphItem {
   TrialExamGraphItem({required this.itemName, required this.value});
 }
 
-enum LessonType { ten, twenty }
+enum LessonType { ten, twenty, total }
 
 /*
 

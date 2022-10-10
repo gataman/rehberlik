@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rehberlik/models/trial_exam.dart';
 
 class TrialExamResult {
   String? id;
@@ -29,6 +30,7 @@ class TrialExamResult {
   double? totalPoint;
   int schoolRank;
   int classRank;
+  TrialExam? trialExam;
 
   TrialExamResult(
       {this.id,
@@ -58,7 +60,8 @@ class TrialExamResult {
       this.dinNet,
       required this.totalPoint,
       this.schoolRank = 0,
-      this.classRank = 0});
+      this.classRank = 0,
+      this.trialExam});
 
   factory TrialExamResult.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -131,6 +134,6 @@ class TrialExamResult {
 
   @override
   String toString() {
-    return 'TrialExamResult{id: $id, studentID: $studentID, studentName: $studentName, studentNumber: $studentNumber, className: $className, classID: $classID, examID: $examID, turDog: $turDog, turYan: $turYan, turNet: $turNet, matDog: $matDog, matYan: $matYan, matNet: $matNet, fenDog: $fenDog, fenYan: $fenYan, fenNet: $fenNet, sosDog: $sosDog, sosYan: $sosYan, sosNet: $sosNet, ingDog: $ingDog, ingYan: $ingYan, ingNet: $ingNet, dinDog: $dinDog, dinYan: $dinYan, dinNet: $dinNet, totalPoint: $totalPoint, schoolRank: $schoolRank, classRank : $classRank}';
+    return 'TrialExamResult{id: $id, studentID: $studentID, studentName: $studentName, studentNumber: $studentNumber, className: $className, classID: $classID, examID: $examID, turDog: $turDog, turYan: $turYan, turNet: $turNet, matDog: $matDog, matYan: $matYan, matNet: $matNet, fenDog: $fenDog, fenYan: $fenYan, fenNet: $fenNet, sosDog: $sosDog, sosYan: $sosYan, sosNet: $sosNet, ingDog: $ingDog, ingYan: $ingYan, ingNet: $ingNet, dinDog: $dinDog, dinYan: $dinYan, dinNet: $dinNet, totalPoint: $totalPoint, schoolRank: $schoolRank, classRank : $classRank, trialExam : $trialExam}';
   }
 }

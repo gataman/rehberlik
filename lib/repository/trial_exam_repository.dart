@@ -22,4 +22,7 @@ class TrialExamRepository implements TrialExamService {
 
   @override
   Future<void> deleteAll({required List<TrialExam> list}) => _service.deleteAll(list: list);
+
+  @override
+  Future<TrialExam?> get({required String id}) => _service.get(id: id);
 }

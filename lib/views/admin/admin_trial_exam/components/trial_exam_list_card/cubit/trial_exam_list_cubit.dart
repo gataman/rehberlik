@@ -9,7 +9,7 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   TrialExamListCubit() : super(TrialExamListState(selectedCategory: 5));
 
   final _trialExamRepository = locator<TrialExamRepository>();
-  int selectedCategory = 5;
+  int selectedCategory = 8;
 
   List<TrialExam>? _trialExamList;
 

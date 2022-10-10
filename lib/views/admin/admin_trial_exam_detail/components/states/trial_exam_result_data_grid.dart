@@ -70,6 +70,7 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
     return ElevatedButton(
       onPressed: () {
         context.read<TrialExamResultCubit>().showTrialExamStatics();
+        //context.read<TrialExamResultCubit>().calculateAllStudentRanks(8);
       },
       style: ElevatedButton.styleFrom(
         shape: const BeveledRectangleBorder(),
