@@ -29,9 +29,7 @@ class SubjectListCard extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: subjectList.length,
-        separatorBuilder: (context, index) => const Divider(
-              height: 0,
-            ),
+        separatorBuilder: (context, index) => defaultDivider,
         itemBuilder: (context, index) {
           final subject = subjectList[index];
           return AppListTile(

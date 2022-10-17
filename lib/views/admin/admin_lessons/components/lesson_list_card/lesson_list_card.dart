@@ -44,7 +44,7 @@ class LessonListCard extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: lessonList.length,
-      separatorBuilder: (context, index) => const Divider(height: 0),
+      separatorBuilder: (context, index) => defaultDivider,
       itemBuilder: (context, index) {
         final lesson = lessonList[index];
         return AppListTile(

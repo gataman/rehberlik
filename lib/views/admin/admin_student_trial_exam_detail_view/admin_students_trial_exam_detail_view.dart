@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view.dart/components/student_trial_exam_detail_container_view.dart';
-import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view.dart/components/student_trial_exam_detail_menu.dart';
-import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view.dart/cubit/student_trial_exam_detail_cubit.dart';
 
 import '../admin_base/admin_base_view.dart';
+import 'components/student_trial_exam_detail_container_view.dart';
+import 'components/student_trial_exam_detail_menu.dart';
+import 'cubit/student_trial_exam_detail_cubit.dart';
 
 class AdminStudentsTrialExamDetailView extends AdminBaseView {
   const AdminStudentsTrialExamDetailView({Key? key}) : super(key: key);
 
   @override
-  Widget get firstView => const StudentTrialExamDetailContainerView();
+  Widget get firstView => StudentTrialExamDetailContainerView();
 
   @override
   Widget get secondView => const StudentTrialExamDetailMenu();

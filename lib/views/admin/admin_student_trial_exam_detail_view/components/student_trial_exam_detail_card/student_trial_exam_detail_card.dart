@@ -9,6 +9,7 @@ import '../../../../../models/trial_exam_student_result.dart';
 import 'student_exam_averages_widget.dart';
 import 'student_exam_info_widget.dart';
 import 'student_exam_line_graphics_widget.dart';
+import 'student_exam_result_list_widget.dart';
 
 class StudentTrialExamDetailCard extends StatelessWidget {
   const StudentTrialExamDetailCard(
@@ -32,7 +33,6 @@ class StudentTrialExamDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(studentTrialExamResultList.toString());
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
       child: Column(
@@ -57,6 +57,10 @@ class StudentTrialExamDetailCard extends StatelessWidget {
           StudentExamLineGraphisWidget(
             studentTrialExamGraphList: studentTrialExamGraphList,
           ),
+          const SizedBox(
+            height: defaultPadding,
+          ),
+          StudentExamResultListWidget(studentTrialExamResultList: studentTrialExamResultList),
         ],
       ),
     );

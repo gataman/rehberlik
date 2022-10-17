@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rehberlik/core/widgets/charts/line_charts/trial_exam_student_line_chart.dart';
 
 import '../../../../../common/constants.dart';
 import '../../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
-import '../../../../../core/widgets/charts/line_charts/trial_exam_student_line_chart.dart';
+import '../../../../../core/widgets/charts/line_charts/trial_exam_student_line_chart2.dart';
 import '../../../../../responsive.dart';
 
 class StudentExamLineGraphisWidget extends StatelessWidget {
@@ -31,3 +32,10 @@ class StudentExamLineGraphisWidget extends StatelessWidget {
         });
   }
 }
+
+/*
+ TrialExamStudentLineChart(
+              examGraph: studentTrialExamGraphList[index],
+              lessonIndex: index,
+            )
+*/

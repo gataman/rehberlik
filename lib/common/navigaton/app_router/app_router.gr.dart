@@ -74,8 +74,7 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     AdminDashboardRoute.name: (routeData) {
-      final args = routeData.argsAs<AdminDashboardRouteArgs>(
-          orElse: () => const AdminDashboardRouteArgs());
+      final args = routeData.argsAs<AdminDashboardRouteArgs>(orElse: () => const AdminDashboardRouteArgs());
       return CustomPage<dynamic>(
         routeData: routeData,
         child: AdminDashboardView(key: args.key),
@@ -516,8 +515,7 @@ class AdminSubjectsRouteArgs {
 
 /// generated route for
 /// [AdminStudentDetailView]
-class AdminStudentDetailRoute
-    extends PageRouteInfo<AdminStudentDetailRouteArgs> {
+class AdminStudentDetailRoute extends PageRouteInfo<AdminStudentDetailRouteArgs> {
   AdminStudentDetailRoute({
     required Student student,
     Key? key,
@@ -551,8 +549,7 @@ class AdminStudentDetailRouteArgs {
 
 /// generated route for
 /// [AdminTrialExamResultView]
-class AdminTrialExamResultRoute
-    extends PageRouteInfo<AdminTrialExamResultRouteArgs> {
+class AdminTrialExamResultRoute extends PageRouteInfo<AdminTrialExamResultRouteArgs> {
   AdminTrialExamResultRoute({
     required TrialExam trialExam,
     Key? key,

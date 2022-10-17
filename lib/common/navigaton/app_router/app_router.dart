@@ -9,7 +9,6 @@ import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_view.dart';
 import 'package:rehberlik/views/admin/admin_main_view.dart';
 import 'package:rehberlik/views/admin/admin_messages/admin_message_view.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_view.dart';
-import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view.dart/admin_students_trial_exam_detail_view.dart';
 import 'package:rehberlik/views/admin/admin_students/admin_students_view.dart';
 import 'package:rehberlik/views/admin/admin_students_password/admin_students_pasword_view.dart';
 import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_view.dart';
@@ -20,6 +19,7 @@ import 'package:rehberlik/views/auth/auth_view.dart';
 import 'package:rehberlik/views/student/student_main_view.dart';
 
 import '../../../models/student.dart';
+import '../../../views/admin/admin_student_trial_exam_detail_view/admin_students_trial_exam_detail_view.dart';
 import '../../../views/student/student_dashboard/student_dashboard_view.dart';
 import '../../../views/student/student_question_follow/student_question_follow_view.dart';
 import 'app_routes.dart';

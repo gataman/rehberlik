@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rehberlik/responsive.dart';
 
 import '../../../../../models/helpers/trial_exam_average_helper.dart';
 import '../../../../../models/trial_exam_student_result.dart';
@@ -42,14 +43,15 @@ class StudentExamAveragesWidget extends StatelessWidget {
         child: Center(
           child: Text(
             value,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleSmall,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       );
 
   TableRow _studentAverages(BuildContext context) {
     return TableRow(children: [
-      _tableLabelValues(context, 'Öğrenci Ort.'),
+      _tableLabelValues(context, 'Ortalama'),
       _tableStudentValues(
         context,
         trialExamStudentResult.turAvg.toString(),
@@ -113,6 +115,7 @@ class StudentExamAveragesWidget extends StatelessWidget {
           child: Text(
             value,
             style: Theme.of(context).textTheme.labelMedium,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       );
@@ -123,18 +126,24 @@ class StudentExamAveragesWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Expanded(
-                child: SizedBox(),
-              ),
+              if (!Responsive.isMobile(context))
+                const Expanded(
+                  child: SizedBox(),
+                ),
               Expanded(
                 flex: 2,
                 child: Center(
                   child: Text(
                     value,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: isGreen ? Colors.green : Colors.red, fontWeight: FontWeight.bold),
+                    style: !Responsive.isMobile(context)
+                        ? Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: isGreen ? Colors.green : Colors.red, fontWeight: FontWeight.bold)
+                        : Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: isGreen ? Colors.green : Colors.red, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

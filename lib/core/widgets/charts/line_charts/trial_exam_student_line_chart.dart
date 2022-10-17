@@ -1,163 +1,108 @@
-import 'package:fl_chart/fl_chart.dart';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'dart:ui' as ui;
+import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 
-class TrialExamStudentLineChart extends StatelessWidget {
+class TrialExamStudentLineChart extends StatefulWidget {
   const TrialExamStudentLineChart({Key? key, required this.examGraph, required this.lessonIndex}) : super(key: key);
-
   final TrialExamGraph examGraph;
   final int lessonIndex;
 
   @override
+  State<TrialExamStudentLineChart> createState() => _TrialExamStudentLineChartState();
+}
+
+class _TrialExamStudentLineChartState extends State<TrialExamStudentLineChart> {
+  late GlobalKey<SfCartesianChartState> _cartesianChartKey;
+
+  late TrialExamGraph examGraph;
+  late int lessonIndex;
+  @override
+  void initState() {
+    _cartesianChartKey = GlobalKey();
+    examGraph = widget.examGraph;
+    lessonIndex = widget.lessonIndex;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          child: Text(
-            examGraph.graphLabelName,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(color: colorList[lessonIndex]),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 160,
-            child: LineChart(
-              LineChartData(
-                minY: 0,
-                maxY: examGraph.lessonType == LessonType.total
-                    ? 100
-                    : examGraph.lessonType == LessonType.twenty
-                        ? 20
-                        : 10,
-                minX: 0,
-                maxX: 10,
-                gridData: _getGridData(context),
-                borderData: FlBorderData(
-                    border: Border.all(
-                  color: Theme.of(context).dividerColor,
-                )),
-                lineBarsData: [
-                  LineChartBarData(
-                    color: colorList[lessonIndex],
-                    show: true,
-                    isCurved: true,
-                    dotData: FlDotData(getDotPainter: ((spot, xPercentage, bar, index) {
-                      return FlDotCirclePainter(
-                        radius: 1.7,
-                        strokeWidth: 1,
-                        strokeColor: colorList[lessonIndex],
-                        color: colorList[lessonIndex],
-                        //strokeColor: _defaultGetDotStrokeColor(spot, xPercentage, bar),
-                      );
-                    })),
-                    spots: _getFlSpotsData,
-                  ),
-                ],
-                titlesData: _getTitlesData(context),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _getTitles(double value, TitleMeta meta, BuildContext context) {
-    final int index = value.toInt();
-    final style = TextStyle(fontSize: 10, color: colorList[lessonIndex]);
-
-    if (examGraph.itemList.isEmpty || index == 0 || index > examGraph.itemList.length) {
-      return const Text('');
-    } else {
-      return SideTitleWidget(
-        axisSide: meta.axisSide,
-        angle: -1.5707963268,
-        space: 1,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: Text(
-            examGraph.itemList[index - 1].itemName,
-            style: style,
-            //textScaleFactor: .7,
-          ),
-        ),
-      );
-    }
-  }
-
-  FlGridData _getGridData(BuildContext context) {
-    return FlGridData(
-      getDrawingHorizontalLine: ((value) {
-        return _getDrawingLine(context);
-      }),
-      getDrawingVerticalLine: ((value) {
-        return _getDrawingLine(context);
-      }),
-      verticalInterval: 1,
-      horizontalInterval: examGraph.lessonType == LessonType.total
-          ? 10
-          : examGraph.lessonType == LessonType.twenty
-              ? 2
-              : 1,
-    );
-  }
-
-  List<FlSpot>? get _getFlSpotsData {
-    final list = examGraph.itemList;
-    if (list.isNotEmpty) {
-      List<FlSpot> flSpotList = [];
-
-      for (var i = 0; i < list.length; i++) {
-        flSpotList.add(FlSpot((i + 1).toDouble(), list[i].value));
-      }
-
-      return flSpotList;
-    } else {
-      return null;
-    }
-  }
-
-  FlLine _getDrawingLine(BuildContext context) =>
-      FlLine(color: Theme.of(context).dividerColor, strokeWidth: .7, dashArray: [1, 3]);
-
-  FlTitlesData _getTitlesData(BuildContext context) {
-    return FlTitlesData(
-      show: true,
-      leftTitles: AxisTitles(
-        sideTitles: SideTitles(
-            showTitles: true,
-            interval: examGraph.lessonType == LessonType.total
-                ? 10
-                : examGraph.lessonType == LessonType.twenty
-                    ? 2
-                    : 1,
-            reservedSize: 24,
-            getTitlesWidget: (value, meta) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  value.toString(),
-                  style: TextStyle(fontSize: 8, color: colorList[lessonIndex]),
-                ),
-              );
-            }),
-      ),
-      topTitles: AxisTitles(
-        sideTitles: SideTitles(showTitles: false),
-      ),
-      bottomTitles: AxisTitles(
-        sideTitles: SideTitles(
-          showTitles: true,
-          getTitlesWidget: (value, meta) => _getTitles(value, meta, context),
+    return SfCartesianChart(
+      key: _cartesianChartKey,
+      plotAreaBorderWidth: 0,
+      title: ChartTitle(
+          text: examGraph.graphLabelName,
+          textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(color: colorList[lessonIndex])),
+      //legend: Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
+      primaryXAxis: CategoryAxis(
+          labelRotation: -90,
           interval: 1,
-        ),
-      ),
-      rightTitles: AxisTitles(
-        sideTitles: SideTitles(showTitles: false),
+          majorTickLines: const MajorTickLines(size: 0),
+          majorGridLines: const MajorGridLines(width: 0),
+          axisLabelFormatter: (AxisLabelRenderDetails details) {
+            return ChartAxisLabel(
+                details.axis.name == 'primaryXAxis' && details.text.contains(RegExp(r'[0-9]')) ? '' : details.text,
+                TextStyle(fontSize: 10, color: colorList[lessonIndex]));
+          }),
+      /*
+      primaryXAxis: NumericAxis(
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
+          interval: 1,
+          majorGridLines: const MajorGridLines(width: 0)),
+          */
+      primaryYAxis: NumericAxis(
+          minimum: 0,
+          maximum: examGraph.lessonType == LessonType.total
+              ? 100
+              : examGraph.lessonType == LessonType.twenty
+                  ? 20
+                  : 10,
+          interval: examGraph.lessonType == LessonType.total
+              ? 10
+              : examGraph.lessonType == LessonType.twenty
+                  ? 2
+                  : 1,
+          labelFormat: '{value}',
+          labelStyle: TextStyle(fontSize: 10, color: colorList[lessonIndex]),
+          axisLine: const AxisLine(width: 0),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: _getDefaultLineSeries(),
+      tooltipBehavior: TooltipBehavior(enable: true),
+    );
+  }
+
+  Future<Uint8List> _renderChartAsImage() async {
+    final ui.Image data = await _cartesianChartKey.currentState!.toImage();
+    final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List imageBytes = bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+    return imageBytes;
+    /*
+    await Navigator.of(context).push<dynamic>(
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) {
+          return Scaffold(body: Image.memory(imageBytes));
+        },
       ),
     );
+    */
+  }
+
+  List<LineSeries<TrialExamGraphItem, dynamic>> _getDefaultLineSeries() {
+    return <LineSeries<TrialExamGraphItem, dynamic>>[
+      LineSeries<TrialExamGraphItem, dynamic>(
+          animationDuration: 2500,
+          dataSource: widget.examGraph.itemList,
+          xValueMapper: (TrialExamGraphItem item, _) => item.itemName,
+          yValueMapper: (TrialExamGraphItem item, _) => item.value,
+          width: 2,
+          color: colorList[lessonIndex],
+          name: examGraph.graphLabelName,
+          pointColorMapper: (TrialExamGraphItem item, _) => colorList[lessonIndex],
+          markerSettings: const MarkerSettings(isVisible: true)),
+    ];
   }
 
   List<Color> get colorList => <Color>[
@@ -170,3 +115,15 @@ class TrialExamStudentLineChart extends StatelessWidget {
         Colors.deepOrange
       ];
 }
+
+
+/*
+
+    //Dikey çizgi çizer
+
+
+      trackballBehavior: TrackballBehavior(
+          enable: true,
+          activationMode: ActivationMode.singleTap,
+          tooltipSettings: const InteractiveTooltip(format: 'point.x : point.y'))
+*/

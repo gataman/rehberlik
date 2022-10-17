@@ -56,6 +56,6 @@ class QuestionFollowListCubit extends Cubit<QuestionFollowListState> {
   }
 
   void _refreshList() {
-    emit(QuestionFollowListState(isLoading: false, quuestionFollowList: questionFollowList));
+    emit(QuestionFollowListState(isLoading: false, questionFollowList: questionFollowList));
   }
 }

@@ -42,6 +42,11 @@ const defaultInfoStyle = TextStyle(
   fontStyle: FontStyle.italic,
 );
 
+const defaultDivider = Divider(
+  thickness: .7,
+  height: 0,
+);
+
 const defaultSubtitleStyle = TextStyle(
   color: infoColor,
   fontSize: 12,

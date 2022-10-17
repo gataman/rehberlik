@@ -65,9 +65,7 @@ class StudentListBox extends StatelessWidget {
       height: defaultListHeight,
       child: ListView.separated(
           itemCount: studentList.length,
-          separatorBuilder: (context, index) => const Divider(
-                height: 0,
-              ),
+          separatorBuilder: (context, index) => defaultDivider,
           itemBuilder: (context, index) {
             final student = studentList[index];
             return InkWell(

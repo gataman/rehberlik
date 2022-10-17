@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -29,9 +31,11 @@ class StudentTrialExamDetailCubit extends Cubit<StudentTrialExamDetailState> {
   Student? selectedStudent;
   List<TrialExamResult>? studentTrialExamResultList;
   List<TrialExamGraph> studentTrialExamGraphList = [];
+  TrialExamStudentResult? trialExamStudentResult;
   TrialExamGraph? totalNetGraph;
   TrialExamAverageHelper? classAverages;
   TrialExamAverageHelper? schoolAverages;
+  Uint8List? imageBytes;
 
   void selectStudent(Student? student) {
     if (student == null) {
@@ -59,7 +63,7 @@ class StudentTrialExamDetailCubit extends Cubit<StudentTrialExamDetailState> {
 
       _setStudentTrialExamGraphList(list);
 
-      final trialExamStudentResult = await _trialExamStudentResultRepository.get(studentID: selectedStudent!.id!);
+      trialExamStudentResult = await _trialExamStudentResultRepository.get(studentID: selectedStudent!.id!);
 
       final trialExamClassResult =
           await _trialExamClassResultRepository.getAll(filters: {'classLevel': selectedStudent!.classLevel!});

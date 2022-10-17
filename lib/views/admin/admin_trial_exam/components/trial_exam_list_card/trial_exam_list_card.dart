@@ -77,7 +77,7 @@ class TrialExamListCard extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: trialExamList.length,
-        separatorBuilder: (context, index) => const Divider(height: 0),
+        separatorBuilder: (context, index) => defaultDivider,
         itemBuilder: (context, index) {
           final trialExam = trialExamList[index];
           return AppListTile(

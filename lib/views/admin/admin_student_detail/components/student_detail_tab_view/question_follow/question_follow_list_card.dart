@@ -38,12 +38,12 @@ class QuestionFollowListCard extends StatelessWidget {
             child: Center(child: DefaultCircularProgress()),
           );
         } else {
-          if (state.quuestionFollowList != null) {
-            _questionFollowDataSource.updateList(questionFollowList: state.quuestionFollowList!, context: context);
+          if (state.questionFollowList != null) {
+            _questionFollowDataSource.updateList(questionFollowList: state.questionFollowList!, context: context);
           }
           return Column(
             children: [
-              if (state.quuestionFollowList != null) _questionFollowDataGridCard(context),
+              if (state.questionFollowList != null) _questionFollowDataGridCard(context),
             ],
           );
         }

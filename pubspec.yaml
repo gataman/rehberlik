@@ -5,51 +5,31 @@ description: A new Flutter application.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
 
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  firebase_core: ^1.18.0
+  
   cloud_firestore: ^3.1.18
   side_navigation: ^1.0.2
   google_fonts: ^3.0.1
   fl_chart: ^0.55.0
-  syncfusion_flutter_calendar: ^20.1.61
+  
   flutter_localizations:
     sdk: flutter
-  syncfusion_flutter_datagrid: ^20.1.61
   pdf_text: ^0.5.0
   file_picker: ^4.6.1
   flutter_svg: ^1.0.3
   intl: ^0.17.0
   firebase_storage: ^10.3.1
   image_picker: ^0.8.5+3
-  syncfusion_flutter_pdf: ^20.2.40
   open_file: ^3.2.1
   get_it: ^7.2.0
   flutter_bloc: ^8.1.1
@@ -59,15 +39,29 @@ dependencies:
   auto_route: ^5.0.1
   #excel: ^2.0.0-null-safety-3
   animated_text_kit: ^4.2.2
-  syncfusion_flutter_core: ^20.2.48
-  syncfusion_localizations: ^20.2.48
   meta: ^1.8.0
-  firebase_auth: ^3.9.0
   json_annotation: ^4.6.0
   excel:
     git:
       url: https://github.com/justkawal/excel.git
       ref: eb091ba # branch name
+  printing: ^5.9.3
+  screenshot: ^1.2.3
+  image_downloader_web: ^1.0.2
+
+  # firebase
+  firebase_core: ^1.18.0
+  firebase_auth: ^3.9.0
+
+  # syncfusion packets
+  syncfusion_flutter_calendar: ^20.1.61
+  syncfusion_flutter_pdf: ^20.2.40
+  syncfusion_flutter_datagrid: ^20.1.61
+  syncfusion_flutter_core: ^20.3.49
+  syncfusion_localizations: ^20.3.49
+  syncfusion_flutter_charts: ^20.3.49
+  syncfusion_flutter_xlsio: ^20.3.49-beta
+  syncfusion_officechart: ^20.3.49-beta
   
 
 

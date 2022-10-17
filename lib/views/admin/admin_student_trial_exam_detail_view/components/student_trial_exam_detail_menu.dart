@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view.dart/cubit/student_trial_exam_detail_cubit.dart';
+import 'package:rehberlik/common/helper/excel_creator/student_trial_exam_excel_creator.dart';
 
 import '../../../../common/constants.dart';
+import '../../../../common/helper/pdf_creator/student_trial_exam_result_pdf_builder.dart';
 import '../../../../common/widgets/default_circular_progress.dart';
 import '../../../../core/widgets/drop_down/drop_down_class_list.dart';
 import '../../../../core/widgets/drop_down/drop_down_student_list.dart';
@@ -12,6 +13,7 @@ import '../../../../models/student.dart';
 import '../../../../models/student_with_class.dart';
 import '../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import '../../admin_students/components/student_list_card/cubit/student_list_cubit.dart';
+import '../cubit/student_trial_exam_detail_cubit.dart';
 
 class StudentTrialExamDetailMenu extends StatelessWidget {
   const StudentTrialExamDetailMenu({Key? key}) : super(key: key);
@@ -96,6 +98,11 @@ class StudentTrialExamDetailMenu extends StatelessWidget {
               }
             },
           ),
+        ElevatedButton(
+            onPressed: () {
+              StudentTrialExamExcelCreator(context).build();
+            },
+            child: Text('Pdf Kaydet'))
       ],
     );
   }
