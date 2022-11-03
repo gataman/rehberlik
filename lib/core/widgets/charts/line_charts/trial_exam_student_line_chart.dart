@@ -1,9 +1,5 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'dart:ui' as ui;
 import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 
 class TrialExamStudentLineChart extends StatefulWidget {
@@ -72,22 +68,6 @@ class _TrialExamStudentLineChartState extends State<TrialExamStudentLineChart> {
       series: _getDefaultLineSeries(),
       tooltipBehavior: TooltipBehavior(enable: true),
     );
-  }
-
-  Future<Uint8List> _renderChartAsImage() async {
-    final ui.Image data = await _cartesianChartKey.currentState!.toImage();
-    final ByteData? bytes = await data.toByteData(format: ui.ImageByteFormat.png);
-    final Uint8List imageBytes = bytes!.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
-    return imageBytes;
-    /*
-    await Navigator.of(context).push<dynamic>(
-      MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) {
-          return Scaffold(body: Image.memory(imageBytes));
-        },
-      ),
-    );
-    */
   }
 
   List<LineSeries<TrialExamGraphItem, dynamic>> _getDefaultLineSeries() {

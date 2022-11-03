@@ -30,10 +30,6 @@ class AdminMainView extends StatelessWidget implements AutoRouteWrapper {
         BlocProvider<LessonListCubit>(
           create: (_) => LessonListCubit()..fetchLessonList(),
         ),
-        BlocProvider<ClassListCubit>(
-          create: (_) => ClassListCubit()..fetchClassList(),
-          lazy: false,
-        ),
         BlocProvider<StudentListCubit>(
           create: (_) => StudentListCubit(),
         ),

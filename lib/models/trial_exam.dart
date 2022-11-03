@@ -14,7 +14,7 @@ class TrialExam {
       required this.examCode,
       required this.classLevel,
       required this.examDate,
-      this.examType = 1});
+      this.examType = 0});
 
   factory TrialExam.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,

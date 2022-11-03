@@ -20,7 +20,6 @@ class StudentExamInfoWidget extends StatelessWidget {
   }
 
   Widget _desktopView(BuildContext context) {
-    debugPrint('desktopppppppp');
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -39,7 +38,6 @@ class StudentExamInfoWidget extends StatelessWidget {
   }
 
   Widget _mobileView(BuildContext context) {
-    debugPrint('mobillllll');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

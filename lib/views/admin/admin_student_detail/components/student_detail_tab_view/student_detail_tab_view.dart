@@ -47,7 +47,7 @@ class _StudentDetailTabViewState extends State<StudentDetailTabView> with Single
             ),
             child: TabBar(
               indicatorColor: Colors.amber,
-              labelStyle: const TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis),
+              labelStyle: Theme.of(context).textTheme.bodyMedium,
               controller: _tabController,
               tabs: _getTabs(),
             ),
@@ -102,11 +102,15 @@ class _StudentDetailTabViewState extends State<StudentDetailTabView> with Single
           Icon(
             icon,
             size: 20,
+            color: Theme.of(context).colorScheme.secondary,
           ),
           const SizedBox(
             height: defaultPadding / 4,
           ),
-          AutoSizeText(labelText),
+          AutoSizeText(
+            labelText,
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
         ],
       ),
     );

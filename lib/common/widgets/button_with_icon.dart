@@ -34,7 +34,8 @@ class ButtonWithIcon extends StatelessWidget {
               child: Center(
                 child: Text(
                   labelText,
-                  style: TextStyle(color: textColor ?? Theme.of(context).colorScheme.onPrimary),
+                  style: TextStyle(
+                      color: textColor ?? Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
 import 'package:rehberlik/models/helpers/trial_exam_average_helper.dart';
 import 'package:rehberlik/models/student.dart';
+import 'package:rehberlik/models/trial_exam_result.dart';
 import 'package:rehberlik/models/trial_exam_student_result.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:syncfusion_officechart/officechart.dart';
@@ -71,21 +72,7 @@ class StudentTrialExamExcelCreator {
     sheet.getRangeByName('N3:Y7').merge();
 
     //Style
-    final Style studentInfoStyle = ExcelHelper.studentInfoStyle(workbook);
-    final Style titleLargeStyle = ExcelHelper.titleLargeStyle(workbook: workbook);
-    final Style titleMediumStyle = ExcelHelper.titleMediumStyle(workbook: workbook);
-    final Style averageTitleStyle = ExcelHelper.averageTitleStyle(workbook: workbook);
-    final Style averageValueStyle = ExcelHelper.averageValueStyle(workbook: workbook);
-
-    sheet.getRangeByName('B3:M7').cellStyle = studentInfoStyle;
-    sheet.getRangeByName('B1:Y1').cellStyle = titleLargeStyle;
-    sheet.getRangeByName('B2:Y2').cellStyle = titleMediumStyle;
-    sheet.getRangeByName('N3:Y7').cellStyle = studentInfoStyle;
-    sheet.getRangeByName('B8:Y9').cellStyle = titleLargeStyle; // Ortalama Başlık Style
-    sheet.getRangeByName('B10:Y11').cellStyle = averageTitleStyle; // Ortalama Ders Başlık Style
-    sheet.getRangeByName('B12:Y12').cellStyle = averageValueStyle; // Öğrenci Ortalama Değerleri
-    sheet.getRangeByName('B13:Y13').cellStyle = averageValueStyle; // Sınıf Ortalama Değerleri
-    sheet.getRangeByName('B14:Y14').cellStyle = averageValueStyle; // Okul Ortalama Değerleri
+    _setStyles(workbook, sheet); // Ortalama Ders Başlık Style
 
     //Titles
     _setTitles(sheet);
@@ -103,6 +90,8 @@ class StudentTrialExamExcelCreator {
     _setLessonCharts(sheet, sheet2, studentTrialExamGraphList, charts);
     sheet.charts = charts;
 
+    _setExamResults(sheet, studentTrialExamResultList, workbook);
+
     final List<int> bytes = workbook.saveAsStream();
     //Dispose the document.
     workbook.dispose();
@@ -110,6 +99,25 @@ class StudentTrialExamExcelCreator {
     //Save and launch the file.
     await FileSaveHelper.saveAndLaunchFile(bytes, '${student.studentNumber}.xlsx');
     notifier.value = false;
+  }
+
+  void _setStyles(Workbook workbook, Worksheet sheet) {
+    //Style
+    final Style studentInfoStyle = ExcelHelper.studentInfoStyle(workbook);
+    final Style titleLargeStyle = ExcelHelper.titleLargeStyle(workbook: workbook);
+    final Style titleMediumStyle = ExcelHelper.titleMediumStyle(workbook: workbook);
+    final Style averageTitleStyle = ExcelHelper.averageTitleStyle(workbook: workbook);
+    final Style averageValueStyle = ExcelHelper.averageValueStyle(workbook: workbook);
+
+    sheet.getRangeByName('B3:M7').cellStyle = studentInfoStyle;
+    sheet.getRangeByName('B1:Y1').cellStyle = titleLargeStyle;
+    sheet.getRangeByName('B2:Y2').cellStyle = titleMediumStyle;
+    sheet.getRangeByName('N3:Y7').cellStyle = studentInfoStyle;
+    sheet.getRangeByName('B8:Y9').cellStyle = titleLargeStyle; // Ortalama Başlık Style
+    sheet.getRangeByName('B10:Y11').cellStyle = averageTitleStyle; // Ortalama Ders Başlık Style
+    sheet.getRangeByName('B12:Y12').cellStyle = averageValueStyle; // Öğrenci Ortalama Değerleri
+    sheet.getRangeByName('B13:Y13').cellStyle = averageValueStyle; // Sınıf Ortalama Değerleri
+    sheet.getRangeByName('B14:Y14').cellStyle = averageValueStyle; // Okul Ortalama Değerleri
   }
 
   void _setTitles(Worksheet sheet) {
@@ -173,12 +181,8 @@ class StudentTrialExamExcelCreator {
     }
   }
 
-  void _setAverages(
-    Worksheet sheet,
-    TrialExamStudentResult trialExamStudentResult,
-    TrialExamAverageHelper classAverages,
-    TrialExamAverageHelper schoolAverages,
-  ) {
+  void _setAverages(Worksheet sheet, TrialExamStudentResult trialExamStudentResult,
+      TrialExamAverageHelper classAverages, TrialExamAverageHelper schoolAverages) {
     // Main Title
     sheet.getRangeByName('B8:Y9').cellStyle.borders.all.color = '#A9D08E';
     sheet.getRangeByName('B13:Y13').cellStyle.backColor = '#C6E0B4';
@@ -322,8 +326,6 @@ class StudentTrialExamExcelCreator {
     sheet.getRangeByName('T14').setNumber(schoolAverages.fenAvg);
     sheet.getRangeByName('W14').setNumber(schoolAverages.totAvg);
 
-    debugPrint(trialExamStudentResult.toString());
-
     // styles:
   }
 
@@ -362,8 +364,6 @@ class StudentTrialExamExcelCreator {
       
     }
     */
-
-    debugPrint(studentTrialExamGraphList.toString());
   }
 
   void _addLessonChart(
@@ -454,6 +454,164 @@ class StudentTrialExamExcelCreator {
         break;
       default:
     }
+  }
+
+  void _setExamResults(Worksheet sheet, List<TrialExamResult>? studentTrialExamResultList, Workbook workbook) {
+    final Style examResultTitleStyle = ExcelHelper.examResultTitle(workbook: workbook);
+
+    // Styles :
+    sheet.getRangeByName('B44:Y45').cellStyle = examResultTitleStyle;
+    sheet.getRangeByName('B44').setText('Sınav Adı');
+
+    int row = 44;
+    int startCol = 5;
+    int endCol = 7;
+    sheet.getRangeByName('B44:D45').merge();
+    for (var i = 0; i < 7; i++) {
+      sheet.getRangeByIndex(row, startCol, row, endCol).merge();
+      sheet.getRangeByIndex(row, startCol).setText(_getResultTitle(i));
+      startCol = startCol + 3;
+      endCol = endCol + 3;
+    }
+
+    _setDYN(sheet);
+
+    _setValue(studentTrialExamResultList, sheet, workbook);
+  }
+
+  void _setValue(List<TrialExamResult>? studentTrialExamResultList, Worksheet sheet, Workbook workbook) {
+    final Style examResultValue1Style = ExcelHelper.examResultValue1(workbook: workbook);
+    final Style examResultValue2Style = ExcelHelper.examResultValue2(workbook: workbook);
+    int row = 46;
+    const int startCol = 2;
+    const int endCol = 4;
+
+    if (studentTrialExamResultList != null && studentTrialExamResultList.isNotEmpty) {
+      for (var examResult in studentTrialExamResultList) {
+        if (row % 2 == 0) {
+          sheet.getRangeByIndex(row, 2, row, 25).cellStyle = examResultValue1Style;
+        } else {
+          sheet.getRangeByIndex(row, 2, row, 25).cellStyle = examResultValue2Style;
+        }
+
+        List<num> numList = <num>[
+          examResult.turDog!,
+          examResult.turYan!,
+          examResult.turNet!,
+          examResult.sosDog!,
+          examResult.sosYan!,
+          examResult.sosNet!,
+          examResult.ingDog!,
+          examResult.ingYan!,
+          examResult.ingNet!,
+          examResult.dinDog!,
+          examResult.dinYan!,
+          examResult.dinNet!,
+          examResult.matDog!,
+          examResult.matYan!,
+          examResult.matNet!,
+          examResult.fenDog!,
+          examResult.fenYan!,
+          examResult.fenNet!,
+          _totalDog(examResult),
+          _totalYan(examResult),
+          _totalNet(examResult),
+        ];
+        // Exam Name:
+        sheet.getRangeByIndex(row, startCol, row, endCol).merge();
+        sheet.getRangeByIndex(row, startCol).setText(examResult.trialExam!.examName);
+
+        var stCol = 5;
+
+        for (var i = 0; i < numList.length; i++) {
+          sheet.getRangeByIndex(row, stCol).setNumber(numList[i].toDouble());
+          stCol++;
+        }
+
+        row++;
+
+        //
+      }
+    }
+  }
+
+  String _getResultTitle(int i) {
+    var title = '';
+    switch (i) {
+      case 0:
+        title = 'Türkçe';
+        break;
+
+      case 1:
+        title = 'Sosyal';
+        break;
+
+      case 2:
+        title = 'İngilizce';
+        break;
+
+      case 3:
+        title = 'Din';
+        break;
+
+      case 4:
+        title = 'Matematik';
+        break;
+
+      case 5:
+        title = 'Fen';
+        break;
+
+      case 6:
+        title = 'Toplam';
+        break;
+    }
+
+    return title;
+  }
+
+  void _setDYN(Worksheet sheet) {
+    int row = 45;
+    int startCol = 5;
+    for (var i = 1; i < 22; i++) {
+      var range = i % 3;
+      if (range == 1) {
+        sheet.getRangeByIndex(row, startCol).setText('D');
+        //sheet.getRangeByIndex(row, startCol).cellStyle = averageTitleStyle;
+      } else if (range == 2) {
+        sheet.getRangeByIndex(row, startCol).setText('Y');
+      } else {
+        sheet.getRangeByIndex(row, startCol).setText('N');
+      }
+      startCol++;
+    }
+  }
+
+  int _totalDog(TrialExamResult examResult) {
+    return examResult.turDog! +
+        examResult.sosDog! +
+        examResult.ingDog! +
+        examResult.dinDog! +
+        examResult.matDog! +
+        examResult.fenDog!;
+  }
+
+  int _totalYan(TrialExamResult examResult) {
+    return examResult.turYan! +
+        examResult.sosYan! +
+        examResult.ingYan! +
+        examResult.dinYan! +
+        examResult.matYan! +
+        examResult.fenYan!;
+  }
+
+  double _totalNet(TrialExamResult examResult) {
+    return examResult.turNet! +
+        examResult.sosNet! +
+        examResult.ingNet! +
+        examResult.dinNet! +
+        examResult.matNet! +
+        examResult.fenNet!;
   }
 }
 

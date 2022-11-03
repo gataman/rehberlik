@@ -1,29 +1,16 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_downloader_web/image_downloader_web.dart';
-import 'package:rehberlik/models/student_with_class.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import 'package:rehberlik/views/admin/admin_dashboard/admin_dashboard_imports.dart';
-import 'package:screenshot/screenshot.dart';
 
-import '../../../../common/constants.dart';
 import '../../../../common/widgets/default_circular_progress.dart';
 import '../../../../core/widgets/containers/app_list_box_container.dart';
 import '../../../../core/widgets/text/app_box_title.dart';
 import '../cubit/student_trial_exam_detail_cubit.dart';
 
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
-
 import 'student_trial_exam_detail_card/student_trial_exam_detail_card.dart';
 
 class StudentTrialExamDetailContainerView extends StatelessWidget {
-  StudentTrialExamDetailContainerView({Key? key}) : super(key: key);
-  final ScreenshotController screenshotController = ScreenshotController();
-  final WebImageDownloader _webImageDownloader = WebImageDownloader();
+  const StudentTrialExamDetailContainerView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +47,6 @@ class StudentTrialExamDetailContainerView extends StatelessWidget {
                         classAverages: classAverages,
                         schoolAverages: schoolAverages,
                       ),
-                      ElevatedButton(
-                          onPressed: () {
-                            _createPdf(context);
-                          },
-                          child: const Text('PdfOluştur'))
                     ],
                   );
 
@@ -86,26 +68,6 @@ class StudentTrialExamDetailContainerView extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<void> _createPdf(BuildContext context) async {
-    final doc = pw.Document();
-    doc.addPage(
-      pw.Page(
-          pageFormat: PdfPageFormat.a4,
-          build: (pw.Context context) {
-            return pw.Container(child: pw.Text('Deneme'));
-          }),
-    );
-
-    await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => doc.save());
-  }
-
-  void _captureImage(Widget studentTrialExamDetailCard) {
-    screenshotController.captureFromWidget(studentTrialExamDetailCard).then((image) {
-      debugPrint('image: ${image.toString()}');
-      _webImageDownloader.downloadImageFromUInt8List(uInt8List: image);
-    });
   }
 }
 

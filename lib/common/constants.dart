@@ -141,6 +141,8 @@ class Constants {
         side: BorderSide(color: borderColor, width: borderWidth),
         borderRadius: BorderRadius.circular(radius),
       );
+
+  static const List<String> trialExamType = ['90 Soru', '75 Soru'];
 }
 
 const meetingTypeList = <String>[
@@ -149,6 +151,8 @@ const meetingTypeList = <String>[
   'Toplantılar / Seminerler',
   'Diğer İş ve İşlemler',
 ];
+
+
 
 
 //! Sonradan eklenenler:

@@ -5,5 +5,5 @@ class LgsFactors {
   static const double sosFactor = 1.411;
   static const double ingFactor = 1.505;
   static const double dinFactor = 1.532;
-  static const double constFactor = 200.3;
+  static const double constFactor = 200.28;
 }

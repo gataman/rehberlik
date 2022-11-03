@@ -4,14 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/core/widgets/popup_menu/custom_popup_menu_button.dart';
+import 'package:rehberlik/responsive.dart';
+import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import 'package:rehberlik/views/app_main/search/search_student_dialog.dart';
 
 import '../../core/init/locale_manager.dart';
 import '../../core/init/pref_keys.dart';
 import '../../models/student.dart';
 import '../../models/teacher.dart';
 import '../../views/app_main/cubit/app_main_cubit.dart';
+import '../../views/app_main/search/cubit/search_student_cubit.dart';
 import '../constants.dart';
 import '../navigaton/app_router/app_routes.dart';
+import 'search_widget.dart';
 
 class CustomAppBar extends AppBar {
   final BuildContext context;
@@ -22,6 +27,7 @@ class CustomAppBar extends AppBar {
   @override
   Widget? get title => _AdminAppBarTitle(
         isStudent: isStudent,
+        mainContext: context,
       );
 
   @override
@@ -116,11 +122,14 @@ class CustomAppBar extends AppBar {
 }
 
 class _AdminAppBarTitle extends StatelessWidget {
-  const _AdminAppBarTitle({required this.isStudent, Key? key}) : super(key: key);
+  const _AdminAppBarTitle({required this.isStudent, Key? key, required this.mainContext}) : super(key: key);
   final bool isStudent;
+  final BuildContext mainContext;
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+    final bool isDesktop = Responsive.isDesktop(context);
     return Row(
       children: [
         MouseRegion(
@@ -133,47 +142,77 @@ class _AdminAppBarTitle extends StatelessWidget {
             },
             child: Column(
               children: [
-                const Text(
+                Text(
                   "Rehberlik Servisi",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.amber),
+                  style: TextStyle(fontSize: isMobile ? 14 : 16, fontWeight: FontWeight.bold, color: Colors.amber),
                 ),
                 Text(
                   isStudent ? 'Öğrenci Paneli' : 'Yönetici Paneli',
-                  style: const TextStyle(fontSize: 12, color: Colors.white),
+                  style: TextStyle(fontSize: isMobile ? 10 : 12, color: Colors.white),
                 )
               ],
             ),
           ),
         ),
         const Spacer(
-          flex: 1,
+          flex: 4,
         ),
-        /*
-        Expanded(
-          child: SearchWidget(
-              text: 'Öğrenci Arama',
-              onChanged: (text) {
-                if (text.length > 2) {
-                  _showSearchDialog(text, context).then((value) {
-                    if (text.length < 2) {
-                      Get.back();
-                    }
-                  });
+        BlocBuilder<ClassListCubit, ClassListState>(
+          builder: (_, state) {
+            if (state is ClassListLoadedState) {
+              final studentList = state.allStudentList;
+              if (studentList != null) {
+                context.read<SearchStudentCubit>().init(studentList);
+                if (isDesktop) {
+                  return Expanded(child: _getSearchButton(context, studentList, isMobile));
+                } else {
+                  return Container(
+                    decoration: defaultBoxDecoration,
+                    child: IconButton(
+                      onPressed: () {
+                        _showSearchDialog(mainContext, studentList);
+                      },
+                      icon: const Icon(Icons.search),
+                    ),
+                  );
                 }
-              },
-              hintText: 'Öğrenci Arama'),
+              }
+            }
+            return Container();
+          },
         ),
-
-         */
       ],
     );
   }
 
-  Future<dynamic> _showSearchDialog(String text, BuildContext context) {
+  ElevatedButton _getSearchButton(BuildContext context, List<Student> studentList, bool isMobile) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: Constants.darkCanvasColor, side: const BorderSide(color: Constants.darkDividerColor)),
+      child: Row(children: [
+        const Icon(Icons.search, size: 20, color: Colors.white38),
+        Expanded(
+            child: Center(
+          child: Text(
+            'Öğrenci Arama',
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white38),
+          ),
+        ))
+      ]),
+      onPressed: () {
+        _showSearchDialog(mainContext, studentList);
+      },
+    );
+  }
+
+  Future<dynamic> _showSearchDialog(BuildContext mainContext, List<Student> allStudentList) {
     final dialog = showDialog(
-        context: context,
+        context: mainContext,
         builder: (ctx) {
-          return const AlertDialog();
+          return SearchStudentDialog(
+            allStudentList: allStudentList,
+            mainContext: mainContext,
+          );
         });
 
     return dialog;

@@ -1,7 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../common/locator.dart';
 import '../../../../../../models/trial_exam.dart';
+import '../../../../../../models/trial_exam_result.dart';
 import '../../../../../../repository/trial_exam_repository.dart';
+import '../../../../../../repository/trial_exam_result_repository.dart';
+import '../../../../../../repository/trial_exam_student_result_repository.dart';
+import '../../../../admin_trial_exam_detail/helper/trial_exam_student_result_helper.dart';
 
 part 'trial_exam_list_state.dart';
 
@@ -9,6 +13,9 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   TrialExamListCubit() : super(TrialExamListState(selectedCategory: 5));
 
   final _trialExamRepository = locator<TrialExamRepository>();
+  final _trialExamResultRepository = locator<TrialExamResultRepository>();
+  final _helperStudentResult = locator<TrialExamStudentResultHelper>();
+  final _trialExamStudentResultRepository = locator<TrialExamStudentResultRepository>();
   int selectedCategory = 8;
 
   List<TrialExam>? _trialExamList;
@@ -39,6 +46,7 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   Future<void> deleteTrialExam({required TrialExam trialExam}) async {
     return _trialExamRepository.delete(objectID: trialExam.id!).whenComplete(() {
       // editingLesson.value = null;
+      _calculateAllStudentRanks(trialExam.classLevel!);
       _deleteTrialExamInLocalList(trialExam: trialExam);
     });
   }
@@ -56,5 +64,28 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   void _deleteTrialExamInLocalList({required TrialExam trialExam}) {
     _trialExamList!.remove(trialExam);
     _refreshList();
+  }
+
+  void _calculateAllStudentRanks(int classLevel) async {
+    final List<TrialExamResult> trialExamAllResultList = [];
+
+    // Sınıf seviyesine göre bütün sınavlar çekildi:
+    final trialExamList = await _trialExamRepository.getAll(filters: {'classLevel': classLevel});
+
+    if (trialExamList != null && trialExamList.isNotEmpty) {
+      for (var exam in trialExamList) {
+        final examResultList = await _trialExamResultRepository.getAll(filters: {'examID': exam.id!});
+        if (examResultList != null && examResultList.isNotEmpty) {
+          // Bütün listeler dolduruldu.
+          trialExamAllResultList.addAll(examResultList);
+        }
+      }
+    }
+
+    if (trialExamAllResultList.isNotEmpty) {
+      final trialExamStudentResultList = _helperStudentResult.createTrialExamStudentResultList(
+          trialExamAllResultList: trialExamAllResultList, classLevel: classLevel);
+      _trialExamStudentResultRepository.addAll(list: trialExamStudentResultList);
+    }
   }
 }

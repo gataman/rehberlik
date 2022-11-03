@@ -6,6 +6,7 @@ import '../constants.dart';
 import 'admin_drawer_list_tile.dart';
 import 'admin_drawer_model.dart';
 import 'app_router/app_router.dart';
+import 'app_router/app_routes.dart';
 
 class AdminDrawerMenu extends StatelessWidget {
   const AdminDrawerMenu({Key? key}) : super(key: key);
@@ -28,7 +29,11 @@ class AdminDrawerMenu extends StatelessWidget {
                   tileColor: context.router.currentPath == '/admin/${listItem.route}' ? Colors.white12 : null,
                   onPress: () {
                     Navigator.pop(context);
-                    context.router.replaceNamed(listItem.route);
+                    if (listItem.route == AppRoutes.routeAdminStudentsTrialExamDetailView) {
+                      context.router.replace(AdminStudentsTrialExamDetailRoute(student: null));
+                    } else {
+                      context.router.replaceNamed(listItem.route);
+                    }
                   },
                 ),
             ],

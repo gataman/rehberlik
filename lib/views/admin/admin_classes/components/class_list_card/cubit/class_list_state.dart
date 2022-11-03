@@ -9,8 +9,13 @@ class ClassListLoadingState extends ClassListState {
 }
 
 class ClassListLoadedState extends ClassListState {
+  final List<Student>? allStudentList;
   final List<StudentWithClass>? studentWithClassList;
   final List<SchoolStudentStats> schoolStatsList;
 
-  ClassListLoadedState({this.studentWithClassList, required this.schoolStatsList});
+  ClassListLoadedState({
+    this.studentWithClassList,
+    required this.schoolStatsList,
+    this.allStudentList,
+  });
 }

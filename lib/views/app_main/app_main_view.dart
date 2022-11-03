@@ -17,6 +17,7 @@ import '../admin/admin_dashboard/components/agenda_box/cubit/agenda_box_cubit.da
 import '../admin/admin_lessons/components/lesson_list_card/cubit/lesson_list_cubit.dart';
 import '../admin/admin_students/components/student_list_card/cubit/student_list_cubit.dart';
 import 'cubit/app_main_cubit.dart';
+import 'search/cubit/search_student_cubit.dart';
 
 class AppMainView extends StatelessWidget {
   AppMainView({Key? key}) : super(key: key);
@@ -28,8 +29,21 @@ class AppMainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppMainCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ClassListCubit>(
+          create: (_) => ClassListCubit()..fetchClassList(),
+          lazy: false,
+        ),
+        BlocProvider<SearchStudentCubit>(
+          create: (_) => SearchStudentCubit(),
+          lazy: false,
+        ),
+        BlocProvider<AppMainCubit>(
+          create: (_) => AppMainCubit(),
+          lazy: false,
+        ),
+      ],
       child: BlocBuilder<AppMainCubit, AppMainState>(
         builder: (context, state) {
           final ThemeData theme = CustomTheme(theme: state.themeType).getAppTheme();

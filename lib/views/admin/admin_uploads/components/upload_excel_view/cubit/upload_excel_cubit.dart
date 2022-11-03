@@ -2,10 +2,10 @@ import 'dart:collection';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_excel/excel.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:rehberlik/common/extensions.dart';
@@ -135,9 +135,10 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
               break;
 
             case 6:
-              //var date = convertDigitsToDate(int.parse(studentData.toString()));
-              var date = convertDateTime(studentData?.value.toString());
-              student.birthDay = date;
+              var date = convertDigitsToDate(studentData?.value.toString());
+
+              //var date = convertDateTime(studentData?.value.toString());
+              student.birthDay = date.toString();
               break;
           }
 
@@ -202,6 +203,22 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
       return className;
     } else {
       return "";
+    }
+  }
+
+  String? convertDigitsToDate(String? excelDate) {
+    if (excelDate != null) {
+      int dateInt = int.parse(excelDate);
+      const convertExcelDateToMillis = 86400000;
+      var excelStartTime = 2208995816000 + 172800000; //2209168616000
+      final totalMilis = (dateInt * convertExcelDateToMillis) - excelStartTime;
+      final date = DateTime.fromMillisecondsSinceEpoch(totalMilis);
+
+      //var dateText = "${date.day}/${date.month}/${date.year}";
+      final formatedDate = DateFormat("dd.MM.yyyy").format(date);
+      return formatedDate;
+    } else {
+      return null;
     }
   }
 

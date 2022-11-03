@@ -1,6 +1,9 @@
 library admin_student_detail_view;
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
+import 'package:rehberlik/common/widgets/button_with_icon.dart';
 import 'package:rehberlik/core/widgets/text/app_box_title.dart';
 
 import '../admin_base/admin_base_view.dart';

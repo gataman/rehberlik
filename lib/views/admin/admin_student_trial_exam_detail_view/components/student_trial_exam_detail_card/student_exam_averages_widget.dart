@@ -147,10 +147,11 @@ class StudentExamAveragesWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              Icon(
-                isGreen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                color: isGreen ? Colors.green : Colors.red,
-              )
+              if (!Responsive.isMobile(context))
+                Icon(
+                  isGreen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                  color: isGreen ? Colors.green : Colors.red,
+                )
             ],
           ),
         ),

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_excel/excel.dart';
 import 'package:rehberlik/models/trial_exam_student_result.dart';
 import '../../../../common/extensions.dart';
 import '../../../../common/custom_result.dart';
@@ -64,6 +64,11 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
       try {
         await _trialExamResultRepository.addAll(list: trialExamResultParsedList!);
         _saveAllClassResult();
+
+        if (trialExam?.classLevel != null) {
+          _calculateAllStudentRanks(trialExam!.classLevel!);
+        }
+
         return customResult;
       } catch (e) {
         customResult.message = 'Bir hata oluştu. Hata kodu: ${e.toString()}';
@@ -108,14 +113,14 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
           //Web
           final bytes = result.files.first.bytes;
           if (bytes != null) {
-            _decodeExcelFile(bytes, studentList);
+            _decodeExcelFile(bytes, studentList, classLevel);
           }
         } else {
           //Others
           final path = result.files.first.path;
           if (path != null) {
             var mobileBytes = await File(path).readAsBytes();
-            _decodeExcelFile(mobileBytes, studentList);
+            _decodeExcelFile(mobileBytes, studentList, classLevel);
           }
         }
       }
@@ -124,7 +129,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
     }
   }
 
-  void _decodeExcelFile(Uint8List bytes, List<Student> studentList) {
+  void _decodeExcelFile(Uint8List bytes, List<Student> studentList, int classLevel) {
     //final decoder = SpreadsheetDecoder.decodeBytes(bytes, update: false);
     var decoder = Excel.decodeBytes(bytes);
     wrongRowList.clear();
@@ -160,6 +165,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
 
     if (examResultList.isNotEmpty) {
       _createStudentRanks(examResultList);
+
       trialExamResultParsedList = examResultList;
     }
 
@@ -215,7 +221,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
     });
   }
 
-  void calculateAllStudentRanks(int classLevel) async {
+  void _calculateAllStudentRanks(int classLevel) async {
     final List<TrialExamResult> trialExamAllResultList = [];
 
     // Sınıf seviyesine göre bütün sınavlar çekildi:

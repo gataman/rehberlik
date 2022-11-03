@@ -1,4 +1,4 @@
-import 'package:excel/excel.dart';
+import 'package:flutter_excel/excel.dart';
 import 'package:rehberlik/common/extensions.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/models/trial_exam_class_result.dart';
@@ -137,7 +137,7 @@ class TrialExamResultHelper {
       fenDog: row[12]?.value ?? 0,
       fenYan: row[13]?.value ?? 0,
       fenNet: fenNet,
-      totalPoint: getTotalPoint(studentNets),
+      totalPoint: getTotalPoint(studentNets, trialExam.examType),
     );
     return trialExamResult;
   }
@@ -155,13 +155,20 @@ class TrialExamResultHelper {
     }
   }
 
-  double getTotalPoint(StudentNets studentNets) {
-    return (studentNets.turNet * LgsFactors.turFactor) +
+  double getTotalPoint(StudentNets studentNets, int examType) {
+    return (studentNets.turNet * _getFactor(factor: LgsFactors.turFactor, examType: examType)) +
+        (studentNets.matNet * _getFactor(factor: LgsFactors.matFactor, examType: examType)) +
+        (studentNets.fenNet * _getFactor(factor: LgsFactors.fenFactor, examType: examType)) +
         (studentNets.sosNet * LgsFactors.sosFactor) +
         (studentNets.dinNet * LgsFactors.dinFactor) +
         (studentNets.ingNet * LgsFactors.ingFactor) +
-        (studentNets.matNet * LgsFactors.matFactor) +
-        (studentNets.fenNet * LgsFactors.fenFactor) +
         LgsFactors.constFactor;
+  }
+
+  double _getFactor({required double factor, required int examType}) {
+    if (examType == 1) {
+      return (factor * 20) / 15;
+    }
+    return factor;
   }
 }

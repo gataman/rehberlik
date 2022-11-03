@@ -28,3 +28,13 @@ extension DecimalCount on double {
     return double.parse(toStringAsFixed(count));
   }
 }
+
+extension CheckExamType on double {
+  double checkExamType(int examType) {
+    if (examType == 1) {
+      return (this * 20) / 15;
+    } else {
+      return this;
+    }
+  }
+}

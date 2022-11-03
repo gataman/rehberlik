@@ -3,7 +3,7 @@ part of admin_student_detail_view;
 class StudentInfoCard extends StatelessWidget {
   final Student? student;
 
-  StudentInfoCard({Key? key, this.student}) : super(key: key);
+  const StudentInfoCard({Key? key, this.student}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,19 +67,32 @@ class StudentInfoCard extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.all(defaultPadding),
                   child: AppBoxTitle(
-                    title: 'Raporlar',
+                    title: 'İşlemler',
                     isBack: false,
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.all(defaultPadding),
-                    child: LoadingButton(
-                        text: 'Çalışma Programı İndir',
-                        iconData: Icons.download,
-                        loadingListener: pdfBuilder.notifier,
-                        onPressed: () {
-                          pdfBuilder.build(student!);
-                        })),
+                  padding: const EdgeInsets.all(defaultPadding),
+                  child: ButtonWithIcon(
+                    labelText: 'Deneme Sonuçları',
+                    icon: Icons.line_axis_rounded,
+                    onPressed: () {
+                      context.router.push(
+                        AdminStudentsTrialExamDetailRoute(student: student),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  child: LoadingButton(
+                      text: 'Çalışma Programı İndir',
+                      iconData: Icons.download,
+                      loadingListener: pdfBuilder.notifier,
+                      onPressed: () {
+                        pdfBuilder.build(student!);
+                      }),
+                ),
               ],
             ),
           ),
@@ -123,3 +136,23 @@ class StudentInfoCard extends StatelessWidget {
           );
   }
 }
+
+
+/*
+ElevatedButton.icon(
+                    onPressed: () {
+                      context.router.push(AdminStudentsTrialExamDetailRoute(student: student));
+                    },
+                    icon: Icon(
+                      Icons.line_axis,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    label: Text(
+                      'Deneme İstatistikleri',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+*/

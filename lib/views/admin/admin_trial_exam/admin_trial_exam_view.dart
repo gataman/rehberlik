@@ -22,6 +22,7 @@ import 'package:rehberlik/views/admin/admin_trial_exam/components/trial_exam_lis
 import 'package:flutter/material.dart';
 
 import '../../../common/navigaton/app_router/app_router.dart';
+import '../../../common/widgets/trial_exam_type_select_box.dart';
 import '../../../core/widgets/containers/app_form_box_elements.dart';
 
 part 'components/trial_exam_list_card/trial_exam_list_card.dart';

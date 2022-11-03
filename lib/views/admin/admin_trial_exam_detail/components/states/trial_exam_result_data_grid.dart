@@ -94,6 +94,8 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
         frozenColumnsCount: 3,
         gridLinesVisibility: GridLinesVisibility.both,
         headerGridLinesVisibility: GridLinesVisibility.both,
+        allowMultiColumnSorting: true,
+
         headerRowHeight: 30,
         defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
         rowHeight: 40,

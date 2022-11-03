@@ -117,7 +117,7 @@ part 'app_router.gr.dart';
             path: AppRoutes.routeAdminMessages,
             guards: [TeacherAuthGuard],
           ),
-          CustomRoute(
+          CustomRoute<Student?>(
             page: AdminStudentsTrialExamDetailView,
             transitionsBuilder: TransitionsBuilders.fadeIn,
             path: AppRoutes.routeAdminStudentsTrialExamDetailView,

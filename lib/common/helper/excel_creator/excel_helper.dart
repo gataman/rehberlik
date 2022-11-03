@@ -61,4 +61,43 @@ class ExcelHelper {
     style.borders.all.lineStyle = LineStyle.thin;
     return style;
   }
+
+  static Style examResultTitle({required Workbook workbook}) {
+    final Style style = workbook.styles.add('ExamResultTitle');
+    style.fontColor = '#FFFFFF';
+    style.fontSize = 12;
+    style.backColor = '#1F4E78';
+    style.bold = true;
+    style.hAlign = HAlignType.center;
+    style.vAlign = VAlignType.center;
+    style.borders.all.color = '#9BC2E6';
+    style.borders.all.lineStyle = LineStyle.thin;
+    return style;
+  }
+
+  static Style examResultValue1({required Workbook workbook}) {
+    final Style style = workbook.styles.add('ExamResultValue1');
+    //style.fontColor = '#FFFFFF';
+    style.fontSize = 11;
+    style.backColor = '#BDD7EE';
+    style.bold = true;
+    style.hAlign = HAlignType.center;
+    style.vAlign = VAlignType.center;
+    style.borders.all.color = '#2F75B5';
+    style.borders.all.lineStyle = LineStyle.thin;
+    return style;
+  }
+
+  static Style examResultValue2({required Workbook workbook}) {
+    final Style style = workbook.styles.add('ExamResultValue2');
+    //style.fontColor = '#FFFFFF';
+    style.fontSize = 11;
+    style.backColor = '#DDEBF7';
+    style.bold = true;
+    style.hAlign = HAlignType.center;
+    style.vAlign = VAlignType.center;
+    style.borders.all.color = '#2F75B5';
+    style.borders.all.lineStyle = LineStyle.thin;
+    return style;
+  }
 }

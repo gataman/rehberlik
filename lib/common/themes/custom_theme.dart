@@ -98,14 +98,17 @@ class CustomTheme {
       margin: EdgeInsets.zero,
       surfaceTintColor: Constants.darkCanvasColor,
       color: Constants.darkCanvasColor,
-      shape: Constants.getBorder(borderColor: Constants.darkDividerColor), //Border.all(color: Colors.white10),
+      shape:
+          Constants.getBorder(borderColor: Constants.darkDividerColor), //Border.all(color: Colors.white10),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: Constants.darkPrimaryColor,
         //foregroundColor: ,
+        foregroundColor: Constants.darkOnPrimaryColor,
         textStyle: const TextStyle(
           color: Constants.darkOnPrimaryColor,
+          fontWeight: FontWeight.bold,
         ),
       ),
     ),
@@ -195,18 +198,19 @@ class CustomTheme {
       margin: EdgeInsets.zero,
       surfaceTintColor: Constants.lightCanvasColor,
       color: Constants.lightCanvasColor,
-      shape: Constants.getBorder(borderColor: Constants.lightDividerColor), //Border.all(color: Colors.white10),
+      shape:
+          Constants.getBorder(borderColor: Constants.lightDividerColor), //Border.all(color: Colors.white10),
     ),
     drawerTheme: const DrawerThemeData(backgroundColor: Constants.darkBackgroundColor),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
           backgroundColor: Constants.lightPrimaryColor,
-          textStyle: const TextStyle(color: Constants.lightOnPrimaryColor)),
+          foregroundColor: Constants.lightOnPrimaryColor,
+          textStyle: const TextStyle(color: Constants.lightOnPrimaryColor, fontWeight: FontWeight.bold)),
     ),
     dialogTheme: const DialogTheme(backgroundColor: Constants.lightBackgroundColor),
   );
 }
-
 
 /*
 

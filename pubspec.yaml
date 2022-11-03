@@ -41,13 +41,11 @@ dependencies:
   animated_text_kit: ^4.2.2
   meta: ^1.8.0
   json_annotation: ^4.6.0
-  excel:
-    git:
-      url: https://github.com/justkawal/excel.git
-      ref: eb091ba # branch name
-  printing: ^5.9.3
-  screenshot: ^1.2.3
-  image_downloader_web: ^1.0.2
+  #excel:
+    #git:
+      #url: https://github.com/justkawal/excel.git
+      #ref: eb091ba # branch name
+
 
   # firebase
   firebase_core: ^1.18.0
@@ -62,6 +60,8 @@ dependencies:
   syncfusion_flutter_charts: ^20.3.49
   syncfusion_flutter_xlsio: ^20.3.49-beta
   syncfusion_officechart: ^20.3.49-beta
+  flutter_excel: ^1.0.1
+  turkish: ^0.2.1
   
 
 

@@ -92,6 +92,7 @@ class ClassListCubit extends Cubit<ClassListState> {
   void _refreshList() async {
     await _addStudentList();
     emit(ClassListLoadedState(
+      allStudentList: allStudentList,
       studentWithClassList: studentWithClassList,
       schoolStatsList: schoolStatsList,
     ));

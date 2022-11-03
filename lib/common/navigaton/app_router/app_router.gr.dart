@@ -74,7 +74,8 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     AdminDashboardRoute.name: (routeData) {
-      final args = routeData.argsAs<AdminDashboardRouteArgs>(orElse: () => const AdminDashboardRouteArgs());
+      final args = routeData.argsAs<AdminDashboardRouteArgs>(
+          orElse: () => const AdminDashboardRouteArgs());
       return CustomPage<dynamic>(
         routeData: routeData,
         child: AdminDashboardView(key: args.key),
@@ -177,9 +178,14 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     AdminStudentsTrialExamDetailRoute.name: (routeData) {
-      return CustomPage<dynamic>(
+      final args = routeData.argsAs<AdminStudentsTrialExamDetailRouteArgs>(
+          orElse: () => const AdminStudentsTrialExamDetailRouteArgs());
+      return CustomPage<Student?>(
         routeData: routeData,
-        child: const AdminStudentsTrialExamDetailView(),
+        child: AdminStudentsTrialExamDetailView(
+          student: args.student,
+          key: args.key,
+        ),
         transitionsBuilder: TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -515,7 +521,8 @@ class AdminSubjectsRouteArgs {
 
 /// generated route for
 /// [AdminStudentDetailView]
-class AdminStudentDetailRoute extends PageRouteInfo<AdminStudentDetailRouteArgs> {
+class AdminStudentDetailRoute
+    extends PageRouteInfo<AdminStudentDetailRouteArgs> {
   AdminStudentDetailRoute({
     required Student student,
     Key? key,
@@ -549,7 +556,8 @@ class AdminStudentDetailRouteArgs {
 
 /// generated route for
 /// [AdminTrialExamResultView]
-class AdminTrialExamResultRoute extends PageRouteInfo<AdminTrialExamResultRouteArgs> {
+class AdminTrialExamResultRoute
+    extends PageRouteInfo<AdminTrialExamResultRouteArgs> {
   AdminTrialExamResultRoute({
     required TrialExam trialExam,
     Key? key,
@@ -595,14 +603,37 @@ class AdminMessageRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [AdminStudentsTrialExamDetailView]
-class AdminStudentsTrialExamDetailRoute extends PageRouteInfo<void> {
-  const AdminStudentsTrialExamDetailRoute()
-      : super(
+class AdminStudentsTrialExamDetailRoute
+    extends PageRouteInfo<AdminStudentsTrialExamDetailRouteArgs> {
+  AdminStudentsTrialExamDetailRoute({
+    Student? student,
+    Key? key,
+  }) : super(
           AdminStudentsTrialExamDetailRoute.name,
           path: 'students_trial_exam_detail',
+          args: AdminStudentsTrialExamDetailRouteArgs(
+            student: student,
+            key: key,
+          ),
         );
 
   static const String name = 'AdminStudentsTrialExamDetailRoute';
+}
+
+class AdminStudentsTrialExamDetailRouteArgs {
+  const AdminStudentsTrialExamDetailRouteArgs({
+    this.student,
+    this.key,
+  });
+
+  final Student? student;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AdminStudentsTrialExamDetailRouteArgs{student: $student, key: $key}';
+  }
 }
 
 /// generated route for

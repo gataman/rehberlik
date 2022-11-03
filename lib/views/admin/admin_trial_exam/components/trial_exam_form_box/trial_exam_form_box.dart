@@ -14,6 +14,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
   late FocusNode _trialExamNameFocusNode;
   TrialExam? _trialExam;
   int _selectedIndex = 3;
+  int? _selectedTrialExamType;
   final ValueNotifier<bool> buttonListener = ValueNotifier(false);
 
   @override
@@ -26,7 +27,6 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
   void dispose() {
     _tfTrialExamFormController.dispose();
     _tfTrialExamCodeFormController.dispose();
-
     super.dispose();
   }
 
@@ -57,6 +57,11 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
               ),
               _trialExamNameInput(),
               _trialExamCodeInput(),
+              TrialExamTypeSelectBox(
+                valueChanged: (value) {
+                  _selectedTrialExamType = value;
+                },
+              ),
               _actionButtons(),
             ]),
           ],
@@ -143,30 +148,35 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
   void _saveTrialExam() {
     TrialExamListCubit cubit = context.read<TrialExamListCubit>();
     if (!buttonListener.value && _checkFormElement()) {
-      buttonListener.value = true;
+      if (_selectedTrialExamType == null) {
+        CustomDialog.showSnackBar(context: context, message: 'Sınav tipini seçiniz', type: DialogType.error);
+      } else {
+        buttonListener.value = true;
 
-      final TrialExam trialExam = TrialExam(
-          examName: _tfTrialExamFormController.text,
-          examCode: _tfTrialExamCodeFormController.text,
-          classLevel: cubit.selectedCategory,
-          examDate: DateTime.now());
+        final TrialExam trialExam = TrialExam(
+            examName: _tfTrialExamFormController.text,
+            examCode: _tfTrialExamCodeFormController.text,
+            classLevel: cubit.selectedCategory,
+            examDate: DateTime.now(),
+            examType: _selectedTrialExamType!);
 
-      cubit.addTrialExam(trialExam).then((value) {
-        _resetForm();
-        buttonListener.value = false;
-        CustomDialog.showSnackBar(
-          message: LocaleKeys.trialExams_trialExamSuccessAdded.locale(),
-          context: context,
-          type: DialogType.success,
-        );
-      }, onError: (e) {
-        buttonListener.value = false;
-        CustomDialog.showSnackBar(
-          message: LocaleKeys.alerts_error.locale([e.toString()]),
-          context: context,
-          type: DialogType.error,
-        );
-      });
+        cubit.addTrialExam(trialExam).then((value) {
+          _resetForm();
+          buttonListener.value = false;
+          CustomDialog.showSnackBar(
+            message: LocaleKeys.trialExams_trialExamSuccessAdded.locale(),
+            context: context,
+            type: DialogType.success,
+          );
+        }, onError: (e) {
+          buttonListener.value = false;
+          CustomDialog.showSnackBar(
+            message: LocaleKeys.alerts_error.locale([e.toString()]),
+            context: context,
+            type: DialogType.error,
+          );
+        });
+      }
     }
 
     /*

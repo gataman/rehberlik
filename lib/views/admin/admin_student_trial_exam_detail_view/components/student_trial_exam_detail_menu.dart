@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/extensions.dart';
 import 'package:rehberlik/common/helper/excel_creator/student_trial_exam_excel_creator.dart';
 
 import '../../../../common/constants.dart';
-import '../../../../common/helper/pdf_creator/student_trial_exam_result_pdf_builder.dart';
 import '../../../../common/widgets/default_circular_progress.dart';
 import '../../../../core/widgets/drop_down/drop_down_class_list.dart';
 import '../../../../core/widgets/drop_down/drop_down_student_list.dart';
@@ -16,10 +16,14 @@ import '../../admin_students/components/student_list_card/cubit/student_list_cub
 import '../cubit/student_trial_exam_detail_cubit.dart';
 
 class StudentTrialExamDetailMenu extends StatelessWidget {
-  const StudentTrialExamDetailMenu({Key? key}) : super(key: key);
+  StudentTrialExamDetailMenu({Key? key, this.selectedStudent}) : super(key: key);
+  Student? selectedStudent;
 
   @override
   Widget build(BuildContext context) {
+    if (selectedStudent != null) {
+      //context.read<SubjectBloc>()
+    }
     return Card(
       child: Padding(
           padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding, bottom: defaultPadding),
@@ -64,8 +68,10 @@ class StudentTrialExamDetailMenu extends StatelessWidget {
 
   Widget _buildDropdownButtonColumns(
       {required List<StudentWithClass> classesList, required SelectedIndexState state, required BuildContext context}) {
-    final int classIndex = state.classIndex;
-    final int studentIndex = state.studentIndex;
+    final int classIndex = selectedStudent != null ? _getClassIndex(classesList, state.classIndex) : state.classIndex;
+    final int studentIndex =
+        selectedStudent != null ? _getStudentIndex(classesList[classIndex].studentList) : state.studentIndex;
+
     final List<Student>? studentList = classesList[classIndex].studentList;
     final cubit = context.read<StudentTrialExamDetailCubit>();
     final Student? student = context.read<StudentTrialExamDetailCubit>().selectedStudent;
@@ -92,18 +98,41 @@ class StudentTrialExamDetailMenu extends StatelessWidget {
             studentList: studentList,
             selectedStudentIndex: studentIndex,
             onChanged: (newValue) {
-              debugPrint('Öğrenci seçildi');
               if (newValue != null) {
                 context.read<StudentTrialExamDetailCubit>().selectStudent(newValue);
               }
             },
           ),
-        ElevatedButton(
-            onPressed: () {
-              StudentTrialExamExcelCreator(context).build();
-            },
-            child: Text('Pdf Kaydet'))
+        const SizedBox(height: defaultPadding,),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+              onPressed: () {
+                StudentTrialExamExcelCreator(context).build();
+              },
+              child: Text('Pdf Kaydet')),
+        )
       ],
     );
+  }
+
+  int _getStudentIndex(List<Student>? studentList) {
+    if (studentList != null) {
+      final index = studentList.indexOf(selectedStudent!);
+      if (index >= 0) {
+        selectedStudent = null;
+        return index;
+      }
+    }
+    return 0;
+  }
+
+  int _getClassIndex(List<StudentWithClass> classesList, int classIndex) {
+    final studentClass = classesList.findOrNull((element) => element.classes.id == selectedStudent!.classID);
+    if (studentClass != null) {
+      return classesList.indexOf(studentClass);
+    }
+
+    return classIndex;
   }
 }
