@@ -73,6 +73,15 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    StudentTrialExamRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const StudentTrialExamView(),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     AdminDashboardRoute.name: (routeData) {
       final args = routeData.argsAs<AdminDashboardRouteArgs>(
           orElse: () => const AdminDashboardRouteArgs());
@@ -239,6 +248,12 @@ class _$AppRouter extends RootStackRouter {
               parent: StudentMainRoute.name,
               guards: [studentAuthGuard],
             ),
+            RouteConfig(
+              StudentTrialExamRoute.name,
+              path: 'deneme_sinavlari',
+              parent: StudentMainRoute.name,
+              guards: [studentAuthGuard],
+            ),
           ],
         ),
         RouteConfig(
@@ -399,6 +414,18 @@ class StudentQuestionFollowRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'StudentQuestionFollowRoute';
+}
+
+/// generated route for
+/// [StudentTrialExamView]
+class StudentTrialExamRoute extends PageRouteInfo<void> {
+  const StudentTrialExamRoute()
+      : super(
+          StudentTrialExamRoute.name,
+          path: 'deneme_sinavlari',
+        );
+
+  static const String name = 'StudentTrialExamRoute';
 }
 
 /// generated route for
