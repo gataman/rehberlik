@@ -68,7 +68,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
   }
 
   Widget _studentPasswordInput() {
-    _tfStudentPasswordController.text = 'LFDNLG';
+    _tfStudentPasswordController.text = '7TK3PA';
     return AppLoginTextFormField(
       iconData: Icons.password,
       validateText: 'Şifre boş olamaz',

@@ -30,4 +30,8 @@ class TrialExamResultUploadedState extends TrialExamResultState {
   TrialExamResultUploadedState({this.trialExamResultParsedList, this.wrongRowList, this.wrongStudentList});
 }
 
-class TrialExamResultStaticsState extends TrialExamResultState {}
+class TrialExamResultStaticsState extends TrialExamResultState {
+  final List<TrialExamGraph> trialExamGraphList;
+
+  TrialExamResultStaticsState({required this.trialExamGraphList});
+}

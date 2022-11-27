@@ -56,7 +56,9 @@ class TrialExamResultContainerView extends StatelessWidget {
                     _saveData(context);
                   });
             } else if (state is TrialExamResultStaticsState) {
-              return const TrialExamResultStaticsView();
+              return TrialExamResultStaticsView(
+                trialExamGraphList: state.trialExamGraphList,
+              );
             } else {
               return TrialExamResultDefaultView(
                 classLevel: trialExam.classLevel!,

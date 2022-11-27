@@ -66,7 +66,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
         _saveAllClassResult();
 
         if (trialExam?.classLevel != null) {
-          _calculateAllStudentRanks(trialExam!.classLevel!);
+          calculateAllStudentRanks(trialExam!.classLevel!);
         }
 
         return customResult;
@@ -83,7 +83,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
   }
 
   void showTrialExamStatics() {
-    emit(TrialExamResultStaticsState());
+    emit(TrialExamResultStaticsState(trialExamGraphList: trialExamGraphList));
   }
 
   void _setTrialExamGraphList() async {
@@ -221,7 +221,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
     });
   }
 
-  void _calculateAllStudentRanks(int classLevel) async {
+  void calculateAllStudentRanks(int classLevel) async {
     final List<TrialExamResult> trialExamAllResultList = [];
 
     // Sınıf seviyesine göre bütün sınavlar çekildi:

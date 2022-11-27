@@ -46,7 +46,7 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   Future<void> deleteTrialExam({required TrialExam trialExam}) async {
     return _trialExamRepository.delete(objectID: trialExam.id!).whenComplete(() {
       // editingLesson.value = null;
-      _calculateAllStudentRanks(trialExam.classLevel!);
+      calculateAllStudentRanks(trialExam.classLevel!);
       _deleteTrialExamInLocalList(trialExam: trialExam);
     });
   }
@@ -66,7 +66,7 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
     _refreshList();
   }
 
-  void _calculateAllStudentRanks(int classLevel) async {
+  void calculateAllStudentRanks(int classLevel) async {
     final List<TrialExamResult> trialExamAllResultList = [];
 
     // Sınıf seviyesine göre bütün sınavlar çekildi:

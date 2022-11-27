@@ -240,13 +240,13 @@ class StudentTrialExamExcelCreator {
     // Öğrenci Ortalaması:
 
     sheet.getRangeByName('B12').setText('Öğrenci Ort.');
-    sheet.getRangeByName('E12').setNumber(trialExamStudentResult.turAvg);
-    sheet.getRangeByName('H12').setNumber(trialExamStudentResult.sosAvg);
-    sheet.getRangeByName('K12').setNumber(trialExamStudentResult.dinAvg);
-    sheet.getRangeByName('N12').setNumber(trialExamStudentResult.ingAvg);
-    sheet.getRangeByName('Q12').setNumber(trialExamStudentResult.matAvg);
-    sheet.getRangeByName('T12').setNumber(trialExamStudentResult.fenAvg);
-    sheet.getRangeByName('W12').setNumber(trialExamStudentResult.totAvg);
+    sheet.getRangeByName('E12').setNumber(trialExamStudentResult.turNetAvg);
+    sheet.getRangeByName('H12').setNumber(trialExamStudentResult.sosNetAvg);
+    sheet.getRangeByName('K12').setNumber(trialExamStudentResult.dinNetAvg);
+    sheet.getRangeByName('N12').setNumber(trialExamStudentResult.ingNetAvg);
+    sheet.getRangeByName('Q12').setNumber(trialExamStudentResult.matNetAvg);
+    sheet.getRangeByName('T12').setNumber(trialExamStudentResult.fenNetAvg);
+    sheet.getRangeByName('W12').setNumber(trialExamStudentResult.totNetAvg);
 
     //Set Icons
     sheet.getRangeByName('G12').setText('▲');
@@ -257,37 +257,37 @@ class StudentTrialExamExcelCreator {
     sheet.getRangeByName('V12').setText('▲');
     sheet.getRangeByName('Y12').setText('▲');
 
-    if (trialExamStudentResult.turAvg < schoolAverages.turAvg) {
+    if (trialExamStudentResult.turNetAvg < schoolAverages.turAvg) {
       sheet.getRangeByName('E12:G12').cellStyle.fontColor = '#C00001';
       sheet.getRangeByName('G12').setText('▼');
     }
 
-    if (trialExamStudentResult.sosAvg < schoolAverages.sosAvg) {
+    if (trialExamStudentResult.sosNetAvg < schoolAverages.sosAvg) {
       sheet.getRangeByName('H12:J12').cellStyle.fontColor = '#C00001';
       sheet.getRangeByName('J12').setText('▼');
     }
 
-    if (trialExamStudentResult.dinAvg < schoolAverages.dinAvg) {
+    if (trialExamStudentResult.dinNetAvg < schoolAverages.dinAvg) {
       sheet.getRangeByName('K12:M12').cellStyle.fontColor = '#C00001';
       sheet.getRangeByName('M12').setText('▼');
     }
 
-    if (trialExamStudentResult.ingAvg < schoolAverages.ingAvg) {
+    if (trialExamStudentResult.ingNetAvg < schoolAverages.ingAvg) {
       sheet.getRangeByName('N12:P12').cellStyle.fontColor = '#C00001';
       sheet.getRangeByName('P12').setText('▼');
     }
 
-    if (trialExamStudentResult.matAvg < schoolAverages.matAvg) {
+    if (trialExamStudentResult.matNetAvg < schoolAverages.matAvg) {
       sheet.getRangeByName('Q12:S12').cellStyle.fontColor = '#C00001';
       sheet.getRangeByName('S12').setText('▼');
     }
 
-    if (trialExamStudentResult.fenAvg < schoolAverages.fenAvg) {
+    if (trialExamStudentResult.fenNetAvg < schoolAverages.fenAvg) {
       sheet.getRangeByName('T12:V12').cellStyle.fontColor = '#C00001';
       sheet.getRangeByName('V12').setText('▼');
     }
 
-    if (trialExamStudentResult.totAvg < schoolAverages.totAvg) {
+    if (trialExamStudentResult.totNetAvg < schoolAverages.totAvg) {
       sheet.getRangeByName('W12:Y12').cellStyle.fontColor = '#C00001';
       sheet.getRangeByName('Y12').setText('▼');
     }

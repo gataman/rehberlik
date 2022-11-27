@@ -16,10 +16,11 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
   final String _schoolRankLabel = "Okul";
   final String _classRankLabel = "Sınıf";
   final String _yanlisLabel = "Yan";
-  int _rowsPerPage = 15;
+  int _rowsPerPage = 25;
 
   late TrialExamResultDataSource _trialExamResultDataSource;
   late List<TrialExamResult> _trialExamResultList;
+  final GlobalKey<SfDataGridState> key = GlobalKey<SfDataGridState>();
 
   @override
   void initState() {
@@ -44,11 +45,19 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
               if (snapshot.hasData) {
                 return Card(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    //crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _detailButton(context),
                       snapshot.data!, // DatGridWİdget
                       _buildDataPager(),
+                      Row(
+                        children: [
+                          _detailButton(context),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          _exportButton(context),
+                        ],
+                      )
                     ],
                   ),
                 );
@@ -68,15 +77,32 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
 
   ElevatedButton _detailButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
+        //exportDataGridToExcel();
         context.read<TrialExamResultCubit>().showTrialExamStatics();
-        //context.read<TrialExamResultCubit>().calculateAllStudentRanks(8);
+        //context.read<TrialExamResultCubit>().calculateAllStudentRanks(6);
       },
       style: ElevatedButton.styleFrom(
         shape: const BeveledRectangleBorder(),
       ),
       child: Text(
-        'Detaylı İstatistikler',
+        'Sınıf İstatistikleri',
+        style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+      ),
+    );
+  }
+
+  ElevatedButton _exportButton(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () async {
+        exportDataGridToExcel();
+      },
+      icon: const Icon(Icons.download_outlined),
+      style: ElevatedButton.styleFrom(
+        shape: const BeveledRectangleBorder(),
+      ),
+      label: Text(
+        'Excel indir',
         style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
       ),
     );
@@ -88,23 +114,31 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
 
     return SizedBox(
       height: 450,
-      child: SfDataGrid(
-        allowSorting: true,
-        columnWidthMode: _getWidthMode(),
-        frozenColumnsCount: 3,
-        gridLinesVisibility: GridLinesVisibility.both,
-        headerGridLinesVisibility: GridLinesVisibility.both,
-        allowMultiColumnSorting: true,
+      child: SfDataGridTheme(
+        data: SfDataGridThemeData(
+          sortIcon: _setIcon(),
+        ),
+        child: SfDataGrid(
+          key: key,
+          allowMultiColumnSorting: true,
+          allowSorting: true,
+          //allowFiltering: true,
+          columnWidthMode: _getWidthMode(),
+          allowTriStateSorting: true,
+          frozenColumnsCount: 3,
+          gridLinesVisibility: GridLinesVisibility.both,
+          headerGridLinesVisibility: GridLinesVisibility.both,
 
-        headerRowHeight: 30,
-        defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
-        rowHeight: 40,
-        //rowsPerPage: _rowsPerPage,
-        //footerFrozenRowsCount: 1,
-        //footer: _getFooter(),
-        stackedHeaderRows: _getStackedHeaderRows(),
-        source: _trialExamResultDataSource,
-        columns: _getColumns(),
+          headerRowHeight: 30,
+          defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
+          rowHeight: 40,
+          //rowsPerPage: _rowsPerPage,
+          //footerFrozenRowsCount: 1,
+          //footer: _getFooter(),
+          stackedHeaderRows: _getStackedHeaderRows(),
+          source: _trialExamResultDataSource,
+          columns: _getColumns(),
+        ),
       ),
     );
   }
@@ -113,47 +147,49 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
     List<StackedHeaderRow> stackedHeaderRows;
     stackedHeaderRows = <StackedHeaderRow>[
       StackedHeaderRow(cells: <StackedHeaderCell>[
-        StackedHeaderCell(
-            columnNames: <String>['student_no', 'student_name', 'student_class'],
-            child: _getWidgetForStackedHeaderCell('')),
+        StackedHeaderCell(columnNames: <String>[
+          'No',
+          'Adı Soyadı',
+          'Sınıfı',
+        ], child: _getWidgetForStackedHeaderCell('')),
         StackedHeaderCell(columnNames: <String>[
           'turDog',
           'turYan',
           'turNet',
-        ], child: _getWidgetForStackedHeaderCell('Türkçe')),
+        ], child: _getWidgetForStackedHeaderCell('Türkçe'), text: 'Türkçe'),
         StackedHeaderCell(columnNames: <String>[
           'matDog',
           'matYan',
           'matNet',
-        ], child: _getWidgetForStackedHeaderCell('Matematik')),
+        ], child: _getWidgetForStackedHeaderCell('Matematik'), text: 'Matematik'),
         StackedHeaderCell(columnNames: <String>[
           'fenDog',
           'fenYan',
           'fenNet',
-        ], child: _getWidgetForStackedHeaderCell('Fen')),
+        ], child: _getWidgetForStackedHeaderCell('Fen'), text: 'Fen'),
         StackedHeaderCell(columnNames: <String>[
           'sosDog',
           'sosYan',
           'sosNet',
-        ], child: _getWidgetForStackedHeaderCell('Sosyal')),
+        ], child: _getWidgetForStackedHeaderCell('Sosyal'), text: 'Sosyal'),
         StackedHeaderCell(columnNames: <String>[
           'ingDog',
           'ingYan',
           'ingNet',
-        ], child: _getWidgetForStackedHeaderCell('İngilizce')),
+        ], child: _getWidgetForStackedHeaderCell('İngilizce'), text: 'İngilizce'),
         StackedHeaderCell(columnNames: <String>[
           'dinDog',
           'dinYan',
           'dinNet',
-        ], child: _getWidgetForStackedHeaderCell('Din')),
+        ], child: _getWidgetForStackedHeaderCell('Din'), text: 'Din'),
         StackedHeaderCell(columnNames: <String>[
           'topDog',
           'topYan',
           'topNet',
-          'classRank',
-          'schoolRank',
-          'totalPoint',
-        ], child: _getWidgetForStackedHeaderCell('Toplam')),
+          'sınıfS',
+          'okulS',
+          'puan',
+        ], child: _getWidgetForStackedHeaderCell('Toplam'), text: 'Toplam'),
       ])
     ];
     return stackedHeaderRows;
@@ -172,16 +208,16 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
   List<GridColumn> _getColumns() {
     return <GridColumn>[
       GridColumn(
-        columnName: 'student_no',
+        columnName: 'No',
         label: _getLabelTitleText("No"),
       ),
       GridColumn(
         width: Responsive.isMobile(context) ? 100 : 150,
-        columnName: 'student_name',
+        columnName: 'Adı Soyadı',
         label: _getLabelTitleText("Öğrenci Adı"),
       ),
       GridColumn(
-        columnName: 'student_class',
+        columnName: 'Sınıfı',
         label: _getLabelTitleText("Sınıfı"),
       ),
       GridColumn(columnName: 'turDog', label: _getLabelTitleText(_dogruLabel)),
@@ -205,9 +241,9 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
       GridColumn(columnName: 'topDog', label: _getLabelTitleText(_dogruLabel)),
       GridColumn(columnName: 'topYan', label: _getLabelTitleText(_yanlisLabel)),
       GridColumn(columnName: 'topNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'classRank', label: _getLabelTitleText(_classRankLabel)),
-      GridColumn(columnName: 'schoolRank', label: _getLabelTitleText(_schoolRankLabel)),
-      GridColumn(columnName: 'totalPoint', label: _getLabelTitleText(_pointLabel), width: 60),
+      GridColumn(columnName: 'sınıfS', label: _getLabelTitleText(_classRankLabel)),
+      GridColumn(columnName: 'okulS', label: _getLabelTitleText(_schoolRankLabel)),
+      GridColumn(columnName: 'puan', label: _getLabelTitleText(_pointLabel), width: 60),
     ];
   }
 
@@ -249,7 +285,43 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
 
   void _sortColumns() {
     _trialExamResultDataSource.sortedColumns
-        .add(const SortColumnDetails(name: 'totalPoint', sortDirection: DataGridSortDirection.descending));
+        .add(const SortColumnDetails(name: 'puan', sortDirection: DataGridSortDirection.descending));
     _trialExamResultDataSource.sort();
+  }
+
+  Future<void> exportDataGridToExcel() async {
+    final xlsio.Workbook workbook = key.currentState!.exportToExcelWorkbook();
+    final List<int> bytes = workbook.saveAsStream();
+    //debugPrint(bytes.toString());
+    FileSaveHelper.saveAndLaunchFile(bytes, 'deneme.xlsx');
+    workbook.dispose();
+  }
+
+  _setIcon() {
+    return Builder(
+      builder: (context) {
+        Widget? icon;
+        String columnName = '';
+        context.visitAncestorElements((element) {
+          if (element is GridHeaderCellElement) {
+            columnName = element.column.columnName;
+          }
+          return true;
+        });
+        var column = _trialExamResultDataSource.sortedColumns.findOrNull((element) => element.name == columnName);
+        if (column != null) {
+          if (column.sortDirection == DataGridSortDirection.ascending) {
+            icon = const Icon(Icons.arrow_circle_up_rounded, size: 16);
+          } else if (column.sortDirection == DataGridSortDirection.descending) {
+            icon = const Icon(Icons.arrow_circle_down_rounded, size: 16);
+          }
+        }
+        return icon ??
+            const Icon(
+              Icons.sort_outlined,
+              size: .1,
+            );
+      },
+    );
   }
 }

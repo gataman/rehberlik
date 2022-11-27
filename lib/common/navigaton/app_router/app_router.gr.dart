@@ -209,6 +209,19 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    AdminTrialExamTotalRoute.name: (routeData) {
+      final args = routeData.argsAs<AdminTrialExamTotalRouteArgs>();
+      return CustomPage<int>(
+        routeData: routeData,
+        child: AdminTrialExamTotalView(
+          classLevel: args.classLevel,
+          key: args.key,
+        ),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
   };
 
   @override
@@ -348,6 +361,15 @@ class _$AppRouter extends RootStackRouter {
               path: 'students_password',
               parent: AdminMainRoute.name,
               guards: [teacherAuthGuard],
+            ),
+            RouteConfig(
+              AdminTrialExamTotalRoute.name,
+              path: 'trial_exam_total_average',
+              parent: AdminMainRoute.name,
+              guards: [
+                argumentsGuard,
+                teacherAuthGuard,
+              ],
             ),
           ],
         ),
@@ -673,4 +695,39 @@ class AdminStudentsPasswordRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AdminStudentsPasswordRoute';
+}
+
+/// generated route for
+/// [AdminTrialExamTotalView]
+class AdminTrialExamTotalRoute
+    extends PageRouteInfo<AdminTrialExamTotalRouteArgs> {
+  AdminTrialExamTotalRoute({
+    required int classLevel,
+    Key? key,
+  }) : super(
+          AdminTrialExamTotalRoute.name,
+          path: 'trial_exam_total_average',
+          args: AdminTrialExamTotalRouteArgs(
+            classLevel: classLevel,
+            key: key,
+          ),
+        );
+
+  static const String name = 'AdminTrialExamTotalRoute';
+}
+
+class AdminTrialExamTotalRouteArgs {
+  const AdminTrialExamTotalRouteArgs({
+    required this.classLevel,
+    this.key,
+  });
+
+  final int classLevel;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AdminTrialExamTotalRouteArgs{classLevel: $classLevel, key: $key}';
+  }
 }

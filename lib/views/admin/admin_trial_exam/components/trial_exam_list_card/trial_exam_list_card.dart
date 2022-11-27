@@ -3,43 +3,10 @@ part of admin_trial_exam_view;
 class TrialExamListCard extends StatelessWidget {
   const TrialExamListCard({Key? key}) : super(key: key);
 
-/*
-  void _addAllExamResult() {
-    final list = <TrialExamResult>[
-      TrialExamResult(
-        studentID: 'H58WRsRv7hpUy5uE9oug',
-        studentName: 'AYÇA DEMİRCİ',
-        studentNumber: '35',
-        className: '5-A',
-        examID: 'B5EQS4PcjcQnWnSwqXwm',
-        turDog: 1,
-        turYan: 2,
-        turNet: 1.2,
-        matDog: 3,
-        matYan: 4,
-        matNet: 3.2,
-        fenDog: 5,
-        fenYan: 6,
-        fenNet: 5.2,
-        sosDog: 7,
-        sosYan: 8,
-        sosNet: 7.2,
-        ingDog: 9,
-        ingYan: 10,
-        ingNet: 9.2,
-        dinDog: 11,
-        dinYan: 12,
-        dinNet: 11.2,
-      )
-    ];
-
-    controller.addAllTrialExamResult(resultList: list);
-  }
-
- */
   @override
   Widget build(BuildContext context) {
     // _addAllExamResult();
+    debugPrint('trialExamListCard');
     return Card(
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: minimumBoxHeight),
@@ -54,9 +21,23 @@ class TrialExamListCard extends StatelessWidget {
   Widget _getTrialExamListBox() {
     return BlocBuilder<TrialExamListCubit, TrialExamListState>(builder: (context, state) {
       final trialExamList = state.trialExamList;
+      final selectedCategory = state.selectedCategory;
       return Column(
         children: [
-          _getTitle(state),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(child: _getTitle(state)),
+                if (trialExamList != null && trialExamList.length > 1)
+                  _getTotalTrialExamDetailView(context, selectedCategory),
+              ],
+            ),
+          ),
+          const Divider(
+            thickness: 1,
+            height: .5,
+          ),
           if (state.isLoading) const SizedBox(height: minimumBoxHeight, child: DefaultCircularProgress()),
           if (trialExamList != null && !state.isLoading) _getTrialExamListView(trialExamList),
           if (trialExamList != null && trialExamList.isEmpty && !state.isLoading)
@@ -129,5 +110,15 @@ class TrialExamListCard extends StatelessWidget {
             );
           });
         });
+  }
+
+  _getTotalTrialExamDetailView(BuildContext context, int selectedCategory) {
+    return ElevatedButton.icon(
+        onPressed: () {
+          context.router.replace(AdminTrialExamTotalRoute(classLevel: selectedCategory));
+        },
+        icon: const Icon(Icons.query_stats),
+        label: const Text('Ortalama '
+            'Sonuçlar'));
   }
 }

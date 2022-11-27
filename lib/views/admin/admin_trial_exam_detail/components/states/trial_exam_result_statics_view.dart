@@ -7,21 +7,17 @@ import 'package:rehberlik/views/admin/admin_trial_exam_detail/cubit/trial_exam_r
 
 import '../../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 
-class TrialExamResultStaticsView extends StatefulWidget {
-  const TrialExamResultStaticsView({Key? key}) : super(key: key);
+class TrialExamResultStaticsView extends StatelessWidget {
+  const TrialExamResultStaticsView({Key? key, required this.trialExamGraphList}) : super(key: key);
+  final List<TrialExamGraph> trialExamGraphList;
 
-  @override
-  State<TrialExamResultStaticsView> createState() => _TrialExamResultStaticsViewState();
-}
-
-class _TrialExamResultStaticsViewState extends State<TrialExamResultStaticsView> {
   @override
   Widget build(BuildContext context) {
-    final trialExamGraphList = context.read<TrialExamResultCubit>().trialExamGraphList;
-    return _getGraphWidgetList(trialExamGraphList);
+    debugPrint(trialExamGraphList.toString());
+    return _getGraphWidgetList(trialExamGraphList, context);
   }
 
-  Widget _getGraphWidgetList(List<TrialExamGraph> graphList) {
+  Widget _getGraphWidgetList(List<TrialExamGraph> graphList, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
       child: GridView.builder(

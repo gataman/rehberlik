@@ -14,8 +14,10 @@ import 'package:rehberlik/views/admin/admin_students_password/admin_students_pas
 import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam/admin_trial_exam_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_view.dart';
+import 'package:rehberlik/views/admin/admin_trial_exam_total/admin_trial_exam_total_view.dart';
 import 'package:rehberlik/views/admin/admin_uploads/admin_uploads_view.dart';
 import 'package:rehberlik/views/auth/auth_view.dart';
+import 'package:rehberlik/views/student/studen_trial_exam/student_trial_exam_view.dart';
 import 'package:rehberlik/views/student/student_main_view.dart';
 
 import '../../../models/student.dart';
@@ -54,6 +56,11 @@ part 'app_router.gr.dart';
           CustomRoute(
               page: StudentQuestionFollowView,
               path: AppRoutes.routeStudentQuestionFollow,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              guards: [StudentAuthGuard]),
+          CustomRoute(
+              page: StudentTrialExamView,
+              path: AppRoutes.routeStudentTrialExam,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [StudentAuthGuard]),
         ]),
@@ -128,6 +135,11 @@ part 'app_router.gr.dart';
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [TeacherAuthGuard],
               path: AppRoutes.routeAdminStudentsPassword),
+          CustomRoute<int>(
+              page: AdminTrialExamTotalView,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              path: AppRoutes.routeAdminTrialExamTotal,
+              guards: [ArgumentsGuard, TeacherAuthGuard]),
         ]),
   ],
 )

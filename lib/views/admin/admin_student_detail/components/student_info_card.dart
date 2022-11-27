@@ -7,6 +7,8 @@ class StudentInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userType = SharedPrefs.instance.getInt(PrefKeys.userType.toString());
+
     var pdfBuilder = StudentDetailPdfBuilder(context);
     if (student != null) {
       return Column(
@@ -77,9 +79,14 @@ class StudentInfoCard extends StatelessWidget {
                     labelText: 'Deneme Sonuçları',
                     icon: Icons.line_axis_rounded,
                     onPressed: () {
-                      context.router.push(
-                        AdminStudentsTrialExamDetailRoute(student: student),
-                      );
+                      if(userType == 2){
+                        context.router.pushNamed(AppRoutes.routeStudentTrialExam);
+                      }else{
+                        context.router.push(
+                          AdminStudentsTrialExamDetailRoute(student: student),
+                        );
+                      }
+
                     },
                   ),
                 ),

@@ -22,6 +22,7 @@ abstract class AdminBaseView extends StatelessWidget {
   bool get isFullPage => false;
 
   Widget _content() {
+    debugPrint('_content');
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
       child: SingleChildScrollView(
@@ -41,6 +42,7 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getDesktopContent(bool isExpanded, BuildContext context) {
+    debugPrint('_getDesktopContent');
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(
         flex: 4,
@@ -71,6 +73,7 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getMobileContent(bool isExpanded, BuildContext context) {
+    debugPrint('_getMobileContent');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -91,6 +94,7 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getMobileDashboardContent(bool isExpanded, BuildContext context) {
+    debugPrint('_getMobileDashboardContent');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

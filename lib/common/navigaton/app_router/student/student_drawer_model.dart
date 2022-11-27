@@ -13,5 +13,8 @@ class StudentDrawerModel {
     StudentDrawerModel(title: "Ana Sayfa", iconSrc: 'menu_dashboard.svg', route: AppRoutes.routeStudentDashboard),
     StudentDrawerModel(
         title: "Soru Takip Çizelgesi", iconSrc: 'menu_timetable.svg', route: AppRoutes.routeStudentQuestionFollow),
+    StudentDrawerModel(
+        title: "Deneme Sınavları", iconSrc: 'menu_timetable.svg', route: AppRoutes
+        .routeStudentTrialExam),
   ];
 }

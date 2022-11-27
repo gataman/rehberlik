@@ -14,9 +14,9 @@ class TrialExamResultDataSource extends DataGridSource {
     _tiralExamResultDataGridRowList = trialExamResultList
         .map((e) => DataGridRow(
               cells: [
-                DataGridCell<String>(columnName: 'student_no', value: e.studentNumber),
-                DataGridCell<String>(columnName: 'student_name', value: e.studentName),
-                DataGridCell<String>(columnName: 'student_class', value: e.className),
+                DataGridCell<String>(columnName: 'No', value: e.studentNumber),
+                DataGridCell<String>(columnName: 'Adı Soyadı', value: e.studentName),
+                DataGridCell<String>(columnName: 'Sınıfı', value: e.className),
                 DataGridCell<int>(columnName: 'turDog', value: e.turDog),
                 DataGridCell<int>(columnName: 'turYan', value: e.turYan),
                 DataGridCell<double>(columnName: 'turNet', value: _getNumberFormat(e.turNet)),
@@ -38,9 +38,9 @@ class TrialExamResultDataSource extends DataGridSource {
                 DataGridCell<int>(columnName: 'topDog', value: _getTopDog(e)),
                 DataGridCell<int>(columnName: 'topYan', value: _getTopYan(e)),
                 DataGridCell<double>(columnName: 'topNet', value: _getNumberFormat(_getTopNet(e))),
-                DataGridCell<int>(columnName: 'classRank', value: e.classRank),
-                DataGridCell<int>(columnName: 'schoolRank', value: e.schoolRank),
-                DataGridCell<double>(columnName: 'totalPoint', value: _getNumberFormatForPoint(e.totalPoint)),
+                DataGridCell<int>(columnName: 'sınıfS', value: e.classRank),
+                DataGridCell<int>(columnName: 'okulS', value: e.schoolRank),
+                DataGridCell<double>(columnName: 'puan', value: _getNumberFormatForPoint(e.totalPoint)),
               ],
             ))
         .toList();
@@ -54,16 +54,13 @@ class TrialExamResultDataSource extends DataGridSource {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((e) {
       return Container(
-        padding: e.columnName == 'totalPoint' || e.columnName == 'student_name'
-            ? const EdgeInsets.only(left: 3)
-            : EdgeInsets.zero,
-        alignment:
-            e.columnName == 'totalPoint' || e.columnName == 'student_name' ? Alignment.centerLeft : Alignment.center,
+        padding:
+            e.columnName == 'puan' || e.columnName == 'Adı Soyadı' ? const EdgeInsets.only(left: 3) : EdgeInsets.zero,
+        alignment: e.columnName == 'puan' || e.columnName == 'Adı Soyadı' ? Alignment.centerLeft : Alignment.center,
         child: AutoSizeText(
           e.value == null ? '  ' : e.value.toString(),
           style: _getNetTextStyle(e),
-          textAlign:
-              e.columnName == 'totalPoint' || e.columnName == 'student_name' ? TextAlign.start : TextAlign.center,
+          textAlign: e.columnName == 'puan' || e.columnName == 'Adı Soyadı' ? TextAlign.start : TextAlign.center,
         ),
       );
     }).toList());
@@ -91,7 +88,7 @@ class TrialExamResultDataSource extends DataGridSource {
   }
 
   TextStyle _getNetTextStyle(DataGridCell e) {
-    if (e.columnName == 'student_name' || e.columnName == 'student_no' || e.columnName == 'student_class') {
+    if (e.columnName == 'Adı Soyadı' || e.columnName == 'No' || e.columnName == 'Sınıfı') {
       return const TextStyle(
         fontSize: 12,
         color: Colors.amber,
@@ -105,7 +102,7 @@ class TrialExamResultDataSource extends DataGridSource {
           e.columnName == 'ingNet' ||
           e.columnName == 'sosNet' ||
           e.columnName == 'dinNet' ||
-          e.columnName == 'totalPoint') {
+          e.columnName == 'puan') {
         return const TextStyle(
           fontSize: 12,
           color: Colors.amber,

@@ -54,33 +54,33 @@ class StudentExamAveragesWidget extends StatelessWidget {
       _tableLabelValues(context, 'Ortalama'),
       _tableStudentValues(
         context,
-        trialExamStudentResult.turAvg.toString(),
-        trialExamStudentResult.turAvg > schoolAverages.turAvg,
+        trialExamStudentResult.turNetAvg.toString(),
+        trialExamStudentResult.turNetAvg > schoolAverages.turAvg,
       ),
       _tableStudentValues(
         context,
-        trialExamStudentResult.sosAvg.toString(),
-        trialExamStudentResult.sosAvg > schoolAverages.sosAvg,
+        trialExamStudentResult.sosNetAvg.toString(),
+        trialExamStudentResult.sosNetAvg > schoolAverages.sosAvg,
       ),
       _tableStudentValues(
         context,
-        trialExamStudentResult.ingAvg.toString(),
-        trialExamStudentResult.ingAvg > schoolAverages.ingAvg,
+        trialExamStudentResult.ingNetAvg.toString(),
+        trialExamStudentResult.ingNetAvg > schoolAverages.ingAvg,
       ),
       _tableStudentValues(
         context,
-        trialExamStudentResult.dinAvg.toString(),
-        trialExamStudentResult.dinAvg > schoolAverages.dinAvg,
+        trialExamStudentResult.dinNetAvg.toString(),
+        trialExamStudentResult.dinNetAvg > schoolAverages.dinAvg,
       ),
       _tableStudentValues(
         context,
-        trialExamStudentResult.matAvg.toString(),
-        trialExamStudentResult.matAvg > schoolAverages.matAvg,
+        trialExamStudentResult.matNetAvg.toString(),
+        trialExamStudentResult.matNetAvg > schoolAverages.matAvg,
       ),
       _tableStudentValues(
         context,
-        trialExamStudentResult.fenAvg.toString(),
-        trialExamStudentResult.fenAvg > schoolAverages.fenAvg,
+        trialExamStudentResult.fenNetAvg.toString(),
+        trialExamStudentResult.fenNetAvg > schoolAverages.fenAvg,
       ),
     ]);
   }

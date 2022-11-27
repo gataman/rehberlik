@@ -6,6 +6,9 @@ import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
 import 'package:rehberlik/common/widgets/button_with_icon.dart';
 import 'package:rehberlik/core/widgets/text/app_box_title.dart';
 
+import '../../../common/navigaton/app_router/app_routes.dart';
+import '../../../core/init/locale_manager.dart';
+import '../../../core/init/pref_keys.dart';
 import '../admin_base/admin_base_view.dart';
 import 'admin_student_detail_imports.dart';
 import 'components/student_detail_tab_view/question_follow/cubit/question_follow_list_cubit.dart';

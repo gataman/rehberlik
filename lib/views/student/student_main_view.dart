@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/navigaton/app_router/student/student_drawer_menu.dart';
 import 'package:rehberlik/common/widgets/custom_app_bar.dart';
 import 'package:rehberlik/common/widgets/student_app_bar.dart';
+import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view/cubit/student_trial_exam_detail_cubit.dart';
 
 import '../../core/init/locale_manager.dart';
 import '../../core/init/pref_keys.dart';
@@ -48,7 +49,13 @@ class StudentMainView extends StatelessWidget implements AutoRouteWrapper {
           lazy: false,
         ),
         BlocProvider<QuestionFollowListCubit>(
-            create: (_) => QuestionFollowListCubit()..fetchQuestionFollowList(studentID: student.id!), lazy: false),
+          create: (_) => QuestionFollowListCubit()..fetchQuestionFollowList(studentID: student.id!),
+          lazy: false,
+        ),
+        BlocProvider<StudentTrialExamDetailCubit>(
+          create: (_) => StudentTrialExamDetailCubit()..selectStudent(student),
+          lazy: false,
+        ),
       ],
       child: this,
     );
