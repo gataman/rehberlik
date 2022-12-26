@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rehberlik/common/extensions.dart';
+import 'package:rehberlik/core/widgets/data_table/sf_data_grid_icon.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../../common/constants.dart';
@@ -39,19 +40,22 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
           top: BorderSide(color: Theme.of(context).dividerColor),
         ),
       ),
-      child: SfDataGrid(
-        shrinkWrapRows: true,
-        allowSorting: true,
-        columnWidthMode: _getWidthMode(),
-        frozenColumnsCount: 1,
-        gridLinesVisibility: GridLinesVisibility.both,
-        headerGridLinesVisibility: GridLinesVisibility.both,
-        headerRowHeight: 30,
-        defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
-        rowHeight: 40,
-        stackedHeaderRows: _getStackedHeaderRows(),
-        source: _dataSource,
-        columns: _getColumns(),
+      child: SfDataGridIcon(
+        dataGridSource: _dataSource,
+        child: SfDataGrid(
+          shrinkWrapRows: true,
+          allowSorting: true,
+          columnWidthMode: _getWidthMode(),
+          frozenColumnsCount: 1,
+          gridLinesVisibility: GridLinesVisibility.both,
+          headerGridLinesVisibility: GridLinesVisibility.both,
+          headerRowHeight: 30,
+          defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
+          rowHeight: 40,
+          stackedHeaderRows: _getStackedHeaderRows(),
+          source: _dataSource,
+          columns: _getColumns(),
+        ),
       ),
     );
   }

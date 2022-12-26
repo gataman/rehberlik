@@ -22,19 +22,28 @@ abstract class AdminBaseView extends StatelessWidget {
   bool get isFullPage => false;
 
   Widget _content() {
-    debugPrint('_content');
+    debugPrint(':::content');
     return Padding(
-      padding: const EdgeInsets.all(defaultPadding),
+      padding: const EdgeInsets.all(minPadding),
       child: SingleChildScrollView(
         child: BlocProvider(
           create: (context) => ExpandedCubit(),
           child: BlocBuilder<ExpandedCubit, ExpandedState>(builder: (context, state) {
             bool isExpanded = state.isExpanded;
+
+            return Responsive.isDesktop(context)
+                ? _getDesktopContent(isExpanded, context)
+                : isDashboard
+                    ? _getMobileDashboardContent(isExpanded, context)
+                    : _getMobileContent(isExpanded, context);
+            /*
             return Responsive(
                 mobile: isDashboard
                     ? _getMobileDashboardContent(isExpanded, context)
                     : _getMobileContent(isExpanded, context),
                 desktop: _getDesktopContent(isExpanded, context));
+
+             */
           }),
         ),
       ),
@@ -42,7 +51,7 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getDesktopContent(bool isExpanded, BuildContext context) {
-    debugPrint('_getDesktopContent');
+    debugPrint(':::_getDesktopContent');
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(
         flex: 4,
@@ -73,7 +82,7 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getMobileContent(bool isExpanded, BuildContext context) {
-    debugPrint('_getMobileContent');
+    debugPrint(':::_getMobileContent');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -94,7 +103,7 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getMobileDashboardContent(bool isExpanded, BuildContext context) {
-    debugPrint('_getMobileDashboardContent');
+    debugPrint(':::_getMobileDashboardContent');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -115,6 +124,7 @@ abstract class AdminBaseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(':::build');
     return providers != null
         ? MultiBlocProvider(
             providers: providers!,

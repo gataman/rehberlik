@@ -1,7 +1,6 @@
 library admin_dashboard_view;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/widgets/default_circular_progress.dart';
 import 'package:rehberlik/core/widgets/text/app_menu_title.dart';
 import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';

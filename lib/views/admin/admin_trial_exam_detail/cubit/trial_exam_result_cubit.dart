@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_excel/excel.dart';
-import 'package:rehberlik/models/trial_exam_student_result.dart';
 import '../../../../common/extensions.dart';
 import '../../../../common/custom_result.dart';
 import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';

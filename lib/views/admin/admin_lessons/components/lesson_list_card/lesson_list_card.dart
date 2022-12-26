@@ -65,7 +65,6 @@ class LessonListCard extends StatelessWidget {
   }
 
   void _goSubjectsPage(Lesson lesson, BuildContext context) {
-    final params = {'lessonID': lesson.id!, 'lessonName': lesson.lessonName!};
     context.router.navigate(AdminSubjectsRoute(lesson: lesson));
     //Get.toNamed(AdminRoutes.routeSubjects, parameters: params);
     //Navigator.pushNamed(context, AdminRoutes.routeSubjects,)

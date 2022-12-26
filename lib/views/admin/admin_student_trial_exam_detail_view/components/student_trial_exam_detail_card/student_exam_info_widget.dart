@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_imports.dart';
 

@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../common/locator.dart';
 import '../../../../../../models/subject.dart';
@@ -14,8 +14,8 @@ class SubjectListCubit extends Cubit<SubjectListState> {
   final _subjectRepository = locator<SubjectRepository>();
 
   void fetchSubjectList({required String lessonID}) {
-    _subjectRepository.getAll(lessonID: lessonID).then((_list) {
-      _subjectList = _list;
+    _subjectRepository.getAll(lessonID: lessonID).then((list) {
+      _subjectList = list;
       emit(SubjectListLoadedState(_subjectList!));
     });
   }

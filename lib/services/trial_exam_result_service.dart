@@ -1,7 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/services/trial_exam_service.dart';
 
 import '../models/trial_exam_result.dart';
 import 'base/db_base.dart';

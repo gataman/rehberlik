@@ -25,29 +25,29 @@ class TimeTableListCubit extends Cubit<TimeTableListState> {
 
   Future<Map<int, List<TimeTable>>?> fetchTimeTableList({required Student student}) async {
     return await Future.delayed(const Duration(milliseconds: 1), () async {
-      final _localList = <TimeTable>[];
+      final localList = <TimeTable>[];
 
       for (var order = 0; order < 4; order++) {
         for (var day = 1; day <= 7; day++) {
           var timeTable = TimeTable(studentID: student.id, order: order, day: day);
 
-          _localList.add(timeTable);
+          localList.add(timeTable);
         }
       }
 
       final remoteList = await _timeTableRepository.getAll(filters: {'studentID': student.id});
 
       if (remoteList != null && remoteList.isNotEmpty) {
-        for (var _timeTable in remoteList) {
-          var findingTimeTable = _localList
-              .findOrNull((element) => element.day == _timeTable.day && element.order == _timeTable.order);
+        for (var timeTable in remoteList) {
+          var findingTimeTable =
+              localList.findOrNull((element) => element.day == timeTable.day && element.order == timeTable.order);
           if (findingTimeTable != null) {
-            final index = _localList.indexOf(findingTimeTable);
-            _localList[index] = _timeTable;
+            final index = localList.indexOf(findingTimeTable);
+            localList[index] = timeTable;
           }
         }
       }
-      final groupedList = _localList.groupBy((element) => element.order);
+      final groupedList = localList.groupBy((element) => element.order);
       timeTableList = groupedList;
       await getAllLessonWithSubject(student: student);
       return timeTableList;

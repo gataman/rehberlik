@@ -10,7 +10,8 @@ class MeetingTypeSelectBox extends StatelessWidget {
     return DropdownButtonFormField<String>(
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
-        hintStyle: const TextStyle(color: Colors.white30),
+        hintStyle: const TextStyle(fontSize: 14),
+        hintText: meetingTypeList[0],
         fillColor: darkSecondaryColor,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).dividerColor),

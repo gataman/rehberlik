@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/helper/pdf_creator/student_password_pdf_builder.dart';
 import '../../../../../core/init/extentions.dart';
 import '../../../../../core/init/locale_keys.g.dart';
 import '../../../../../core/widgets/drop_down/drop_down_class_list.dart';
@@ -14,9 +15,11 @@ class StudentFormBox extends StatelessWidget {
 
   StudentFormBox({Key? key, required this.hasPasswordMenu}) : super(key: key);
   final ValueNotifier<bool> buttonListener = ValueNotifier(false);
+  late StudentPasswordPdfBuilder _pdfBuilder;
 
   @override
   Widget build(BuildContext context) {
+    _pdfBuilder = StudentPasswordPdfBuilder(context);
     return Card(
       child: Padding(
           padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding, bottom: defaultPadding),
@@ -40,6 +43,18 @@ class StudentFormBox extends StatelessWidget {
                       loadingListener: buttonListener,
                       onPressed: () {
                         _generateAllStudentPassword(context);
+                      },
+                    ),
+                  if (hasPasswordMenu)
+                    const SizedBox(
+                      height: defaultPadding,
+                    ),
+                  if (hasPasswordMenu)
+                    LoadingButton(
+                      text: 'Şifreleri İndir',
+                      loadingListener: _pdfBuilder.notifier,
+                      onPressed: () {
+                        _pdfBuilder.build(classesList!);
                       },
                     ),
                 ],

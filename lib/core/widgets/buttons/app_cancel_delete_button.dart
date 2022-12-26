@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/constants.dart';
 import '../../init/extentions.dart';
 import '../../init/locale_keys.g.dart';
 

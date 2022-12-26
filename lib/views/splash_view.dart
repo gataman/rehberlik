@@ -17,9 +17,9 @@ class SplashView extends StatelessWidget {
   void _checkUser() async {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
-        print(user.uid);
+        debugPrint(user.uid);
       } else {
-        print("User null");
+        debugPrint("User null");
       }
     });
   }

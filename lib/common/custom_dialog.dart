@@ -87,14 +87,12 @@ class CustomDialog {
                   ),
                 ],
               ),
-              actionsAlignment: MainAxisAlignment.center,
+              actionsAlignment: MainAxisAlignment.end,
               actions: [
-                Expanded(
-                  child: AppDeleteButton(onConfirm: () {
-                    onConfirm();
-                    Navigator.of(ctx).pop();
-                  }),
-                )
+                AppDeleteButton(onConfirm: () {
+                  onConfirm();
+                  Navigator.of(ctx).pop();
+                })
               ]);
         });
   }

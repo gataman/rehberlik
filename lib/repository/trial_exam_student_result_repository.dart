@@ -1,7 +1,5 @@
 import '../common/locator.dart';
-import '../models/trial_exam_class_result.dart';
 import '../models/trial_exam_student_result.dart';
-import '../services/trial_exam_class_result_service.dart';
 import '../services/trial_exam_student_result_service.dart';
 
 class TrialExamStudentResultRepository implements TrialExamStudentResultService {

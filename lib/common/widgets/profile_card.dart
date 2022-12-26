@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
-import 'package:rehberlik/common/themes/custom_theme.dart';
 import 'package:rehberlik/core/init/pref_keys.dart';
 import 'package:rehberlik/views/app_main/cubit/app_main_cubit.dart';
 

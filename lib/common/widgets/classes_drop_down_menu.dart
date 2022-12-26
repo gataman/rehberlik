@@ -11,25 +11,27 @@ class ClassesDropDownMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedClassCategory = getClassesCategory(_selectedCategory);
     return DropdownButtonFormField<ClassesCategory>(
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
-        hintStyle: TextStyle(color: Colors.white30),
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
+        hintStyle: Theme.of(context).textTheme.bodyLarge,
+        hintText: selectedClassCategory!.className,
         fillColor: darkSecondaryColor,
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white10),
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: primaryColor),
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
         ),
       ),
-      value: getClassesCategory(_selectedCategory),
+      value: selectedClassCategory,
       icon: const Icon(Icons.keyboard_arrow_down),
       onChanged: (ClassesCategory? newValue) {
         if (newValue != null) {

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rehberlik/common/extensions.dart';
 
-import '../../../common/constants.dart';
-
 class AppLoginTextFormField extends StatelessWidget {
   const AppLoginTextFormField({
     Key? key,

@@ -68,7 +68,7 @@ class UploadStudentImagesView extends StatelessWidget {
     return Column(
       children: [
         ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Colors.amber),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
           onPressed: () {
             context.read<UploadStudentImageCubit>().selectAllStudentImage();
           },
@@ -80,8 +80,7 @@ class UploadStudentImagesView extends StatelessWidget {
         const SizedBox(
           height: defaultPadding,
         ),
-        const Text(
-            "Öğrenci fotoğraflarını numaralarıyla isimlendirdikten sonra bu alandan topluca yükleyebilirsiniz!")
+        const Text("Öğrenci fotoğraflarını numaralarıyla isimlendirdikten sonra bu alandan topluca yükleyebilirsiniz!")
       ],
     );
   }

@@ -21,7 +21,7 @@ class AppTimeTableCardItem extends StatelessWidget {
         child: timeTable.id != null
             ? Container(
                 alignment: Alignment.center,
-                width: 100,
+                width: 110,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -47,7 +47,7 @@ class AppTimeTableCardItem extends StatelessWidget {
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(letterSpacing: 0.3),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(letterSpacing: 0.3),
                       ),
                     ],
                   ),

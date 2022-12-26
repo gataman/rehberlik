@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:rehberlik/common/models/teacher_login_result.dart';
 import 'package:rehberlik/models/teacher.dart';
 
@@ -13,7 +12,7 @@ class AuthService {
 
   Future<TeacherLoginResult> teacherLogin({required String email, required String password}) async {
     TeacherLoginResult loginResult = TeacherLoginResult(isSuccess: false, message: 'Bir hata oluştu');
-    UserCredential credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+    //UserCredential credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
     try {
       final credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
       if (credential.user != null) {

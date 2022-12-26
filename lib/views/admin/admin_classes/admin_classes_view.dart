@@ -35,16 +35,22 @@ class AdminClassesView extends AdminBaseView {
   const AdminClassesView({Key? key}) : super(key: key);
 
   @override
-  Widget get firstView => const ClassListCard();
+  Widget get firstView => getData();
 
   @override
   Widget get secondView => const ClassFormBox();
 
   @override
   List<BlocProvider<StateStreamableSource<Object?>>> get providers {
+
     final providers = <BlocProvider>[
       BlocProvider<ClassFormBoxCubit>(create: (_) => ClassFormBoxCubit()),
     ];
     return providers;
+  }
+
+  Widget getData(){
+    debugPrint('classes View providers');
+    return const ClassListCard();
   }
 }

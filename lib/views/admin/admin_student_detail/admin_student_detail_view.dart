@@ -35,7 +35,6 @@ class AdminStudentDetailView extends AdminBaseView {
   @override
   bool get isBack => true;
 
-  @override
   Object? get refreshRoute => student;
 
   @override

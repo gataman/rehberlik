@@ -5,7 +5,6 @@ import '../../../core/widgets/containers/app_list_box_container.dart';
 import '../../../core/widgets/text/app_box_title.dart';
 import '../../../core/widgets/text/app_menu_title.dart';
 import '../../../models/student.dart';
-import '../../admin/admin_student_detail/admin_student_detail_view.dart';
 import '../../admin/admin_student_detail/components/student_detail_tab_view/time_table/student_time_table_card.dart';
 import '../../admin/admin_student_trial_exam_detail_view/components/student_trial_exam_detail_container_view.dart';
 import '../student_base/student_base_view.dart';

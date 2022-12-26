@@ -3,12 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-import '../../../../models/helpers/trial_exam_average.dart';
 import '../../../../models/trial_exam_result.dart';
 
 class TrialExamResultDataSource extends DataGridSource {
   TrialExamResultDataSource({required List<TrialExamResult> trialExamResultList}) {
-    _trialExamResultList = trialExamResultList;
     // _tiralExamResultDataGridRowList.clear();
     // _tiralExamResultDataGridRowList.add(_getFooter());
     _tiralExamResultDataGridRowList = trialExamResultList
@@ -47,7 +45,6 @@ class TrialExamResultDataSource extends DataGridSource {
   }
 
   List<DataGridRow> _tiralExamResultDataGridRowList = [];
-  List<TrialExamResult> _trialExamResultList = [];
 
   @override
   DataGridRowAdapter? buildRow(DataGridRow row) {

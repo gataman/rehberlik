@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
@@ -21,7 +19,18 @@ class AdminDrawerMenu extends StatelessWidget {
           controller: ScrollController(),
           child: Column(
             children: [
-              DrawerHeader(child: Image.asset("${imagesSrc}logo.png")),
+              DrawerHeader(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(child: Image.asset("${imagesSrc}logo.png")),
+                    Text(
+                      'Rehberlik Servisi',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )
+                  ],
+                ),
+              ),
               for (var listItem in AdminDrawerModel.getAdminDrawerList)
                 AdminDrawerListTile(
                   title: listItem.title,

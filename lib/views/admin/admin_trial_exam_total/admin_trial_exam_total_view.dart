@@ -25,7 +25,6 @@ class AdminTrialExamTotalView extends AdminBaseView {
 
   @override
   List<BlocProvider<StateStreamableSource<Object?>>> get providers {
-    debugPrint('Admin Trial Exam Total View $classLevel');
     final providers = <BlocProvider>[
       BlocProvider<TrialExamTotalCubit>(
         create: (_) => TrialExamTotalCubit()..fetchTrialExamStudentResultList(classLevel: classLevel),

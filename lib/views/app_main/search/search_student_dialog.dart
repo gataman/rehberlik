@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/widgets/search_widget.dart';
@@ -21,7 +20,7 @@ class SearchStudentDialog extends StatelessWidget {
   }
 
   Widget _getStudentSearchingList(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
       height: MediaQuery.of(context).size.height * 0.8,
       child: Column(
@@ -42,10 +41,10 @@ class SearchStudentDialog extends StatelessWidget {
                   return _showSearchedList(list);
                   //return Text('ahahahha');
                 } else {
-                  return Text('Öğrenci bulunamadı');
+                  return const Text('Öğrenci bulunamadı');
                 }
               } else {
-                return Text('Öğrenci bulunamadı');
+                return const Text('Öğrenci bulunamadı');
               }
             },
           ),

@@ -16,7 +16,6 @@ import '../../views/app_main/cubit/app_main_cubit.dart';
 import '../../views/app_main/search/cubit/search_student_cubit.dart';
 import '../constants.dart';
 import '../navigaton/app_router/app_routes.dart';
-import 'search_widget.dart';
 
 class CustomAppBar extends AppBar {
   final BuildContext context;
@@ -157,30 +156,31 @@ class _AdminAppBarTitle extends StatelessWidget {
         const Spacer(
           flex: 4,
         ),
-        BlocBuilder<ClassListCubit, ClassListState>(
-          builder: (_, state) {
-            if (state is ClassListLoadedState) {
-              final studentList = state.allStudentList;
-              if (studentList != null) {
-                context.read<SearchStudentCubit>().init(studentList);
-                if (isDesktop) {
-                  return Expanded(child: _getSearchButton(context, studentList, isMobile));
-                } else {
-                  return Container(
-                    decoration: defaultBoxDecoration,
-                    child: IconButton(
-                      onPressed: () {
-                        _showSearchDialog(mainContext, studentList);
-                      },
-                      icon: const Icon(Icons.search),
-                    ),
-                  );
+        if (!isStudent)
+          BlocBuilder<ClassListCubit, ClassListState>(
+            builder: (_, state) {
+              if (state is ClassListLoadedState) {
+                final studentList = state.allStudentList;
+                if (studentList != null) {
+                  context.read<SearchStudentCubit>().init(studentList);
+                  if (isDesktop) {
+                    return Expanded(child: _getSearchButton(context, studentList, isMobile));
+                  } else {
+                    return Container(
+                      decoration: defaultBoxDecoration,
+                      child: IconButton(
+                        onPressed: () {
+                          _showSearchDialog(mainContext, studentList);
+                        },
+                        icon: const Icon(Icons.search),
+                      ),
+                    );
+                  }
                 }
               }
-            }
-            return Container();
-          },
-        ),
+              return Container();
+            },
+          ),
       ],
     );
   }

@@ -1,6 +1,5 @@
 library admin_trial_exam_result_view;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
 import 'package:rehberlik/common/extensions.dart';
@@ -50,7 +49,6 @@ class AdminTrialExamResultView extends AdminBaseView {
 
   @override
   List<BlocProvider<StateStreamableSource<Object?>>> get providers {
-    debugPrint('deneme2');
     final providers = <BlocProvider>[
       BlocProvider<TrialExamResultCubit>(
         create: (_) => TrialExamResultCubit()..fetchTrialExamResult(exam: trialExam),

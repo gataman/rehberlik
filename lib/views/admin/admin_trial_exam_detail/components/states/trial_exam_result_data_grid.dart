@@ -292,7 +292,6 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
   Future<void> exportDataGridToExcel() async {
     final xlsio.Workbook workbook = key.currentState!.exportToExcelWorkbook();
     final List<int> bytes = workbook.saveAsStream();
-    //debugPrint(bytes.toString());
     FileSaveHelper.saveAndLaunchFile(bytes, 'deneme.xlsx');
     workbook.dispose();
   }

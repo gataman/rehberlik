@@ -103,14 +103,16 @@ class StudentTrialExamDetailMenu extends StatelessWidget {
               }
             },
           ),
-        const SizedBox(height: defaultPadding,),
+        const SizedBox(
+          height: defaultPadding,
+        ),
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
               onPressed: () {
                 StudentTrialExamExcelCreator(context).build();
               },
-              child: Text('Pdf Kaydet')),
+              child: const Text('Excel Kaydet')),
         )
       ],
     );

@@ -64,14 +64,4 @@ class _StudentAppBarTitle extends StatelessWidget {
       ],
     );
   }
-
-  Future<dynamic> _showSearchDialog(String text, BuildContext context) {
-    final dialog = showDialog(
-        context: context,
-        builder: (ctx) {
-          return const AlertDialog();
-        });
-
-    return dialog;
-  }
 }

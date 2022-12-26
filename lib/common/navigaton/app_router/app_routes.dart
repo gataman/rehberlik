@@ -23,6 +23,7 @@ abstract class AppRoutes {
   static const String routeAdminTrialExamExcelImport = "trial_exam_result_exam_import";
   static const String routeAdminStudentsPassword = "students_password";
   static const String routeAdminStudentsTrialExamDetailView = "students_trial_exam_detail";
+  static const String routeAdminQuizzes = "admin_quizzes";
 
   //* Student Routes
   static const String routeStudentDashboard = "dashboard";

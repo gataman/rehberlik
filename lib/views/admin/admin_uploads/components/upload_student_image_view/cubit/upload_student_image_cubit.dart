@@ -22,8 +22,7 @@ class UploadStudentImageCubit extends Cubit<UploadStudentImageState> {
 
     if (images != null && schoolID != null) {
       var totalImagesCount = images.length;
-      emit(UploadStudentImageLoadingState(
-          isLoading: true, totalImageCount: totalImagesCount, loadedImageCount: 0));
+      emit(UploadStudentImageLoadingState(isLoading: true, totalImageCount: totalImagesCount, loadedImageCount: 0));
       List<Student> studentList = await _studentRepository.getAllWithSchoolID(schoolID: schoolID);
 
       List<Student> editingStudentList = <Student>[];
@@ -38,8 +37,7 @@ class UploadStudentImageCubit extends Cubit<UploadStudentImageState> {
           Student student = studentSearchList.first;
 
           await _studentRepository
-              .uploadStudentImage(
-                  imageFile: studentImage, schoolID: schoolID, imageFileName: "$studentNumber.jpeg")
+              .uploadStudentImage(imageFile: studentImage, schoolID: schoolID, imageFileName: "$studentNumber.jpeg")
               .then((imageUrl) {
             student.photoUrl = imageUrl;
             editingStudentList.add(student);

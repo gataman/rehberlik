@@ -1,8 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:rehberlik/repository/auth_repository.dart';
+import 'package:rehberlik/repository/quiz_repository.dart';
 import 'package:rehberlik/repository/teacher_repository.dart';
 import 'package:rehberlik/repository/trial_exam_class_result_repository.dart';
 import 'package:rehberlik/services/auth_service.dart';
+import 'package:rehberlik/services/quiz_service.dart';
 import 'package:rehberlik/services/teacher_service.dart';
 import 'package:rehberlik/services/trial_exam_class_result_service.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/helper/trial_exam_result_helper.dart';
@@ -93,4 +95,8 @@ void setupLocator() {
   //Helper
   locator.registerLazySingleton(() => TrialExamResultHelper());
   locator.registerLazySingleton(() => TrialExamStudentResultHelper());
+
+  //TrialExamStudentResultService
+  locator.registerLazySingleton(() => QuizService());
+  locator.registerLazySingleton(() => QuizRepository());
 }

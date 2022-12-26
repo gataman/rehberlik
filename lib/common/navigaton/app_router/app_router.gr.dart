@@ -222,6 +222,15 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    AdminQuizzesRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const AdminQuizzesView(),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
   };
 
   @override
@@ -370,6 +379,12 @@ class _$AppRouter extends RootStackRouter {
                 argumentsGuard,
                 teacherAuthGuard,
               ],
+            ),
+            RouteConfig(
+              AdminQuizzesRoute.name,
+              path: 'admin_quizzes',
+              parent: AdminMainRoute.name,
+              guards: [teacherAuthGuard],
             ),
           ],
         ),
@@ -730,4 +745,16 @@ class AdminTrialExamTotalRouteArgs {
   String toString() {
     return 'AdminTrialExamTotalRouteArgs{classLevel: $classLevel, key: $key}';
   }
+}
+
+/// generated route for
+/// [AdminQuizzesView]
+class AdminQuizzesRoute extends PageRouteInfo<void> {
+  const AdminQuizzesRoute()
+      : super(
+          AdminQuizzesRoute.name,
+          path: 'admin_quizzes',
+        );
+
+  static const String name = 'AdminQuizzesRoute';
 }

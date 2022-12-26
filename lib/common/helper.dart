@@ -16,7 +16,7 @@ class Helper {
   }
 
   static String getRandomString(int length) {
-    const characters = 'ABCDEFGHIJKLMNPRSTUVYZ123456789';
+    const characters = 'ABCDEFGHJKLMNPRSTUVYZ123456789';
     // '+-*=?AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
     Random random = Random();
     return String.fromCharCodes(

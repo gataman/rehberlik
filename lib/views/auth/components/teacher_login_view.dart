@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
@@ -56,7 +55,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
   }
 
   Widget _teacherEmailInput() {
-    _tfTeacherEmailController.text = 'gurcanataman@gmail.com';
+    // _tfTeacherEmailController.text = 'gurcanataman@gmail.com';
     return AppLoginTextFormField(
       iconData: Icons.person,
       validateText: 'E-posta adresi boş olamaz',
@@ -73,7 +72,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
   }
 
   Widget _teacherPasswordInput() {
-    _tfTeacherPasswordController.text = '112233i_';
+    //_tfTeacherPasswordController.text = '112233i_';
     return AppLoginTextFormField(
       iconData: Icons.password,
       validateText: 'Şifre boş olamaz',

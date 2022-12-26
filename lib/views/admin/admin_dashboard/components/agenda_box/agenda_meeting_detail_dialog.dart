@@ -54,14 +54,14 @@ class AgendaMeetingDetailDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
           onPressed: () {
             _deleteEvent(context);
           },
           child: const Text('Sil'),
         ),
         ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Colors.green),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
           onPressed: () {
             Navigator.of(context).pop();
           },

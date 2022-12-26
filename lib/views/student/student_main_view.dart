@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/navigaton/app_router/student/student_drawer_menu.dart';
 import 'package:rehberlik/common/widgets/custom_app_bar.dart';
-import 'package:rehberlik/common/widgets/student_app_bar.dart';
 import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view/cubit/student_trial_exam_detail_cubit.dart';
 
 import '../../core/init/locale_manager.dart';

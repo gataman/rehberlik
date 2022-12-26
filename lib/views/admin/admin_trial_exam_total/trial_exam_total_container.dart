@@ -22,7 +22,6 @@ class TrialExamTotalContainer extends StatelessWidget {
             return const Text('Sonuç bulunamadı');
           }
         } else if (state is TrialExamTotalGraphState) {
-          debugPrint('container ${state.trialExamGraphList.toString()}');
           return TrialExamResultStaticsView(
             trialExamGraphList: state.trialExamGraphList,
           );

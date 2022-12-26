@@ -1,6 +1,5 @@
 library admin_subjects_view;
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
 import 'package:rehberlik/core/init/extentions.dart';

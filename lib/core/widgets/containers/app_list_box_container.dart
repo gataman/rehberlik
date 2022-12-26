@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/core/app_constants.dart';
 
 import '../../../common/constants.dart';
 

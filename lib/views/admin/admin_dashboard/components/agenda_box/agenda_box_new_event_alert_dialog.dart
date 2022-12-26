@@ -39,49 +39,70 @@ class _AgendaBoxNewEventDialogFormState extends State<AgendaBoxNewEventAlertDial
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      actionsPadding: const EdgeInsets.all(defaultPadding),
+      shape: RoundedRectangleBorder(
+          side: BorderSide(color: Theme.of(context).dividerColor),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      titlePadding: EdgeInsets.zero,
+      insetPadding: EdgeInsets.zero,
       scrollable: true,
       title: Center(
-          child: Column(
-        children: [
-          Text(
-            "Yeni Randevu / İş Ekle",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          Text(
-            _dateText,
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
-        ],
+          child: Align(
+        alignment: Alignment.topRight,
+        child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.cancel,
+              color: Theme.of(context).colorScheme.primary,
+            )),
       )),
-      content: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: defaultPadding / 2),
-                child: MeetingTypeSelectBox(
-                  onChanged: (index) {
-                    meetingTypeIndex = index;
-                  },
-                ),
-              ),
-              Center(
-                child: AgendaBoxNewEventFormField(subjectController: _subjectController),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: defaultPadding),
-                child: Table(
-                  defaultColumnWidth: const IntrinsicColumnWidth(),
+      content: SizedBox(
+        width: 360,
+        child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                    child: Column(
                   children: [
-                    _getStartTimeText(context),
-                    _getEndTimeText(context),
+                    Text(
+                      "Yeni Randevu / İş Ekle",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Text(
+                      _dateText,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
                   ],
+                )),
+                Container(
+                  margin: const EdgeInsets.only(bottom: defaultPadding / 2),
+                  child: MeetingTypeSelectBox(
+                    onChanged: (index) {
+                      meetingTypeIndex = index;
+                    },
+                  ),
                 ),
-              ),
-            ],
-          )),
+                Center(
+                  child: AgendaBoxNewEventFormField(subjectController: _subjectController),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: defaultPadding),
+                  child: Table(
+                    defaultColumnWidth: const IntrinsicColumnWidth(),
+                    children: [
+                      _getStartTimeText(context),
+                      _getEndTimeText(context),
+                    ],
+                  ),
+                ),
+              ],
+            )),
+      ),
       actions: <Widget>[
         ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),

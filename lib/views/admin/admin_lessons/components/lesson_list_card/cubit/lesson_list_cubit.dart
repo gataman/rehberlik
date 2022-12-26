@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../../../common/extensions.dart';
 import '../../../../../../common/locator.dart';
 import '../../../../../../models/lesson.dart';
@@ -18,8 +18,8 @@ class LessonListCubit extends Cubit<LessonListState> {
 
   void fetchLessonList() async {
     if (lessonList == null) {
-      _lessonsRepository.getAll().then((_lessonList) {
-        final lastList = _lessonList.groupBy((lesson) => lesson.classLevel);
+      _lessonsRepository.getAll().then((list) {
+        final lastList = list.groupBy((lesson) => lesson.classLevel);
         final sortedList = SplayTreeMap<int, List<Lesson>>.from(lastList, (a, b) => a.compareTo(b));
 
         lessonList = sortedList;

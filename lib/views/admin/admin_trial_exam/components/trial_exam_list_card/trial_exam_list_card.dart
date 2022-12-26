@@ -6,7 +6,6 @@ class TrialExamListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // _addAllExamResult();
-    debugPrint('trialExamListCard');
     return Card(
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: minimumBoxHeight),

@@ -53,7 +53,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
   }
 
   Widget _studentNumberInput() {
-    _tfStudentNumberController.text = '248';
+    //_tfStudentNumberController.text = '248';
     return AppLoginTextFormField(
       iconData: Icons.person,
       validateText: 'Öğrenci Numarası boş olamaz',
@@ -68,7 +68,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
   }
 
   Widget _studentPasswordInput() {
-    _tfStudentPasswordController.text = '7TK3PA';
+    //_tfStudentPasswordController.text = '7TK3PA';
     return AppLoginTextFormField(
       iconData: Icons.password,
       validateText: 'Şifre boş olamaz',

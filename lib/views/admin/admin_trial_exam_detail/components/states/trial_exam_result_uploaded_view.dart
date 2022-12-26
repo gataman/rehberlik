@@ -57,7 +57,7 @@ class TrialExamResultUploadedView extends StatelessWidget {
           TrialExamResultDataGrid(
             trialExamResultList: state.trialExamResultParsedList!,
           ),
-        if (state.wrongRowList != null) ...state.wrongRowList!.map((row) => Text("Hatalı satır: ${row}")),
+        if (state.wrongRowList != null) ...state.wrongRowList!.map((row) => Text("Hatalı satır: $row")),
       ],
     );
   }

@@ -20,6 +20,7 @@ const meetingConferenceColor = Colors.lightBlue;
 const meetingOthersColor = Colors.redAccent;
 
 const defaultPadding = 16.0;
+const minPadding = 8.0;
 const defaultListHeight = 440.0;
 const minimumBoxHeight = 250.0;
 const mobileWidth = 600;

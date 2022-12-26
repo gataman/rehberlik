@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/core/widgets/containers/app_form_box_elements.dart';
 import 'package:rehberlik/views/auth/components/student_login_view.dart';
 import 'package:rehberlik/views/auth/components/teacher_login_view.dart';
 import 'package:rehberlik/views/auth/cubit/auth_cubit.dart';
 
 import '../../common/constants.dart';
 import '../../core/widgets/containers/app_list_box_container.dart';
-import '../../core/widgets/text_form_fields/app_outline_text_form_field.dart';
 
 // ignore: must_be_immutable
 class AuthView extends StatefulWidget {

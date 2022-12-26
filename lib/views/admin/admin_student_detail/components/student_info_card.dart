@@ -44,7 +44,7 @@ class StudentInfoCard extends StatelessWidget {
                   child: Table(
                     defaultColumnWidth: const IntrinsicColumnWidth(),
                     children: [
-                      buildRow(label: "T.C. Kimlik No", value: "", context: context),
+                      //buildRow(label: "T.C. Kimlik No", value: "", context: context),
                       buildRow(label: "Sınıfı", value: student!.className ?? '', context: context),
                       buildRow(label: "Numarası", value: student!.studentNumber ?? '', context: context),
                       buildRow(label: "Baba Adı", value: student!.fatherName ?? '', context: context),
@@ -79,14 +79,13 @@ class StudentInfoCard extends StatelessWidget {
                     labelText: 'Deneme Sonuçları',
                     icon: Icons.line_axis_rounded,
                     onPressed: () {
-                      if(userType == 2){
+                      if (userType == 2) {
                         context.router.pushNamed(AppRoutes.routeStudentTrialExam);
-                      }else{
+                      } else {
                         context.router.push(
                           AdminStudentsTrialExamDetailRoute(student: student),
                         );
                       }
-
                     },
                   ),
                 ),

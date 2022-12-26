@@ -39,7 +39,6 @@ class AdminTrialExamView extends AdminBaseView {
 
   @override
   List<BlocProvider<StateStreamableSource<Object?>>> get providers {
-
     final providers = <BlocProvider>[
       BlocProvider<TrialExamListCubit>(create: (_) => TrialExamListCubit()..fetchTrialExamList()),
       BlocProvider<TrialExamFormBoxCubit>(create: (_) => TrialExamFormBoxCubit()),

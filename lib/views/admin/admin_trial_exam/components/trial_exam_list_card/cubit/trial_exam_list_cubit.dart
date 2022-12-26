@@ -21,8 +21,8 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
   List<TrialExam>? _trialExamList;
 
   void fetchTrialExamList() async {
-    final _remoteList = await _trialExamRepository.getAll(filters: {'classLevel': selectedCategory});
-    _trialExamList = _remoteList;
+    final remoteList = await _trialExamRepository.getAll(filters: {'classLevel': selectedCategory});
+    _trialExamList = remoteList;
     _refreshList();
   }
 

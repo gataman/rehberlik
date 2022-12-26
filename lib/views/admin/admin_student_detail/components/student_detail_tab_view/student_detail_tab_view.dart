@@ -33,8 +33,7 @@ class _StudentDetailTabViewState extends State<StudentDetailTabView> with Single
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: defaultBoxDecoration,
+    return Card(
       child: Column(
         children: [
           Container(

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rehberlik/common/models/student_login_result.dart';
 import 'package:rehberlik/common/models/teacher_login_result.dart';
 import 'package:rehberlik/services/auth_service.dart';

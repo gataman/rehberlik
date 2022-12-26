@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rehberlik/common/extensions.dart';
+import 'package:rehberlik/core/widgets/data_table/sf_data_grid_icon.dart';
 import 'package:rehberlik/models/trial_exam_student_result.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_total/cubit/trial_exam_total_cubit.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -106,34 +106,31 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
     await Future.delayed(const Duration(seconds: 1));
 
     return SizedBox(
-      height: 450,
-      child: SfDataGridTheme(
-        data: SfDataGridThemeData(
-          sortIcon: _setIcon(),
-        ),
-        child: SfDataGrid(
-          key: key,
-          allowMultiColumnSorting: true,
-          allowSorting: true,
-          //allowFiltering: true,
-          columnWidthMode: _getWidthMode(),
-          allowTriStateSorting: true,
-          frozenColumnsCount: 3,
-          gridLinesVisibility: GridLinesVisibility.both,
-          headerGridLinesVisibility: GridLinesVisibility.both,
+        height: 450,
+        child: SfDataGridIcon(
+          dataGridSource: _trialExamResultDataSource,
+          child: SfDataGrid(
+            key: key,
+            allowMultiColumnSorting: true,
+            allowSorting: true,
+            //allowFiltering: true,
+            columnWidthMode: _getWidthMode(),
+            allowTriStateSorting: true,
+            frozenColumnsCount: 3,
+            gridLinesVisibility: GridLinesVisibility.both,
+            headerGridLinesVisibility: GridLinesVisibility.both,
 
-          headerRowHeight: 30,
-          defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
-          rowHeight: 40,
-          //rowsPerPage: _rowsPerPage,
-          //footerFrozenRowsCount: 1,
-          //footer: _getFooter(),
-          stackedHeaderRows: _getStackedHeaderRows(),
-          source: _trialExamResultDataSource,
-          columns: _getColumns(),
-        ),
-      ),
-    );
+            headerRowHeight: 30,
+            defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
+            rowHeight: 40,
+            //rowsPerPage: _rowsPerPage,
+            //footerFrozenRowsCount: 1,
+            //footer: _getFooter(),
+            stackedHeaderRows: _getStackedHeaderRows(),
+            source: _trialExamResultDataSource,
+            columns: _getColumns(),
+          ),
+        ));
   }
 
   ElevatedButton _detailButton(BuildContext context) {
@@ -321,39 +318,10 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
   }
 
   ColumnWidthMode _getWidthMode() => Responsive.isMobile(context) ? ColumnWidthMode.none : ColumnWidthMode.fill;
-
-  _setIcon() {
-    return Builder(
-      builder: (context) {
-        Widget? icon;
-        String columnName = '';
-        context.visitAncestorElements((element) {
-          if (element is GridHeaderCellElement) {
-            columnName = element.column.columnName;
-          }
-          return true;
-        });
-        var column = _trialExamResultDataSource.sortedColumns.findOrNull((element) => element.name == columnName);
-        if (column != null) {
-          if (column.sortDirection == DataGridSortDirection.ascending) {
-            icon = const Icon(Icons.arrow_circle_up_rounded, size: 16);
-          } else if (column.sortDirection == DataGridSortDirection.descending) {
-            icon = const Icon(Icons.arrow_circle_down_rounded, size: 16);
-          }
-        }
-        return icon ??
-            const Icon(
-              Icons.sort_outlined,
-              size: .1,
-            );
-      },
-    );
-  }
 }
 
 class _TrialExamResultDataSource extends DataGridSource {
   _TrialExamResultDataSource({required List<TrialExamStudentResult> trialExamResultList}) {
-    _trialExamResultList = trialExamResultList;
     _tiralExamResultDataGridRowList = trialExamResultList
         .map((e) => DataGridRow(
               cells: [
@@ -390,7 +358,6 @@ class _TrialExamResultDataSource extends DataGridSource {
   }
 
   List<DataGridRow> _tiralExamResultDataGridRowList = [];
-  List<TrialExamStudentResult> _trialExamResultList = [];
 
   @override
   DataGridRowAdapter? buildRow(DataGridRow row) {
@@ -415,15 +382,6 @@ class _TrialExamResultDataSource extends DataGridSource {
   double _getNumberFormat(double? net) {
     if (net != null) {
       final format = NumberFormat('#.00', 'en_US').format(net);
-      return double.parse(format);
-    } else {
-      return 0;
-    }
-  }
-
-  double _getNumberFormatForPoint(double? net) {
-    if (net != null) {
-      final format = NumberFormat('#.000', 'en_US').format(net);
       return double.parse(format);
     } else {
       return 0;

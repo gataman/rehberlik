@@ -10,9 +10,12 @@ class ClassesLevelSelectBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedClass = classesCategoryList[selectedIndex];
     return DropdownButtonFormField<ClassesCategory>(
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
+        hintStyle: Theme.of(context).textTheme.bodyLarge,
+        hintText: selectedClass.className,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).dividerColor),
           borderRadius: const BorderRadius.all(
@@ -26,7 +29,7 @@ class ClassesLevelSelectBox extends StatelessWidget {
           ),
         ),
       ),
-      value: classesCategoryList[selectedIndex],
+      value: selectedClass,
       icon: const Icon(Icons.keyboard_arrow_down),
       onChanged: (ClassesCategory? newValue) {
         valueChanged(classesCategoryList.indexOf(newValue!));

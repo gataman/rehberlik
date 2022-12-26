@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/models/teacher_login_result.dart';
-import 'package:rehberlik/models/student.dart';
 import 'package:rehberlik/repository/auth_repository.dart';
 
 import '../../../common/locator.dart';

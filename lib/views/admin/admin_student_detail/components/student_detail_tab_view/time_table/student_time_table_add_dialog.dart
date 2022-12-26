@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:rehberlik/common/constants.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
@@ -192,7 +190,7 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
   void _showLessonDialog(BuildContext context) {
     showDialog(
         context: context,
-        builder: (BuildContext _context) {
+        builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: darkBackColor,
             scrollable: true,
@@ -205,7 +203,7 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
             content: SizedBox(width: 100, height: 200, child: _getLessonListWiew()),
             actions: <Widget>[
               ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

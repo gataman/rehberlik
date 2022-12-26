@@ -1,3 +1,7 @@
+// ignore_for_file: must_be_immutable
+
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/constants.dart';
@@ -67,111 +71,111 @@ class QuestionFollowListCard extends StatelessWidget {
         editingGestureType: EditingGestureType.tap,
         navigationMode: GridNavigationMode.cell,
         selectionMode: SelectionMode.single,
-        stackedHeaderRows: _getStackedHeaderRows(),
+        stackedHeaderRows: _getStackedHeaderRows(context),
         controller: _dataGridController,
-        selectionManager: QuestionFollowSelectionController(onChanged: (_rowIndex) {
-          _dataGridController.beginEdit(_rowIndex);
+        selectionManager: QuestionFollowSelectionController(onChanged: (rowIndex) {
+          _dataGridController.beginEdit(rowIndex);
         }),
         source: _questionFollowDataSource,
         columns: _getColumns(context));
   }
 
-  List<StackedHeaderRow> _getStackedHeaderRows() {
+  List<StackedHeaderRow> _getStackedHeaderRows(BuildContext context) {
     List<StackedHeaderRow> stackedHeaderRows;
     stackedHeaderRows = <StackedHeaderRow>[
       StackedHeaderRow(cells: <StackedHeaderCell>[
         StackedHeaderCell(columnNames: <String>[
           'tarih',
           'gun',
-        ], child: _getWidgetForStackedHeaderCell('')),
+        ], child: _getWidgetForStackedHeaderCell('', context)),
         StackedHeaderCell(columnNames: <String>[
           'turTarget',
           'turSolved',
           'turCorrect',
           'turIncorrect',
-        ], child: _getWidgetForStackedHeaderCell('Türkçe')),
+        ], child: _getWidgetForStackedHeaderCell('Türkçe', context)),
         StackedHeaderCell(columnNames: <String>[
           'matTarget',
           'matSolved',
           'matCorrect',
           'matIncorrect',
-        ], child: _getWidgetForStackedHeaderCell('Matematik')),
+        ], child: _getWidgetForStackedHeaderCell('Matematik', context)),
         StackedHeaderCell(columnNames: <String>[
           'fenTarget',
           'fenSolved',
           'fenCorrect',
           'fenIncorrect',
-        ], child: _getWidgetForStackedHeaderCell('Fen')),
+        ], child: _getWidgetForStackedHeaderCell('Fen', context)),
         StackedHeaderCell(columnNames: <String>[
           'inkTarget',
           'inkSolved',
           'inkCorrect',
           'inkIncorrect',
-        ], child: _getWidgetForStackedHeaderCell('İnkılap')),
+        ], child: _getWidgetForStackedHeaderCell('İnkılap', context)),
         StackedHeaderCell(columnNames: <String>[
           'ingTarget',
           'ingSolved',
           'ingCorrect',
           'ingIncorrect',
-        ], child: _getWidgetForStackedHeaderCell('İngilizce')),
+        ], child: _getWidgetForStackedHeaderCell('İngilizce', context)),
         StackedHeaderCell(columnNames: <String>[
           'dinTarget',
           'dinSolved',
           'dinCorrect',
           'dinIncorrect',
-        ], child: _getWidgetForStackedHeaderCell('Din')),
+        ], child: _getWidgetForStackedHeaderCell('Din', context)),
       ])
     ];
     return stackedHeaderRows;
   }
 
-  Widget _getWidgetForStackedHeaderCell(String title) {
+  Widget _getWidgetForStackedHeaderCell(String title, BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         alignment: Alignment.center,
         child: Text(
           title,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.amber),
+          style: Theme.of(context).textTheme.titleMedium,
         ));
   }
 
   List<GridColumn> _getColumns(BuildContext context) {
     return <GridColumn>[
       GridColumn(width: 100, columnName: 'tarih', label: _getLabelDateTitleText(context, "Tarih"), allowEditing: false),
-      GridColumn(width: 100, columnName: 'gun', label: _getLabelTitleText("Gün"), allowEditing: false),
-      GridColumn(columnName: 'turTarget', label: _getLabelTitleText(_targetLabel)),
-      GridColumn(columnName: 'turSolved', label: _getLabelTitleText(_solvedLabel)),
-      GridColumn(columnName: 'turCorrect', label: _getLabelTitleText(_correctLabel)),
-      GridColumn(columnName: 'turIncorrect', label: _getLabelTitleText(_incorrectLabel)),
-      GridColumn(columnName: 'matTarget', label: _getLabelTitleText(_targetLabel)),
-      GridColumn(columnName: 'matSolved', label: _getLabelTitleText(_solvedLabel)),
-      GridColumn(columnName: 'matCorrect', label: _getLabelTitleText(_correctLabel)),
-      GridColumn(columnName: 'matIncorrect', label: _getLabelTitleText(_incorrectLabel)),
-      GridColumn(columnName: 'fenTarget', label: _getLabelTitleText(_targetLabel)),
-      GridColumn(columnName: 'fenSolved', label: _getLabelTitleText(_solvedLabel)),
-      GridColumn(columnName: 'fenCorrect', label: _getLabelTitleText(_correctLabel)),
-      GridColumn(columnName: 'fenIncorrect', label: _getLabelTitleText(_incorrectLabel)),
-      GridColumn(columnName: 'inkTarget', label: _getLabelTitleText(_targetLabel)),
-      GridColumn(columnName: 'inkSolved', label: _getLabelTitleText(_solvedLabel)),
-      GridColumn(columnName: 'inkCorrect', label: _getLabelTitleText(_correctLabel)),
-      GridColumn(columnName: 'inkIncorrect', label: _getLabelTitleText(_incorrectLabel)),
-      GridColumn(columnName: 'ingTarget', label: _getLabelTitleText(_targetLabel)),
-      GridColumn(columnName: 'ingSolved', label: _getLabelTitleText(_solvedLabel)),
-      GridColumn(columnName: 'ingCorrect', label: _getLabelTitleText(_correctLabel)),
-      GridColumn(columnName: 'ingIncorrect', label: _getLabelTitleText(_incorrectLabel)),
-      GridColumn(columnName: 'dinTarget', label: _getLabelTitleText(_targetLabel)),
-      GridColumn(columnName: 'dinSolved', label: _getLabelTitleText(_solvedLabel)),
-      GridColumn(columnName: 'dinCorrect', label: _getLabelTitleText(_correctLabel)),
-      GridColumn(columnName: 'dinIncorrect', label: _getLabelTitleText(_incorrectLabel)),
+      GridColumn(width: 100, columnName: 'gun', label: _getLabelTitleText("Gün", context), allowEditing: false),
+      GridColumn(columnName: 'turTarget', label: _getLabelTitleText(_targetLabel, context)),
+      GridColumn(columnName: 'turSolved', label: _getLabelTitleText(_solvedLabel, context)),
+      GridColumn(columnName: 'turCorrect', label: _getLabelTitleText(_correctLabel, context)),
+      GridColumn(columnName: 'turIncorrect', label: _getLabelTitleText(_incorrectLabel, context)),
+      GridColumn(columnName: 'matTarget', label: _getLabelTitleText(_targetLabel, context)),
+      GridColumn(columnName: 'matSolved', label: _getLabelTitleText(_solvedLabel, context)),
+      GridColumn(columnName: 'matCorrect', label: _getLabelTitleText(_correctLabel, context)),
+      GridColumn(columnName: 'matIncorrect', label: _getLabelTitleText(_incorrectLabel, context)),
+      GridColumn(columnName: 'fenTarget', label: _getLabelTitleText(_targetLabel, context)),
+      GridColumn(columnName: 'fenSolved', label: _getLabelTitleText(_solvedLabel, context)),
+      GridColumn(columnName: 'fenCorrect', label: _getLabelTitleText(_correctLabel, context)),
+      GridColumn(columnName: 'fenIncorrect', label: _getLabelTitleText(_incorrectLabel, context)),
+      GridColumn(columnName: 'inkTarget', label: _getLabelTitleText(_targetLabel, context)),
+      GridColumn(columnName: 'inkSolved', label: _getLabelTitleText(_solvedLabel, context)),
+      GridColumn(columnName: 'inkCorrect', label: _getLabelTitleText(_correctLabel, context)),
+      GridColumn(columnName: 'inkIncorrect', label: _getLabelTitleText(_incorrectLabel, context)),
+      GridColumn(columnName: 'ingTarget', label: _getLabelTitleText(_targetLabel, context)),
+      GridColumn(columnName: 'ingSolved', label: _getLabelTitleText(_solvedLabel, context)),
+      GridColumn(columnName: 'ingCorrect', label: _getLabelTitleText(_correctLabel, context)),
+      GridColumn(columnName: 'ingIncorrect', label: _getLabelTitleText(_incorrectLabel, context)),
+      GridColumn(columnName: 'dinTarget', label: _getLabelTitleText(_targetLabel, context)),
+      GridColumn(columnName: 'dinSolved', label: _getLabelTitleText(_solvedLabel, context)),
+      GridColumn(columnName: 'dinCorrect', label: _getLabelTitleText(_correctLabel, context)),
+      GridColumn(columnName: 'dinIncorrect', label: _getLabelTitleText(_incorrectLabel, context)),
     ];
   }
 
-  Widget _getLabelTitleText(String value) {
+  Widget _getLabelTitleText(String value, BuildContext context) {
     return Container(
       alignment: Alignment.center,
       child: Text(
         value,
-        style: defaultDataTableTitleStyle,
+        style: Theme.of(context).textTheme.labelMedium,
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -195,13 +199,13 @@ class QuestionFollowListCard extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 value,
-                style: defaultDataTableTitleStyle,
+                style: Theme.of(context).textTheme.labelMedium,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const Icon(
+            Icon(
               Icons.date_range_outlined,
-              color: Colors.teal,
+              color: Theme.of(context).colorScheme.secondary,
               size: 16,
             )
           ],

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/constants.dart';
-
 class AppOutlineTextFormField extends StatelessWidget {
   const AppOutlineTextFormField(
       {Key? key,

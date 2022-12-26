@@ -1,13 +1,11 @@
 import 'dart:collection';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_excel/excel.dart';
 import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
 import 'package:rehberlik/common/extensions.dart';
 import 'package:rehberlik/common/locator.dart';
 import 'package:rehberlik/core/init/locale_manager.dart';
@@ -156,7 +154,6 @@ class UploadExcelCubit extends Cubit<UploadExcelState> {
   Future<Map<String, List<Student>>?> _decodeTemplateExcelFile(Uint8List bytes) async {
     //final decoder = SpreadsheetDecoder.decodeBytes(bytes, update: false);
     var decoder = Excel.decodeBytes(bytes);
-    debugPrint("Tables ${decoder.tables.keys.toString()}");
 
     int i = 0;
     List<Student> studentList = [];

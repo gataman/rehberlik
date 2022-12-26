@@ -18,7 +18,18 @@ class StudentDrawerMenu extends StatelessWidget {
           controller: ScrollController(),
           child: Column(
             children: [
-              DrawerHeader(child: Image.asset("${imagesSrc}logo.png")),
+              DrawerHeader(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(child: Image.asset("${imagesSrc}logo.png")),
+                    Text(
+                      'Rehberlik Servisi',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )
+                  ],
+                ),
+              ),
               for (var listItem in StudentDrawerModel.getStudentDrawerList)
                 StudentDrawerListTile(
                   title: listItem.title,

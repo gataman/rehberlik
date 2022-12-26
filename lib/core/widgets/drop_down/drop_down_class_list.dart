@@ -12,10 +12,12 @@ class DropDownClassList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedClass = classesList[selectedIndex];
     return DropdownButtonFormField<StudentWithClass>(
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
-        hintStyle: const TextStyle(color: Colors.white30),
+        hintStyle: Theme.of(context).textTheme.bodyLarge,
+        hintText: selectedClass.classes.className,
         fillColor: darkSecondaryColor,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).dividerColor),
@@ -30,7 +32,7 @@ class DropDownClassList extends StatelessWidget {
           ),
         ),
       ),
-      value: classesList[selectedIndex],
+      value: selectedClass,
       icon: const Icon(Icons.keyboard_arrow_down),
       onChanged: onChanged,
       items: classesList.map<DropdownMenuItem<StudentWithClass>>((StudentWithClass value) {

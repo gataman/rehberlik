@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../common/constants.dart';
-import '../../init/extentions.dart';
 import '../buttons/app_small_rounded_button.dart';
 
 class AppListTile extends StatelessWidget {

@@ -79,7 +79,7 @@ class MyPieChart extends StatelessWidget {
     final studentClassList = context.read<ClassListCubit>().studentWithClassList;
     final studenList = studentClassList![14].studentList!;
 
-    final katsayi = 0.00979;
+    const katsayi = 0.00979;
 
     return SizedBox(
       height: 500,

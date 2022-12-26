@@ -26,14 +26,11 @@ class QuestionFollowDataSource extends DataGridSource {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((e) {
       return Container(
-        alignment: Alignment.center,
-        child: Text(
-          e.value == null ? '  ' : e.value.toString(),
-          style: TextStyle(
-              fontSize: 14, color: (e.columnName == 'tarih' || e.columnName == 'gun') ? Colors.amber : Colors.white54),
-          overflow: TextOverflow.ellipsis,
-        ),
-      );
+          alignment: Alignment.center,
+          child: Text(e.value == null ? '  ' : e.value.toString(),
+              style: (e.columnName == 'tarih' || e.columnName == 'gun')
+                  ? Theme.of(_context!).textTheme.titleMedium
+                  : Theme.of(_context!).textTheme.bodyMedium));
     }).toList());
   }
 
@@ -223,7 +220,7 @@ class QuestionFollowDataSource extends DataGridSource {
         alignment: Alignment.center,
         child: Text(
           displayText,
-          style: const TextStyle(fontSize: 14, color: Colors.amber),
+          style: TextStyle(fontSize: 14, color: Theme.of(_context!).colorScheme.primary),
           overflow: TextOverflow.ellipsis,
         ),
       );
@@ -244,7 +241,7 @@ class QuestionFollowDataSource extends DataGridSource {
           onSubmitted: (value) {
             submitCell();
           },
-          style: const TextStyle(fontSize: 14, color: Colors.white54),
+          style: Theme.of(_context!).textTheme.bodyLarge,
           autofocus: true,
           decoration: const InputDecoration(border: InputBorder.none, isDense: true, contentPadding: EdgeInsets.all(0)),
           textAlign: TextAlign.center,

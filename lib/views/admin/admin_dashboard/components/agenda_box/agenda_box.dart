@@ -14,9 +14,9 @@ class AgendaBox extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            const Text(
+            Text(
               "Randevular - Ajanda",
-              style: TextStyle(fontSize: 16),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const Divider(),
             BlocBuilder<AgendaBoxCubit, AgendaBoxState>(builder: (context, state) {

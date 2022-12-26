@@ -27,7 +27,6 @@ class TrialExamTotalCubit extends Cubit<TrialExamTotalState> {
 
   void fetchTrialExamStudentResultList({required int classLevel}) async {
     _classLevel = classLevel;
-    debugPrint('fetchTrialExamStudentResultList: $classLevel');
     trialExamStudentResultList = await _trialExamStudentResultRepository.getAll(filters: {'classLevel': classLevel});
 
     showListState();
@@ -39,10 +38,6 @@ class TrialExamTotalCubit extends Cubit<TrialExamTotalState> {
     // listeyi grupla
     if (list != null) {
       final groupedList = list.groupBy((result) => result.className);
-
-      debugPrint(groupedList.toString());
-      debugPrint('...................................');
-      debugPrint('...................................');
       List<TrialExamClassResult> classResultList = [];
       groupedList.forEach((className, resultList) {
         String classID = '';

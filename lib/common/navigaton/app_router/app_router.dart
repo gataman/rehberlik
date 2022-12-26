@@ -8,6 +8,7 @@ import 'package:rehberlik/views/admin/admin_dashboard/admin_dashboard_view.dart'
 import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_view.dart';
 import 'package:rehberlik/views/admin/admin_main_view.dart';
 import 'package:rehberlik/views/admin/admin_messages/admin_message_view.dart';
+import 'package:rehberlik/views/admin/admin_quizzes/admin_quizzes_view.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_view.dart';
 import 'package:rehberlik/views/admin/admin_students/admin_students_view.dart';
 import 'package:rehberlik/views/admin/admin_students_password/admin_students_pasword_view.dart';
@@ -140,6 +141,11 @@ part 'app_router.gr.dart';
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminTrialExamTotal,
               guards: [ArgumentsGuard, TeacherAuthGuard]),
+          CustomRoute(
+              page: AdminQuizzesView,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              path: AppRoutes.routeAdminQuizzes,
+              guards: [TeacherAuthGuard]),
         ]),
   ],
 )

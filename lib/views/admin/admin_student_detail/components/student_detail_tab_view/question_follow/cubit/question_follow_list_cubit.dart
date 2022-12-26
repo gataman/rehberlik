@@ -27,13 +27,13 @@ class QuestionFollowListCubit extends Cubit<QuestionFollowListState> {
 
     final endTime = startTime.add(const Duration(days: 6));
 
-    var _remoteList =
+    var remoteList =
         await _questionFollowRepository.getAll(studentID: studentID, startTime: startTime, endTime: endTime);
 
-    if (_remoteList != null && _remoteList.isNotEmpty) {
+    if (remoteList != null && remoteList.isNotEmpty) {
       var i = 0;
       for (var localQuestionFollow in localList) {
-        var findingQuestionFollow = _remoteList.findOrNull((element) => element.date == localQuestionFollow.date);
+        var findingQuestionFollow = remoteList.findOrNull((element) => element.date == localQuestionFollow.date);
         if (findingQuestionFollow != null) {
           localList[i] = findingQuestionFollow;
         }
