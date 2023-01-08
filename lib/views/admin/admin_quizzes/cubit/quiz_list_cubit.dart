@@ -41,7 +41,6 @@ class QuizListCubit extends Cubit<QuizListState> {
   }
 
   void _refreshList() {
-    debugPrint(quizList.toString());
     emit(QuizListLoadedState(quizList: quizList));
   }
 

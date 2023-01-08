@@ -1,5 +1,5 @@
 name: rehberlik
-description: A new Flutter application.
+description: Yavuz Selim Ortaokulu Rehberlik Servisi
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -13,7 +13,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
 
   cupertino_icons: ^1.0.2
   
@@ -52,17 +51,20 @@ dependencies:
   firebase_auth: ^3.9.0
 
   # syncfusion packets
-  syncfusion_flutter_calendar: ^20.1.61
-  syncfusion_flutter_pdf: ^20.2.40
-  syncfusion_flutter_datagrid: ^20.1.61
-  syncfusion_flutter_core: ^20.3.49
-  syncfusion_localizations: ^20.3.49
-  syncfusion_flutter_charts: ^20.3.49
-  syncfusion_flutter_xlsio: ^20.3.49-beta
-  syncfusion_officechart: ^20.3.49-beta
+  syncfusion_flutter_calendar: ^20.4.38
+  syncfusion_flutter_pdf: ^20.4.38
+  syncfusion_flutter_datagrid: ^20.4.38
+  syncfusion_flutter_core: ^20.4.38
+  syncfusion_localizations: ^20.4.38
+  syncfusion_flutter_charts: ^20.4.38
+  #syncfusion_flutter_datepicker: ^20.4.38
+
+  syncfusion_flutter_xlsio: ^20.4.38-beta
+  syncfusion_officechart: ^20.4.38-beta
+  syncfusion_flutter_datagrid_export: ^20.4.38-beta
+  
   flutter_excel: ^1.0.1
   turkish: ^0.2.1
-  syncfusion_flutter_datagrid_export: ^20.3.58-beta
   path_provider: ^2.0.11
   
   
@@ -78,6 +80,8 @@ dev_dependencies:
   auto_route_generator: ^5.0.2
   build_runner: ^2.2.0
   json_serializable: ^6.3.2
+  flutter_launcher_icons: ^0.11.0
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -131,3 +135,22 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icon_logo.png"
+  #image_path: "assets/images/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/icon_logo.png"
+    #background_color: "#202332"
+    background_color: "#49635D"
+    theme_color: "#49635D"
+  windows:
+    generate: true
+    image_path: "assets/icon_logo.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icon_logo.png"

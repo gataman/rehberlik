@@ -136,4 +136,48 @@ class TrialExamResult {
   String toString() {
     return 'TrialExamResult{id: $id, studentID: $studentID, studentName: $studentName, studentNumber: $studentNumber, className: $className, classID: $classID, examID: $examID, turDog: $turDog, turYan: $turYan, turNet: $turNet, matDog: $matDog, matYan: $matYan, matNet: $matNet, fenDog: $fenDog, fenYan: $fenYan, fenNet: $fenNet, sosDog: $sosDog, sosYan: $sosYan, sosNet: $sosNet, ingDog: $ingDog, ingYan: $ingYan, ingNet: $ingNet, dinDog: $dinDog, dinYan: $dinYan, dinNet: $dinNet, totalPoint: $totalPoint, schoolRank: $schoolRank, classRank : $classRank, trialExam : $trialExam}';
   }
+
+  Map<String, int> getAllEmpty() {
+    return {
+      'tur': _getEmptyCountMainLesson(turDog, turYan),
+      'mat': _getEmptyCountMainLesson(matDog, matYan),
+      'fen': _getEmptyCountMainLesson(fenDog, fenYan),
+      'sos': _getEmptyCountOtherLesson(sosDog, sosYan),
+      'din': _getEmptyCountOtherLesson(dinDog, dinYan),
+      'ing': _getEmptyCountOtherLesson(ingDog, ingYan),
+    };
+  }
+
+  int _getEmptyCountMainLesson(int? dog, int? yan) {
+    if (dog != null && yan != null) {
+      final totalCount = trialExam!.examType == 0 ? 20 : 15;
+
+      return totalCount - (dog + yan);
+    } else {
+      return 0;
+    }
+  }
+
+  int _getEmptyCountOtherLesson(int? dog, int? yan) {
+    if (dog != null && yan != null) {
+      return 10 - (dog + yan);
+    } else {
+      return 0;
+    }
+  }
+
+  double get getTotalNet => turNet! + sosNet! + ingNet! + dinNet! + fenNet! + matNet!;
+
+  int get getTotalDog => turDog! + sosDog! + ingDog! + dinDog! + fenDog! + matDog!;
+
+  int get getTotalYan => turYan! + sosYan! + ingYan! + dinYan! + fenYan! + matYan!;
+
+  int get getTotalEmptyCount {
+    var totalEmytCount = 0;
+    getAllEmpty().forEach((key, value) {
+      totalEmytCount = totalEmytCount + value;
+    });
+
+    return totalEmytCount;
+  }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rehberlik/models/teacher.dart';
 
 import '../../../common/constants.dart';
+import '../../../views/admin/admin_base/cubit/teacher_cubit.dart';
 import '../buttons/app_small_rounded_button.dart';
 
 class AppListTile extends StatelessWidget {
@@ -24,6 +27,7 @@ class AppListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final teacherType = context.read<TeacherCubit>().teacherType;
     return InkWell(
       mouseCursor: SystemMouseCursors.click,
       hoverColor: Theme.of(context).dividerColor,
@@ -51,12 +55,12 @@ class AppListTile extends StatelessWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (editOnPressed != null)
+              if (editOnPressed != null && teacherType == TeacherType.admin)
                 AppSmallRoundedButton(
                   onPressed: editOnPressed!,
                 ),
               const SizedBox(width: defaultPadding),
-              if (deleteOnPressed != null)
+              if (deleteOnPressed != null && teacherType == TeacherType.admin)
                 AppSmallRoundedButton(
                   bgColor: Colors.redAccent,
                   iconData: Icons.delete,

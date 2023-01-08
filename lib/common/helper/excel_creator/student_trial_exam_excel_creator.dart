@@ -33,7 +33,8 @@ class StudentTrialExamExcelCreator {
     final Worksheet sheet2 = workbook.worksheets[1];
     sheet.name = 'Öğrenci Karnesi';
     sheet2.name = 'Veriler';
-    //sheet2.visibility = WorksheetVisibility.hidden;
+
+    sheet2.visibility = WorksheetVisibility.hidden;
 
     //sheet.showGridlines = false;
     //sheet.enableSheetCalculations();
@@ -78,7 +79,7 @@ class StudentTrialExamExcelCreator {
     _setTitles(sheet);
 
     // StudentInfo
-    _setStudentInfo(sheet, student!);
+    _setStudentInfo(sheet, student!, trialExamStudentResult!);
 
     // Set Total Net
     _setTotalNetGraph(sheet, sheet2, totalNetGraph, charts);
@@ -126,7 +127,7 @@ class StudentTrialExamExcelCreator {
     sheet.getRangeByName('B8').setText('ORTALAMA');
   }
 
-  void _setStudentInfo(Worksheet sheet, Student student) {
+  void _setStudentInfo(Worksheet sheet, Student student, TrialExamStudentResult trialExamStudentResult) {
     sheet.getRangeByName('B3').setText('SINIFI');
     sheet.getRangeByName('E3').setText(':');
     sheet.getRangeByName('F3').setText(student.className); // Sınıfı
@@ -144,12 +145,12 @@ class StudentTrialExamExcelCreator {
     // 6
     sheet.getRangeByName('B6').setText('SINIF SIRASI');
     sheet.getRangeByName('E6').setText(':');
-    sheet.getRangeByName('F6').setNumber(1);
+    sheet.getRangeByName('F6').setNumber(trialExamStudentResult.classRank.toDouble());
 
     // 7
     sheet.getRangeByName('B7').setText('OKUL SIRASI');
     sheet.getRangeByName('E7').setText(':');
-    sheet.getRangeByName('F7').setNumber(1);
+    sheet.getRangeByName('F7').setNumber(trialExamStudentResult.schoolRank.toDouble());
   }
 
   void _setTotalNetGraph(Worksheet sheet, Worksheet sheet2, TrialExamGraph? totalNetGraph, ChartCollection charts) {

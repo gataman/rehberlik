@@ -1,5 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+enum LessonCode { tur, mat, fen, sos, din, ing }
+
+extension LessonCodeExtension on LessonCode {
+  String get name {
+    switch (this) {
+      case LessonCode.tur:
+        return 'Türkçe';
+
+      case LessonCode.sos:
+        return 'Sosyal';
+
+      case LessonCode.din:
+        return 'Din Kültürü';
+
+      case LessonCode.ing:
+        return 'İngilizce';
+
+      case LessonCode.mat:
+        return 'Matematik';
+
+      case LessonCode.fen:
+        return 'Fen Bilimleri';
+
+      default:
+        return 'Türkçe';
+    }
+  }
+}
+
 class Lesson {
   String? id;
   int? classLevel;

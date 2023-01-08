@@ -8,6 +8,7 @@ import 'package:rehberlik/core/widgets/text_form_fields/app_login_text_form_fiel
 import 'package:rehberlik/views/auth/cubit/auth_cubit.dart';
 
 import '../../../common/constants.dart';
+import '../../../common/enums/user_type.dart';
 import '../../../common/navigaton/app_router/app_routes.dart';
 import '../../../common/widgets/loading_button.dart';
 import '../../../core/init/locale_manager.dart';
@@ -109,7 +110,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
 
       if (result.isSuccess) {
         await SharedPrefs.instance.setString(PrefKeys.userID.toString(), result.teacher!.id!);
-        await SharedPrefs.instance.setInt(PrefKeys.userType.toString(), 1);
+        await SharedPrefs.instance.setInt(PrefKeys.userType.toString(), UserType.teacher.type);
         await SharedPrefs.instance.setString(PrefKeys.teacher.toString(), json.encode(result.teacher));
 
         CustomDialog.showSnackBar(

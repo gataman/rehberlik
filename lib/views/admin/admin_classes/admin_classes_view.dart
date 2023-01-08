@@ -20,7 +20,9 @@ import 'package:rehberlik/core/widgets/text/app_empty_warning_text.dart';
 import 'package:rehberlik/core/widgets/text/app_menu_title.dart';
 import 'package:rehberlik/core/widgets/text_form_fields/app_outline_text_form_field.dart';
 import 'package:rehberlik/models/classes.dart';
+import 'package:rehberlik/models/teacher.dart';
 import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
+import 'package:rehberlik/views/admin/admin_base/cubit/teacher_cubit.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/class_form_box/cubit/class_form_box_cubit.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import 'package:rehberlik/views/admin/admin_students/components/student_list_card/cubit/student_list_cubit.dart';
@@ -41,16 +43,17 @@ class AdminClassesView extends AdminBaseView {
   Widget get secondView => const ClassFormBox();
 
   @override
-  List<BlocProvider<StateStreamableSource<Object?>>> get providers {
+  bool get isFullPage => teacherType == TeacherType.teacher;
 
+  @override
+  List<BlocProvider<StateStreamableSource<Object?>>> get providers {
     final providers = <BlocProvider>[
       BlocProvider<ClassFormBoxCubit>(create: (_) => ClassFormBoxCubit()),
     ];
     return providers;
   }
 
-  Widget getData(){
-    debugPrint('classes View providers');
+  Widget getData() {
     return const ClassListCard();
   }
 }

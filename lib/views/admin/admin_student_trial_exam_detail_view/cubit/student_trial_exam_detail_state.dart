@@ -13,13 +13,16 @@ class StudentTrialExamStudentSelectedStade extends StudentTrialExamDetailState {
   final TrialExamAverageHelper? classAverages;
   final TrialExamAverageHelper? schoolAverages;
   final TrialExamGraph? totalNetGraph;
+  final List<TrialExamClassResult>? trialExamClassResult;
 
-  StudentTrialExamStudentSelectedStade(
-      {required this.student,
-      this.studentTrialExamResultList,
-      this.trialExamStudentResult,
-      this.studentTrialExamGraphList,
-      this.classAverages,
-      this.schoolAverages,
-      this.totalNetGraph});
+  StudentTrialExamStudentSelectedStade({
+    required this.student,
+    this.studentTrialExamResultList,
+    this.trialExamStudentResult,
+    this.studentTrialExamGraphList,
+    this.classAverages,
+    this.schoolAverages,
+    this.totalNetGraph,
+    this.trialExamClassResult,
+  });
 }

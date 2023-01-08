@@ -3,8 +3,9 @@ import '../constants.dart';
 
 class TrialExamTypeSelectBox extends StatelessWidget {
   final ValueChanged<int> valueChanged;
+  final int? typeIndex;
 
-  const TrialExamTypeSelectBox({Key? key, required this.valueChanged}) : super(key: key);
+  const TrialExamTypeSelectBox({Key? key, required this.valueChanged, this.typeIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,9 @@ class TrialExamTypeSelectBox extends StatelessWidget {
           ),
         ),
       ),
-      //value: Constants.trialExamType[0],
+      value: typeIndex != null ? Constants.trialExamType[typeIndex!] : null,
       icon: const Icon(Icons.keyboard_arrow_down),
-      hint: const Center(child: Text('Sınav tipi seçin')),
+      hint: typeIndex == null ? const Center(child: Text('Sınav tipi seçin')) : null,
       onChanged: (String? newValue) {
         valueChanged(Constants.trialExamType.indexOf(newValue!));
       },

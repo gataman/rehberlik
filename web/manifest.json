@@ -1,11 +1,11 @@
 {
-    "name": "rehberlik",
-    "short_name": "rehberlik",
+    "name": "Yavuz Selim Rehberlik",
+    "short_name": "Rehberlik",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter application.",
+    "background_color": "#49635D",
+    "theme_color": "#49635D",
+    "description": "Yavuz Selim Ortaokulu Rehberlik Servisi",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

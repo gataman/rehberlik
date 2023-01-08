@@ -8,6 +8,7 @@ import 'package:rehberlik/core/widgets/text_form_fields/app_login_text_form_fiel
 import 'package:rehberlik/views/auth/cubit/auth_cubit.dart';
 
 import '../../../common/constants.dart';
+import '../../../common/enums/user_type.dart';
 import '../../../common/navigaton/app_router/app_routes.dart';
 import '../../../common/widgets/loading_button.dart';
 import '../../../core/init/locale_manager.dart';
@@ -53,7 +54,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
   }
 
   Widget _studentNumberInput() {
-    //_tfStudentNumberController.text = '248';
+    //_tfStudentNumberController.text = '171';
     return AppLoginTextFormField(
       iconData: Icons.person,
       validateText: 'Öğrenci Numarası boş olamaz',
@@ -68,7 +69,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
   }
 
   Widget _studentPasswordInput() {
-    //_tfStudentPasswordController.text = '7TK3PA';
+    //_tfStudentPasswordController.text = 'TLZDF8';
     return AppLoginTextFormField(
       iconData: Icons.password,
       validateText: 'Şifre boş olamaz',
@@ -103,7 +104,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
         _buttonListener.value = false;
         if (result.isSuccess) {
           await SharedPrefs.instance.setString(PrefKeys.userID.toString(), result.student!.id!);
-          await SharedPrefs.instance.setInt(PrefKeys.userType.toString(), 2);
+          await SharedPrefs.instance.setInt(PrefKeys.userType.toString(), UserType.student.type);
           await SharedPrefs.instance.setString(PrefKeys.student.toString(), json.encode(result.student));
 
           CustomDialog.showSnackBar(

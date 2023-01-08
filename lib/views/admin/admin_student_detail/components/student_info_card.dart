@@ -1,16 +1,28 @@
 part of admin_student_detail_view;
 
-class StudentInfoCard extends StatelessWidget {
+class StudentInfoCard extends StatefulWidget {
   final Student? student;
 
   const StudentInfoCard({Key? key, this.student}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final userType = SharedPrefs.instance.getInt(PrefKeys.userType.toString());
+  State<StudentInfoCard> createState() => _StudentInfoCardState();
+}
 
-    var pdfBuilder = StudentDetailPdfBuilder(context);
-    if (student != null) {
+class _StudentInfoCardState extends State<StudentInfoCard> {
+  bool showPassword = false;
+  int? userType;
+
+  @override
+  void initState() {
+    userType = SharedPrefs.instance.getInt(PrefKeys.userType.toString());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var excelBuilder = StudentDetailExcelBuilder(context);
+    if (widget.student != null) {
       return Column(
         children: [
           Card(
@@ -21,7 +33,7 @@ class StudentInfoCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Text(
-                    student!.studentName.toString(),
+                    widget.student!.studentName.toString(),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
@@ -33,7 +45,8 @@ class StudentInfoCard extends StatelessWidget {
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.all(defaultPadding / 3),
-                        child: SizedBox(height: 80, width: 80, child: _setStudentProfileImage(student!.photoUrl)),
+                        child:
+                            SizedBox(height: 80, width: 80, child: _setStudentProfileImage(widget.student!.photoUrl)),
                       ),
                       const Spacer(),
                     ],
@@ -45,14 +58,18 @@ class StudentInfoCard extends StatelessWidget {
                     defaultColumnWidth: const IntrinsicColumnWidth(),
                     children: [
                       //buildRow(label: "T.C. Kimlik No", value: "", context: context),
-                      buildRow(label: "Sınıfı", value: student!.className ?? '', context: context),
-                      buildRow(label: "Numarası", value: student!.studentNumber ?? '', context: context),
-                      buildRow(label: "Baba Adı", value: student!.fatherName ?? '', context: context),
+                      buildRow(label: "Sınıfı", value: widget.student!.className ?? '', context: context),
+                      buildRow(label: "Numarası", value: widget.student!.studentNumber ?? '', context: context),
+                      buildRow(label: "Baba Adı", value: widget.student!.fatherName ?? '', context: context),
                       buildRow(
                         label: "Anne Adı",
-                        value: student!.motherName ?? '',
+                        value: widget.student!.motherName ?? '',
                         context: context,
                       ),
+                      if (userType != UserType.student.type)
+                        buildPasswordRow(
+                          context: context,
+                        ),
                     ],
                   ),
                 )
@@ -79,11 +96,11 @@ class StudentInfoCard extends StatelessWidget {
                     labelText: 'Deneme Sonuçları',
                     icon: Icons.line_axis_rounded,
                     onPressed: () {
-                      if (userType == 2) {
+                      if (userType == UserType.student.type) {
                         context.router.pushNamed(AppRoutes.routeStudentTrialExam);
                       } else {
                         context.router.push(
-                          AdminStudentsTrialExamDetailRoute(student: student),
+                          AdminStudentsTrialExamDetailRoute(student: widget.student),
                         );
                       }
                     },
@@ -94,9 +111,9 @@ class StudentInfoCard extends StatelessWidget {
                   child: LoadingButton(
                       text: 'Çalışma Programı İndir',
                       iconData: Icons.download,
-                      loadingListener: pdfBuilder.notifier,
+                      loadingListener: excelBuilder.notifier,
                       onPressed: () {
-                        pdfBuilder.build(student!);
+                        excelBuilder.build(widget.student!);
                       }),
                 ),
               ],
@@ -125,6 +142,36 @@ class StudentInfoCard extends StatelessWidget {
         ),
         Text(
           value,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+      ],
+    );
+  }
+
+  TableRow buildPasswordRow({required BuildContext context}) {
+    return TableRow(
+      children: [
+        SizedBox(
+          height: 30,
+          child: InkWell(
+            mouseCursor: SystemMouseCursors.click,
+            onTap: () {
+              setState(() {
+                showPassword = !showPassword;
+              });
+            },
+            child: Text(
+              showPassword ? 'Şifreyi Gizle' : 'Şifreyi Göster',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
+        ),
+        Text(
+          ":",
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+        SelectableText(
+          showPassword ? widget.student?.password ?? '' : '******',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ],

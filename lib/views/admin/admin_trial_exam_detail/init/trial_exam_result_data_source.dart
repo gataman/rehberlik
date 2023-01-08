@@ -12,7 +12,7 @@ class TrialExamResultDataSource extends DataGridSource {
     _tiralExamResultDataGridRowList = trialExamResultList
         .map((e) => DataGridRow(
               cells: [
-                DataGridCell<String>(columnName: 'No', value: e.studentNumber),
+                DataGridCell<int>(columnName: 'No', value: int.parse(e.studentNumber)),
                 DataGridCell<String>(columnName: 'Adı Soyadı', value: e.studentName),
                 DataGridCell<String>(columnName: 'Sınıfı', value: e.className),
                 DataGridCell<int>(columnName: 'turDog', value: e.turDog),

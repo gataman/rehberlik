@@ -21,7 +21,7 @@ class _StudentDetailTabViewState extends State<StudentDetailTabView> with Single
   @override
   void initState() {
     student = widget.student;
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
@@ -88,7 +88,7 @@ class _StudentDetailTabViewState extends State<StudentDetailTabView> with Single
     return <Widget>[
       _tabContainer(icon: Icons.stacked_bar_chart, labelText: 'Soru Takibi'),
       _tabContainer(icon: Icons.calendar_month, labelText: 'Çalışma Programı'),
-      _tabContainer(icon: Icons.contact_page, labelText: 'Notlar'),
+      //_tabContainer(icon: Icons.contact_page, labelText: 'Notlar'),
     ];
   }
 
@@ -117,10 +117,13 @@ class _StudentDetailTabViewState extends State<StudentDetailTabView> with Single
 
   List<Widget> _getTabBarViews() {
     return <Widget>[
-      QuestionFollowListCard(studentID: student.id!),
+      QuestionFollowListCard(
+        studentID: student.id!,
+        isStudent: false,
+      ),
       StudentTimeTableCard(student: student),
       //const Text("istatistik"),
-      const Text("Notlar"),
+      // const Text("Notlar"),
     ];
   }
 }

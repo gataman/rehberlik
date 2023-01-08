@@ -5,17 +5,20 @@ import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/constants.dart';
+import 'package:rehberlik/models/teacher.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../../../common/widgets/default_circular_progress.dart';
+import '../../../../admin_base/cubit/teacher_cubit.dart';
 import 'core/question_follow_data_source.dart';
 import 'core/question_follow_selection_controller.dart';
 import 'cubit/question_follow_list_cubit.dart';
 
 class QuestionFollowListCard extends StatelessWidget {
-  QuestionFollowListCard({Key? key, required this.studentID}) : super(key: key);
+  QuestionFollowListCard({Key? key, required this.studentID, required this.isStudent}) : super(key: key);
   DateTime? _startTime;
   final String studentID;
+  final bool isStudent;
 
   //region Properties
 
@@ -58,10 +61,15 @@ class QuestionFollowListCard extends StatelessWidget {
   //endregion
 
   SfDataGrid _questionFollowDataGridCard(BuildContext context) {
+    TeacherType teacherType = TeacherType.teacher;
+    if (!isStudent) {
+      teacherType = context.read<TeacherCubit>().teacherType;
+    }
+
     return SfDataGrid(
         shrinkWrapRows: true,
         verticalScrollPhysics: const NeverScrollableScrollPhysics(),
-        allowEditing: true,
+        allowEditing: teacherType == TeacherType.admin || isStudent,
         frozenColumnsCount: 1,
         gridLinesVisibility: GridLinesVisibility.both,
         headerGridLinesVisibility: GridLinesVisibility.both,

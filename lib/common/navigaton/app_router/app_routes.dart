@@ -23,10 +23,13 @@ abstract class AppRoutes {
   static const String routeAdminTrialExamExcelImport = "trial_exam_result_exam_import";
   static const String routeAdminStudentsPassword = "students_password";
   static const String routeAdminStudentsTrialExamDetailView = "students_trial_exam_detail";
+  static const String routeAdminTrialExamSingleView = "trial_exam_single_view";
   static const String routeAdminQuizzes = "admin_quizzes";
 
   //* Student Routes
   static const String routeStudentDashboard = "dashboard";
   static const String routeStudentQuestionFollow = "soru_takibi";
   static const String routeStudentTrialExam = "deneme_sinavlari";
+  static const String routeStudentTrialExamList = "deneme_sinav_listesi";
+  static const String routeStudentExamDetail = "deneme_detayi";
 }

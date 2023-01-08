@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
+import 'package:rehberlik/common/navigaton/app_router/guards/auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/teacher_auth_guard.dart';
 import 'package:rehberlik/common/themes/custom_theme.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
@@ -15,10 +16,10 @@ import 'search/cubit/search_student_cubit.dart';
 class AppMainView extends StatelessWidget {
   AppMainView({Key? key}) : super(key: key);
   final _appRouter = AppRouter(
-    argumentsGuard: ArgumentsGuard(),
-    teacherAuthGuard: TeacherAuthGuard(),
-    studentAuthGuard: StudentAuthGuard(),
-  );
+      argumentsGuard: ArgumentsGuard(),
+      teacherAuthGuard: TeacherAuthGuard(),
+      studentAuthGuard: StudentAuthGuard(),
+      authGuard: AuthGuard());
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class AppMainView extends StatelessWidget {
             locale: context.locale,
 
             debugShowCheckedModeBanner: false,
-            title: 'Rehberlik',
+            title: 'Yavuz Selim Ortaokulu Rehberlik Servisi',
             theme: theme,
             //initialRoute: AppPages.initial,
             //defaultTransition: Transition.fadeIn,

@@ -12,7 +12,6 @@ class SchoolStudentStatsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('dashboard');
     return BlocBuilder<ClassListCubit, ClassListState>(builder: (context, state) {
       if (state is ClassListLoadingState) {
         return buildGridView(state.schoolStatsList);

@@ -21,6 +21,10 @@ class ArgumentsGuard extends AutoRouteGuard {
         case AppRoutes.routeAdminTrialExamResult:
           refreshRoute = AppRoutes.routeAdminTrialExams;
           break;
+
+        case AppRoutes.routeAdminTrialExamSingleView:
+          refreshRoute = AppRoutes.routeAdminTrialExams;
+          break;
       }
 
       router.navigateNamed(refreshRoute);

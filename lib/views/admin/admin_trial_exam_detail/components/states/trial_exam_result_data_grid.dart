@@ -26,9 +26,10 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
   void initState() {
     _trialExamResultList = widget.trialExamResultList;
     _trialExamResultDataSource = TrialExamResultDataSource(trialExamResultList: _trialExamResultList);
+    _sortColumns();
 
     /// Programmaticaly sorting based on string length for 'customer name' GirdColumn
-    _sortColumns();
+
     super.initState();
   }
 
@@ -128,6 +129,10 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
           frozenColumnsCount: 3,
           gridLinesVisibility: GridLinesVisibility.both,
           headerGridLinesVisibility: GridLinesVisibility.both,
+
+          onCellTap: (details) {
+            // debugPrint(details.rowColumnIndex.rowIndex.toString());
+          },
 
           headerRowHeight: 30,
           defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,

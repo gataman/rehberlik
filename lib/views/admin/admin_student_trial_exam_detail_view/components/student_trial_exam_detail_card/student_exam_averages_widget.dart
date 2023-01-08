@@ -64,13 +64,13 @@ class StudentExamAveragesWidget extends StatelessWidget {
       ),
       _tableStudentValues(
         context,
-        trialExamStudentResult.ingNetAvg.toString(),
-        trialExamStudentResult.ingNetAvg > schoolAverages.ingAvg,
+        trialExamStudentResult.dinNetAvg.toString(),
+        trialExamStudentResult.dinNetAvg > schoolAverages.dinAvg,
       ),
       _tableStudentValues(
         context,
-        trialExamStudentResult.dinNetAvg.toString(),
-        trialExamStudentResult.dinNetAvg > schoolAverages.dinAvg,
+        trialExamStudentResult.ingNetAvg.toString(),
+        trialExamStudentResult.ingNetAvg > schoolAverages.ingAvg,
       ),
       _tableStudentValues(
         context,
@@ -90,8 +90,8 @@ class StudentExamAveragesWidget extends StatelessWidget {
       _tableLabelValues(context, 'Sınıf Ort.'),
       _tableValues(context, classAverages.turAvg.toString()),
       _tableValues(context, classAverages.sosAvg.toString()),
-      _tableValues(context, classAverages.ingAvg.toString()),
       _tableValues(context, classAverages.dinAvg.toString()),
+      _tableValues(context, classAverages.ingAvg.toString()),
       _tableValues(context, classAverages.matAvg.toString()),
       _tableValues(context, classAverages.fenAvg.toString()),
     ]);
@@ -102,8 +102,8 @@ class StudentExamAveragesWidget extends StatelessWidget {
       _tableLabelValues(context, 'Okul Ort.'),
       _tableValues(context, schoolAverages.turAvg.toString()),
       _tableValues(context, schoolAverages.sosAvg.toString()),
-      _tableValues(context, schoolAverages.ingAvg.toString()),
       _tableValues(context, schoolAverages.dinAvg.toString()),
+      _tableValues(context, schoolAverages.ingAvg.toString()),
       _tableValues(context, schoolAverages.matAvg.toString()),
       _tableValues(context, schoolAverages.fenAvg.toString()),
     ]);

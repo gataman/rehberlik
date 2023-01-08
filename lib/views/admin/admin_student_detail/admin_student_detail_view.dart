@@ -2,10 +2,12 @@ library admin_student_detail_view;
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/helper/excel_creator/student_detail_excel_builder/student_detail_excel_builder.dart';
 import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
 import 'package:rehberlik/common/widgets/button_with_icon.dart';
 import 'package:rehberlik/core/widgets/text/app_box_title.dart';
 
+import '../../../common/enums/user_type.dart';
 import '../../../common/navigaton/app_router/app_routes.dart';
 import '../../../core/init/locale_manager.dart';
 import '../../../core/init/pref_keys.dart';

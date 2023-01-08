@@ -35,6 +35,7 @@ class StudentTrialExamDetailCubit extends Cubit<StudentTrialExamDetailState> {
   TrialExamGraph? totalNetGraph;
   TrialExamAverageHelper? classAverages;
   TrialExamAverageHelper? schoolAverages;
+  List<TrialExamClassResult>? classResult;
   Uint8List? imageBytes;
 
   void selectStudent(Student? student) {
@@ -65,16 +66,16 @@ class StudentTrialExamDetailCubit extends Cubit<StudentTrialExamDetailState> {
 
       trialExamStudentResult = await _trialExamStudentResultRepository.get(studentID: selectedStudent!.id!);
 
-      final trialExamClassResult =
-          await _trialExamClassResultRepository.getAll(filters: {'classLevel': selectedStudent!.classLevel!});
+      classResult = await _trialExamClassResultRepository.getAll(filters: {'classLevel': selectedStudent!.classLevel!});
 
-      _calculateTrialExamClassResult(trialExamClassResult);
+      _calculateTrialExamClassResult(classResult);
 
       emit(StudentTrialExamStudentSelectedStade(
           student: selectedStudent!,
           studentTrialExamResultList: studentTrialExamResultList,
           trialExamStudentResult: trialExamStudentResult,
           studentTrialExamGraphList: studentTrialExamGraphList,
+          trialExamClassResult: classResult,
           classAverages: classAverages,
           totalNetGraph: totalNetGraph,
           schoolAverages: schoolAverages));

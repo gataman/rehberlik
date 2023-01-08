@@ -31,6 +31,7 @@ class QuestionFollowContainer extends StatelessWidget {
           const AppBoxTitle(title: 'Soru Takip Çizelgesi', isBack: false),
           QuestionFollowListCard(
             studentID: student!.id!,
+            isStudent: true,
           ),
         ],
       ),

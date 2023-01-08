@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/helper/excel_creator/student_password_excel_creator.dart';
 import 'package:rehberlik/common/helper/pdf_creator/student_password_pdf_builder.dart';
 import '../../../../../core/init/extentions.dart';
 import '../../../../../core/init/locale_keys.g.dart';
@@ -15,11 +16,11 @@ class StudentFormBox extends StatelessWidget {
 
   StudentFormBox({Key? key, required this.hasPasswordMenu}) : super(key: key);
   final ValueNotifier<bool> buttonListener = ValueNotifier(false);
-  late StudentPasswordPdfBuilder _pdfBuilder;
+  late final StudentPasswordExcelCrator _excelCrator;
 
   @override
   Widget build(BuildContext context) {
-    _pdfBuilder = StudentPasswordPdfBuilder(context);
+    _excelCrator = StudentPasswordExcelCrator(context);
     return Card(
       child: Padding(
           padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding, bottom: defaultPadding),
@@ -33,18 +34,18 @@ class StudentFormBox extends StatelessWidget {
                     height: defaultPadding,
                   ),
                   _getDropDownMenu(classesList),
-                  if (hasPasswordMenu)
-                    const SizedBox(
-                      height: defaultPadding,
-                    ),
-                  if (hasPasswordMenu)
-                    LoadingButton(
-                      text: 'Tüm Sınıflara Şifre Oluştur',
-                      loadingListener: buttonListener,
-                      onPressed: () {
-                        _generateAllStudentPassword(context);
-                      },
-                    ),
+                  // if (hasPasswordMenu)
+                  //   const SizedBox(
+                  //     height: defaultPadding,
+                  //   ),
+                  // if (hasPasswordMenu)
+                  //   LoadingButton(
+                  //     text: 'Tüm Sınıflara Şifre Oluştur',
+                  //     loadingListener: buttonListener,
+                  //     onPressed: () {
+                  //       _generateAllStudentPassword(context);
+                  //     },
+                  //   ),
                   if (hasPasswordMenu)
                     const SizedBox(
                       height: defaultPadding,
@@ -52,9 +53,9 @@ class StudentFormBox extends StatelessWidget {
                   if (hasPasswordMenu)
                     LoadingButton(
                       text: 'Şifreleri İndir',
-                      loadingListener: _pdfBuilder.notifier,
+                      loadingListener: _excelCrator.notifier,
                       onPressed: () {
-                        _pdfBuilder.build(classesList!);
+                        _excelCrator.build(classesList!);
                       },
                     ),
                 ],

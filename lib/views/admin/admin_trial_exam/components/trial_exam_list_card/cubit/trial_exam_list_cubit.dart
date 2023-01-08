@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../common/locator.dart';
 import '../../../../../../models/trial_exam.dart';
@@ -43,6 +44,13 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
     return examID;
   }
 
+  Future<void> updateTrialExam(TrialExam exam) async {
+    return _trialExamRepository.update(object: exam).then((value) {
+      _trialExamList!.sort(((a, b) => b.examDate!.compareTo(a.examDate!)));
+      _refreshList();
+    });
+  }
+
   Future<void> deleteTrialExam({required TrialExam trialExam}) async {
     return _trialExamRepository.delete(objectID: trialExam.id!).whenComplete(() {
       // editingLesson.value = null;
@@ -58,16 +66,19 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
       _trialExamList = <TrialExam>[];
       _trialExamList!.add(trialExam);
     }
+    _trialExamList!.sort(((a, b) => b.examDate!.compareTo(a.examDate!)));
     _refreshList();
   }
 
   void _deleteTrialExamInLocalList({required TrialExam trialExam}) {
     _trialExamList!.remove(trialExam);
+
     _refreshList();
   }
 
   void calculateAllStudentRanks(int classLevel) async {
     final List<TrialExamResult> trialExamAllResultList = [];
+    debugPrint('calculatdsdss');
 
     // Sınıf seviyesine göre bütün sınavlar çekildi:
     final trialExamList = await _trialExamRepository.getAll(filters: {'classLevel': classLevel});
@@ -77,6 +88,7 @@ class TrialExamListCubit extends Cubit<TrialExamListState> {
         final examResultList = await _trialExamResultRepository.getAll(filters: {'examID': exam.id!});
         if (examResultList != null && examResultList.isNotEmpty) {
           // Bütün listeler dolduruldu.
+
           trialExamAllResultList.addAll(examResultList);
         }
       }

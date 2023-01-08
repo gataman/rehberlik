@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/models/teacher.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/widgets/expand_button.dart';
+import '../../../core/init/locale_manager.dart';
+import '../../../core/init/pref_keys.dart';
 import '../../../responsive.dart';
 import 'cubit/expanded_cubit.dart';
 
@@ -21,8 +26,9 @@ abstract class AdminBaseView extends StatelessWidget {
 
   bool get isFullPage => false;
 
+  TeacherType get teacherType => _getTeacherType();
+
   Widget _content() {
-    debugPrint(':::content');
     return Padding(
       padding: const EdgeInsets.all(minPadding),
       child: SingleChildScrollView(
@@ -51,7 +57,6 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getDesktopContent(bool isExpanded, BuildContext context) {
-    debugPrint(':::_getDesktopContent');
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Expanded(
         flex: 4,
@@ -82,7 +87,6 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getMobileContent(bool isExpanded, BuildContext context) {
-    debugPrint(':::_getMobileContent');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -103,7 +107,6 @@ abstract class AdminBaseView extends StatelessWidget {
   }
 
   Widget _getMobileDashboardContent(bool isExpanded, BuildContext context) {
-    debugPrint(':::_getMobileDashboardContent');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -124,12 +127,23 @@ abstract class AdminBaseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(':::build');
     return providers != null
         ? MultiBlocProvider(
             providers: providers!,
             child: _content(),
           )
         : _content();
+  }
+
+  TeacherType _getTeacherType() {
+    final teacher = SharedPrefs.instance.getString(PrefKeys.teacher.toString());
+    if (teacher != null) {
+      final decodedTeacher = Teacher.fromJson(jsonDecode(teacher)!);
+      if (decodedTeacher.rank == TeacherType.admin.type) {
+        return TeacherType.admin;
+      }
+    }
+
+    return TeacherType.teacher;
   }
 }

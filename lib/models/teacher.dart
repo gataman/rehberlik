@@ -8,6 +8,21 @@ import '../core/init/pref_keys.dart';
 
 part 'teacher.g.dart';
 
+enum TeacherType { admin, teacher }
+
+extension TeacherTypeExtension on TeacherType {
+  int get type {
+    switch (this) {
+      case TeacherType.admin:
+        return 1;
+      case TeacherType.teacher:
+        return 3;
+      default:
+        return 3;
+    }
+  }
+}
+
 @JsonSerializable()
 class Teacher {
   final String? id;

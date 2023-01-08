@@ -75,6 +75,7 @@ class TrialExamService implements DBBase<TrialExam> {
 
     final docSnap = await colRef.get();
     final list = docSnap.docs.map((e) => e.data()).toList();
+    list.sort(((a, b) => b.examDate!.compareTo(a.examDate!)));
     return list;
   }
 

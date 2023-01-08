@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
 import '../../../common/constants.dart';
 import '../../../common/helper/excel_creator/student_trial_exam_excel_creator.dart';
 import '../../../core/widgets/containers/app_list_box_container.dart';
@@ -17,6 +19,9 @@ class StudentTrialExamView extends StudentBaseView {
 
   @override
   Widget get secondView => _StudentTrialExamMenuContainer();
+
+  @override
+  bool get isDashboard => true;
 }
 
 class _StudentTrialExamContainer extends StatelessWidget {
@@ -54,20 +59,41 @@ class _StudentTrialExamMenuContainer extends StatelessWidget {
               title: 'İşlemler',
               color: Theme.of(context).colorScheme.primary,
             ),
-            Padding(
-              padding: const EdgeInsets.all(defaultPadding),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    StudentTrialExamExcelCreator(context).build();
-                  },
-                  icon: const Icon(Icons.download),
-                  label: const Text('Deneme Sonuçlarını İndir'),
-                ),
-              ),
-            )
+            _examListButton(context),
+            _downloadButton(context)
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _downloadButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(defaultPadding),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton.icon(
+          onPressed: () {
+            StudentTrialExamExcelCreator(context).build();
+          },
+          icon: const Icon(Icons.download),
+          label: const Text('Deneme Sonuçlarını İndir'),
+        ),
+      ),
+    );
+  }
+
+  Widget _examListButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(defaultPadding),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton.icon(
+          onPressed: () {
+            context.router.replaceNamed(AppRoutes.routeStudentTrialExamList);
+          },
+          icon: const Icon(Icons.analytics),
+          label: const Text('Deneme Sınavları'),
         ),
       ),
     );

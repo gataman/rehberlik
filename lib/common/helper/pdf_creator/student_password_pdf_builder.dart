@@ -10,8 +10,6 @@ class StudentPasswordPdfBuilder {
   StudentPasswordPdfBuilder(this.context);
 
   Future<void> build(List<StudentWithClass> classesList) async {
-    debugPrint(classesList.toString());
-
     final PdfDocument pdfDocument = PdfDocument();
 
     //pdfDocument.pageSettings.orientation = PdfPageOrientation.landscape;

@@ -106,7 +106,6 @@ class TrialExamTotalCubit extends Cubit<TrialExamTotalState> {
   void showGraphState() async {
     emit(TrialExamTotalLoadingState());
     await fetchTrialExamClassResult(classLevel: _classLevel);
-    debugPrint('cubit : ${trialExamGraphList.toString()}');
     emit(TrialExamTotalGraphState(trialExamGraphList: trialExamGraphList));
   }
 

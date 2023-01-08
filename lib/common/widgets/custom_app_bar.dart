@@ -99,6 +99,7 @@ class CustomAppBar extends AppBar {
     await SharedPrefs.instance.remove(PrefKeys.userID.toString());
     await SharedPrefs.instance.remove(PrefKeys.student.toString());
     await SharedPrefs.instance.remove(PrefKeys.teacher.toString());
+    await SharedPrefs.instance.remove(PrefKeys.userType.toString());
     await FirebaseAuth.instance.signOut();
     context.router.replaceNamed(AppRoutes.routeMainAuth);
   }

@@ -12,14 +12,17 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
   final _tfTrialExamCodeFormController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late FocusNode _trialExamNameFocusNode;
+  late FocusNode _trialExamCodeFocusNode;
   TrialExam? _trialExam;
   int _selectedIndex = 3;
   int? _selectedTrialExamType;
+  DateTime? _dateTime;
   final ValueNotifier<bool> buttonListener = ValueNotifier(false);
 
   @override
   void initState() {
     _trialExamNameFocusNode = FocusNode();
+    _trialExamCodeFocusNode = FocusNode();
     super.initState();
   }
 
@@ -33,6 +36,8 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
   @override
   Widget build(BuildContext context) {
     _selectedIndex = context.read<TrialExamListCubit>().selectedCategory - 5;
+    debugPrint('Build.......');
+
     return Card(
       child: BlocBuilder<TrialExamFormBoxCubit, TrialExamFormBoxState>(builder: (context, state) {
         _trialExam = state is EditTrialExamState ? state.editTrialExam : null;
@@ -41,9 +46,15 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
           _trialExamNameFocusNode.requestFocus();
           _tfTrialExamFormController.text = _trialExam!.examName!;
           _tfTrialExamCodeFormController.text = _trialExam!.examCode!;
+          _dateTime = _trialExam!.examDate;
+          _selectedTrialExamType = _trialExam!.examType;
         } else {
+          debugPrint('----------------');
+          debugPrint('elseeee');
           _resetForm();
         }
+
+        debugPrint('..... ${_dateTime?.day.toString()}');
 
         return Column(
           children: [
@@ -51,15 +62,24 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
             AppFormBoxElements(formKey: _formKey, children: [
               ClassesLevelSelectBox(
                 valueChanged: (index) {
+                  debugPrint('ClassesLevelSelectBox ......');
                   context.read<TrialExamListCubit>().changeCategory(index + 5);
+                  context.read<TrialExamFormBoxCubit>().editTrialExam(trialExam: null);
                 },
                 selectedIndex: _selectedIndex,
               ),
-              _trialExamNameInput(),
-              _trialExamCodeInput(),
               TrialExamTypeSelectBox(
                 valueChanged: (value) {
                   _selectedTrialExamType = value;
+                },
+                typeIndex: _selectedTrialExamType,
+              ),
+              _trialExamNameInput(),
+              _trialExamCodeInput(),
+              AppDatePickerText(
+                initialValue: _dateTime,
+                valueChanged: (value) {
+                  _dateTime = value;
                 },
               ),
               _actionButtons(),
@@ -73,6 +93,9 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
   void _resetForm() {
     _tfTrialExamFormController.text = "";
     _tfTrialExamCodeFormController.text = "";
+    _dateTime = null;
+    _selectedTrialExamType = null;
+    debugPrint('_resetForm ......');
   }
 
   Widget _actionButtons() {
@@ -115,6 +138,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
       isStyleDifferent: _trialExam == null,
       validateText: LocaleKeys.trialExams_trialExamNameEmptyAlert.locale(),
       onFieldSubmitted: (value) {
+        debugPrint('denemee');
         _saveTrialExam();
       },
       focusNode: _trialExamNameFocusNode,
@@ -130,6 +154,7 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
       onFieldSubmitted: (value) {
         _saveTrialExam();
       },
+      focusNode: _trialExamCodeFocusNode,
       controller: _tfTrialExamCodeFormController,
       hintText: _trialExam == null ? LocaleKeys.trialExams_trialExamCodeHint.locale() : _trialExam?.examCode,
     );
@@ -149,7 +174,9 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
     TrialExamListCubit cubit = context.read<TrialExamListCubit>();
     if (!buttonListener.value && _checkFormElement()) {
       if (_selectedTrialExamType == null) {
-        CustomDialog.showSnackBar(context: context, message: 'Sınav tipini seçiniz', type: DialogType.error);
+        CustomDialog.showSnackBar(context: context, message: 'Sınav tipini seçiniz!', type: DialogType.error);
+      } else if (_dateTime == null) {
+        CustomDialog.showSnackBar(context: context, message: 'Sınav tarihini seçiniz!', type: DialogType.error);
       } else {
         buttonListener.value = true;
 
@@ -157,11 +184,11 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
             examName: _tfTrialExamFormController.text,
             examCode: _tfTrialExamCodeFormController.text,
             classLevel: cubit.selectedCategory,
-            examDate: DateTime.now(),
+            examDate: _dateTime,
             examType: _selectedTrialExamType!);
 
         cubit.addTrialExam(trialExam).then((value) {
-          _resetForm();
+          context.read<TrialExamFormBoxCubit>().editTrialExam(trialExam: null);
           buttonListener.value = false;
           CustomDialog.showSnackBar(
             message: LocaleKeys.trialExams_trialExamSuccessAdded.locale(),
@@ -178,45 +205,43 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
         });
       }
     }
-
-    /*
-      final TrialExam trialExam = Subject(
-          lessonID: widget.lessonID,
-          subject: _tfSubjectNameFormController.text);
-      _controller.addSubject(subject).then((value) {
-        _tfSubjectNameFormController.text = "";
-
-
-        Get.snackbar(
-          "Başarılı",
-          "Konu başarıyla eklendi",
-          duration: const Duration(seconds: 2),
-          colorText: secondaryColor,
-          backgroundColor: infoColor,
-        );
-      });
-
-       */
   }
 
   void _editSubject(TrialExam? trialExam) {
     if (trialExam != null) {
-      trialExam.examName = _tfTrialExamFormController.text;
+      TrialExamListCubit cubit = context.read<TrialExamListCubit>();
+      if (!buttonListener.value && _checkFormElement()) {
+        if (_selectedTrialExamType == null) {
+          CustomDialog.showSnackBar(context: context, message: 'Sınav tipini seçiniz!', type: DialogType.error);
+        } else if (_dateTime == null) {
+          CustomDialog.showSnackBar(context: context, message: 'Sınav tarihini seçiniz!', type: DialogType.error);
+        } else {
+          buttonListener.value = true;
 
-      /*
-      _controller.updateSubject(subject).then((value) {
-        Get.snackbar(
-          "Başarılı",
-          "Sınıf adı başarıyla güncellendi",
-          duration: const Duration(seconds: 2),
-          colorText: secondaryColor,
-          backgroundColor: infoColor,
-        );
-        _tfSubjectNameFormController.text = "";
-        _controller.editingSubject.value = null;
-      });
+          trialExam.examName = _tfTrialExamFormController.text;
+          trialExam.examCode = _tfTrialExamCodeFormController.text;
+          trialExam.classLevel = cubit.selectedCategory;
+          trialExam.examDate = _dateTime;
+          trialExam.examType = _selectedTrialExamType!;
 
-       */
+          cubit.updateTrialExam(trialExam).then((value) {
+            context.read<TrialExamFormBoxCubit>().editTrialExam(trialExam: null);
+            buttonListener.value = false;
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.trialExams_trialExamSuccessUpdated.locale(),
+              context: context,
+              type: DialogType.success,
+            );
+          }, onError: (e) {
+            buttonListener.value = false;
+            CustomDialog.showSnackBar(
+              message: LocaleKeys.alerts_error.locale([e.toString()]),
+              context: context,
+              type: DialogType.error,
+            );
+          });
+        }
+      }
     }
   }
 

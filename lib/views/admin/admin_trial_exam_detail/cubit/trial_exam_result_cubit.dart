@@ -33,6 +33,7 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
 
   final List<int> wrongRowList = <int>[];
   final List<int> wrongStudentList = <int>[];
+  final List<int> duplicateNumberList = <int>[];
 
   final _trialExamRepository = locator<TrialExamRepository>();
   final _trialExamResultRepository = locator<TrialExamResultRepository>();
@@ -133,6 +134,8 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
     var decoder = Excel.decodeBytes(bytes);
     wrongRowList.clear();
     wrongStudentList.clear();
+    duplicateNumberList.clear();
+    List<int> studentNumberList = <int>[];
 
     int i = 1;
     List<TrialExamResult> examResultList = [];
@@ -145,6 +148,18 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
           if (studentNo != null && studentNo.value is int && studentNo.value > 0) {
             final student = studentList.findOrNull((element) => element.studentNumber == studentNo.value.toString());
             if (student != null) {
+              var number = int.tryParse(studentNo.value.toString());
+              if (number != null) {
+                final findingNumber = studentNumberList.findOrNull((element) => element == number);
+                if (findingNumber != null) {
+                  debugPrint('Çiftleyen numara : $number');
+                  duplicateNumberList.add(number);
+                } else {
+                  debugPrint('---------------------');
+                  debugPrint('numara : $number');
+                  studentNumberList.add(number);
+                }
+              }
               if (_checkData(row)) {
                 TrialExamResult trialExamResult = _helperResult.buildTrialExamResult(row, student, trialExam!);
                 examResultList.add(trialExamResult);
@@ -171,7 +186,8 @@ class TrialExamResultCubit extends Cubit<TrialExamResultState> {
     emit(TrialExamResultUploadedState(
         trialExamResultParsedList: examResultList,
         wrongRowList: wrongRowList.isNotEmpty ? wrongRowList : null,
-        wrongStudentList: wrongStudentList.isNotEmpty ? wrongStudentList : null));
+        wrongStudentList: wrongStudentList.isNotEmpty ? wrongStudentList : null,
+        duplicateNumberList: duplicateNumberList.isNotEmpty ? duplicateNumberList : null));
   }
 
   bool _checkData(List<Data?> row) {

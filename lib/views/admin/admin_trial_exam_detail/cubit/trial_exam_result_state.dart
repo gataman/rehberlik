@@ -26,8 +26,10 @@ class TrialExamResultUploadedState extends TrialExamResultState {
   final List<TrialExamResult>? trialExamResultParsedList;
   final List<int>? wrongRowList;
   final List<int>? wrongStudentList;
+  final List<int>? duplicateNumberList;
 
-  TrialExamResultUploadedState({this.trialExamResultParsedList, this.wrongRowList, this.wrongStudentList});
+  TrialExamResultUploadedState(
+      {this.trialExamResultParsedList, this.wrongRowList, this.wrongStudentList, this.duplicateNumberList});
 }
 
 class TrialExamResultStaticsState extends TrialExamResultState {

@@ -23,7 +23,7 @@ abstract class StudentBaseView extends StatelessWidget {
 
   Widget _content() {
     return Padding(
-      padding: const EdgeInsets.all(defaultPadding),
+      padding: const EdgeInsets.all(minPadding),
       child: SingleChildScrollView(
         child: BlocProvider(
           create: (context) => ExpandedCubit(),

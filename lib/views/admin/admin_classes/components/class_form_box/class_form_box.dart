@@ -82,9 +82,7 @@ class _ClassFormBoxState extends State<ClassFormBox> {
           ),
         Expanded(
           child: LoadingButton(
-            text: _classes == null
-                ? LocaleKeys.actions_save.locale()
-                : LocaleKeys.actions_update.locale(),
+            text: _classes == null ? LocaleKeys.actions_save.locale() : LocaleKeys.actions_update.locale(),
             loadingListener: buttonListener,
             onPressed: () {
               if (_classes == null) {
@@ -108,9 +106,7 @@ class _ClassFormBoxState extends State<ClassFormBox> {
         },
         focusNode: _classNameFocusNode,
         controller: _tfClassNameFormController,
-        hintText: _classes == null
-            ? LocaleKeys.classes_classNameHint.locale()
-            : _classes!.className ?? '');
+        hintText: _classes == null ? LocaleKeys.classes_classNameHint.locale() : _classes!.className ?? '');
   }
 
   Widget _title() {
@@ -128,13 +124,10 @@ class _ClassFormBoxState extends State<ClassFormBox> {
     if (!buttonListener.value && _checkFormElement()) {
       ClassListCubit cubit = context.read<ClassListCubit>();
       buttonListener.value = true;
-      final schoolID = SharedPrefs.instance
-          .getString(PrefKeys.schoolID.toString()); //_box.read("schoolID");
+      final schoolID = SharedPrefs.instance.getString(PrefKeys.schoolID.toString()); //_box.read("schoolID");
 
-      final Classes classes = Classes(
-          schoolID: schoolID,
-          className: _tfClassNameFormController.text,
-          classLevel: _selectedIndex + 5);
+      final Classes classes =
+          Classes(schoolID: schoolID, className: _tfClassNameFormController.text, classLevel: _selectedIndex + 5);
 
       cubit.addClass(classes).then((value) {
         buttonListener.value = false;
@@ -160,8 +153,7 @@ class _ClassFormBoxState extends State<ClassFormBox> {
     if (!buttonListener.value && _checkFormElement()) {
       buttonListener.value = true;
       if (classes != null) {
-        if (classes.className == _tfClassNameFormController.text &&
-            classes.classLevel == _selectedIndex + 5) {
+        if (classes.className == _tfClassNameFormController.text && classes.classLevel == _selectedIndex + 5) {
           CustomDialog.showSnackBar(
             message: LocaleKeys.alerts_noChange.locale(),
             context: context,

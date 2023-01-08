@@ -5,7 +5,6 @@ class ClassListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('classListBox');
     return AppBoxContainer(child: _getClassesListBox());
   }
 

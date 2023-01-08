@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:rehberlik/common/navigaton/app_router/guards/auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/teacher_auth_guard.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/models/trial_exam.dart';
+import 'package:rehberlik/models/trial_exam_result.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_view.dart';
 import 'package:rehberlik/views/admin/admin_dashboard/admin_dashboard_view.dart';
 import 'package:rehberlik/views/admin/admin_lessons/admin_lessons_view.dart';
@@ -15,11 +17,14 @@ import 'package:rehberlik/views/admin/admin_students_password/admin_students_pas
 import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam/admin_trial_exam_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_view.dart';
+import 'package:rehberlik/views/admin/admin_trial_exam_single_result/admin_trial_exam_single_result_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_total/admin_trial_exam_total_view.dart';
 import 'package:rehberlik/views/admin/admin_uploads/admin_uploads_view.dart';
 import 'package:rehberlik/views/auth/auth_view.dart';
 import 'package:rehberlik/views/student/studen_trial_exam/student_trial_exam_view.dart';
 import 'package:rehberlik/views/student/student_main_view.dart';
+import 'package:rehberlik/views/student/student_trial_exam_detail/student_exam_detail_view.dart';
+import 'package:rehberlik/views/student/student_trial_exam_list/student_trial_exam_list_view.dart';
 
 import '../../../models/student.dart';
 import '../../../views/admin/admin_student_trial_exam_detail_view/admin_students_trial_exam_detail_view.dart';
@@ -37,7 +42,7 @@ part 'app_router.gr.dart';
     CustomRoute(
         page: AuthView,
         transitionsBuilder: TransitionsBuilders.fadeIn,
-        guards: [TeacherAuthGuard],
+        guards: [AuthGuard],
         path: AppRoutes.routeMainAuth,
         initial: true),
     CustomRoute(
@@ -49,21 +54,31 @@ part 'app_router.gr.dart';
         ],
         children: [
           CustomRoute(
-              page: StudentDashboardView,
-              path: AppRoutes.routeStudentDashboard,
+              page: StudentTrialExamView,
+              path: AppRoutes.routeStudentTrialExam,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [StudentAuthGuard],
               initial: true),
+          CustomRoute(
+              page: StudentDashboardView,
+              path: AppRoutes.routeStudentDashboard,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              guards: [StudentAuthGuard]),
           CustomRoute(
               page: StudentQuestionFollowView,
               path: AppRoutes.routeStudentQuestionFollow,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [StudentAuthGuard]),
           CustomRoute(
-              page: StudentTrialExamView,
-              path: AppRoutes.routeStudentTrialExam,
+              page: StudentTrialExamListView,
+              path: AppRoutes.routeStudentTrialExamList,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [StudentAuthGuard]),
+          CustomRoute<TrialExam>(
+              page: StudentExamDetailView,
+              path: AppRoutes.routeStudentExamDetail,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              guards: [ArgumentsGuard, StudentAuthGuard]),
         ]),
     CustomRoute(
         page: AdminMainView,
@@ -141,6 +156,11 @@ part 'app_router.gr.dart';
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminTrialExamTotal,
               guards: [ArgumentsGuard, TeacherAuthGuard]),
+          CustomRoute<TrialExamResult>(
+              page: AdminTrialExamSingleResultView,
+              transitionsBuilder: TransitionsBuilders.fadeIn,
+              path: AppRoutes.routeAdminTrialExamSingleView,
+              guards: [ArgumentsGuard, TeacherAuthGuard]),
           CustomRoute(
               page: AdminQuizzesView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
@@ -150,15 +170,16 @@ part 'app_router.gr.dart';
   ],
 )
 class AppRouter extends _$AppRouter {
-  AppRouter({
-    required ArgumentsGuard argumentsGuard,
-    required TeacherAuthGuard teacherAuthGuard,
-    required StudentAuthGuard studentAuthGuard,
-  }) : super(
-          argumentsGuard: argumentsGuard,
-          teacherAuthGuard: teacherAuthGuard,
-          studentAuthGuard: studentAuthGuard,
-        );
+  AppRouter(
+      {required ArgumentsGuard argumentsGuard,
+      required TeacherAuthGuard teacherAuthGuard,
+      required StudentAuthGuard studentAuthGuard,
+      required AuthGuard authGuard})
+      : super(
+            argumentsGuard: argumentsGuard,
+            teacherAuthGuard: teacherAuthGuard,
+            studentAuthGuard: studentAuthGuard,
+            authGuard: authGuard);
 }
 
 /*

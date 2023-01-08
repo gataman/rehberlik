@@ -20,7 +20,7 @@ class TrialExamResultUploadedView extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (state.wrongStudentList != null || state.wrongRowList != null)
+                if (state.wrongStudentList != null || state.wrongRowList != null || state.duplicateNumberList != null)
                   Container(
                     margin: const EdgeInsets.only(right: defaultPadding),
                     child: ElevatedButton.icon(
@@ -51,8 +51,17 @@ class TrialExamResultUploadedView extends StatelessWidget {
                 ),
               ],
             )),
-        if (state.wrongStudentList != null) _getWronRowAlert(state.wrongStudentList!, false),
-        if (state.wrongRowList != null) _getWronRowAlert(state.wrongRowList!, true),
+        if (state.wrongStudentList != null)
+          _getWronRowAlert(state.wrongStudentList!,
+              'Bazı satırlardaki öğrenci numaraları eşleşmiyor lütfen kontrol edin.Bu satırlar :'),
+        if (state.wrongRowList != null)
+          _getWronRowAlert(
+              state.wrongRowList!,
+              'Bazı satırlarda doğru, yanlış sayılarında boşluklar veya sayısal olmayan '
+              'karakterler mevcut. Lütfen excel dosyasını kontrol edin!'),
+        if (state.duplicateNumberList != null)
+          _getWronRowAlert(
+              state.duplicateNumberList!, 'Aynı numaradan birden çok kayıt mevcut bu öğrenci numaraları: '),
         if (state.trialExamResultParsedList != null)
           TrialExamResultDataGrid(
             trialExamResultList: state.trialExamResultParsedList!,
@@ -62,7 +71,7 @@ class TrialExamResultUploadedView extends StatelessWidget {
     );
   }
 
-  _getWronRowAlert(List<int> wrongRowList, bool isWrongRow) {
+  _getWronRowAlert(List<int> wrongRowList, String message) {
     var wrongRows = StringBuffer();
     wrongRows.writeAll(wrongRowList, ', ');
     return Container(
@@ -72,6 +81,7 @@ class TrialExamResultUploadedView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text(message),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -79,15 +89,11 @@ class TrialExamResultUploadedView extends StatelessWidget {
                   Icons.report_problem,
                 ),
                 Text(
-                  ' Hatalı Satırlar: ${wrongRows.toString()}',
+                  '  ${wrongRows.toString()}',
                   style: const TextStyle(),
                 ),
               ],
             ),
-            Text(isWrongRow
-                ? 'Bazı satırlarda doğru, yanlış sayılarında boşluklar veya sayısal olmayan '
-                    'karakterler mevcut. Lütfen excel dosyasını kontrol edin!'
-                : 'Bazı satırlardaki öğrenci numaraları eşleşmiyor lütfen kontrol edin'),
           ],
         ),
       ),

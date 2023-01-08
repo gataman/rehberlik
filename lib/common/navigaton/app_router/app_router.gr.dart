@@ -15,14 +15,17 @@ part of 'app_router.dart';
 class _$AppRouter extends RootStackRouter {
   _$AppRouter({
     GlobalKey<NavigatorState>? navigatorKey,
-    required this.teacherAuthGuard,
+    required this.authGuard,
     required this.studentAuthGuard,
+    required this.teacherAuthGuard,
     required this.argumentsGuard,
   }) : super(navigatorKey);
 
-  final TeacherAuthGuard teacherAuthGuard;
+  final AuthGuard authGuard;
 
   final StudentAuthGuard studentAuthGuard;
+
+  final TeacherAuthGuard teacherAuthGuard;
 
   final ArgumentsGuard argumentsGuard;
 
@@ -55,6 +58,15 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    StudentTrialExamRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const StudentTrialExamView(),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     StudentDashboardRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
@@ -73,10 +85,23 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
-    StudentTrialExamRoute.name: (routeData) {
+    StudentTrialExamListRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
-        child: const StudentTrialExamView(),
+        child: const StudentTrialExamListView(),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    StudentExamDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<StudentExamDetailRouteArgs>();
+      return CustomPage<TrialExam>(
+        routeData: routeData,
+        child: StudentExamDetailView(
+          trialExam: args.trialExam,
+          key: args.key,
+        ),
         transitionsBuilder: TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -222,6 +247,19 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    AdminTrialExamSingleResultRoute.name: (routeData) {
+      final args = routeData.argsAs<AdminTrialExamSingleResultRouteArgs>();
+      return CustomPage<TrialExamResult>(
+        routeData: routeData,
+        child: AdminTrialExamSingleResultView(
+          key: args.key,
+          trialExamResult: args.trialExamResult,
+        ),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     AdminQuizzesRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
@@ -244,7 +282,7 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           AuthRoute.name,
           path: '/auth',
-          guards: [teacherAuthGuard],
+          guards: [authGuard],
         ),
         RouteConfig(
           StudentMainRoute.name,
@@ -255,8 +293,14 @@ class _$AppRouter extends RootStackRouter {
               '#redirect',
               path: '',
               parent: StudentMainRoute.name,
-              redirectTo: 'dashboard',
+              redirectTo: 'deneme_sinavlari',
               fullMatch: true,
+            ),
+            RouteConfig(
+              StudentTrialExamRoute.name,
+              path: 'deneme_sinavlari',
+              parent: StudentMainRoute.name,
+              guards: [studentAuthGuard],
             ),
             RouteConfig(
               StudentDashboardRoute.name,
@@ -271,10 +315,19 @@ class _$AppRouter extends RootStackRouter {
               guards: [studentAuthGuard],
             ),
             RouteConfig(
-              StudentTrialExamRoute.name,
-              path: 'deneme_sinavlari',
+              StudentTrialExamListRoute.name,
+              path: 'deneme_sinav_listesi',
               parent: StudentMainRoute.name,
               guards: [studentAuthGuard],
+            ),
+            RouteConfig(
+              StudentExamDetailRoute.name,
+              path: 'deneme_detayi',
+              parent: StudentMainRoute.name,
+              guards: [
+                argumentsGuard,
+                studentAuthGuard,
+              ],
             ),
           ],
         ),
@@ -381,6 +434,15 @@ class _$AppRouter extends RootStackRouter {
               ],
             ),
             RouteConfig(
+              AdminTrialExamSingleResultRoute.name,
+              path: 'trial_exam_single_view',
+              parent: AdminMainRoute.name,
+              guards: [
+                argumentsGuard,
+                teacherAuthGuard,
+              ],
+            ),
+            RouteConfig(
               AdminQuizzesRoute.name,
               path: 'admin_quizzes',
               parent: AdminMainRoute.name,
@@ -430,6 +492,18 @@ class AdminMainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [StudentTrialExamView]
+class StudentTrialExamRoute extends PageRouteInfo<void> {
+  const StudentTrialExamRoute()
+      : super(
+          StudentTrialExamRoute.name,
+          path: 'deneme_sinavlari',
+        );
+
+  static const String name = 'StudentTrialExamRoute';
+}
+
+/// generated route for
 /// [StudentDashboardView]
 class StudentDashboardRoute extends PageRouteInfo<void> {
   const StudentDashboardRoute()
@@ -454,15 +528,49 @@ class StudentQuestionFollowRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [StudentTrialExamView]
-class StudentTrialExamRoute extends PageRouteInfo<void> {
-  const StudentTrialExamRoute()
+/// [StudentTrialExamListView]
+class StudentTrialExamListRoute extends PageRouteInfo<void> {
+  const StudentTrialExamListRoute()
       : super(
-          StudentTrialExamRoute.name,
-          path: 'deneme_sinavlari',
+          StudentTrialExamListRoute.name,
+          path: 'deneme_sinav_listesi',
         );
 
-  static const String name = 'StudentTrialExamRoute';
+  static const String name = 'StudentTrialExamListRoute';
+}
+
+/// generated route for
+/// [StudentExamDetailView]
+class StudentExamDetailRoute extends PageRouteInfo<StudentExamDetailRouteArgs> {
+  StudentExamDetailRoute({
+    required TrialExam trialExam,
+    Key? key,
+  }) : super(
+          StudentExamDetailRoute.name,
+          path: 'deneme_detayi',
+          args: StudentExamDetailRouteArgs(
+            trialExam: trialExam,
+            key: key,
+          ),
+        );
+
+  static const String name = 'StudentExamDetailRoute';
+}
+
+class StudentExamDetailRouteArgs {
+  const StudentExamDetailRouteArgs({
+    required this.trialExam,
+    this.key,
+  });
+
+  final TrialExam trialExam;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'StudentExamDetailRouteArgs{trialExam: $trialExam, key: $key}';
+  }
 }
 
 /// generated route for
@@ -744,6 +852,41 @@ class AdminTrialExamTotalRouteArgs {
   @override
   String toString() {
     return 'AdminTrialExamTotalRouteArgs{classLevel: $classLevel, key: $key}';
+  }
+}
+
+/// generated route for
+/// [AdminTrialExamSingleResultView]
+class AdminTrialExamSingleResultRoute
+    extends PageRouteInfo<AdminTrialExamSingleResultRouteArgs> {
+  AdminTrialExamSingleResultRoute({
+    Key? key,
+    required TrialExamResult trialExamResult,
+  }) : super(
+          AdminTrialExamSingleResultRoute.name,
+          path: 'trial_exam_single_view',
+          args: AdminTrialExamSingleResultRouteArgs(
+            key: key,
+            trialExamResult: trialExamResult,
+          ),
+        );
+
+  static const String name = 'AdminTrialExamSingleResultRoute';
+}
+
+class AdminTrialExamSingleResultRouteArgs {
+  const AdminTrialExamSingleResultRouteArgs({
+    this.key,
+    required this.trialExamResult,
+  });
+
+  final Key? key;
+
+  final TrialExamResult trialExamResult;
+
+  @override
+  String toString() {
+    return 'AdminTrialExamSingleResultRouteArgs{key: $key, trialExamResult: $trialExamResult}';
   }
 }
 

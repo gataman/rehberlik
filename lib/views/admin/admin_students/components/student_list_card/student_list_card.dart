@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/core/init/extentions.dart';
+import 'package:rehberlik/models/teacher.dart';
 
 import '../../../../../common/constants.dart';
 import '../../../../../common/custom_dialog.dart';
@@ -13,6 +14,7 @@ import '../../../../../core/widgets/containers/app_list_box_container.dart';
 import '../../../../../core/widgets/text/app_box_title.dart';
 import '../../../../../core/widgets/text/app_empty_warning_text.dart';
 import '../../../../../models/student.dart';
+import '../../../admin_base/cubit/teacher_cubit.dart';
 import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import 'cubit/student_list_cubit.dart';
 
@@ -61,6 +63,7 @@ class StudentListBox extends StatelessWidget {
   }
 
   Widget _getStudentListView(List<Student> studentList, BuildContext buildContext) {
+    final teacherType = buildContext.read<TeacherCubit>().teacherType;
     return SizedBox(
       height: defaultListHeight,
       child: ListView.separated(
@@ -87,16 +90,17 @@ class StudentListBox extends StatelessWidget {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AppSmallRoundedButton(onPressed: () {}),
+                    if (teacherType == TeacherType.admin) AppSmallRoundedButton(onPressed: () {}),
                     const SizedBox(
                       width: defaultPadding / 2,
                     ),
-                    AppSmallRoundedButton(
-                        bgColor: Colors.redAccent,
-                        iconData: Icons.delete,
-                        onPressed: () {
-                          _deleteStudent(student, context);
-                        })
+                    if (teacherType == TeacherType.admin)
+                      AppSmallRoundedButton(
+                          bgColor: Colors.redAccent,
+                          iconData: Icons.delete,
+                          onPressed: () {
+                            _deleteStudent(student, context);
+                          })
                   ],
                 ),
               ),
