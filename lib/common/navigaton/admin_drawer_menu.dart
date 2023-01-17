@@ -25,7 +25,7 @@ class AdminDrawerMenu extends StatelessWidget {
                   children: [
                     Expanded(child: Image.asset("${imagesSrc}logo.png")),
                     Text(
-                      'Rehberlik Servisi',
+                      'Başarı İzleme Uygulaması',
                       style: Theme.of(context).textTheme.titleMedium,
                     )
                   ],

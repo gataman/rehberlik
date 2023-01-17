@@ -45,6 +45,32 @@ class SubjectListCard extends StatelessWidget {
         });
   }
 
+  // Widget _getSubjectListBox(List<Subject> subjectList) {
+  //   subjectList.sort((a, b) => a.subject!.compareTo(b.subject!));
+  //   return ReorderableListView.builder(
+  //     itemBuilder: (context, index) {
+  //       final subject = subjectList[index];
+  //       return AppListTile(
+  //         key: ValueKey(subject),
+  //         title: subject.subject!,
+  //         iconData: Icons.book,
+  //         editOnPressed: () {
+  //           context.read<EditSubjectCubit>().editSubject(subject);
+  //         },
+  //         deleteOnPressed: () {
+  //           _deleteSubject(subject: subject, index: index, context: context);
+  //         },
+  //       );
+  //     },
+  //     shrinkWrap: true,
+  //     itemCount: subjectList.length,
+  //     onReorder: (oldIndex, newIndex) {
+  //       debugPrint('OldIndex : $oldIndex');
+  //       debugPrint('NewIndex : $newIndex');
+  //     },
+  //   );
+  // }
+
   void _deleteSubject({required Subject subject, required int index, required BuildContext context}) {
     CustomDialog.showDeleteAlertDialog(
         context: context,

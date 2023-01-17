@@ -58,6 +58,15 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    StudentTrialExamListRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: const StudentTrialExamListView(),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     StudentTrialExamRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
@@ -80,15 +89,6 @@ class _$AppRouter extends RootStackRouter {
       return CustomPage<dynamic>(
         routeData: routeData,
         child: const StudentQuestionFollowView(),
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-        opaque: true,
-        barrierDismissible: false,
-      );
-    },
-    StudentTrialExamListRoute.name: (routeData) {
-      return CustomPage<dynamic>(
-        routeData: routeData,
-        child: const StudentTrialExamListView(),
         transitionsBuilder: TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -165,10 +165,10 @@ class _$AppRouter extends RootStackRouter {
     },
     AdminSubjectsRoute.name: (routeData) {
       final args = routeData.argsAs<AdminSubjectsRouteArgs>();
-      return CustomPage<Lesson>(
+      return CustomPage<LessonWithSubject>(
         routeData: routeData,
         child: AdminSubjectsView(
-          lesson: args.lesson,
+          lessonWithSubject: args.lessonWithSubject,
           key: args.key,
         ),
         transitionsBuilder: TransitionsBuilders.fadeIn,
@@ -269,6 +269,20 @@ class _$AppRouter extends RootStackRouter {
         barrierDismissible: false,
       );
     },
+    AdminLessonSourcesRoute.name: (routeData) {
+      final args = routeData.argsAs<AdminLessonSourcesRouteArgs>(
+          orElse: () => const AdminLessonSourcesRouteArgs());
+      return CustomPage<Student?>(
+        routeData: routeData,
+        child: AdminLessonSourcesView(
+          student: args.student,
+          key: args.key,
+        ),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
   };
 
   @override
@@ -293,8 +307,14 @@ class _$AppRouter extends RootStackRouter {
               '#redirect',
               path: '',
               parent: StudentMainRoute.name,
-              redirectTo: 'deneme_sinavlari',
+              redirectTo: 'deneme_sinav_listesi',
               fullMatch: true,
+            ),
+            RouteConfig(
+              StudentTrialExamListRoute.name,
+              path: 'deneme_sinav_listesi',
+              parent: StudentMainRoute.name,
+              guards: [studentAuthGuard],
             ),
             RouteConfig(
               StudentTrialExamRoute.name,
@@ -311,12 +331,6 @@ class _$AppRouter extends RootStackRouter {
             RouteConfig(
               StudentQuestionFollowRoute.name,
               path: 'soru_takibi',
-              parent: StudentMainRoute.name,
-              guards: [studentAuthGuard],
-            ),
-            RouteConfig(
-              StudentTrialExamListRoute.name,
-              path: 'deneme_sinav_listesi',
               parent: StudentMainRoute.name,
               guards: [studentAuthGuard],
             ),
@@ -448,6 +462,12 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [teacherAuthGuard],
             ),
+            RouteConfig(
+              AdminLessonSourcesRoute.name,
+              path: 'lesson_sources_view',
+              parent: AdminMainRoute.name,
+              guards: [teacherAuthGuard],
+            ),
           ],
         ),
       ];
@@ -492,6 +512,18 @@ class AdminMainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [StudentTrialExamListView]
+class StudentTrialExamListRoute extends PageRouteInfo<void> {
+  const StudentTrialExamListRoute()
+      : super(
+          StudentTrialExamListRoute.name,
+          path: 'deneme_sinav_listesi',
+        );
+
+  static const String name = 'StudentTrialExamListRoute';
+}
+
+/// generated route for
 /// [StudentTrialExamView]
 class StudentTrialExamRoute extends PageRouteInfo<void> {
   const StudentTrialExamRoute()
@@ -525,18 +557,6 @@ class StudentQuestionFollowRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'StudentQuestionFollowRoute';
-}
-
-/// generated route for
-/// [StudentTrialExamListView]
-class StudentTrialExamListRoute extends PageRouteInfo<void> {
-  const StudentTrialExamListRoute()
-      : super(
-          StudentTrialExamListRoute.name,
-          path: 'deneme_sinav_listesi',
-        );
-
-  static const String name = 'StudentTrialExamListRoute';
 }
 
 /// generated route for
@@ -661,13 +681,13 @@ class AdminUploadsRoute extends PageRouteInfo<void> {
 /// [AdminSubjectsView]
 class AdminSubjectsRoute extends PageRouteInfo<AdminSubjectsRouteArgs> {
   AdminSubjectsRoute({
-    required Lesson lesson,
+    required LessonWithSubject lessonWithSubject,
     Key? key,
   }) : super(
           AdminSubjectsRoute.name,
           path: 'subjects',
           args: AdminSubjectsRouteArgs(
-            lesson: lesson,
+            lessonWithSubject: lessonWithSubject,
             key: key,
           ),
         );
@@ -677,17 +697,17 @@ class AdminSubjectsRoute extends PageRouteInfo<AdminSubjectsRouteArgs> {
 
 class AdminSubjectsRouteArgs {
   const AdminSubjectsRouteArgs({
-    required this.lesson,
+    required this.lessonWithSubject,
     this.key,
   });
 
-  final Lesson lesson;
+  final LessonWithSubject lessonWithSubject;
 
   final Key? key;
 
   @override
   String toString() {
-    return 'AdminSubjectsRouteArgs{lesson: $lesson, key: $key}';
+    return 'AdminSubjectsRouteArgs{lessonWithSubject: $lessonWithSubject, key: $key}';
   }
 }
 
@@ -900,4 +920,39 @@ class AdminQuizzesRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AdminQuizzesRoute';
+}
+
+/// generated route for
+/// [AdminLessonSourcesView]
+class AdminLessonSourcesRoute
+    extends PageRouteInfo<AdminLessonSourcesRouteArgs> {
+  AdminLessonSourcesRoute({
+    Student? student,
+    Key? key,
+  }) : super(
+          AdminLessonSourcesRoute.name,
+          path: 'lesson_sources_view',
+          args: AdminLessonSourcesRouteArgs(
+            student: student,
+            key: key,
+          ),
+        );
+
+  static const String name = 'AdminLessonSourcesRoute';
+}
+
+class AdminLessonSourcesRouteArgs {
+  const AdminLessonSourcesRouteArgs({
+    this.student,
+    this.key,
+  });
+
+  final Student? student;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AdminLessonSourcesRouteArgs{student: $student, key: $key}';
+  }
 }

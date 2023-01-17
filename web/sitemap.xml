@@ -1,0 +1,28 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+        <loc>https://ysosinav.com.tr/</loc>
+        <lastmod>2023-01-16T19:58:07+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://ysosinav.com.tr/student/deneme_sinav_listesi</loc>
+        <lastmod>2023-01-16T19:58:07+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://ysosinav.com.tr/student/deneme_sinavlari</loc>
+        <lastmod>2023-01-16T19:58:07+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://ysosinav.com.tr/student/dashboard</loc>
+        <lastmod>2023-01-16T19:58:07+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://ysosinav.com.tr/student/soru_takibi</loc>
+        <lastmod>2023-01-16T19:58:07+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://ysosinav.com.tr/auth</loc>
+        <lastmod>2023-01-16T19:58:07+00:00</lastmod>
+    </url>
+</urlset>

@@ -5,6 +5,8 @@ import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/teacher_auth_guard.dart';
 import 'package:rehberlik/common/themes/custom_theme.dart';
+import 'package:rehberlik/core/init/locale_manager.dart';
+import 'package:rehberlik/core/init/pref_keys.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 import '../../common/navigaton/app_router/guards/arguments_guard.dart';
@@ -40,7 +42,14 @@ class AppMainView extends StatelessWidget {
       ],
       child: BlocBuilder<AppMainCubit, AppMainState>(
         builder: (context, state) {
-          final ThemeData theme = CustomTheme(theme: state.themeType).getAppTheme();
+          final themePref = SharedPrefs.instance.getInt(PrefKeys.theme.toString());
+          ThemeType themeType = ThemeType.dark;
+          if (themePref == 1) {
+            themeType = ThemeType.light;
+          }
+
+          ThemeData theme = CustomTheme(theme: themeType).getAppTheme();
+
           return MaterialApp.router(
             /*
                   localizationsDelegates: const [
@@ -60,7 +69,7 @@ class AppMainView extends StatelessWidget {
             locale: context.locale,
 
             debugShowCheckedModeBanner: false,
-            title: 'Yavuz Selim Ortaokulu Rehberlik Servisi',
+            title: 'Yavuz Selim Ortaokulu Başarı İzleme Uygulaması',
             theme: theme,
             //initialRoute: AppPages.initial,
             //defaultTransition: Transition.fadeIn,

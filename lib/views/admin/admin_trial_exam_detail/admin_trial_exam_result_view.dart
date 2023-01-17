@@ -1,17 +1,13 @@
 library admin_trial_exam_result_view;
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
 import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
-import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
 import 'package:rehberlik/common/widgets/button_with_icon.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
 import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
-import 'package:rehberlik/views/admin/admin_student_trial_exam_detail_view/cubit/student_trial_exam_detail_cubit.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/components/states/trial_exam_result_default_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam_detail/cubit/trial_exam_result_cubit.dart';
 import 'package:syncfusion_flutter_core/theme.dart';

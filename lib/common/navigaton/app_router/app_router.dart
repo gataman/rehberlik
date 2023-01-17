@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/teacher_auth_guard.dart';
+import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/models/trial_exam_result.dart';
@@ -27,6 +28,7 @@ import 'package:rehberlik/views/student/student_trial_exam_detail/student_exam_d
 import 'package:rehberlik/views/student/student_trial_exam_list/student_trial_exam_list_view.dart';
 
 import '../../../models/student.dart';
+import '../../../views/admin/admin_lesson_sources/admin_lesson_sources_view.dart';
 import '../../../views/admin/admin_student_trial_exam_detail_view/admin_students_trial_exam_detail_view.dart';
 import '../../../views/student/student_dashboard/student_dashboard_view.dart';
 import '../../../views/student/student_question_follow/student_question_follow_view.dart';
@@ -54,11 +56,17 @@ part 'app_router.gr.dart';
         ],
         children: [
           CustomRoute(
-              page: StudentTrialExamView,
-              path: AppRoutes.routeStudentTrialExam,
+              page: StudentTrialExamListView,
+              path: AppRoutes.routeStudentTrialExamList,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [StudentAuthGuard],
               initial: true),
+          CustomRoute(
+            page: StudentTrialExamView,
+            path: AppRoutes.routeStudentTrialExam,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            guards: [StudentAuthGuard],
+          ),
           CustomRoute(
               page: StudentDashboardView,
               path: AppRoutes.routeStudentDashboard,
@@ -67,11 +75,6 @@ part 'app_router.gr.dart';
           CustomRoute(
               page: StudentQuestionFollowView,
               path: AppRoutes.routeStudentQuestionFollow,
-              transitionsBuilder: TransitionsBuilders.fadeIn,
-              guards: [StudentAuthGuard]),
-          CustomRoute(
-              page: StudentTrialExamListView,
-              path: AppRoutes.routeStudentTrialExamList,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [StudentAuthGuard]),
           CustomRoute<TrialExam>(
@@ -119,7 +122,7 @@ part 'app_router.gr.dart';
               transitionsBuilder: TransitionsBuilders.fadeIn,
               guards: [TeacherAuthGuard],
               path: AppRoutes.routeAdminUploads),
-          CustomRoute<Lesson>(
+          CustomRoute<LessonWithSubject>(
               page: AdminSubjectsView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminSubjects,
@@ -166,6 +169,12 @@ part 'app_router.gr.dart';
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminQuizzes,
               guards: [TeacherAuthGuard]),
+          CustomRoute<Student?>(
+            page: AdminLessonSourcesView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            path: AppRoutes.routeAdminLessonSourcesView,
+            guards: [TeacherAuthGuard],
+          ),
         ]),
   ],
 )

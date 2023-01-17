@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rehberlik/core/init/pref_keys.dart';
 import 'package:rehberlik/views/app_main/app_main_view.dart';
+import 'package:url_strategy/url_strategy.dart';
 import 'common/constants.dart';
 import 'common/locator.dart';
 import 'core/init/locale_manager.dart';
@@ -33,6 +34,7 @@ void main() async {
 
 Future<void> _init() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setPathUrlStrategy();
   await EasyLocalization.ensureInitialized();
   await setupFirebaseOptions();
   await SharedPrefs.init();

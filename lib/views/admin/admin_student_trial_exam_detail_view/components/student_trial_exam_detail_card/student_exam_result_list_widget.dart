@@ -19,12 +19,15 @@ class StudentExamResultListWidget extends StatefulWidget {
 }
 
 class _StudentExamResultListWidgetState extends State<StudentExamResultListWidget> {
+//SECTION - init
+  //SECTION - labels
   final String _dogruLabel = "Doğ";
   final String _netLabel = "Net";
   final String _yanlisLabel = "Yan";
   final String _puanLabel = "Puan";
   final String _classRankLabel = "Sınıf";
   final String _schoolRankLabel = "Okul";
+  //!SECTION
 
   late List<TrialExamResult> _trialExamResultList;
   late _DataSource _dataSource;
@@ -32,10 +35,13 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
   @override
   void initState() {
     _trialExamResultList = widget.studentTrialExamResultList;
-
     super.initState();
   }
 
+//!SECTION
+
+//SECTION - State Build
+  //ANCHOR - build
   @override
   Widget build(BuildContext context) {
     _dataSource = _DataSource(trialExamResultList: _trialExamResultList);
@@ -49,6 +55,7 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
       child: SfDataGridIcon(
         dataGridSource: _dataSource,
         child: SfDataGrid(
+          verticalScrollPhysics: const NeverScrollableScrollPhysics(),
           shrinkWrapRows: true,
           allowSorting: true,
           columnWidthMode: _getWidthMode(),
@@ -66,6 +73,7 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
     );
   }
 
+  //ANCHOR - _getStackedHeaderRows
   List<StackedHeaderRow> _getStackedHeaderRows() {
     List<StackedHeaderRow> stackedHeaderRows;
     stackedHeaderRows = <StackedHeaderRow>[
@@ -116,6 +124,7 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
     return stackedHeaderRows;
   }
 
+  //ANCHOR - _getWidgetForStackedHeaderCell
   Widget _getWidgetForStackedHeaderCell(String title) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -128,6 +137,7 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
     );
   }
 
+  //ANCHOR - _getColumns
   List<GridColumn> _getColumns() {
     return <GridColumn>[
       GridColumn(
@@ -162,6 +172,7 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
     ];
   }
 
+  //ANCHOR - _getLabelTitleText
   Widget _getLabelTitleText(String value) {
     return Container(
       alignment: Alignment.center,
@@ -173,14 +184,18 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
     );
   }
 
+  //ANCHOR - _getWidthMode
   ColumnWidthMode _getWidthMode() => Responsive.isMobile(context) ? ColumnWidthMode.none : ColumnWidthMode.fill;
 
+  //ANCHOR - _showDialog
   void _showDialog(TrialExamResult result) {}
 }
+//!SECTION
 
+//SECTION - _DataSource
 class _DataSource extends DataGridSource {
   List<DataGridRow> _dataGridRows = <DataGridRow>[];
-
+  //ANCHOR - constructor
   _DataSource({required List<TrialExamResult> trialExamResultList}) {
     _dataGridRows = trialExamResultList.map<DataGridRow>((TrialExamResult e) {
       return DataGridRow(cells: <DataGridCell>[
@@ -213,6 +228,24 @@ class _DataSource extends DataGridSource {
     }).toList();
   }
 
+  //ANCHOR - buildRow
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+    return DataGridRowAdapter(
+        cells: row.getCells().map<Widget>((e) {
+      return Container(
+        padding: e.columnName == 'exam_name' ? const EdgeInsets.only(left: 3) : EdgeInsets.zero,
+        alignment: e.columnName == 'exam_name' ? Alignment.centerLeft : Alignment.center,
+        child: Text(
+          e.value == null ? '  ' : e.value.toString(),
+          style: _getNetTextStyle(e),
+          textAlign: e.columnName == 'exam_name' ? TextAlign.start : TextAlign.center,
+        ),
+      );
+    }).toList());
+  }
+
+  //ANCHOR - _getClickableData
   Widget _getClickableData(TrialExamResult result) {
     return InkWell(
       onTap: () {},
@@ -223,6 +256,7 @@ class _DataSource extends DataGridSource {
     );
   }
 
+  //ANCHOR - _examNameWidget
   Widget _examNameWidget(TrialExamResult result) {
     return Container(
       padding: const EdgeInsets.only(left: 3),
@@ -255,22 +289,6 @@ class _DataSource extends DataGridSource {
     return e.turNet! + e.matNet! + e.fenNet! + e.sosNet! + e.ingNet! + e.dinNet!;
   }
 
-  @override
-  DataGridRowAdapter? buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((e) {
-      return Container(
-        padding: e.columnName == 'exam_name' ? const EdgeInsets.only(left: 3) : EdgeInsets.zero,
-        alignment: e.columnName == 'exam_name' ? Alignment.centerLeft : Alignment.center,
-        child: Text(
-          e.value == null ? '  ' : e.value.toString(),
-          style: _getNetTextStyle(e),
-          textAlign: e.columnName == 'exam_name' ? TextAlign.start : TextAlign.center,
-        ),
-      );
-    }).toList());
-  }
-
   // @override
   // DataGridRowAdapter? buildRow(DataGridRow row) {
   //   return DataGridRowAdapter(
@@ -291,6 +309,7 @@ class _DataSource extends DataGridSource {
   //   }).toList());
   // }
 
+  //ANCHOR - _getNetTextStyle
   TextStyle _getNetTextStyle(DataGridCell e) {
     if (e.columnName == 'exam_name') {
       return const TextStyle(
@@ -321,6 +340,7 @@ class _DataSource extends DataGridSource {
     }
   }
 
+  //ANCHOR - _getFormElementList
   List<FormElement> _getFormElementList(TrialExamResult result) => <FormElement>[
         FormElement(label: 'Türkçe Doğru', value: result.turDog.toString()),
         FormElement(label: 'Türkçe Yanlış', value: result.turYan.toString()),
@@ -336,3 +356,5 @@ class _DataSource extends DataGridSource {
         FormElement(label: 'Fen Yanlış', value: result.fenYan.toString()),
       ];
 }
+
+//!SECTION - _DataSource

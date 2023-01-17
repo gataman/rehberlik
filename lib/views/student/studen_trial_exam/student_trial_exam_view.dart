@@ -92,7 +92,7 @@ class _StudentTrialExamMenuContainer extends StatelessWidget {
           onPressed: () {
             context.router.replaceNamed(AppRoutes.routeStudentTrialExamList);
           },
-          icon: const Icon(Icons.analytics),
+          icon: const Icon(Icons.fact_check),
           label: const Text('Deneme Sınavları'),
         ),
       ),

@@ -4,8 +4,7 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import '../../../../models/question_follow.dart';
 
 class StudentDetailExcelHelper {
-  Style pageTitleStyle(Workbook workbook) {
-    final Style style = workbook.styles.add('PageTitleStyle');
+  Style pageTitleStyle(Style style) {
     style.fontName = 'Alegreya Sans SC Black';
     style.backColor = '#EFEFEF';
     style.fontSize = 36;
@@ -14,6 +13,38 @@ class StudentDetailExcelHelper {
     style.vAlign = VAlignType.center;
     // style.borders.all.color = '#000000';
     // style.borders.all.lineStyle = LineStyle.thin;
+    return style;
+  }
+
+  void setStyle({
+    required Style style,
+    bool isBold = false,
+    double fontSize = 18,
+    String fontName = 'Calibri',
+    VAlignType vAlign = VAlignType.center,
+    HAlignType hAlign = HAlignType.center,
+  }) {
+    style.fontName = fontName;
+    style.fontSize = fontSize;
+    style.bold = isBold;
+    style.vAlign = vAlign;
+    style.hAlign = hAlign;
+  }
+
+  void setBorderAll({required Style style, LineStyle lineStyle = LineStyle.thin, String color = '#000000'}) {
+    style.borders.all.color = color;
+    style.borders.all.lineStyle = lineStyle;
+  }
+
+  void setColors({required Style style, String backColor = '#EFEFEF'}) {
+    style.backColor = backColor;
+    //style.fontColor =
+  }
+
+  Style mediumTextStyle(Style style) {
+    style.fontName = 'Calibri';
+    style.fontSize = 18;
+    style.vAlign = VAlignType.bottom;
     return style;
   }
 
@@ -26,33 +57,23 @@ class StudentDetailExcelHelper {
     return style;
   }
 
-  Style valueStyle18(Workbook workbook) {
-    final Style style = workbook.styles.add('ValueStyle18');
+  Style smallTextStyle(Workbook workbook) {
+    final Style style = workbook.styles.add('SmallTextStyle');
     style.fontName = 'Calibri';
-    style.fontSize = 18;
+    style.backColor = '#EFEFEF';
+    style.fontSize = 11;
     style.bold = false;
-    style.vAlign = VAlignType.bottom;
-    return style;
-  }
-
-  Style lessonTitleStyle(Workbook workbook) {
-    final Style style = workbook.styles.add('LessonTitleStyle');
-    style.fontName = 'Calibri';
-    style.fontSize = 20;
-    style.bold = true;
-    style.vAlign = VAlignType.bottom;
+    style.vAlign = VAlignType.center;
     style.hAlign = HAlignType.center;
     style.borders.all.color = '#000000';
     style.borders.all.lineStyle = LineStyle.thin;
     return style;
   }
 
-  Style lessonSubTitleStyle(Workbook workbook) {
-    final Style style = workbook.styles.add('LessonSubTitleStyle');
+  Style averageSubTitleStyle(Workbook workbook) {
+    final Style style = workbook.styles.add('AverageSubTitleStyle');
     style.fontName = 'Calibri';
-    style.backColor = '#EFEFEF';
     style.fontSize = 11;
-    style.bold = false;
     style.vAlign = VAlignType.center;
     style.hAlign = HAlignType.center;
     style.borders.all.color = '#000000';
@@ -235,14 +256,14 @@ class StudentDetailExcelHelper {
       13: inkCozCount,
       14: inkDogCount,
       15: inkYanCount,
-      16: dinHedCount,
-      17: dinCozCount,
-      18: dinDogCount,
-      19: dinYanCount,
-      20: ingHedCount,
-      21: ingCozCount,
-      22: ingDogCount,
-      23: ingYanCount
+      16: ingHedCount,
+      17: ingCozCount,
+      18: ingDogCount,
+      19: ingYanCount,
+      20: dinHedCount,
+      21: dinCozCount,
+      22: dinDogCount,
+      23: dinYanCount
     };
 
     return questionFollowMap;

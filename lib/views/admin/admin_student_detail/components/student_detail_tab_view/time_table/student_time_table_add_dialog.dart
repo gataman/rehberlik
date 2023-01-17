@@ -222,24 +222,27 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
           //physics: const NeverScrollableScrollPhysics(),
           itemCount: lessonWithSubjectList.length,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                _selectLesson(lessonWithSubject: lessonWithSubjectList[index]);
-                Navigator.of(context).pop();
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: Colors.white10, width: 0.6),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                color: darkSecondaryColor,
-                elevation: 8,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                  child: Text(lessonWithSubjectList[index].lesson.lessonName ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: GestureDetector(
+                onTap: () {
+                  _selectLesson(lessonWithSubject: lessonWithSubjectList[index]);
+                  Navigator.of(context).pop();
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Colors.white10, width: 0.6),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: darkSecondaryColor,
+                  elevation: 8,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                    child: Text(lessonWithSubjectList[index].lesson.lessonName ?? '',
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+                  ),
                 ),
               ),
             );
@@ -307,24 +310,27 @@ class _TimeTableAddAlertDialogState extends State<TimeTableAddAlertDialog> {
           //physics: const NeverScrollableScrollPhysics(),
           itemCount: subjectList.length,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                _selectSubject(selectedSubjectID: subjectList[index].id!);
-                Navigator.of(context).pop();
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: Colors.white10, width: 0.6),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                color: darkSecondaryColor,
-                elevation: 8,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                  child: Text(subjectList[index].subject!,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: GestureDetector(
+                onTap: () {
+                  _selectSubject(selectedSubjectID: subjectList[index].id!);
+                  Navigator.of(context).pop();
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Colors.white10, width: 0.6),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: darkSecondaryColor,
+                  elevation: 8,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                    child: Text(subjectList[index].subject!,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+                  ),
                 ),
               ),
             );

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
 
 import '../models/helpers/lesson_with_subject.dart';
 import '../models/lesson.dart';
@@ -88,6 +89,7 @@ class LessonService implements DBBase<Lesson> {
 
     final docSnap = await colRef.get();
     final lessonList = docSnap.docs.map((e) => e.data()).toList();
+    lessonList.sort((a, b) => b.lessonTime!.compareTo(a.lessonTime!));
     return lessonList;
   }
 

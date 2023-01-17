@@ -100,6 +100,7 @@ class CustomAppBar extends AppBar {
     await SharedPrefs.instance.remove(PrefKeys.student.toString());
     await SharedPrefs.instance.remove(PrefKeys.teacher.toString());
     await SharedPrefs.instance.remove(PrefKeys.userType.toString());
+    await SharedPrefs.instance.remove(PrefKeys.theme.toString());
     await FirebaseAuth.instance.signOut();
     context.router.replaceNamed(AppRoutes.routeMainAuth);
   }
@@ -143,7 +144,7 @@ class _AdminAppBarTitle extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "Rehberlik Servisi",
+                  "Başarı İzleme Uygulaması",
                   style: TextStyle(fontSize: isMobile ? 14 : 16, fontWeight: FontWeight.bold, color: Colors.amber),
                 ),
                 Text(

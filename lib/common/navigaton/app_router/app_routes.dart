@@ -25,6 +25,7 @@ abstract class AppRoutes {
   static const String routeAdminStudentsTrialExamDetailView = "students_trial_exam_detail";
   static const String routeAdminTrialExamSingleView = "trial_exam_single_view";
   static const String routeAdminQuizzes = "admin_quizzes";
+  static const String routeAdminLessonSourcesView = "lesson_sources_view";
 
   //* Student Routes
   static const String routeStudentDashboard = "dashboard";

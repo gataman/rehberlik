@@ -13,15 +13,20 @@ class SubjectListCubit extends Cubit<SubjectListState> {
 
   final _subjectRepository = locator<SubjectRepository>();
 
-  void fetchSubjectList({required String lessonID}) {
-    _subjectRepository.getAll(lessonID: lessonID).then((list) {
+  void setSubjectList({required List<Subject>? list}) {
+    if (list != null) {
+      // for (var i = 0; i < list.length; i++) {
+      //   list[i].sort = i;
+      // }
       _subjectList = list;
+      // debugPrint(list.toString());
       emit(SubjectListLoadedState(_subjectList!));
-    });
+    }
   }
 
   Future<String> addSubject(Subject subject) async {
     final subjectID = await _subjectRepository.add(object: subject);
+    debugPrint('Add : $subject');
     subject.id = subjectID;
     _addSubjectInLocalList(subject);
     //_timeTableController.needUpdate = true;
@@ -29,6 +34,7 @@ class SubjectListCubit extends Cubit<SubjectListState> {
   }
 
   Future<void> updateSubject(Subject subject) async {
+    debugPrint('Update : $subject');
     return _subjectRepository.update(object: subject).then((value) {
       //_timeTableController.needUpdate = true;
       emit(SubjectListLoadedState(_subjectList!));

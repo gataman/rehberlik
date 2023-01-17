@@ -1,5 +1,5 @@
 name: rehberlik
-description: Yavuz Selim Ortaokulu Rehberlik Servisi
+description: Yavuz Selim Ortaokulu Başarı İzleme
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -66,6 +66,7 @@ dependencies:
   flutter_excel: ^1.0.1
   turkish: ^0.2.1
   path_provider: ^2.0.11
+  url_strategy: ^0.2.0
   
   
 

@@ -12,6 +12,7 @@ import '../../../common/navigaton/app_router/app_routes.dart';
 import '../../../core/init/locale_manager.dart';
 import '../../../core/init/pref_keys.dart';
 import '../admin_base/admin_base_view.dart';
+import '../admin_student_trial_exam_detail_view/cubit/student_trial_exam_detail_cubit.dart';
 import 'admin_student_detail_imports.dart';
 import 'components/student_detail_tab_view/question_follow/cubit/question_follow_list_cubit.dart';
 import 'components/student_detail_tab_view/student_detail_tab_view.dart';
@@ -42,6 +43,9 @@ class AdminStudentDetailView extends AdminBaseView {
   @override
   List<BlocProvider<StateStreamableSource<Object?>>> get providers {
     final providers = <BlocProvider>[
+      BlocProvider<StudentTrialExamDetailCubit>(
+        create: (_) => StudentTrialExamDetailCubit(),
+      ),
       BlocProvider<TimeTableListCubit>(
         create: (_) => TimeTableListCubit()..fetchTimeTableList(student: student),
         lazy: false,

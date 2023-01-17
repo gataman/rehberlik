@@ -116,7 +116,7 @@ class _SubjectAddFormBoxState extends State<SubjectAddFormBox> {
     SubjectListCubit cubit = context.read<SubjectListCubit>();
     if (!buttonListener.value && _checkFormElement()) {
       buttonListener.value = true;
-      final Subject subject = Subject(lessonID: _lessonID, subject: _tfSubjectNameFormController.text);
+      final Subject subject = Subject(lessonID: _lessonID, subject: _tfSubjectNameFormController.text, sort: 0);
 
       cubit.addSubject(subject).then((value) {
         _tfSubjectNameFormController.text = "";

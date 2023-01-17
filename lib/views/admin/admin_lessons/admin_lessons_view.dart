@@ -17,6 +17,7 @@ import 'package:rehberlik/core/widgets/text/app_box_title.dart';
 import 'package:rehberlik/core/widgets/text/app_empty_warning_text.dart';
 import 'package:rehberlik/core/widgets/text/app_menu_title.dart';
 import 'package:rehberlik/core/widgets/text_form_fields/app_outline_text_form_field.dart';
+import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
 import 'package:rehberlik/views/admin/admin_lessons/components/lesson_form_box/cubit/lesson_form_box_cubit.dart';

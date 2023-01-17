@@ -1,6 +1,8 @@
 import 'dart:collection';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 
 import '../../../../../../common/extensions.dart';
 import '../../../../../../common/locator.dart';
@@ -10,17 +12,17 @@ import '../../../../../../repository/lesson_repository.dart';
 part 'lesson_list_state.dart';
 
 class LessonListCubit extends Cubit<LessonListState> {
-  LessonListCubit() : super(LessonListState(selectedCategory: 5));
+  LessonListCubit() : super(LessonListState(selectedCategory: 8));
   final _lessonsRepository = locator<LessonRepository>();
 
-  Map<int, List<Lesson>>? lessonList;
+  Map<int, List<LessonWithSubject>>? lessonList;
   int selectedCategory = 8;
 
   void fetchLessonList() async {
     if (lessonList == null) {
-      _lessonsRepository.getAll().then((list) {
-        final lastList = list.groupBy((lesson) => lesson.classLevel);
-        final sortedList = SplayTreeMap<int, List<Lesson>>.from(lastList, (a, b) => a.compareTo(b));
+      _lessonsRepository.getAllWithSubjects().then((list) {
+        final lastList = list.groupBy((lessonWithSubject) => lessonWithSubject.lesson.classLevel);
+        final sortedList = SplayTreeMap<int, List<LessonWithSubject>>.from(lastList, (a, b) => a.compareTo(b));
 
         lessonList = sortedList;
         _refreshList();
@@ -35,10 +37,10 @@ class LessonListCubit extends Cubit<LessonListState> {
     fetchLessonList();
   }
 
-  Future<String> addLesson(Lesson lesson) async {
-    final lessonID = await _lessonsRepository.add(object: lesson);
-    lesson.id = lessonID;
-    _addLessonInLocalList(lesson);
+  Future<String> addLesson(LessonWithSubject lessonWithSubject) async {
+    final lessonID = await _lessonsRepository.add(object: lessonWithSubject.lesson);
+    lessonWithSubject.lesson.id = lessonID;
+    _addLessonInLocalList(lessonWithSubject);
 
     return lessonID;
   }
@@ -50,40 +52,38 @@ class LessonListCubit extends Cubit<LessonListState> {
     });
   }
 
-  Future<void> deleteLesson({required Lesson lesson}) async {
-    return _lessonsRepository.delete(objectID: lesson.id!).whenComplete(() {
+  Future<void> deleteLesson({required LessonWithSubject lessonWithSubject}) async {
+    return _lessonsRepository.delete(objectID: lessonWithSubject.lesson.id!).whenComplete(() {
       // editingLesson.value = null;
-      _deleteLessonInLocalList(lesson: lesson);
+      _deleteLessonInLocalList(lessonWithSubject: lessonWithSubject);
     });
   }
 
-  void _deleteLessonInLocalList({required Lesson lesson}) {
-    lessonList![lesson.classLevel]!.remove(lesson);
+  void _deleteLessonInLocalList({required LessonWithSubject lessonWithSubject}) {
+    lessonList![lessonWithSubject.lesson.classLevel]!.remove(lessonWithSubject);
     _refreshList();
   }
 
-  void _addLessonInLocalList(Lesson lesson) {
+  void _addLessonInLocalList(LessonWithSubject lessonWithSubject) {
     if (lessonList == null) {
-      var map = <int, List<Lesson>>{
-        lesson.classLevel!: <Lesson>[lesson]
+      var map = <int, List<LessonWithSubject>>{
+        lessonWithSubject.lesson.classLevel!: <LessonWithSubject>[lessonWithSubject]
       };
       lessonList = map;
     } else {
       // Bu sınıf seviyesinde henüz ders yoksa
-      if (lessonList![lesson.classLevel!] == null) {
-        lessonList![lesson.classLevel!] = <Lesson>[lesson];
+      if (lessonList![lessonWithSubject.lesson.classLevel!] == null) {
+        lessonList![lessonWithSubject.lesson.classLevel!] = <LessonWithSubject>[lessonWithSubject];
       } else {
         // Ders varsa
-        lessonList![lesson.classLevel!]!.add(lesson);
+        lessonList![lessonWithSubject.lesson.classLevel!]!.add(lessonWithSubject);
       }
     }
 
-    emit(LessonListState(
-        selectedCategory: selectedCategory, lessonList: lessonList![selectedCategory], isLoading: false));
+    emit(LessonListState(selectedCategory: selectedCategory, lessonList: lessonList, isLoading: false));
   }
 
   void _refreshList() {
-    emit(LessonListState(
-        selectedCategory: selectedCategory, lessonList: lessonList![selectedCategory], isLoading: false));
+    emit(LessonListState(selectedCategory: selectedCategory, lessonList: lessonList, isLoading: false));
   }
 }

@@ -48,7 +48,7 @@ class StudentTrialExamDetailCubit extends Cubit<StudentTrialExamDetailState> {
     }
   }
 
-  void _getStudentTrialExamDetail() async {
+  Future<void> _getStudentTrialExamDetail() async {
     _loadingState();
     if (selectedStudent != null) {
       final list = await _trialExamResultRepository.getAll(filters: {'studentID': selectedStudent!.id});
@@ -225,4 +225,9 @@ class StudentTrialExamDetailCubit extends Cubit<StudentTrialExamDetailState> {
       examResult.dinNet! +
       examResult.fenNet! +
       examResult.matNet!;
+
+  Future<TrialExamStudentResult?> getExamResult(Student student) async {
+    selectedStudent = student;
+    return await _getStudentTrialExamDetail().then((value) => trialExamStudentResult);
+  }
 }

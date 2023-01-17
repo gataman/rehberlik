@@ -1,9 +1,12 @@
 import 'package:get_it/get_it.dart';
+import 'package:rehberlik/common/helper/excel_creator/student_detail_excel_builder/student_detail_excel_helper.dart';
 import 'package:rehberlik/repository/auth_repository.dart';
+import 'package:rehberlik/repository/lesson_source_repository.dart';
 import 'package:rehberlik/repository/quiz_repository.dart';
 import 'package:rehberlik/repository/teacher_repository.dart';
 import 'package:rehberlik/repository/trial_exam_class_result_repository.dart';
 import 'package:rehberlik/services/auth_service.dart';
+import 'package:rehberlik/services/lesson_sources_service.dart';
 import 'package:rehberlik/services/quiz_service.dart';
 import 'package:rehberlik/services/teacher_service.dart';
 import 'package:rehberlik/services/trial_exam_class_result_service.dart';
@@ -99,4 +102,11 @@ void setupLocator() {
   //TrialExamStudentResultService
   locator.registerLazySingleton(() => QuizService());
   locator.registerLazySingleton(() => QuizRepository());
+
+  //LessonResources
+  locator.registerLazySingleton(() => LessonSourceService());
+  locator.registerLazySingleton(() => LessonSourceRepository());
+
+  // Helpers:
+  locator.registerLazySingleton(() => StudentDetailExcelHelper());
 }

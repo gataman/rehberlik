@@ -156,7 +156,9 @@ class _LessonFormBoxState extends State<LessonFormBox> {
           classLevel: cubit.selectedCategory,
           lessonTime: int.parse(_tfLessonTimeFormController.text));
 
-      cubit.addLesson(lesson).then((value) {
+      final LessonWithSubject lessonWithSubject = LessonWithSubject(lesson: lesson);
+
+      cubit.addLesson(lessonWithSubject).then((value) {
         buttonListener.value = false;
         _clearForm();
         CustomDialog.showSnackBar(

@@ -33,7 +33,7 @@ class AppOutlineTextFormField extends StatelessWidget {
       },
       onFieldSubmitted: onFieldSubmitted,
       focusNode: focusNode,
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.go,
       controller: controller,
       style: Theme.of(context).textTheme.bodyLarge,
       //textAlign: TextAlign.center,

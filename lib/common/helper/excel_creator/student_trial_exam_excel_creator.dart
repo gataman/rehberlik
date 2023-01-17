@@ -85,7 +85,7 @@ class StudentTrialExamExcelCreator {
     _setTotalNetGraph(sheet, sheet2, totalNetGraph, charts);
 
     //Averages
-    _setAverages(sheet, trialExamStudentResult!, classAverages!, schoolAverages!);
+    _setAverages(sheet, trialExamStudentResult, classAverages!, schoolAverages!);
 
     // Charts
     _setLessonCharts(sheet, sheet2, studentTrialExamGraphList, charts);

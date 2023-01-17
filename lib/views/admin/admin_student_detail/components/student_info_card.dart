@@ -93,7 +93,7 @@ class _StudentInfoCardState extends State<StudentInfoCard> {
                 Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: ButtonWithIcon(
-                    labelText: 'Deneme Sonuçları',
+                    labelText: 'Öğrenci Başarı Karnesi',
                     icon: Icons.line_axis_rounded,
                     onPressed: () {
                       if (userType == UserType.student.type) {
@@ -113,6 +113,7 @@ class _StudentInfoCardState extends State<StudentInfoCard> {
                       iconData: Icons.download,
                       loadingListener: excelBuilder.notifier,
                       onPressed: () {
+                        excelBuilder.notifier.value = true;
                         excelBuilder.build(widget.student!);
                       }),
                 ),

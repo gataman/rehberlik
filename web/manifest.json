@@ -1,11 +1,11 @@
 {
-    "name": "Yavuz Selim Rehberlik",
-    "short_name": "Rehberlik",
+    "name": "Başarı İzleme Uygulaması",
+    "short_name": "Başarı İzleme",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#49635D",
     "theme_color": "#49635D",
-    "description": "Yavuz Selim Ortaokulu Rehberlik Servisi",
+    "description": "Yavuz Selim Ortaokulu",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
