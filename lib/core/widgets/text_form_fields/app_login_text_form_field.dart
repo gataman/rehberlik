@@ -3,20 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:rehberlik/common/extensions.dart';
 
 class AppLoginTextFormField extends StatelessWidget {
-  const AppLoginTextFormField({
-    Key? key,
-    required this.isSecure,
-    required this.validateText,
-    this.isEmail,
-    this.isNumeric,
-    this.onFieldSubmitted,
-    this.focusNode,
-    this.controller,
-    this.hintText,
-    this.iconData,
-    this.isFinish,
-    this.keyboardType,
-  }) : super(key: key);
+  const AppLoginTextFormField(
+      {Key? key,
+      required this.isSecure,
+      required this.validateText,
+      this.isEmail,
+      this.isNumeric,
+      this.onFieldSubmitted,
+      this.focusNode,
+      this.controller,
+      this.hintText,
+      this.iconData,
+      this.isFinish,
+      this.keyboardType,
+      this.autofillHints,
+      this.inputFormatters})
+      : super(key: key);
   final bool? isNumeric;
   final bool isSecure;
   final bool? isEmail;
@@ -28,6 +30,8 @@ class AppLoginTextFormField extends StatelessWidget {
   final String? hintText;
   final IconData? iconData;
   final TextInputType? keyboardType;
+  final Iterable<String>? autofillHints;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +49,9 @@ class AppLoginTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: isSecure,
       onFieldSubmitted: onFieldSubmitted,
-      autofillHints: [
-        isEmail != null
-            ? AutofillHints.email
-            : isSecure
-                ? AutofillHints.password
-                : AutofillHints.name
-      ],
+      autofillHints: autofillHints,
       focusNode: focusNode,
+      inputFormatters: inputFormatters,
       textInputAction: TextInputAction.go,
       controller: controller,
       textAlign: TextAlign.center,

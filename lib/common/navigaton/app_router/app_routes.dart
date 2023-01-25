@@ -4,6 +4,7 @@ abstract class AppRoutes {
   static const String routeMainSplash = "/splash";
   static const String routeMainAuth = "/auth";
   static const String routeMainStudent = "/student";
+  static const String routeMainTeacher = "/teacher";
 
   //* Admin Routes
   static const String routeAdminDashboard = "dashboard";
@@ -33,4 +34,7 @@ abstract class AppRoutes {
   static const String routeStudentTrialExam = "deneme_sinavlari";
   static const String routeStudentTrialExamList = "deneme_sinav_listesi";
   static const String routeStudentExamDetail = "deneme_detayi";
+
+  //Teacher Routes:
+  static const String routeTeacherDashboard = "dashboard";
 }

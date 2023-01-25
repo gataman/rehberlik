@@ -16,7 +16,7 @@ class ClassListCard extends StatelessWidget {
           const Divider(),
           if (state is ClassListLoadingState)
             const SizedBox(height: minimumBoxHeight, child: DefaultCircularProgress()),
-          if (state is ClassListLoadedState) _getClassesListView(state),
+          if (state is ClassListLoadedState) _getClassesListView(state, context),
         ]);
       },
     );
@@ -29,11 +29,12 @@ class ClassListCard extends StatelessWidget {
     );
   }
 
-  Widget _getClassesListView(ClassListLoadedState state) {
+  Widget _getClassesListView(ClassListLoadedState state, BuildContext context) {
     if (state.studentWithClassList != null && state.studentWithClassList!.isNotEmpty) {
       final classesList = state.studentWithClassList!;
+      final height = MediaQuery.of(context).size.height;
       return SizedBox(
-        height: defaultListHeight,
+        height: height * .8,
         child: ListView.separated(
             itemCount: classesList.length,
             separatorBuilder: (context, index) => defaultDivider,

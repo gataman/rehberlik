@@ -6,10 +6,8 @@ import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 
 import '../../../../../common/constants.dart';
-import '../../../../../common/navigaton/app_router/app_routes.dart';
 import '../../../../../common/widgets/default_circular_progress.dart';
 import '../../../../../core/widgets/list_tiles/app_list_with_date_tile.dart';
-import '../../../../../core/widgets/text/app_box_title.dart';
 import '../../../../../core/widgets/text/app_empty_warning_text.dart';
 import '../student_trial_exam_list_cubit.dart';
 
@@ -65,15 +63,15 @@ class StudentTrialExamListCard extends StatelessWidget {
         separatorBuilder: (context, index) => defaultDivider,
         itemBuilder: (context, index) {
           final trialExam = trialExamList[index];
+          final difference = trialExam.examDate!.difference(DateTime.now()).inDays;
           return AppListWithDateTile(
-            title: trialExam.examName!,
-            detailOnPressed: () {
-              _goTrialExamDetail(trialExam, context);
-            },
-            iconData: Icons.insert_chart,
-            date: DateFormat("dd.MM.yyyy").format(trialExam.examDate!),
-            isNew: (index == 0),
-          );
+              title: trialExam.examName!,
+              detailOnPressed: () {
+                _goTrialExamDetail(trialExam, context);
+              },
+              iconData: Icons.insert_chart,
+              date: DateFormat("dd.MM.yyyy").format(trialExam.examDate!),
+              isNew: difference >= dateDifference);
         },
       );
     } else {

@@ -51,7 +51,8 @@ Future<void> setupFirebaseOptions() async {
             projectId: "rehberlik-810e1",
             storageBucket: "rehberlik-810e1.appspot.com",
             messagingSenderId: "628522179079",
-            appId: "1:628522179079:web:f24b8e41f3d064c91868a2"));
+            appId: "1:628522179079:web:f24b8e41f3d064c91868a2",
+            measurementId: "G-NLSTYD7RDQ"));
   } else {
     await Firebase.initializeApp();
   }

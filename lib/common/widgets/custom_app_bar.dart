@@ -20,13 +20,18 @@ import '../navigaton/app_router/app_routes.dart';
 class CustomAppBar extends AppBar {
   final BuildContext context;
   final bool isStudent;
+  final bool? isTeacher;
+  final String appBarTitle;
 
-  CustomAppBar({required this.context, this.isStudent = false, Key? key}) : super(key: key);
+  CustomAppBar({required this.context, this.isStudent = false, required this.appBarTitle, this.isTeacher, Key? key})
+      : super(key: key);
 
   @override
   Widget? get title => _AdminAppBarTitle(
         isStudent: isStudent,
         mainContext: context,
+        title: appBarTitle,
+        isTeacher: isTeacher,
       );
 
   @override
@@ -123,9 +128,13 @@ class CustomAppBar extends AppBar {
 }
 
 class _AdminAppBarTitle extends StatelessWidget {
-  const _AdminAppBarTitle({required this.isStudent, Key? key, required this.mainContext}) : super(key: key);
-  final bool isStudent;
+  const _AdminAppBarTitle(
+      {required this.isStudent, Key? key, required this.mainContext, required this.title, this.isTeacher})
+      : super(key: key);
+  final String title;
   final BuildContext mainContext;
+  final bool isStudent;
+  final bool? isTeacher;
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +146,11 @@ class _AdminAppBarTitle extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              if (context.router.currentPath != AppRoutes.routeAdminDashboard) {
-                context.router.replaceNamed(AppRoutes.routeAdminDashboard);
+              if (isTeacher != null && isTeacher!) {
+              } else {
+                if (context.router.currentPath != AppRoutes.routeAdminDashboard) {
+                  context.router.replaceNamed(AppRoutes.routeAdminDashboard);
+                }
               }
             },
             child: Column(
@@ -148,7 +160,7 @@ class _AdminAppBarTitle extends StatelessWidget {
                   style: TextStyle(fontSize: isMobile ? 14 : 16, fontWeight: FontWeight.bold, color: Colors.amber),
                 ),
                 Text(
-                  isStudent ? 'Öğrenci Paneli' : 'Yönetici Paneli',
+                  title,
                   style: TextStyle(fontSize: isMobile ? 10 : 12, color: Colors.white),
                 )
               ],

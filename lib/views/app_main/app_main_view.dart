@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/navigaton/app_router/app_router.dart';
+import 'package:rehberlik/common/navigaton/app_router/guards/admin_auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/teacher_auth_guard.dart';
 import 'package:rehberlik/common/themes/custom_theme.dart';
@@ -21,6 +22,7 @@ class AppMainView extends StatelessWidget {
       argumentsGuard: ArgumentsGuard(),
       teacherAuthGuard: TeacherAuthGuard(),
       studentAuthGuard: StudentAuthGuard(),
+      adminAuthGuard: AdminAuthGuard(),
       authGuard: AuthGuard());
 
   @override

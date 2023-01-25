@@ -22,34 +22,34 @@ class _AuthViewState extends State<AuthView> {
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(),
-      body: BlocProvider(
-        create: (context) => AuthCubit(),
-        child: Container(
-          margin: const EdgeInsets.all(16),
-          child: Center(
-            child: Stack(
-              alignment: AlignmentDirectional.topCenter,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: profileImageSize / 2),
-                  child: SizedBox(
-                    width: 350,
-                    child: AppBoxContainer(child: BlocBuilder<AuthCubit, AuthState>(
-                      builder: (context, state) {
-                        return SingleChildScrollView(
-                          child: Column(
+      body: Center(
+        child: SingleChildScrollView(
+          child: BlocProvider(
+            create: (context) => AuthCubit(),
+            child: Container(
+              margin: const EdgeInsets.all(16),
+              child: Stack(
+                alignment: AlignmentDirectional.topCenter,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: profileImageSize / 2),
+                    child: SizedBox(
+                      width: 350,
+                      child: AppBoxContainer(child: BlocBuilder<AuthCubit, AuthState>(
+                        builder: (context, state) {
+                          return Column(
                             children: [
                               _topNavigationBar(context, state),
                               (state.activeIndex == 0) ? const StudentLoginView() : const TeacherLoginView(),
                             ],
-                          ),
-                        );
-                      },
-                    )),
+                          );
+                        },
+                      )),
+                    ),
                   ),
-                ),
-                _profileImageContainer(),
-              ],
+                  _profileImageContainer(),
+                ],
+              ),
             ),
           ),
         ),

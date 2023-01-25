@@ -12,8 +12,11 @@ class SfDataGridIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return SfDataGridTheme(
         data: SfDataGridThemeData(
-          sortIcon: _setIcon(),
-        ),
+            sortIcon: _setIcon(),
+            filterIcon: const Icon(
+              Icons.search,
+              size: 14,
+            )),
         child: child);
   }
 

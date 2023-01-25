@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
 import 'package:rehberlik/core/widgets/text_form_fields/app_login_text_form_field.dart';
@@ -63,6 +64,8 @@ class _StudentLoginViewState extends State<StudentLoginView> {
       focusNode: _studentNumberFocusNode,
       controller: _tfStudentNumberController,
       hintText: 'Öğrenci Numarası',
+      autofillHints: const [AutofillHints.username],
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       keyboardType: TextInputType.number,
     );
   }
@@ -73,6 +76,7 @@ class _StudentLoginViewState extends State<StudentLoginView> {
       iconData: Icons.password,
       validateText: 'Şifre boş olamaz',
       isSecure: true,
+      autofillHints: const [AutofillHints.password],
       focusNode: _studentPasswordFocusNode,
       controller: _tfStudentPasswordController,
       hintText: 'Şifre',

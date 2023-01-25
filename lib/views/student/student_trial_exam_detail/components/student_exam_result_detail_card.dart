@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:rehberlik/responsive.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../models/trial_exam_class_result.dart';
@@ -163,7 +164,9 @@ class _StudentExamResultDetailCardState extends State<StudentExamResultDetailCar
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
         child: Text(
           value,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Responsive.isMobile(context)
+              ? Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.primary)
+              : Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.primary),
           overflow: TextOverflow.ellipsis,
         ),
       );
@@ -172,7 +175,9 @@ class _StudentExamResultDetailCardState extends State<StudentExamResultDetailCar
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
         child: Text(
           value,
-          style: Theme.of(context).textTheme.labelMedium,
+          style: Responsive.isMobile(context)
+              ? Theme.of(context).textTheme.labelSmall
+              : Theme.of(context).textTheme.labelMedium,
           overflow: TextOverflow.ellipsis,
         ),
       );
@@ -182,7 +187,9 @@ class _StudentExamResultDetailCardState extends State<StudentExamResultDetailCar
         child: Center(
           child: Text(
             value,
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Responsive.isMobile(context)
+                ? Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.primary)
+                : Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.primary),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -193,7 +200,9 @@ class _StudentExamResultDetailCardState extends State<StudentExamResultDetailCar
         child: Center(
           child: Text(
             value,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: Responsive.isMobile(context)
+                ? Theme.of(context).textTheme.bodySmall
+                : Theme.of(context).textTheme.bodyMedium,
           ),
         ),
       );

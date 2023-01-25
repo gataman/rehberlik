@@ -25,6 +25,7 @@ class StudentMainView extends StatelessWidget implements AutoRouteWrapper {
       appBar: CustomAppBar(
         context: context,
         isStudent: true,
+        appBarTitle: 'Öğrenci Paneli',
       ),
       drawer: const StudentDrawerMenu(),
       body: const AutoRouter(),
@@ -35,6 +36,7 @@ class StudentMainView extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     final studentPref = SharedPrefs.instance.getString(PrefKeys.student.toString());
     final Student student = Student.fromJson(jsonDecode(studentPref!));
+    //_fcmToken();
     return MultiBlocProvider(
       providers: [
         BlocProvider<LessonListCubit>(
@@ -64,4 +66,9 @@ class StudentMainView extends StatelessWidget implements AutoRouteWrapper {
       child: this,
     );
   }
+
+  // void _fcmToken() async {
+  //   final fcmToken = await FirebaseMessaging.instance.getToken(vapidKey: vapidKey);
+  //   debugPrint('Vapid: $fcmToken');
+  // }
 }

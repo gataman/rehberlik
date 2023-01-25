@@ -17,6 +17,7 @@ class _$AppRouter extends RootStackRouter {
     GlobalKey<NavigatorState>? navigatorKey,
     required this.authGuard,
     required this.studentAuthGuard,
+    required this.adminAuthGuard,
     required this.teacherAuthGuard,
     required this.argumentsGuard,
   }) : super(navigatorKey);
@@ -24,6 +25,8 @@ class _$AppRouter extends RootStackRouter {
   final AuthGuard authGuard;
 
   final StudentAuthGuard studentAuthGuard;
+
+  final AdminAuthGuard adminAuthGuard;
 
   final TeacherAuthGuard teacherAuthGuard;
 
@@ -53,6 +56,15 @@ class _$AppRouter extends RootStackRouter {
       return CustomPage<dynamic>(
         routeData: routeData,
         child: WrappedRoute(child: const AdminMainView()),
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    TeacherMainRoute.name: (routeData) {
+      return CustomPage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const TeacherMainView()),
         transitionsBuilder: TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -348,7 +360,7 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           AdminMainRoute.name,
           path: '/admin',
-          guards: [teacherAuthGuard],
+          guards: [adminAuthGuard],
           children: [
             RouteConfig(
               '#redirect',
@@ -361,37 +373,37 @@ class _$AppRouter extends RootStackRouter {
               AdminDashboardRoute.name,
               path: 'dashboard',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminClassesRoute.name,
               path: 'classes',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminStudentsRoute.name,
               path: 'students',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminLessonsRoute.name,
               path: 'lessons',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminTrialExamRoute.name,
               path: 'trial_exams',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminUploadsRoute.name,
               path: 'uploads',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminSubjectsRoute.name,
@@ -399,7 +411,7 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [
                 argumentsGuard,
-                teacherAuthGuard,
+                adminAuthGuard,
               ],
             ),
             RouteConfig(
@@ -408,7 +420,7 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [
                 argumentsGuard,
-                teacherAuthGuard,
+                adminAuthGuard,
               ],
             ),
             RouteConfig(
@@ -417,26 +429,26 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [
                 argumentsGuard,
-                teacherAuthGuard,
+                adminAuthGuard,
               ],
             ),
             RouteConfig(
               AdminMessageRoute.name,
               path: 'messages',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminStudentsTrialExamDetailRoute.name,
               path: 'students_trial_exam_detail',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminStudentsPasswordRoute.name,
               path: 'students_password',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminTrialExamTotalRoute.name,
@@ -444,7 +456,7 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [
                 argumentsGuard,
-                teacherAuthGuard,
+                adminAuthGuard,
               ],
             ),
             RouteConfig(
@@ -453,20 +465,100 @@ class _$AppRouter extends RootStackRouter {
               parent: AdminMainRoute.name,
               guards: [
                 argumentsGuard,
-                teacherAuthGuard,
+                adminAuthGuard,
               ],
             ),
             RouteConfig(
               AdminQuizzesRoute.name,
               path: 'admin_quizzes',
               parent: AdminMainRoute.name,
-              guards: [teacherAuthGuard],
+              guards: [adminAuthGuard],
             ),
             RouteConfig(
               AdminLessonSourcesRoute.name,
               path: 'lesson_sources_view',
               parent: AdminMainRoute.name,
+              guards: [adminAuthGuard],
+            ),
+          ],
+        ),
+        RouteConfig(
+          TeacherMainRoute.name,
+          path: '/teacher',
+          guards: [teacherAuthGuard],
+          children: [
+            RouteConfig(
+              '#redirect',
+              path: '',
+              parent: TeacherMainRoute.name,
+              redirectTo: 'trial_exams',
+              fullMatch: true,
+            ),
+            RouteConfig(
+              AdminTrialExamRoute.name,
+              path: 'trial_exams',
+              parent: TeacherMainRoute.name,
               guards: [teacherAuthGuard],
+            ),
+            RouteConfig(
+              AdminClassesRoute.name,
+              path: 'classes',
+              parent: TeacherMainRoute.name,
+              guards: [teacherAuthGuard],
+            ),
+            RouteConfig(
+              AdminStudentsRoute.name,
+              path: 'students',
+              parent: TeacherMainRoute.name,
+              guards: [teacherAuthGuard],
+            ),
+            RouteConfig(
+              AdminStudentDetailRoute.name,
+              path: 'student_detail',
+              parent: TeacherMainRoute.name,
+              guards: [
+                argumentsGuard,
+                teacherAuthGuard,
+              ],
+            ),
+            RouteConfig(
+              AdminStudentsTrialExamDetailRoute.name,
+              path: 'students_trial_exam_detail',
+              parent: TeacherMainRoute.name,
+              guards: [teacherAuthGuard],
+            ),
+            RouteConfig(
+              AdminTrialExamResultRoute.name,
+              path: 'trial_exam_result',
+              parent: TeacherMainRoute.name,
+              guards: [
+                argumentsGuard,
+                teacherAuthGuard,
+              ],
+            ),
+            RouteConfig(
+              AdminTrialExamTotalRoute.name,
+              path: 'trial_exam_total_average',
+              parent: TeacherMainRoute.name,
+              guards: [
+                argumentsGuard,
+                teacherAuthGuard,
+              ],
+            ),
+            RouteConfig(
+              AdminTrialExamSingleResultRoute.name,
+              path: 'trial_exam_single_view',
+              parent: TeacherMainRoute.name,
+              guards: [
+                argumentsGuard,
+                teacherAuthGuard,
+              ],
+            ),
+            RouteConfig(
+              AdminStudentsPasswordRoute.name,
+              path: 'students_password',
+              parent: TeacherMainRoute.name,
+              guards: [adminAuthGuard],
             ),
           ],
         ),
@@ -509,6 +601,19 @@ class AdminMainRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AdminMainRoute';
+}
+
+/// generated route for
+/// [TeacherMainView]
+class TeacherMainRoute extends PageRouteInfo<void> {
+  const TeacherMainRoute({List<PageRouteInfo>? children})
+      : super(
+          TeacherMainRoute.name,
+          path: '/teacher',
+          initialChildren: children,
+        );
+
+  static const String name = 'TeacherMainRoute';
 }
 
 /// generated route for

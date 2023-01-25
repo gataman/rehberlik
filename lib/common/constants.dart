@@ -153,6 +153,8 @@ const meetingTypeList = <String>[
   'Diğer İş ve İşlemler',
 ];
 
+//Firebase Cloud Messaging VAPID key:
+const String vapidKey = 'BNqke_ixC1YIJPk5jfeiBpy5JP8LuosVpjTsrl2ss9ajJHmDyIbDTTGFkmzCbOuL_WXwzeQPYalqCAd9qk7KEb8';
 
 
 

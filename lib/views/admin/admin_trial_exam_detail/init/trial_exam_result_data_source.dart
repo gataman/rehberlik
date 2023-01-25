@@ -12,8 +12,9 @@ class TrialExamResultDataSource extends DataGridSource {
     _tiralExamResultDataGridRowList = trialExamResultList
         .map((e) => DataGridRow(
               cells: [
-                DataGridCell<int>(columnName: 'No', value: int.parse(e.studentNumber)),
+                DataGridCell<int>(columnName: 'okulS', value: e.schoolRank),
                 DataGridCell<String>(columnName: 'Adı Soyadı', value: e.studentName),
+                DataGridCell<int>(columnName: 'No', value: int.parse(e.studentNumber)),
                 DataGridCell<String>(columnName: 'Sınıfı', value: e.className),
                 DataGridCell<int>(columnName: 'turDog', value: e.turDog),
                 DataGridCell<int>(columnName: 'turYan', value: e.turYan),
@@ -37,7 +38,6 @@ class TrialExamResultDataSource extends DataGridSource {
                 DataGridCell<int>(columnName: 'topYan', value: _getTopYan(e)),
                 DataGridCell<double>(columnName: 'topNet', value: _getNumberFormat(_getTopNet(e))),
                 DataGridCell<int>(columnName: 'sınıfS', value: e.classRank),
-                DataGridCell<int>(columnName: 'okulS', value: e.schoolRank),
                 DataGridCell<double>(columnName: 'puan', value: _getNumberFormatForPoint(e.totalPoint)),
               ],
             ))
@@ -54,8 +54,9 @@ class TrialExamResultDataSource extends DataGridSource {
         padding:
             e.columnName == 'puan' || e.columnName == 'Adı Soyadı' ? const EdgeInsets.only(left: 3) : EdgeInsets.zero,
         alignment: e.columnName == 'puan' || e.columnName == 'Adı Soyadı' ? Alignment.centerLeft : Alignment.center,
-        child: AutoSizeText(
+        child: Text(
           e.value == null ? '  ' : e.value.toString(),
+          maxLines: 1,
           style: _getNetTextStyle(e),
           textAlign: e.columnName == 'puan' || e.columnName == 'Adı Soyadı' ? TextAlign.start : TextAlign.center,
         ),
@@ -87,10 +88,10 @@ class TrialExamResultDataSource extends DataGridSource {
   TextStyle _getNetTextStyle(DataGridCell e) {
     if (e.columnName == 'Adı Soyadı' || e.columnName == 'No' || e.columnName == 'Sınıfı') {
       return const TextStyle(
-        fontSize: 12,
+        fontSize: 10,
         color: Colors.amber,
         fontWeight: FontWeight.normal,
-        overflow: TextOverflow.ellipsis,
+        overflow: TextOverflow.visible,
       );
     } else {
       if (e.columnName == 'turNet' ||
@@ -101,13 +102,13 @@ class TrialExamResultDataSource extends DataGridSource {
           e.columnName == 'dinNet' ||
           e.columnName == 'puan') {
         return const TextStyle(
-          fontSize: 12,
+          fontSize: 10,
           color: Colors.amber,
           overflow: TextOverflow.ellipsis,
         );
       } else {
         return const TextStyle(
-          fontSize: 12,
+          fontSize: 10,
           overflow: TextOverflow.ellipsis,
         );
       }

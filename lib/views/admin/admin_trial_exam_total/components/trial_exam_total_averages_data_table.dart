@@ -72,7 +72,7 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
                         //crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           snapshot.data!, // DatGridWİdget
-                          _buildDataPager(),
+                          // _buildDataPager(),
                           Row(
                             children: [
                               _detailButton(context),
@@ -116,7 +116,8 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
             //allowFiltering: true,
             columnWidthMode: _getWidthMode(),
             allowTriStateSorting: true,
-            frozenColumnsCount: 3,
+            allowFiltering: true,
+            frozenColumnsCount: 2,
             gridLinesVisibility: GridLinesVisibility.both,
             headerGridLinesVisibility: GridLinesVisibility.both,
 
@@ -180,8 +181,12 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
     List<StackedHeaderRow> stackedHeaderRows;
     stackedHeaderRows = <StackedHeaderRow>[
       StackedHeaderRow(cells: <StackedHeaderCell>[
-        StackedHeaderCell(
-            columnNames: <String>['No', 'Adı Soyadı', 'Sınıfı'], child: _getWidgetForStackedHeaderCell('')),
+        StackedHeaderCell(columnNames: <String>[
+          'okulS',
+          'Adı Soyadı',
+          'No',
+          'Sınıfı',
+        ], child: _getWidgetForStackedHeaderCell('')),
         StackedHeaderCell(columnNames: <String>[
           'turDog',
           'turYan',
@@ -217,7 +222,6 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
           'totYan',
           'totNet',
           'sınıfS',
-          'okulS',
           'puan',
         ], child: _getWidgetForStackedHeaderCell('Toplam'), text: 'Toplam'),
       ])
@@ -237,43 +241,40 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
 
   List<GridColumn> _getColumns() {
     return <GridColumn>[
-      GridColumn(
-        columnName: 'No',
-        label: _getLabelTitleText("No"),
-      ),
+      GridColumn(columnName: 'okulS', label: _getLabelTitleText(_schoolRankLabel), allowFiltering: false),
       GridColumn(
         width: Responsive.isMobile(context) ? 100 : 150,
         columnName: 'Adı Soyadı',
         label: _getLabelTitleText("Öğrenci Adı"),
       ),
+      GridColumn(columnName: 'No', label: _getLabelTitleText("No"), allowFiltering: false),
       GridColumn(
         columnName: 'Sınıfı',
         label: _getLabelTitleText("Sınıfı"),
       ),
-      GridColumn(columnName: 'turDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'turYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'turNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'matDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'matYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'matNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'fenDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'fenYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'fenNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'sosDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'sosYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'sosNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'ingDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'ingYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'ingNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'dinDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'dinYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'dinNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'totDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'totYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'totNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'sınıfS', label: _getLabelTitleText(_classRankLabel)),
-      GridColumn(columnName: 'okulS', label: _getLabelTitleText(_schoolRankLabel)),
-      GridColumn(columnName: 'puan', label: _getLabelTitleText(_pointLabel), width: 60),
+      GridColumn(columnName: 'turDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'turYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'turNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'matDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'matYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'matNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'fenDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'fenYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'fenNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'sosDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'sosYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'sosNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'ingDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'ingYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'ingNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'dinDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'dinYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'dinNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'totDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'totYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'totNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'sınıfS', allowFiltering: false, label: _getLabelTitleText(_classRankLabel)),
+      GridColumn(columnName: 'puan', allowFiltering: false, label: _getLabelTitleText(_pointLabel), width: 60),
     ];
   }
 
@@ -325,8 +326,9 @@ class _TrialExamResultDataSource extends DataGridSource {
     _tiralExamResultDataGridRowList = trialExamResultList
         .map((e) => DataGridRow(
               cells: [
-                DataGridCell<String>(columnName: 'No', value: e.studentNumber),
+                DataGridCell<int>(columnName: 'okulS', value: e.schoolRank),
                 DataGridCell<String>(columnName: 'Adı Soyadı', value: e.studentName),
+                DataGridCell<String>(columnName: 'No', value: e.studentNumber),
                 DataGridCell<String>(columnName: 'Sınıfı', value: e.className),
                 DataGridCell<double>(columnName: 'turDog', value: _getNumberFormat(e.turDogAvg)),
                 DataGridCell<double>(columnName: 'turYan', value: _getNumberFormat(e.turYanAvg)),
@@ -350,7 +352,6 @@ class _TrialExamResultDataSource extends DataGridSource {
                 DataGridCell<double>(columnName: 'totYan', value: _getNumberFormat(e.totYanAvg)),
                 DataGridCell<double>(columnName: 'totNet', value: _getNumberFormat(e.totNetAvg)),
                 DataGridCell<int>(columnName: 'sınıfS', value: e.classRank),
-                DataGridCell<int>(columnName: 'okulS', value: e.schoolRank),
                 DataGridCell<double>(columnName: 'puan', value: e.totalPointAvg),
               ],
             ))

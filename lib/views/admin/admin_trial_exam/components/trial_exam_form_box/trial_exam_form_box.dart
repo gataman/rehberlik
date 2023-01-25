@@ -1,7 +1,8 @@
 part of admin_trial_exam_view;
 
 class TrialExamAddFormBox extends StatefulWidget {
-  const TrialExamAddFormBox({Key? key}) : super(key: key);
+  const TrialExamAddFormBox({Key? key, required this.teacherType}) : super(key: key);
+  final TeacherType teacherType;
 
   @override
   State<TrialExamAddFormBox> createState() => _TrialExamAddFormBoxState();
@@ -68,21 +69,23 @@ class _TrialExamAddFormBoxState extends State<TrialExamAddFormBox> {
                 },
                 selectedIndex: _selectedIndex,
               ),
-              TrialExamTypeSelectBox(
-                valueChanged: (value) {
-                  _selectedTrialExamType = value;
-                },
-                typeIndex: _selectedTrialExamType,
-              ),
-              _trialExamNameInput(),
-              _trialExamCodeInput(),
-              AppDatePickerText(
-                initialValue: _dateTime,
-                valueChanged: (value) {
-                  _dateTime = value;
-                },
-              ),
-              _actionButtons(),
+              if (widget.teacherType == TeacherType.admin)
+                TrialExamTypeSelectBox(
+                  valueChanged: (value) {
+                    _selectedTrialExamType = value;
+                  },
+                  typeIndex: _selectedTrialExamType,
+                ),
+              if (widget.teacherType == TeacherType.admin) _trialExamNameInput(),
+              if (widget.teacherType == TeacherType.admin) _trialExamCodeInput(),
+              if (widget.teacherType == TeacherType.admin)
+                AppDatePickerText(
+                  initialValue: _dateTime,
+                  valueChanged: (value) {
+                    _dateTime = value;
+                  },
+                ),
+              if (widget.teacherType == TeacherType.admin) _actionButtons(),
             ]),
           ],
         );

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:rehberlik/common/navigaton/app_router/guards/admin_auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/teacher_auth_guard.dart';
 import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
@@ -26,6 +27,8 @@ import 'package:rehberlik/views/student/studen_trial_exam/student_trial_exam_vie
 import 'package:rehberlik/views/student/student_main_view.dart';
 import 'package:rehberlik/views/student/student_trial_exam_detail/student_exam_detail_view.dart';
 import 'package:rehberlik/views/student/student_trial_exam_list/student_trial_exam_list_view.dart';
+import 'package:rehberlik/views/teacher/teacher_classes/teacher_classes_view.dart';
+import 'package:rehberlik/views/teacher/teacher_main_view.dart';
 
 import '../../../models/student.dart';
 import '../../../views/admin/admin_lesson_sources/admin_lesson_sources_view.dart';
@@ -88,94 +91,149 @@ part 'app_router.gr.dart';
         transitionsBuilder: TransitionsBuilders.fadeIn,
         path: AppRoutes.routeMainAdmin,
         guards: [
-          TeacherAuthGuard
+          AdminAuthGuard
         ],
         children: [
           CustomRoute(
               page: AdminDashboardView,
               path: AppRoutes.routeAdminDashboard,
               transitionsBuilder: TransitionsBuilders.fadeIn,
-              guards: [TeacherAuthGuard],
+              guards: [AdminAuthGuard],
               initial: true),
           CustomRoute(
               page: AdminClassesView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
-              guards: [TeacherAuthGuard],
+              guards: [AdminAuthGuard],
               path: AppRoutes.routeAdminClasses),
           CustomRoute(
               page: AdminStudentsView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
-              guards: [TeacherAuthGuard],
+              guards: [AdminAuthGuard],
               path: AppRoutes.routeAdminStudents),
           CustomRoute(
               page: AdminLessonsView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
-              guards: [TeacherAuthGuard],
+              guards: [AdminAuthGuard],
               path: AppRoutes.routeAdminLessons),
           CustomRoute(
               page: AdminTrialExamView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
-              guards: [TeacherAuthGuard],
+              guards: [AdminAuthGuard],
               path: AppRoutes.routeAdminTrialExams),
           CustomRoute(
               page: AdminUploadsView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
-              guards: [TeacherAuthGuard],
+              guards: [AdminAuthGuard],
               path: AppRoutes.routeAdminUploads),
           CustomRoute<LessonWithSubject>(
               page: AdminSubjectsView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminSubjects,
-              guards: [ArgumentsGuard, TeacherAuthGuard]),
+              guards: [ArgumentsGuard, AdminAuthGuard]),
           CustomRoute<Student>(
               page: AdminStudentDetailView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminStudentDetail,
-              guards: [ArgumentsGuard, TeacherAuthGuard]),
+              guards: [ArgumentsGuard, AdminAuthGuard]),
           CustomRoute<TrialExam>(
               page: AdminTrialExamResultView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminTrialExamResult,
-              guards: [ArgumentsGuard, TeacherAuthGuard]),
+              guards: [ArgumentsGuard, AdminAuthGuard]),
           CustomRoute(
             page: AdminMessageView,
             transitionsBuilder: TransitionsBuilders.fadeIn,
             path: AppRoutes.routeAdminMessages,
-            guards: [TeacherAuthGuard],
+            guards: [AdminAuthGuard],
           ),
           CustomRoute<Student?>(
             page: AdminStudentsTrialExamDetailView,
             transitionsBuilder: TransitionsBuilders.fadeIn,
             path: AppRoutes.routeAdminStudentsTrialExamDetailView,
-            guards: [TeacherAuthGuard],
+            guards: [AdminAuthGuard],
           ),
           CustomRoute(
               page: AdminStudentsPasswordView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
-              guards: [TeacherAuthGuard],
+              guards: [AdminAuthGuard],
               path: AppRoutes.routeAdminStudentsPassword),
           CustomRoute<int>(
               page: AdminTrialExamTotalView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminTrialExamTotal,
-              guards: [ArgumentsGuard, TeacherAuthGuard]),
+              guards: [ArgumentsGuard, AdminAuthGuard]),
           CustomRoute<TrialExamResult>(
               page: AdminTrialExamSingleResultView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminTrialExamSingleView,
-              guards: [ArgumentsGuard, TeacherAuthGuard]),
+              guards: [ArgumentsGuard, AdminAuthGuard]),
           CustomRoute(
               page: AdminQuizzesView,
               transitionsBuilder: TransitionsBuilders.fadeIn,
               path: AppRoutes.routeAdminQuizzes,
-              guards: [TeacherAuthGuard]),
+              guards: [AdminAuthGuard]),
           CustomRoute<Student?>(
             page: AdminLessonSourcesView,
             transitionsBuilder: TransitionsBuilders.fadeIn,
             path: AppRoutes.routeAdminLessonSourcesView,
-            guards: [TeacherAuthGuard],
+            guards: [AdminAuthGuard],
           ),
         ]),
+    CustomRoute(
+      page: TeacherMainView,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+      path: AppRoutes.routeMainTeacher,
+      guards: [TeacherAuthGuard],
+      children: [
+        CustomRoute(
+            page: AdminTrialExamView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            guards: [TeacherAuthGuard],
+            path: AppRoutes.routeAdminTrialExams,
+            initial: true),
+        CustomRoute(
+            page: AdminClassesView,
+            path: AppRoutes.routeAdminClasses,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            guards: [TeacherAuthGuard]),
+        CustomRoute(
+            page: AdminStudentsView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            guards: [TeacherAuthGuard],
+            path: AppRoutes.routeAdminStudents),
+        CustomRoute<Student>(
+            page: AdminStudentDetailView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            path: AppRoutes.routeAdminStudentDetail,
+            guards: [ArgumentsGuard, TeacherAuthGuard]),
+        CustomRoute<Student?>(
+          page: AdminStudentsTrialExamDetailView,
+          transitionsBuilder: TransitionsBuilders.fadeIn,
+          path: AppRoutes.routeAdminStudentsTrialExamDetailView,
+          guards: [TeacherAuthGuard],
+        ),
+        CustomRoute<TrialExam>(
+            page: AdminTrialExamResultView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            path: AppRoutes.routeAdminTrialExamResult,
+            guards: [ArgumentsGuard, TeacherAuthGuard]),
+        CustomRoute<int>(
+            page: AdminTrialExamTotalView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            path: AppRoutes.routeAdminTrialExamTotal,
+            guards: [ArgumentsGuard, TeacherAuthGuard]),
+        CustomRoute<TrialExamResult>(
+            page: AdminTrialExamSingleResultView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            path: AppRoutes.routeAdminTrialExamSingleView,
+            guards: [ArgumentsGuard, TeacherAuthGuard]),
+        CustomRoute(
+            page: AdminStudentsPasswordView,
+            transitionsBuilder: TransitionsBuilders.fadeIn,
+            guards: [AdminAuthGuard],
+            path: AppRoutes.routeAdminStudentsPassword),
+      ],
+    )
   ],
 )
 class AppRouter extends _$AppRouter {
@@ -183,11 +241,13 @@ class AppRouter extends _$AppRouter {
       {required ArgumentsGuard argumentsGuard,
       required TeacherAuthGuard teacherAuthGuard,
       required StudentAuthGuard studentAuthGuard,
-      required AuthGuard authGuard})
+      required AuthGuard authGuard,
+      required AdminAuthGuard adminAuthGuard})
       : super(
             argumentsGuard: argumentsGuard,
             teacherAuthGuard: teacherAuthGuard,
             studentAuthGuard: studentAuthGuard,
+            adminAuthGuard: adminAuthGuard,
             authGuard: authGuard);
 }
 

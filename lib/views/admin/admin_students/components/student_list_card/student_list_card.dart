@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,8 +66,10 @@ class StudentListBox extends StatelessWidget {
 
   Widget _getStudentListView(List<Student> studentList, BuildContext buildContext) {
     final teacherType = buildContext.read<TeacherCubit>().teacherType;
+
+    final height = MediaQuery.of(buildContext).size.height;
     return SizedBox(
-      height: defaultListHeight,
+      height: height * .8,
       child: ListView.separated(
           itemCount: studentList.length,
           separatorBuilder: (context, index) => defaultDivider,

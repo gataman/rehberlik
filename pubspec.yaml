@@ -16,7 +16,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   
-  cloud_firestore: ^3.1.18
+  
   side_navigation: ^1.0.2
   google_fonts: ^3.0.1
   fl_chart: ^0.55.0
@@ -27,7 +27,7 @@ dependencies:
   file_picker: ^4.6.1
   flutter_svg: ^1.0.3
   intl: ^0.17.0
-  firebase_storage: ^10.3.1
+  
   image_picker: ^0.8.5+3
   open_file: ^3.2.1
   get_it: ^7.2.0
@@ -47,8 +47,11 @@ dependencies:
 
 
   # firebase
-  firebase_core: ^1.18.0
-  firebase_auth: ^3.9.0
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
+  firebase_messaging: ^14.2.1
+  firebase_storage: ^11.0.10
+  cloud_firestore: ^4.3.1
 
   # syncfusion packets
   syncfusion_flutter_calendar: ^20.4.38
@@ -58,7 +61,6 @@ dependencies:
   syncfusion_localizations: ^20.4.38
   syncfusion_flutter_charts: ^20.4.38
   #syncfusion_flutter_datepicker: ^20.4.38
-
   syncfusion_flutter_xlsio: ^20.4.38-beta
   syncfusion_officechart: ^20.4.38-beta
   syncfusion_flutter_datagrid_export: ^20.4.38-beta
@@ -67,6 +69,7 @@ dependencies:
   turkish: ^0.2.1
   path_provider: ^2.0.11
   url_strategy: ^0.2.0
+  
   
   
 

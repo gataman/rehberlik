@@ -6,12 +6,12 @@ import '../../../../core/init/pref_keys.dart';
 import '../../../enums/user_type.dart';
 import '../app_routes.dart';
 
-class TeacherAuthGuard extends AutoRouteGuard {
+class AdminAuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
     if (_checkUser()) {
       if (resolver.route.path == AppRoutes.routeMainAuth) {
-        router.replaceNamed(AppRoutes.routeMainTeacher);
+        router.replaceNamed(AppRoutes.routeMainAdmin);
       } else {
         resolver.next(true);
       }

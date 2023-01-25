@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/custom_dialog.dart';
 import 'package:rehberlik/core/widgets/text_form_fields/app_login_text_form_field.dart';
+import 'package:rehberlik/models/teacher.dart';
 import 'package:rehberlik/views/auth/cubit/auth_cubit.dart';
 
 import '../../../common/constants.dart';
@@ -62,6 +63,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
       validateText: 'E-posta adresi boş olamaz',
       isSecure: false,
       isEmail: true,
+      autofillHints: const [AutofillHints.email],
       onFieldSubmitted: (value) {
         _login();
       },
@@ -79,6 +81,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
       validateText: 'Şifre boş olamaz',
       isSecure: true,
       isFinish: true,
+      autofillHints: const [AutofillHints.password],
       onFieldSubmitted: (value) {
         _login();
       },
@@ -116,7 +119,12 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
         CustomDialog.showSnackBar(
             context: context, message: 'Başarıyla giriş yapıldı! Yönlendiriliyorsunuz...', type: DialogType.success);
         await Future.delayed(const Duration(seconds: 1));
-        context.router.replaceNamed(AppRoutes.routeMainAdmin);
+        debugPrint(result.teacher!.rank.toString());
+        if (result.teacher!.rank == TeacherType.admin.type) {
+          context.router.replaceNamed(AppRoutes.routeMainAdmin);
+        } else {
+          context.router.replaceNamed(AppRoutes.routeMainTeacher);
+        }
       } else {
         CustomDialog.showSnackBar(context: context, message: result.message, type: DialogType.error);
       }

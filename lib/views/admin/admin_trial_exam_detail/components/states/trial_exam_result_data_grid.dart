@@ -13,7 +13,7 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
   final String _dogruLabel = "Doğ";
   final String _netLabel = "Net";
   final String _pointLabel = "Puan";
-  final String _schoolRankLabel = "Okul";
+  final String _schoolRankLabel = "Sıra";
   final String _classRankLabel = "Sınıf";
   final String _yanlisLabel = "Yan";
   int _rowsPerPage = 25;
@@ -49,7 +49,7 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
                     //crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       snapshot.data!, // DatGridWİdget
-                      _buildDataPager(),
+                      // _buildDataPager(),
                       Row(
                         children: [
                           _detailButton(context),
@@ -117,16 +117,21 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
       height: 450,
       child: SfDataGridTheme(
         data: SfDataGridThemeData(
-          sortIcon: _setIcon(),
-        ),
+            sortIcon: _setIcon(),
+            filterIcon: const Icon(
+              Icons.search,
+              size: 14,
+            )),
         child: SfDataGrid(
           key: key,
           allowMultiColumnSorting: true,
+          //verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+          //shrinkWrapRows: true,
           allowSorting: true,
-          //allowFiltering: true,
+          allowFiltering: true,
           columnWidthMode: _getWidthMode(),
           allowTriStateSorting: true,
-          frozenColumnsCount: 3,
+          frozenColumnsCount: 2,
           gridLinesVisibility: GridLinesVisibility.both,
           headerGridLinesVisibility: GridLinesVisibility.both,
 
@@ -153,8 +158,9 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
     stackedHeaderRows = <StackedHeaderRow>[
       StackedHeaderRow(cells: <StackedHeaderCell>[
         StackedHeaderCell(columnNames: <String>[
-          'No',
+          'okulS',
           'Adı Soyadı',
+          'No',
           'Sınıfı',
         ], child: _getWidgetForStackedHeaderCell('')),
         StackedHeaderCell(columnNames: <String>[
@@ -192,7 +198,6 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
           'topYan',
           'topNet',
           'sınıfS',
-          'okulS',
           'puan',
         ], child: _getWidgetForStackedHeaderCell('Toplam'), text: 'Toplam'),
       ])
@@ -212,43 +217,40 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
 
   List<GridColumn> _getColumns() {
     return <GridColumn>[
-      GridColumn(
-        columnName: 'No',
-        label: _getLabelTitleText("No"),
-      ),
+      GridColumn(columnName: 'okulS', label: _getLabelTitleText(_schoolRankLabel), allowFiltering: false),
       GridColumn(
         width: Responsive.isMobile(context) ? 100 : 150,
         columnName: 'Adı Soyadı',
         label: _getLabelTitleText("Öğrenci Adı"),
       ),
+      GridColumn(columnName: 'No', label: _getLabelTitleText("No"), allowFiltering: false),
       GridColumn(
         columnName: 'Sınıfı',
         label: _getLabelTitleText("Sınıfı"),
       ),
-      GridColumn(columnName: 'turDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'turYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'turNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'matDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'matYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'matNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'fenDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'fenYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'fenNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'sosDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'sosYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'sosNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'ingDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'ingYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'ingNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'dinDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'dinYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'dinNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'topDog', label: _getLabelTitleText(_dogruLabel)),
-      GridColumn(columnName: 'topYan', label: _getLabelTitleText(_yanlisLabel)),
-      GridColumn(columnName: 'topNet', label: _getLabelTitleText(_netLabel)),
-      GridColumn(columnName: 'sınıfS', label: _getLabelTitleText(_classRankLabel)),
-      GridColumn(columnName: 'okulS', label: _getLabelTitleText(_schoolRankLabel)),
-      GridColumn(columnName: 'puan', label: _getLabelTitleText(_pointLabel), width: 60),
+      GridColumn(columnName: 'turDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'turYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'turNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'matDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'matYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'matNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'fenDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'fenYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'fenNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'sosDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'sosYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'sosNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'ingDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'ingYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'ingNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'dinDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'dinYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'dinNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'topDog', allowFiltering: false, label: _getLabelTitleText(_dogruLabel)),
+      GridColumn(columnName: 'topYan', allowFiltering: false, label: _getLabelTitleText(_yanlisLabel)),
+      GridColumn(columnName: 'topNet', allowFiltering: false, label: _getLabelTitleText(_netLabel)),
+      GridColumn(columnName: 'sınıfS', allowFiltering: false, label: _getLabelTitleText(_classRankLabel)),
+      GridColumn(columnName: 'puan', allowFiltering: false, label: _getLabelTitleText(_pointLabel), width: 60),
     ];
   }
 

@@ -17,6 +17,7 @@ import 'package:rehberlik/core/widgets/text/app_date_picker_text.dart';
 import 'package:rehberlik/core/widgets/text/app_empty_warning_text.dart';
 import 'package:rehberlik/core/widgets/text/app_menu_title.dart';
 import 'package:rehberlik/core/widgets/text_form_fields/app_outline_text_form_field.dart';
+import 'package:rehberlik/models/teacher.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
 import 'package:rehberlik/views/admin/admin_trial_exam/components/trial_exam_form_box/cubit/trial_exam_form_box_cubit.dart';
@@ -37,7 +38,7 @@ class AdminTrialExamView extends AdminBaseView {
   Widget get firstView => const TrialExamListCard();
 
   @override
-  Widget get secondView => const TrialExamAddFormBox();
+  Widget get secondView => TrialExamAddFormBox(teacherType: teacherType);
 
   @override
   List<BlocProvider<StateStreamableSource<Object?>>> get providers {
