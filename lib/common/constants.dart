@@ -144,6 +144,27 @@ class Constants {
       );
 
   static const List<String> trialExamType = ['90 Soru', '75 Soru'];
+
+  static double parseDouble(Map<String, dynamic>? json, String key, {double defaultValue = 0.0}) {
+    if (json == null) return defaultValue;
+
+    if (!json.containsKey(key)) return defaultValue;
+
+    var rawValue = json[key];
+    if (rawValue == null) return defaultValue;
+
+    if (rawValue is double) return rawValue;
+
+    if (rawValue is int) {
+      return rawValue.toDouble();
+    }
+
+    if (rawValue is String) {
+      return double.tryParse(rawValue) ?? defaultValue;
+    }
+
+    return defaultValue;
+  }
 }
 
 const meetingTypeList = <String>[
@@ -157,6 +178,7 @@ const meetingTypeList = <String>[
 const String vapidKey = 'BNqke_ixC1YIJPk5jfeiBpy5JP8LuosVpjTsrl2ss9ajJHmDyIbDTTGFkmzCbOuL_WXwzeQPYalqCAd9qk7KEb8';
 
 
+ 
 
 //! Sonradan eklenenler:
 

@@ -1,4 +1,6 @@
-part of admin_dashboard_view;
+import 'package:flutter/material.dart';
+
+import '../../../../../common/constants.dart';
 
 class MeetingTypeSelectBox extends StatelessWidget {
   final ValueChanged<int> onChanged;

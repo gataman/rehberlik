@@ -4,7 +4,6 @@ import 'package:rehberlik/common/navigaton/app_router/guards/admin_auth_guard.da
 import 'package:rehberlik/common/navigaton/app_router/guards/auth_guard.dart';
 import 'package:rehberlik/common/navigaton/app_router/guards/teacher_auth_guard.dart';
 import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
-import 'package:rehberlik/models/lesson.dart';
 import 'package:rehberlik/models/trial_exam.dart';
 import 'package:rehberlik/models/trial_exam_result.dart';
 import 'package:rehberlik/views/admin/admin_classes/admin_classes_view.dart';
@@ -27,7 +26,6 @@ import 'package:rehberlik/views/student/studen_trial_exam/student_trial_exam_vie
 import 'package:rehberlik/views/student/student_main_view.dart';
 import 'package:rehberlik/views/student/student_trial_exam_detail/student_exam_detail_view.dart';
 import 'package:rehberlik/views/student/student_trial_exam_list/student_trial_exam_list_view.dart';
-import 'package:rehberlik/views/teacher/teacher_classes/teacher_classes_view.dart';
 import 'package:rehberlik/views/teacher/teacher_main_view.dart';
 
 import '../../../models/student.dart';

@@ -63,11 +63,6 @@ class AppLoginTextFormField extends StatelessWidget {
         errorStyle: const TextStyle(fontSize: 10, fontStyle: FontStyle.italic),
         isDense: false,
         errorMaxLines: 1,
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
       ),
       onEditingComplete: isFinish != null ? (() => TextInput.finishAutofillContext()) : null,
     );

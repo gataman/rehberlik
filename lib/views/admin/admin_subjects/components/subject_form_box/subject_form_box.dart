@@ -1,4 +1,18 @@
-part of admin_subjects_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/core/init/extentions.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/custom_dialog.dart';
+import '../../../../../common/widgets/loading_button.dart';
+import '../../../../../core/init/locale_keys.g.dart';
+import '../../../../../core/widgets/buttons/app_cancel_form_button.dart';
+import '../../../../../core/widgets/containers/app_form_box_elements.dart';
+import '../../../../../core/widgets/text/app_menu_title.dart';
+import '../../../../../core/widgets/text_form_fields/app_outline_text_form_field.dart';
+import '../../../../../models/subject.dart';
+import '../subject_list_card/cubit/subject_list_cubit.dart';
+import 'cubit/edit_subject_cubit.dart';
 
 class SubjectAddFormBox extends StatefulWidget {
   final String lessonID;

@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+
+import '../../../models/student.dart';
 import '../../../models/student_with_class.dart';
 import 'pdf_helper.dart';
 import '../save_file_mobile.dart' if (dart.library.html) 'package:rehberlik/common/helper/save_file_web.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
 
 class StudentPasswordPdfBuilder {
   final ValueNotifier<bool> notifier = ValueNotifier(false);

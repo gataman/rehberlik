@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_imports.dart';
 
+import '../../../../../common/constants.dart';
 import '../../../../../core/widgets/charts/line_charts/trial_exam_student_line_chart2.dart';
 import '../../../../../models/student.dart';
 import '../../../../../models/trial_exam_student_result.dart';
+import '../../../../../responsive.dart';
 
 class StudentExamInfoWidget extends StatelessWidget {
   const StudentExamInfoWidget(

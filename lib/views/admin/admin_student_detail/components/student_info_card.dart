@@ -1,4 +1,17 @@
-part of admin_student_detail_view;
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+
+import '../../../../common/constants.dart';
+import '../../../../common/enums/user_type.dart';
+import '../../../../common/helper/excel_creator/student_detail_excel_builder/student_detail_excel_builder.dart';
+import '../../../../common/navigaton/app_router/app_router.dart';
+import '../../../../common/navigaton/app_router/app_routes.dart';
+import '../../../../common/widgets/button_with_icon.dart';
+import '../../../../common/widgets/loading_button.dart';
+import '../../../../core/init/locale_manager.dart';
+import '../../../../core/init/pref_keys.dart';
+import '../../../../core/widgets/text/app_box_title.dart';
+import '../../../../models/student.dart';
 
 class StudentInfoCard extends StatefulWidget {
   final Student? student;

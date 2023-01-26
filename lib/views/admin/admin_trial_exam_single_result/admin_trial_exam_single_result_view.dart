@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_imports.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_imports.dart';
 
-import '../../../models/student.dart';
-import '../../student/student_trial_exam_list/cubit/student_trial_exam_list_cubit.dart';
+import '../../../models/trial_exam_result.dart';
+import '../admin_base/admin_base_view.dart';
 import '../admin_student_trial_exam_detail_view/cubit/student_trial_exam_detail_cubit.dart';
 
 class AdminTrialExamSingleResultView extends AdminBaseView {

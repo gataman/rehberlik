@@ -1,4 +1,19 @@
-part of admin_trial_exam_result_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/common/extensions.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_datagrid_export/export.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
+import '../../../../../common/helper/save_file_mobile.dart'
+    if (dart.library.html) '../../../../../common/helper/save_file_web.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/widgets/default_circular_progress.dart';
+import '../../../../../models/trial_exam_result.dart';
+import '../../../../../responsive.dart';
+import '../../cubit/trial_exam_result_cubit.dart';
+import '../../init/trial_exam_result_data_source.dart';
 
 class TrialExamResultDataGrid extends StatefulWidget {
   const TrialExamResultDataGrid({Key? key, required this.trialExamResultList}) : super(key: key);

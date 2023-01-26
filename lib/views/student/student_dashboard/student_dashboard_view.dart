@@ -3,8 +3,8 @@ import '../../../common/constants.dart';
 import '../../../core/widgets/containers/app_list_box_container.dart';
 import '../../../core/widgets/text/app_box_title.dart';
 import '../../../models/student.dart';
-import '../../admin/admin_student_detail/admin_student_detail_view.dart';
 import '../../admin/admin_student_detail/components/student_detail_tab_view/time_table/student_time_table_card.dart';
+import '../../admin/admin_student_detail/components/student_info_card.dart';
 import '../student_base/student_base_view.dart';
 
 class StudentDashboardView extends StudentBaseView {

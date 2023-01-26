@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rehberlik/common/enums/user_type.dart';
 
 import '../../../../core/init/locale_manager.dart';

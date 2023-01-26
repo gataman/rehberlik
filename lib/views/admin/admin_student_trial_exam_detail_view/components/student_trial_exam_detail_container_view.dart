@@ -1,7 +1,9 @@
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
-import 'package:rehberlik/views/admin/admin_dashboard/admin_dashboard_imports.dart';
 
+import '../../../../common/constants.dart';
 import '../../../../common/widgets/default_circular_progress.dart';
 import '../../../../core/widgets/containers/app_list_box_container.dart';
 import '../../../../core/widgets/text/app_box_title.dart';

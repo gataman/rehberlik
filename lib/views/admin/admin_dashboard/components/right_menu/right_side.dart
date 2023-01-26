@@ -1,4 +1,10 @@
-part of admin_dashboard_view;
+import 'package:flutter/material.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/widgets/classes_drop_down_menu.dart';
+import '../../../../../core/widgets/text/app_menu_title.dart';
+import 'right_side_bar_chart.dart';
+import 'trial_exams_list.dart';
 
 class RightSide extends StatelessWidget {
   const RightSide({

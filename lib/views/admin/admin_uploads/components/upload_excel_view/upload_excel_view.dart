@@ -1,13 +1,15 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/widgets/button_with_icon.dart';
-import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/admin_trial_exam_result_imports.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/upload_excel_view/cubit/upload_excel_cubit.dart';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
 
+import 'package:universal_html/html.dart' as html;
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/widgets/button_with_icon.dart';
+import '../../../../../common/widgets/default_circular_progress.dart';
+import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
 import '../expansion_student_list.dart';
+import 'cubit/upload_excel_cubit.dart';
 
 class UploadExcelView extends StatelessWidget {
   final bool isEokul;

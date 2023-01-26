@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
-
-import '../../../views/admin/admin_student_detail/admin_student_detail_imports.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class PdfHelper {
   static Future<PdfFont> getPdfFont({required double size, required bool isBold}) async {

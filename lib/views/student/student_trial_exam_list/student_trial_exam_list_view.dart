@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
+import 'package:flutter/material.dart';
 import 'package:rehberlik/views/student/student_base/student_base_view.dart';
 import 'package:rehberlik/views/student/student_trial_exam_list/cubit/components/student_trial_exam_list_card.dart';
 
+import '../../../common/constants.dart';
 import '../../../common/navigaton/app_router/app_routes.dart';
 import '../../../core/widgets/text/app_menu_title.dart';
 

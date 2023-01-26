@@ -1,4 +1,10 @@
-part of admin_dashboard_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/models/school_student_stats.dart';
+import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import 'school_student_stats_card.dart';
 
 class SchoolStudentStatsList extends StatelessWidget {
   final int crossAxisCount;

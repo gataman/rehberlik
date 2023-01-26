@@ -1,4 +1,5 @@
-part of admin_dashboard_view;
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 
 class RightSideBarChart extends StatelessWidget {
   const RightSideBarChart({

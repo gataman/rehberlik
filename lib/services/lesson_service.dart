@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
 
 import '../models/helpers/lesson_with_subject.dart';
 import '../models/lesson.dart';

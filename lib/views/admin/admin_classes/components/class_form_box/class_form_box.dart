@@ -1,4 +1,20 @@
-part of admin_classes_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/init/extentions.dart';
+import '../../../../../common/constants.dart';
+import '../../../../../common/custom_dialog.dart';
+import '../../../../../common/widgets/classes_level_select_box.dart';
+import '../../../../../common/widgets/loading_button.dart';
+import '../../../../../core/init/locale_keys.g.dart';
+import '../../../../../core/init/locale_manager.dart';
+import '../../../../../core/init/pref_keys.dart';
+import '../../../../../core/widgets/buttons/app_cancel_form_button.dart';
+import '../../../../../core/widgets/containers/app_form_box_elements.dart';
+import '../../../../../core/widgets/text/app_menu_title.dart';
+import '../../../../../core/widgets/text_form_fields/app_outline_text_form_field.dart';
+import '../../../../../models/classes.dart';
+import '../class_list_card/cubit/class_list_cubit.dart';
+import 'cubit/class_form_box_cubit.dart';
 
 class ClassFormBox extends StatefulWidget {
   const ClassFormBox({Key? key}) : super(key: key);

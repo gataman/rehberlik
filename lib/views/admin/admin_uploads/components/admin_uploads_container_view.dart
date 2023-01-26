@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/core/widgets/containers/app_list_box_container.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/cubit/admin_uploads_cubit.dart';
+import '../../../../core/widgets/containers/app_list_box_container.dart';
+import 'cubit/admin_uploads_cubit.dart';
 
 import 'upload_excel_view/upload_excel_view.dart';
 import 'upload_student_image_view/upload_student_images_view.dart';

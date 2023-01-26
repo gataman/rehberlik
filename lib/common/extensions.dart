@@ -38,3 +38,26 @@ extension CheckExamType on double {
     }
   }
 }
+
+extension ParseDouble on Map<String, dynamic>? {
+  double parseDouble(String key, {double defaultValue = 0.0}) {
+    if (this == null) return defaultValue;
+
+    if (!this!.containsKey(key)) return defaultValue;
+
+    var rawValue = this![key];
+    if (rawValue == null) return defaultValue;
+
+    if (rawValue is double) return rawValue;
+
+    if (rawValue is int) {
+      return rawValue.toDouble();
+    }
+
+    if (rawValue is String) {
+      return double.tryParse(rawValue) ?? defaultValue;
+    }
+
+    return defaultValue;
+  }
+}

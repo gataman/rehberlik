@@ -5,7 +5,6 @@ import 'package:rehberlik/views/admin/admin_lesson_sources/cubit/lesson_sources_
 
 import '../../../models/student.dart';
 import '../admin_base/admin_base_view.dart';
-import '../admin_student_trial_exam_detail_view/components/student_trial_exam_detail_menu.dart';
 import 'components/student_lesson_sources_container_view.dart';
 
 class AdminLessonSourcesView extends AdminBaseView {

@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/common/helper.dart';
 import 'package:rehberlik/common/models/school_student_stats.dart';
 import 'package:rehberlik/core/init/locale_manager.dart';
 import 'package:rehberlik/core/init/pref_keys.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
 
 import '../../../../../../common/locator.dart';
 import '../../../../../../models/classes.dart';
+import '../../../../../../models/student.dart';
 import '../../../../../../models/student_with_class.dart';
 import '../../../../../../repository/classes_repository.dart';
 import '../../../../../../repository/student_repository.dart';

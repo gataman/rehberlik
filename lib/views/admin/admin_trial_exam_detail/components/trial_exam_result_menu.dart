@@ -1,4 +1,7 @@
-part of admin_trial_exam_result_view;
+import 'package:flutter/material.dart';
+
+import '../../../../common/constants.dart';
+import '../../../../common/widgets/button_with_icon.dart';
 
 class TrialExamResultUploads extends StatelessWidget {
   const TrialExamResultUploads({Key? key}) : super(key: key);

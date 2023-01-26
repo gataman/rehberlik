@@ -1,4 +1,21 @@
-part of admin_classes_view;
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/core/init/extentions.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/custom_dialog.dart';
+import '../../../../../common/navigaton/app_router/app_routes.dart';
+import '../../../../../common/widgets/default_circular_progress.dart';
+import '../../../../../core/init/locale_keys.g.dart';
+import '../../../../../core/widgets/containers/app_list_box_container.dart';
+import '../../../../../core/widgets/list_tiles/app_liste_tile.dart';
+import '../../../../../core/widgets/text/app_box_title.dart';
+import '../../../../../core/widgets/text/app_empty_warning_text.dart';
+import '../../../../../models/classes.dart';
+import '../../../admin_students/components/student_list_card/cubit/student_list_cubit.dart';
+import '../class_form_box/cubit/class_form_box_cubit.dart';
+import 'cubit/class_list_cubit.dart';
 
 class ClassListCard extends StatelessWidget {
   const ClassListCard({Key? key}) : super(key: key);

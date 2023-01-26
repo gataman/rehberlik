@@ -1,6 +1,15 @@
-part of admin_dashboard_view;
-
 // ignore: must_be_immutable
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../models/meeting.dart';
+import 'agenda_box_new_event_alert_dialog.dart';
+import 'agenda_meeting_detail_dialog.dart';
+import 'cubit/agenda_box_cubit.dart';
+import 'meeting_data_source.dart';
+
 class AgendaBox extends StatelessWidget {
   MeetingDataSource? _meetingDataSource;
 

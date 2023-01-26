@@ -3,15 +3,14 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
 import '../../../models/student_with_class.dart';
 import '../save_file_mobile.dart' if (dart.library.html) 'package:rehberlik/common/helper/save_file_web.dart';
-import 'student_detail_excel_builder/student_detail_excel_helper.dart';
 
 class StudentPasswordExcelCrator {
   final ValueNotifier<bool> notifier = ValueNotifier(false);
   final BuildContext context;
-  late StudentDetailExcelHelper _helper;
+  //late StudentDetailExcelHelper _helper;
 
   StudentPasswordExcelCrator(this.context) {
-    _helper = StudentDetailExcelHelper();
+    // _helper = StudentDetailExcelHelper();
   }
 
   Future<void> build(List<StudentWithClass> classesList) async {

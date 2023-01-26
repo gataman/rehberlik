@@ -22,13 +22,13 @@ class CustomTheme {
     brightness: Brightness.dark,
     useMaterial3: true,
     //! COLOR
-    backgroundColor: Constants.darkBackgroundColor,
     canvasColor: Constants.darkCanvasColor,
     dividerColor: Constants.darkDividerColor,
     primaryColor: Constants.darkPrimaryColor,
     primaryColorDark: Constants.darkPrimaryColor,
     scaffoldBackgroundColor: Constants.darkBackgroundColor,
     colorScheme: const ColorScheme.dark().copyWith(
+      background: Constants.darkBackgroundColor,
       primary: Constants.darkPrimaryColor,
       onPrimary: Constants.darkOnPrimaryColor,
       secondary: Constants.darkSecondaryColor,
@@ -36,6 +36,7 @@ class CustomTheme {
       onError: Constants.darkOnErrorColor,
       tertiary: Constants.darkTertiaryColor,
       onTertiary: Constants.darkOnTertiaryColor,
+      surfaceTint: Constants.darkBackgroundColor,
     ),
 
     //! // TYPOGRAPHY & ICONOGRAPHY
@@ -111,6 +112,32 @@ class CustomTheme {
       ),
     ),
     dialogTheme: const DialogTheme(backgroundColor: Constants.darkBackgroundColor),
+    inputDecorationTheme: const InputDecorationTheme(
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: Constants.darkDividerColor),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      outlineBorder: BorderSide(width: 1, color: Constants.darkDividerColor),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: Constants.darkDividerColor),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+    ),
+    dividerTheme: const DividerThemeData(
+      color: Constants.darkDividerColor,
+      thickness: .3,
+      space: .2,
+      indent: .2,
+    ),
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: Constants.darkCanvasColor,
+      elevation: 20,
+      shadowColor: Constants.darkBackgroundColor,
+    ),
   );
 
 //? LIGHT THEME
@@ -122,7 +149,6 @@ class CustomTheme {
 
     //useMaterial3: true,
     //* COLOR
-    backgroundColor: Constants.lightBackgroundColor,
     canvasColor: Constants.lightCanvasColor,
     dividerColor: Constants.lightDividerColor,
     primaryColor: Constants.lightPrimaryColor,
@@ -130,12 +156,14 @@ class CustomTheme {
     primaryColorDark: Constants.lightPrimaryColor,
     colorScheme: const ColorScheme.light().copyWith(
       primary: Constants.lightPrimaryColor,
+      background: Constants.lightBackgroundColor,
       onPrimary: Constants.lightOnPrimaryColor,
       secondary: Constants.lightSecondaryColor,
       error: Constants.lightErrorColor,
       onError: Constants.lightOnErrorColor,
       tertiary: Constants.lightTertiaryColor,
       onTertiary: Constants.lightOnTertiaryColor,
+      surfaceTint: Constants.darkBackgroundColor,
     ),
 
     //* // TYPOGRAPHY & ICONOGRAPHY
@@ -206,6 +234,27 @@ class CustomTheme {
           textStyle: const TextStyle(color: Constants.lightOnPrimaryColor, fontWeight: FontWeight.bold)),
     ),
     dialogTheme: const DialogTheme(backgroundColor: Constants.lightBackgroundColor),
+    inputDecorationTheme: const InputDecorationTheme(
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: Constants.lightDividerColor),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      outlineBorder: BorderSide(width: 1, color: Constants.lightDividerColor),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(width: 1, color: Constants.lightDividerColor),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+    ),
+    dividerTheme: const DividerThemeData(
+      color: Constants.lightDividerColor,
+      thickness: .3,
+      space: .2,
+      indent: .2,
+    ),
   );
 }
 

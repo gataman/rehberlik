@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../common/extensions.dart';
 
 class TrialExamClassResult {
   String? id;
@@ -49,14 +50,14 @@ class TrialExamClassResult {
       trialExamID: data?['trialExamID'],
       trialExamName: data?['trialExamName'],
       trialExamCode: data?['trialExamCode'],
-      turAvg: data?['turAvg'],
-      sosAvg: data?['sosAvg'],
-      dinAvg: data?['dinAvg'],
-      ingAvg: data?['ingAvg'],
-      matAvg: data?['matAvg'],
-      fenAvg: data?['fenAvg'],
-      totAvg: data?['totAvg'],
-      totPointAvg: data?['totPointAvg'],
+      turAvg: data.parseDouble('turAvg'),
+      sosAvg: data.parseDouble('sosAvg'),
+      dinAvg: data.parseDouble('dinAvg'),
+      ingAvg: data.parseDouble('ingAvg'),
+      matAvg: data.parseDouble('matAvg'),
+      fenAvg: data.parseDouble('fenAvg'),
+      totAvg: data.parseDouble('totAvg'),
+      totPointAvg: data.parseDouble('totPointAvg'),
     );
   }
 

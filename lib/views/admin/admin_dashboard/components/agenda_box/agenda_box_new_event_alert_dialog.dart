@@ -1,4 +1,13 @@
-part of admin_dashboard_view;
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/custom_dialog.dart';
+import '../../../../../models/meeting.dart';
+import 'agenda_box_new_event_form_field.dart';
+import 'cubit/agenda_box_cubit.dart';
+import 'meeting_type_select_box.dart';
 
 class AgendaBoxNewEventAlertDialog extends StatefulWidget {
   final CalendarTapDetails details;

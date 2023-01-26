@@ -1,4 +1,18 @@
-part of admin_subjects_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/custom_dialog.dart';
+import '../../../../../common/widgets/default_circular_progress.dart';
+import '../../../../../core/init/extentions.dart';
+import '../../../../../core/init/locale_keys.g.dart';
+import '../../../../../core/widgets/containers/app_list_box_container.dart';
+import '../../../../../core/widgets/list_tiles/app_liste_tile.dart';
+import '../../../../../core/widgets/text/app_box_title.dart';
+import '../../../../../core/widgets/text/app_empty_warning_text.dart';
+import '../../../../../models/subject.dart';
+import '../subject_form_box/cubit/edit_subject_cubit.dart';
+import 'cubit/subject_list_cubit.dart';
 
 class SubjectListCard extends StatelessWidget {
   final String lessonName;

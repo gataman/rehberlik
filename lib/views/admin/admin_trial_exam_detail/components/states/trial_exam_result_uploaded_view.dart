@@ -1,4 +1,11 @@
-part of admin_trial_exam_result_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/widgets/loading_button.dart';
+import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import '../../cubit/trial_exam_result_cubit.dart';
+import 'trial_exam_result_data_grid.dart';
 
 class TrialExamResultUploadedView extends StatelessWidget {
   final TrialExamResultUploadedState state;

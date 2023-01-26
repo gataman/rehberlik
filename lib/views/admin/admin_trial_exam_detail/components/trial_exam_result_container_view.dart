@@ -1,4 +1,16 @@
-part of admin_trial_exam_result_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../common/constants.dart';
+import '../../../../common/custom_dialog.dart';
+import '../../../../common/widgets/default_circular_progress.dart';
+import '../../../../core/widgets/containers/app_list_box_container.dart';
+import '../../../../core/widgets/text/app_box_title.dart';
+import '../cubit/trial_exam_result_cubit.dart';
+import 'states/trial_exam_result_data_grid.dart';
+import 'states/trial_exam_result_default_view.dart';
+import 'states/trial_exam_result_statics_view.dart';
+import 'states/trial_exam_result_uploaded_view.dart';
 
 class TrialExamResultContainerView extends StatelessWidget {
   TrialExamResultContainerView({Key? key}) : super(key: key);
@@ -24,7 +36,10 @@ class TrialExamResultContainerView extends StatelessWidget {
 
     buttonListener.value = false;
     CustomDialog.showSnackBar(
-        context: context, message: result.message, type: result.isSuccess ? DialogType.success : DialogType.error);
+      context: context,
+      message: result.message,
+      type: result.isSuccess ? DialogType.success : DialogType.error,
+    );
   }
 
   @override

@@ -1,16 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/components/student_detail_tab_view/time_table/cubit/time_table_list_cubit.dart';
-import '../../../views/admin/admin_student_detail/components/student_detail_tab_view/question_follow/cubit/question_follow_list_cubit.dart';
-import '../../helper.dart';
-import 'pdf_helper.dart';
-import '../save_file_mobile.dart' if (dart.library.html) 'package:rehberlik/common/helper/save_file_web.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+
 import '../../../models/helpers/lesson_with_subject.dart';
-import 'package:rehberlik/models/question_follow.dart';
-import 'package:rehberlik/models/subject.dart';
-import 'package:rehberlik/models/time_table.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/admin_student_detail_imports.dart';
+import '../../../models/question_follow.dart';
+import '../../../models/student.dart';
+import '../../../models/subject.dart';
+import '../../../models/time_table.dart';
+import '../../../views/admin/admin_student_detail/components/student_detail_tab_view/question_follow/cubit/question_follow_list_cubit.dart';
+import '../../../views/admin/admin_student_detail/components/student_detail_tab_view/time_table/cubit/time_table_list_cubit.dart';
+import '../../extensions.dart';
+import '../../helper.dart';
+import '../save_file_mobile.dart' if (dart.library.html) 'package:rehberlik/common/helper/save_file_web.dart';
+import 'pdf_helper.dart';
 
 class StudentDetailPdfBuilder {
   final ValueNotifier<bool> notifier = ValueNotifier(false);

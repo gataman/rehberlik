@@ -573,7 +573,7 @@ class _FooterBox {
 
     var examResultIndex = 0;
     for (var col = box.firstColumn + 14; col <= box.lastColumn; col = col + 2) {
-      final lessonStyle = worksheet.getRangeByIndex(box.firstRow, col, box.firstRow + 1, col + 1);
+      //final lessonStyle = worksheet.getRangeByIndex(box.firstRow, col, box.firstRow + 1, col + 1);
 
       final cell = worksheet.getRangeByIndex(box.firstRow + 4, col, box.firstRow + 5, col + 1);
       cell.merge();

@@ -1,11 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rehberlik/core/widgets/containers/app_list_box_container.dart';
 import 'package:rehberlik/core/widgets/text/app_box_title.dart';
 import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
 import 'package:rehberlik/models/lesson_source.dart';
-import 'package:rehberlik/views/admin/admin_lesson_sources/components/lesson_sources_data_table.dart';
-import 'package:rehberlik/views/admin/admin_subjects/admin_subjects_imports.dart';
 
+import '../../../../common/constants.dart';
+import '../../../../common/widgets/default_circular_progress.dart';
+import '../../../../models/subject.dart';
 import '../cubit/lesson_sources_cubit.dart';
 import 'lesson_sources_data_table2.dart';
 

@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rehberlik/common/extensions.dart';
 import 'package:rehberlik/models/trial_exam.dart';
+
+import '../common/constants.dart';
 
 class TrialExamResult {
   String? id;
@@ -78,22 +81,22 @@ class TrialExamResult {
       examID: data?['examID'],
       turDog: data?['turDog'],
       turYan: data?['turYan'],
-      turNet: data?['turNet'],
+      turNet: data.parseDouble('turNet'),
       matDog: data?['matDog'],
       matYan: data?['matYan'],
-      matNet: data?['matNet'],
+      matNet: data.parseDouble('matNet'),
       fenDog: data?['fenDog'],
       fenYan: data?['fenYan'],
-      fenNet: data?['fenNet'],
+      fenNet: data.parseDouble('fenNet'),
       sosDog: data?['sosDog'],
       sosYan: data?['sosYan'],
-      sosNet: data?['sosNet'],
+      sosNet: data.parseDouble('sosNet'),
       ingDog: data?['ingDog'],
       ingYan: data?['ingYan'],
-      ingNet: data?['ingNet'],
+      ingNet: data.parseDouble('ingNet'),
       dinDog: data?['dinDog'],
       dinYan: data?['dinYan'],
-      dinNet: data?['dinNet'],
+      dinNet: data.parseDouble('dinNet'),
       totalPoint: data?['totalPoint'],
       schoolRank: data?['schoolRank'],
       classRank: data?['classRank'],
