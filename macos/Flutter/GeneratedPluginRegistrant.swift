@@ -10,10 +10,7 @@ import firebase_auth
 import firebase_core
 import firebase_storage
 import path_provider_foundation
-<<<<<<< HEAD
-=======
 import shared_preferences_foundation
->>>>>>> v2.0
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FLTFirebaseFirestorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseFirestorePlugin"))
