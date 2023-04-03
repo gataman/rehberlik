@@ -1,4 +1,5 @@
-part of admin_dashboard_view;
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 
 class RightSideBarChart extends StatelessWidget {
   const RightSideBarChart({
@@ -8,7 +9,7 @@ class RightSideBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
+      height: 150,
       child: BarChart(
         BarChartData(
             gridData: FlGridData(
@@ -46,9 +47,7 @@ class RightSideBarChart extends StatelessWidget {
               ),
               BarChartGroupData(
                 x: 3,
-                barRods: [
-                  BarChartRodData(toY: 55, color: Colors.lightBlueAccent)
-                ],
+                barRods: [BarChartRodData(toY: 55, color: Colors.lightBlueAccent)],
               ),
               BarChartGroupData(
                 x: 4,
@@ -61,20 +60,18 @@ class RightSideBarChart extends StatelessWidget {
             ],
             borderData: FlBorderData(
                 border: Border.all(
-              color: Colors.white10,
+              color: Theme.of(context).dividerColor,
             )),
             titlesData: FlTitlesData(
               show: true,
               leftTitles: AxisTitles(
-                sideTitles: SideTitles(
-                    showTitles: true, interval: 25, reservedSize: 32),
+                sideTitles: SideTitles(showTitles: true, interval: 25, reservedSize: 32),
               ),
               topTitles: AxisTitles(
                 sideTitles: SideTitles(showTitles: false),
               ),
               bottomTitles: AxisTitles(
-                sideTitles:
-                    SideTitles(showTitles: true, getTitlesWidget: getTitles),
+                sideTitles: SideTitles(showTitles: true, getTitlesWidget: getTitles),
               ),
               rightTitles: AxisTitles(
                 sideTitles: SideTitles(showTitles: false),

@@ -1,0 +1,112 @@
+{
+  "app" : {
+    "title": "Rehberlik Servisi",
+    "subtitle": "Yönetici Paneli",
+    "studentSearch" :"Öğrenci Arama"
+  },
+
+  "dashboard" : {
+    "classes" : "SINIFLAR",
+    "studentCount": "{} Öğrenci",
+    "meetingBoxTitle" : "Randevular - Ajanda",
+    "trialExamBoxTitle" : "Deneme Sınavları"
+  },
+
+  "classes" : {
+    "classListBoxTitle" : "SINIFLAR",
+    "classFormBoxTitleAdd" : "Sınıf Ekle",
+    "classFormBoxTitleUpdate" : "Sınıf Düzenle",
+    "classNameEmptyAlert" : "Lütfen sınıf adını yazınız!",
+    "classNameHint" : "Sınıf Adı",
+    "classListEmptyAlert" : "Henüz sınıf eklenmemiş. Lütfen sınıf ekleyin",
+    "classSuccessAdded" : "Sınıf başarıyla eklendi.",
+    "classSuccessUpdated" : "Sınıf başarıyla güncellendi.",
+    "classDeleteAlert" : "{} adlı sınıfı silmek istediğinizden emin misiniz?"
+  },
+
+  "students" : {
+    "className" : "{} Sınıfı",
+    "classSelectTitle" : "Sınıf Seç",
+    "studentListEmptyAlert" : "Henüz öğrenci eklenmemiş. Lütfen ekleyin",
+    "classListEmptyAlert" : "Sınıf listesi getirilemedi. Sınıflar eklenmemişse önce sınıf ekleyiniz",
+    "studentDeleteAlert" : "{} adlı öğrenciyi silmek istediğinizden emin misiniz?"
+  },
+
+  "studentDetail" : {
+    "questionFollowTitle" : "Soru Takibi",
+    "timeTableTitle" : "Çalışma Programı",
+    "notesTitle": "Notlar",
+    "tcKimlikLabel": "T.C. Kimlik No",
+    "classLabel": "Sınıfı",
+    "noLabel" : "Numarası",
+    "fatherNameLabel": "Baba Adı:",
+    "motherNameLabel": "Anne Adı",
+    "reportsBoxTitle": "Raporlar",
+    "createPdf": "Pdf Oluştur"
+  },
+
+  "lessons": {
+    "lessonListTitle" : "{}.Sınıf Dersleri",
+    "lessonFormBoxTitleAdd" : "Ders Ekle",
+    "lessonFormBoxTitleUpdate" : "Ders Düzenle",
+    "lessonNameHint" : "Ders Adı",
+    "lessonTimeHint": "Ders Saati",
+    "lessonDeleteAlert" : "{} adlı dersi silmek istediğinizden emin misiniz?",
+    "lessonListEmptyAlert" : "Bu sınıf düzeyine ait ders eklenmemiş.Lütfen ekleyiniz!",
+    "lessonNameEmptyAlert" : "Lütfen ders adını yazınız!",
+    "lessonTimeEmptyAlert" : "Lütfen ders saatini yazınız!",
+    "lessonSuccessAdded" : "Ders başarıyla eklendi.",
+    "lessonSuccessUpdated" : "Ders başarıyla güncellendi."
+
+  },
+
+  "trialExams": {
+    "trialExamListTitle" : "{}.Sınıf Deneme Listesi",
+    "trialExamListEmptyAlert" : "Bu sınıf düzeyine ait deneme sonuçları eklenmemiş",
+    "trialExamDeleteAlert" : "{} adlı deneme sınavını silmek istediğinizden emin misiniz?",
+    "trialExamFormBoxTitle" : "Deneme Sınavı Ekle",
+    "trialExamNameEmptyAlert" : "Lütfen sınav adını yazınız!",
+    "trialExamCodeEmptyAlert" : "Lütfen kısa kod yazınız!",
+    "trialExamNameHint" : "Sınav Adı",
+    "trialExamCodeHint" : "Sınav Kod Adı",
+    "trialExamSuccessAdded" : "Deneme sınavı başarıyla eklendi.",
+    "trialExamSuccessUpdated" : "Deneme sınavı başarıyla güncellendi.",
+    "trialExamFormBoxTitleAdd" : "Sınav Ekle",
+    "trialExamtFormBoxTitleUpdate" : "Sınav Düzenle"
+  },
+
+  "trialExamResult": {
+    "trialExamResultTitle" : "{} {}.Sınıf Deneme Listesi",
+    "trialExamResultFormBoxTitle" : "Deneme Sonucu Yükle"
+  },
+
+  "subjects" : {
+    "subjectListTitle" : "{} Dersi Konu Listesi",
+    "subjectFormBoxTitleAdd" : "Konu Ekle",
+    "subjectFormBoxTitleUpdate" : "Konu Düzenle",
+    "subjectListEmptyAlert" : "Bu derse ait konu eklenmemiş.Lütfen ekleyiniz!",
+    "subjectNameEmptyAlert" : "Lütfen konu adını yazınız!",
+    "subjectDeleteAlert" : "{} adlı konuyu silmek istediğinizden emin misiniz?",
+    "subjectNameHint" : "Konu Adı",
+    "subjectSuccessAdded" : "Konu başarıyla eklendi.",
+    "subjectSuccessUpdated" : "Konu başarıyla güncellendi."
+  },
+
+  "actions" : {
+    "delete": "Sil",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "update" : "Güncelle",
+    "yes": "Evet",
+    "no": "Hayır",
+    "warning": "UYARI",
+    "success" : "Başarılı",
+    "error" : "Hata"
+  },
+  "alerts": {
+    "error": "Bir hata oluştu! Hata: {}",
+    "noChange": "Herhangi bir değişiklik yapmadınız!",
+    "delete_success": "{} başarıyla silindi"
+  }
+
+}

@@ -1,22 +1,44 @@
 library admin_subjects_view;
 
-import 'package:rehberlik/common/navigaton/admin_routes.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'admin_subjects_imports.dart';
+import '../../../models/helpers/lesson_with_subject.dart';
+import '../admin_base/admin_base_view.dart';
+import 'components/subject_form_box/cubit/edit_subject_cubit.dart';
+import 'components/subject_form_box/subject_form_box.dart';
+import 'components/subject_list_card/cubit/subject_list_cubit.dart';
+import 'components/subject_list_card/subject_list_card.dart';
 
-part 'components/subject_list_box.dart';
+class AdminSubjectsView extends AdminBaseView {
+  const AdminSubjectsView({required this.lessonWithSubject, Key? key}) : super(key: key);
 
-part 'components/subject_add_form_box.dart';
+  //@PathParam('lessonName') required this.lessonName,
 
-class AdminSubjectsView extends AdminBaseView<AdminSubjectsController> {
-  const AdminSubjectsView({Key? key}) : super(key: key);
+  final LessonWithSubject lessonWithSubject;
+
+  //final String lessonName;
 
   @override
-  Widget get firstView => const SubjectListBox();
+  Widget get firstView => SubjectListCard(
+        lessonName: lessonWithSubject.lesson.lessonName ?? '',
+      );
 
   @override
-  Widget get secondView => const SubjectAddFormBox();
+  Widget get secondView => SubjectAddFormBox(
+        lessonID: lessonWithSubject.lesson.id!,
+      );
 
   @override
   bool get isBack => true;
+
+  @override
+  List<BlocProvider<StateStreamableSource<Object?>>> get providers {
+    final providers = <BlocProvider>[
+      BlocProvider<SubjectListCubit>(
+          create: (_) => SubjectListCubit()..setSubjectList(list: lessonWithSubject.subjectList)),
+      BlocProvider<EditSubjectCubit>(create: (_) => EditSubjectCubit()),
+    ];
+    return providers;
+  }
 }

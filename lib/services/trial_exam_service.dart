@@ -1,10 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/services/base/db_base.dart';
+import 'trial_exam_class_result_service.dart';
+import 'trial_exam_result_service.dart';
+
+import '../common/locator.dart';
+import '../models/trial_exam.dart';
+import 'base/db_base.dart';
 
 class TrialExamService implements DBBase<TrialExam> {
   final _db = FirebaseFirestore.instance;
   final _mainRef = "trial_exams";
+  final TrialExamResultService _trialExamResultService = locator<TrialExamResultService>();
+  final TrialExamClassResultService _trialExamClassResultService = locator<TrialExamClassResultService>();
 
   @override
   Future<String> add({required TrialExam object}) async {
@@ -51,10 +57,17 @@ class TrialExamService implements DBBase<TrialExam> {
     return batch.commit();
   }
 
+  Future<TrialExam?> get({required String id}) async {
+    var colRef = _db.collection(_mainRef).doc(id).withConverter(
+        fromFirestore: TrialExam.fromFirestore, toFirestore: (TrialExam object, _) => object.toFirestore());
+
+    final docSnap = await colRef.get();
+    return docSnap.data();
+  }
+
   Future<List<TrialExam>?> getAll({Map<String, dynamic>? filters}) async {
     var colRef = _db.collection(_mainRef).where('').withConverter(
-        fromFirestore: TrialExam.fromFirestore,
-        toFirestore: (TrialExam object, _) => object.toFirestore());
+        fromFirestore: TrialExam.fromFirestore, toFirestore: (TrialExam object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
@@ -62,12 +75,16 @@ class TrialExamService implements DBBase<TrialExam> {
 
     final docSnap = await colRef.get();
     final list = docSnap.docs.map((e) => e.data()).toList();
+    list.sort(((a, b) => b.examDate!.compareTo(a.examDate!)));
     return list;
   }
 
   @override
   Future<void> delete({required String objectID}) {
-    return _db.collection(_mainRef).doc(objectID).delete();
+    return _db.collection(_mainRef).doc(objectID).delete().then((value) {
+      _trialExamResultService.deleteWithParentID(parentID: objectID);
+      _trialExamClassResultService.deleteWithParentID(parentID: objectID);
+    });
   }
 
   Future<void> deleteAll({required List<TrialExam> list}) async {

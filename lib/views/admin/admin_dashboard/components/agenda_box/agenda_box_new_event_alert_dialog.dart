@@ -1,38 +1,41 @@
-part of admin_dashboard_view;
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/custom_dialog.dart';
+import '../../../../../models/meeting.dart';
+import 'agenda_box_new_event_form_field.dart';
+import 'cubit/agenda_box_cubit.dart';
+import 'meeting_type_select_box.dart';
 
 class AgendaBoxNewEventAlertDialog extends StatefulWidget {
   final CalendarTapDetails details;
+  final AgendaBoxCubit cubit;
 
-  const AgendaBoxNewEventAlertDialog({Key? key, required this.details})
-      : super(key: key);
+  const AgendaBoxNewEventAlertDialog({Key? key, required this.details, required this.cubit}) : super(key: key);
 
   @override
-  State<AgendaBoxNewEventAlertDialog> createState() =>
-      _AgendaBoxNewEventDialogFormState();
+  State<AgendaBoxNewEventAlertDialog> createState() => _AgendaBoxNewEventDialogFormState();
 }
 
-class _AgendaBoxNewEventDialogFormState
-    extends State<AgendaBoxNewEventAlertDialog> {
+class _AgendaBoxNewEventDialogFormState extends State<AgendaBoxNewEventAlertDialog> {
   final _formKey = GlobalKey<FormState>();
   final _subjectController = TextEditingController();
-  final _controller = Get.put(AdminDashboardController());
-  late DateTime _startTime;
-
-  late DateTime _endTime;
   late String _dateText;
+  late TimeOfDay startTime;
+  late TimeOfDay endTime;
+  late DateTime startDate;
+  late DateTime endDate;
+  int meetingTypeIndex = 0;
 
   @override
   void initState() {
-    _startTime = widget.details.date!;
-    _endTime = widget.details.date!.add(const Duration(minutes: 60));
-
-    _controller.startTime.value =
-        TimeOfDay(hour: _startTime.hour, minute: _startTime.minute);
-
-    _controller.endTime.value =
-        TimeOfDay(hour: _endTime.hour, minute: _endTime.minute);
-
-    _dateText = DateFormat("dd.MM.yyyy").format(_startTime);
+    startDate = widget.details.date ?? DateTime.now();
+    endDate = startDate.add(const Duration(minutes: 60));
+    startTime = TimeOfDay(hour: startDate.hour, minute: startDate.minute);
+    endTime = TimeOfDay(hour: endDate.hour, minute: endDate.minute);
+    _dateText = DateFormat("dd.MM.yyyy").format(startDate);
     super.initState();
   }
 
@@ -45,167 +48,174 @@ class _AgendaBoxNewEventDialogFormState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: bgColor,
+      actionsPadding: const EdgeInsets.all(defaultPadding),
+      shape: RoundedRectangleBorder(
+          side: BorderSide(color: Theme.of(context).dividerColor),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      titlePadding: EdgeInsets.zero,
+      insetPadding: EdgeInsets.zero,
       scrollable: true,
       title: Center(
-          child: Column(
-        children: [
-          const Text(
-            "Yeni Randevu / İş Ekle",
-            style: defaultTitleStyle,
-          ),
-          Text(
-            _dateText,
-            style: const TextStyle(color: Colors.teal, fontSize: 12),
-          ),
-        ],
+          child: Align(
+        alignment: Alignment.topRight,
+        child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.cancel,
+              color: Theme.of(context).colorScheme.primary,
+            )),
       )),
-      content: Form(
-          key: _formKey,
-          child: Obx(() {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
+      content: SizedBox(
+        width: 360,
+        child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                    margin: const EdgeInsets.only(bottom: defaultPadding / 2),
-                    child: const MeetingTypeSelectBox()),
                 Center(
-                  child: AgendaBoxNewEventFormField(
-                      subjectController: _subjectController),
+                    child: Column(
+                  children: [
+                    Text(
+                      "Yeni Randevu / İş Ekle",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Text(
+                      _dateText,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ],
+                )),
+                Container(
+                  margin: const EdgeInsets.only(bottom: defaultPadding / 2),
+                  child: MeetingTypeSelectBox(
+                    onChanged: (index) {
+                      meetingTypeIndex = index;
+                    },
+                  ),
+                ),
+                Center(
+                  child: AgendaBoxNewEventFormField(subjectController: _subjectController),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: defaultPadding),
                   child: Table(
                     defaultColumnWidth: const IntrinsicColumnWidth(),
                     children: [
-                      if (_controller.startTime.value != null)
-                        _getStartTimeText(context),
-                      if (_controller.endTime.value != null)
-                        _getEndTimeText(context),
+                      _getStartTimeText(context),
+                      _getEndTimeText(context),
                     ],
                   ),
                 ),
               ],
-            );
-          })),
+            )),
+      ),
       actions: <Widget>[
         ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Kapat')),
+            child: Text('Kapat', style: TextStyle(color: Theme.of(context).colorScheme.onError))),
         ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Colors.lightGreen),
+            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.tertiary),
             onPressed: () {
-              if (_saveEvent(_startTime, _endTime)) {
+              if (_saveEvent()) {
                 Navigator.of(context).pop();
               }
             },
-            child: const Text('Kaydet'))
+            child: Text('Kaydet',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onTertiary,
+                )))
       ],
     );
   }
 
   TableRow _getStartTimeText(BuildContext context) {
     return TableRow(children: [
-      const SizedBox(
-          height: 40, child: Text("Başlangıç Saati", style: defaultInfoTitle)),
+      SizedBox(height: 40, child: Text("Başlangıç Saati", style: Theme.of(context).textTheme.labelLarge)),
       const Text(":", style: defaultInfoTitle),
       GestureDetector(
         onTap: () async {
           TimeOfDay? newStartTime = await showTimePicker(
               builder: (context, child) {
                 return MediaQuery(
-                  data: MediaQuery.of(context)
-                      .copyWith(alwaysUse24HourFormat: true),
+                  data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
                   child: child ?? Container(),
                 );
               },
               context: context,
-              initialTime: _controller.startTime.value!);
+              initialTime: startTime);
+
           if (newStartTime == null) return;
 
-          _controller.startTime.value = newStartTime;
-          _controller.endTime.value = TimeOfDay(
-              hour: newStartTime.hour + 1, minute: newStartTime.minute);
+          setState(() {
+            startTime = newStartTime;
+            endTime = TimeOfDay(hour: newStartTime.hour + 1, minute: newStartTime.minute);
+          });
         },
-        child: Text(_getTimeStringFormat(_controller.startTime.value!)),
+        child: Text(_getTimeStringFormat(startTime)),
       ),
     ]);
   }
 
   TableRow _getEndTimeText(BuildContext context) {
     return TableRow(children: [
-      const Text("Bitiş Saati", style: defaultInfoTitle),
+      Text("Bitiş Saati", style: Theme.of(context).textTheme.labelLarge),
       const Text(":", style: defaultInfoTitle),
       GestureDetector(
         onTap: () async {
           TimeOfDay? newEndTime = await showTimePicker(
               builder: (context, child) {
                 return MediaQuery(
-                  data: MediaQuery.of(context)
-                      .copyWith(alwaysUse24HourFormat: true),
+                  data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
                   child: child ?? Container(),
                 );
               },
               context: context,
-              initialTime: _controller.endTime.value!);
+              initialTime: endTime);
           if (newEndTime == null) return;
 
-          if ((newEndTime.hour * 60) + newEndTime.minute <=
-              (_controller.startTime.value!.hour * 60) +
-                  _controller.startTime.value!.minute) {
-            Get.snackbar(
-              "Hata",
-              "Bitiş saati, başlangıç saatinden önce olamaz!",
-              colorText: secondaryColor,
-              backgroundColor: infoColor,
-            );
+          if ((newEndTime.hour * 60) + newEndTime.minute <= (startTime.hour * 60) + startTime.minute) {
+            if (context.mounted) {
+              CustomDialog.showSnackBar(
+                  context: context,
+                  message: "Bitiş saati, başlangıç saatinden önce "
+                      "olamaz!",
+                  type: DialogType.warning);
+            }
+
             return;
           }
 
-          _controller.endTime.value = newEndTime;
+          setState(() {
+            endTime = newEndTime;
+          });
         },
-        child: Text(_getTimeStringFormat(_controller.endTime.value!)),
+        child: Text(_getTimeStringFormat(endTime)),
       ),
     ]);
   }
 
-  bool _saveEvent(DateTime startTime, DateTime endTime) {
+  bool _saveEvent() {
     if (_formKey.currentState != null) {
       final isValid = _formKey.currentState!.validate();
       if (!isValid) {
         return false;
       }
 
-      if (_controller.startTime.value != null &&
-          _controller.endTime.value != null) {
-        DateTime newStartTime = DateTime(
-            startTime.year,
-            startTime.month,
-            startTime.day,
-            _controller.startTime.value!.hour,
-            _controller.startTime.value!.minute);
+      DateTime newStartTime =
+          DateTime(startDate.year, startDate.month, startDate.day, startTime.hour, startTime.minute);
 
-        DateTime newEndTime = DateTime(
-            startTime.year,
-            startTime.month,
-            startTime.day,
-            _controller.endTime.value!.hour,
-            _controller.endTime.value!.minute);
+      DateTime newEndTime = DateTime(startDate.year, startDate.month, startDate.day, endTime.hour, endTime.minute);
 
-        _controller.addMeeting(Meetings(
-            eventName: _subjectController.text,
-            from: newStartTime,
-            to: newEndTime,
-            type: _controller.meetingTypeIndex.value));
+      widget.cubit.addMeeting(
+          Meeting(eventName: _subjectController.text, from: newStartTime, to: newEndTime, type: meetingTypeIndex));
 
-        return true;
-      } else {
-        return false;
-      }
+      return true;
     } else {
       return false;
     }

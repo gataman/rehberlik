@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/models/subject.dart';
-import 'package:rehberlik/services/base/db_base.dart';
-import 'package:rehberlik/services/time_table_service.dart';
+
+import '../common/locator.dart';
+import '../models/subject.dart';
+import 'base/db_base.dart';
+import 'time_table_service.dart';
 
 class SubjectService implements DBBase<Subject> {
   final _db = FirebaseFirestore.instance;
-  final TimeTableService _timeTableService = Get.put(TimeTableService());
+  final TimeTableService _timeTableService = locator<TimeTableService>();
   final _mainRef = "lessons";
   final _subRef = "subjects";
 
@@ -25,17 +26,9 @@ class SubjectService implements DBBase<Subject> {
     return docRef.id;
   }
 
-  Future<void> deleteWithLessonID(
-      {required String objectID, required String lessonID}) async {
-    return _db
-        .collection(_mainRef)
-        .doc(lessonID)
-        .collection(_subRef)
-        .doc(objectID)
-        .delete()
-        .then((value) async {
-      var timeTableList =
-          await _timeTableService.getAll(filters: {'subjectID': objectID});
+  Future<void> deleteWithLessonID({required String objectID, required String lessonID}) async {
+    return _db.collection(_mainRef).doc(lessonID).collection(_subRef).doc(objectID).delete().then((value) async {
+      var timeTableList = await _timeTableService.getAll(filters: {'subjectID': objectID});
 
       if (timeTableList != null) {
         _timeTableService.deleteAll(list: timeTableList);
@@ -45,11 +38,7 @@ class SubjectService implements DBBase<Subject> {
 
   @override
   Future<void> update({required Subject object}) {
-    final ref = _db
-        .collection(_mainRef)
-        .doc(object.lessonID)
-        .collection(_subRef)
-        .doc(object.id);
+    final ref = _db.collection(_mainRef).doc(object.lessonID).collection(_subRef).doc(object.id);
     return ref.update(object.toFirestore());
   }
 
@@ -81,16 +70,13 @@ class SubjectService implements DBBase<Subject> {
     return batch.commit();
   }
 
-  Future<List<Subject>?> getAll(
-      {required String lessonID, Map<String, dynamic>? filters}) async {
+  Future<List<Subject>> getAll({required String lessonID, Map<String, dynamic>? filters}) async {
     var colRef = _db
         .collection(_mainRef)
         .doc(lessonID)
         .collection(_subRef)
         .where("")
-        .withConverter(
-            fromFirestore: Subject.fromFirestore,
-            toFirestore: (Subject object, _) => object.toFirestore());
+        .withConverter(fromFirestore: Subject.fromFirestore, toFirestore: (Subject object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);

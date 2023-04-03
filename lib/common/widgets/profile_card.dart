@@ -1,6 +1,15 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/responsive.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../navigaton/app_router/app_routes.dart';
+import '../../core/init/pref_keys.dart';
+import '../../views/app_main/cubit/app_main_cubit.dart';
+
+import '../../core/init/locale_manager.dart';
+import '../../models/student.dart';
+import '../../responsive.dart';
+import '../constants.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({
@@ -9,12 +18,13 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Student? student = Student.getStudentFormLocal();
     return Container(
       height: 40,
       margin: const EdgeInsets.only(left: defaultPadding),
       padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
       decoration: BoxDecoration(
-        color: secondaryColor,
+        color: darkSecondaryColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ),
@@ -22,26 +32,49 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const SizedBox(
-            width: 32,
-            height: 32,
-            child: CircleAvatar(
-              backgroundImage: AssetImage(
-                "${imagesSrc}profile.jpeg",
-              ),
+          InkWell(
+            onTap: () {
+              context.read<AppMainCubit>().changeTheme();
+            },
+            child: SizedBox(
+              width: 32,
+              height: 32,
+              child: student != null
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        student.photoUrl!,
+                      ),
+                    )
+                  : const CircleAvatar(
+                      backgroundImage: AssetImage(
+                        "${imagesSrc}profile.jpeg",
+                      ),
+                    ),
             ),
           ),
           if (!Responsive.isMobile(context))
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
               child: Text(
-                "Gürcan Ataman",
-                style: TextStyle(fontSize: 14),
+                student != null ? student.studentName! : '',
+                style: const TextStyle(fontSize: 14),
               ),
             ),
-          const Icon(Icons.keyboard_arrow_down),
+          InkWell(
+              onTap: () async {
+                _signOut(context);
+              },
+              child: const Icon(Icons.keyboard_arrow_down)),
         ],
       ),
     );
+  }
+
+  void _signOut(BuildContext context) async {
+    await SharedPrefs.instance.remove(PrefKeys.userID.toString());
+    await FirebaseAuth.instance.signOut();
+    if (context.mounted) {
+      context.router.replaceNamed(AppRoutes.routeMainAuth);
+    }
   }
 }

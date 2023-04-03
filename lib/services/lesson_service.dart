@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
-import 'package:rehberlik/models/lesson.dart';
-import 'package:rehberlik/models/subject.dart';
-import 'package:rehberlik/services/base/db_base.dart';
+
+import '../models/helpers/lesson_with_subject.dart';
+import '../models/lesson.dart';
+import '../models/subject.dart';
+import 'base/db_base.dart';
 
 class LessonService implements DBBase<Lesson> {
   final _db = FirebaseFirestore.instance;
@@ -23,8 +24,7 @@ class LessonService implements DBBase<Lesson> {
   }
 
   @override
-  Future<void> delete({required String objectID}) =>
-      _db.collection(_mainRef).doc(objectID).delete();
+  Future<void> delete({required String objectID}) => _db.collection(_mainRef).doc(objectID).delete();
 
   @override
   Future<void> update({required Lesson object}) {
@@ -62,8 +62,7 @@ class LessonService implements DBBase<Lesson> {
     return batch.commit();
   }
 
-  Future<List<LessonWithSubject>> getAllWithSubjects(
-      {Map<String, dynamic>? filters}) async {
+  Future<List<LessonWithSubject>> getAllWithSubjects({Map<String, dynamic>? filters}) async {
     final lessonWithSubjectList = <LessonWithSubject>[];
 
     List<Lesson> lessonList = await _getLessonList(filters);
@@ -71,8 +70,7 @@ class LessonService implements DBBase<Lesson> {
     for (var lesson in lessonList) {
       List<Subject> subjectList = await _getSubjectList(lesson);
 
-      final lessonWithSubject =
-          LessonWithSubject(lesson: lesson, subjectList: subjectList);
+      final lessonWithSubject = LessonWithSubject(lesson: lesson, subjectList: subjectList);
       lessonWithSubjectList.add(lessonWithSubject);
     }
 
@@ -80,15 +78,17 @@ class LessonService implements DBBase<Lesson> {
   }
 
   Future<List<Lesson>> _getLessonList(Map<String, dynamic>? filters) async {
-    var colRef = _db.collection(_mainRef).where("").withConverter(
-        fromFirestore: Lesson.fromFirestore,
-        toFirestore: (Lesson object, _) => object.toFirestore());
+    var colRef = _db
+        .collection(_mainRef)
+        .where("")
+        .withConverter(fromFirestore: Lesson.fromFirestore, toFirestore: (Lesson object, _) => object.toFirestore());
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
     });
 
     final docSnap = await colRef.get();
     final lessonList = docSnap.docs.map((e) => e.data()).toList();
+    lessonList.sort((a, b) => b.lessonTime!.compareTo(a.lessonTime!));
     return lessonList;
   }
 
@@ -97,9 +97,7 @@ class LessonService implements DBBase<Lesson> {
         .collection(_mainRef)
         .doc(lesson.id)
         .collection(_subRef)
-        .withConverter(
-            fromFirestore: Subject.fromFirestore,
-            toFirestore: (Subject object, _) => object.toFirestore());
+        .withConverter(fromFirestore: Subject.fromFirestore, toFirestore: (Subject object, _) => object.toFirestore());
 
     final subjectDocSnap = await subRef.get();
     final subjectList = subjectDocSnap.docs.map((e) => e.data()).toList();

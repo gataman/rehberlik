@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/models/school.dart';
-import 'package:rehberlik/services/base/db_base.dart';
+import '../models/classes.dart';
+import '../models/school.dart';
+import 'base/db_base.dart';
 
 class SchoolService implements DBBase<School> {
   final _db = FirebaseFirestore.instance;
@@ -21,8 +21,7 @@ class SchoolService implements DBBase<School> {
   }
 
   @override
-  Future<void> delete({required String objectID}) =>
-      _db.collection(_mainRef).doc(objectID).delete();
+  Future<void> delete({required String objectID}) => _db.collection(_mainRef).doc(objectID).delete();
 
   @override
   Future<void> update({required School object}) {
@@ -57,9 +56,10 @@ class SchoolService implements DBBase<School> {
   }
 
   Future<List<School>> getAll({Map<String, dynamic>? filters}) async {
-    var colRef = _db.collection(_mainRef).where("").withConverter(
-        fromFirestore: School.fromFirestore,
-        toFirestore: (School object, _) => object.toFirestore());
+    var colRef = _db
+        .collection(_mainRef)
+        .where("")
+        .withConverter(fromFirestore: School.fromFirestore, toFirestore: (School object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
@@ -71,16 +71,14 @@ class SchoolService implements DBBase<School> {
   }
 
   Future<int> getStudentCount(
-      {required String schoolID,
-      required int classLevel,
-      Map<String, dynamic>? filters}) async {
-    var _studentTotalCount = 0;
-    var _classList = await _getClassList(schoolID, classLevel);
-    for (var classes in _classList) {
-      final _studentCount = await _getStudentCount(classes.id!);
-      _studentTotalCount += _studentCount;
+      {required String schoolID, required int classLevel, Map<String, dynamic>? filters}) async {
+    var studentTotalCount = 0;
+    var classList = await _getClassList(schoolID, classLevel);
+    for (var classes in classList) {
+      final studentCount = await _getStudentCount(classes.id!);
+      studentTotalCount += studentCount;
     }
-    return _studentTotalCount;
+    return studentTotalCount;
   }
 
   Future<List<Classes>> _getClassList(String schoolID, int classLevel) async {
@@ -88,17 +86,14 @@ class SchoolService implements DBBase<School> {
         .collection("classes")
         .where("schoolID", isEqualTo: schoolID)
         .where("classLevel", isEqualTo: classLevel)
-        .withConverter(
-            fromFirestore: Classes.fromFirestore,
-            toFirestore: (Classes object, _) => object.toFirestore());
+        .withConverter(fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
 
     final classSnap = await classesRef.get();
     return classSnap.docs.map((e) => e.data()).toList();
   }
 
   Future<int> _getStudentCount(String classID) async {
-    var classesRef =
-        _db.collection("students").where("classID", isEqualTo: classID);
+    var classesRef = _db.collection("students").where("classID", isEqualTo: classID);
     final classSnap = await classesRef.get();
 
     return classSnap.size;

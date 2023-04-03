@@ -4,10 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/models/student.dart';
-import 'package:rehberlik/models/student_with_class.dart';
-import 'package:rehberlik/services/base/db_base.dart';
+
+import '../models/classes.dart';
+import '../models/student.dart';
+import '../models/student_with_class.dart';
+import 'base/db_base.dart';
 
 class StudentService implements DBBase<Student> {
   final _db = FirebaseFirestore.instance;
@@ -30,8 +31,23 @@ class StudentService implements DBBase<Student> {
   }
 
   @override
-  Future<void> delete({required String objectID}) =>
-      _db.collection(_mainRef).doc(objectID).delete();
+  Future<void> delete({required String objectID}) => _db.collection(_mainRef).doc(objectID).delete();
+
+  Future<void> deleteWithClassID({required String classID}) async {
+    var batch = _db.batch();
+    final colRef = _db.collection(_mainRef).where('classID', isEqualTo: classID);
+    var count = 1;
+    final docSnap = await colRef.get();
+    for (var doc in docSnap.docs) {
+      batch.delete(doc.reference);
+      if (count % 500 == 0) {
+        await batch.commit();
+        batch.delete(doc.reference);
+      }
+      count++;
+    }
+    return batch.commit();
+  }
 
   @override
   Future<void> update({required Student object}) {
@@ -39,33 +55,24 @@ class StudentService implements DBBase<Student> {
     return ref.update(object.toFirestore());
   }
 
-  Future<List<Student>> getAll(
-      {required String classID, Map<String, dynamic>? filters}) async {
-    var colRef = _db
-        .collection(_mainRef)
-        .where("classID", isEqualTo: classID)
-        .withConverter(
-            fromFirestore: Student.fromFirestore,
-            toFirestore: (Student object, _) => object.toFirestore());
+  Future<List<Student>> getAll({Map<String, dynamic>? filters}) async {
+    var colRef = _db.collection(_mainRef).where("").withConverter(
+        fromFirestore: Student.fromFirestore, toFirestore: (Student object, _) => object.toFirestore());
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
     });
 
     final docSnap = await colRef.get();
     final list = docSnap.docs.map((e) => e.data()).toList();
+    list.sort((a, b) => int.parse(a.studentNumber!).compareTo(int.parse(b.studentNumber!)));
     return list;
   }
 
-  Future<List<Student>> getAllWithSchoolID(
-      {required String schoolID, Map<String, dynamic>? filters}) async {
+  Future<List<Student>> getAllWithSchoolID({required String schoolID, Map<String, dynamic>? filters}) async {
     final List<Student> studentList = [];
 
-    var classesRef = _db
-        .collection(_classesRef)
-        .where("schoolID", isEqualTo: schoolID)
-        .withConverter(
-            fromFirestore: Classes.fromFirestore,
-            toFirestore: (Classes object, _) => object.toFirestore());
+    var classesRef = _db.collection(_classesRef).where("schoolID", isEqualTo: schoolID).withConverter(
+        fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
     filters?.forEach((key, value) {
       classesRef = classesRef.where(key, isEqualTo: value);
     });
@@ -74,7 +81,7 @@ class StudentService implements DBBase<Student> {
     final classesList = classSnap.docs.map((e) => e.data()).toList();
 
     for (var classes in classesList) {
-      final classStudentList = await getAll(classID: classes.id!);
+      final classStudentList = await getAll(filters: {"classID": classes.id!});
       studentList.addAll(classStudentList);
     }
 
@@ -85,12 +92,8 @@ class StudentService implements DBBase<Student> {
       {required String schoolID, Map<String, dynamic>? filters}) async {
     final List<StudentWithClass> studentWithClassesList = [];
 
-    var classesRef = _db
-        .collection(_classesRef)
-        .where("schoolID", isEqualTo: schoolID)
-        .withConverter(
-            fromFirestore: Classes.fromFirestore,
-            toFirestore: (Classes object, _) => object.toFirestore());
+    var classesRef = _db.collection(_classesRef).where("schoolID", isEqualTo: schoolID).withConverter(
+        fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
     filters?.forEach((key, value) {
       classesRef = classesRef.where(key, isEqualTo: value);
     });
@@ -99,17 +102,15 @@ class StudentService implements DBBase<Student> {
     final classesList = classSnap.docs.map((e) => e.data()).toList();
 
     for (var classes in classesList) {
-      final classStudentList = await getAll(classID: classes.id!);
-      classStudentList.sort((a, b) =>
-          int.parse(a.studentNumber!).compareTo(int.parse(b.studentNumber!)));
+      final classStudentList = await getAll(filters: {"classID": classes.id!});
+      classStudentList.sort((a, b) => int.parse(a.studentNumber!).compareTo(int.parse(b.studentNumber!)));
       StudentWithClass studentWithClass = StudentWithClass(classes: classes);
       studentWithClass.studentList = classStudentList;
       studentWithClassesList.add(studentWithClass);
     }
 
     if (studentWithClassesList.length > 1) {
-      studentWithClassesList
-          .sort((a, b) => a.classes.className!.compareTo(b.classes.className!));
+      studentWithClassesList.sort((a, b) => a.classes.className!.compareTo(b.classes.className!));
     }
 
     return studentWithClassesList;
@@ -162,24 +163,20 @@ class StudentService implements DBBase<Student> {
     return Future.value();
   }
 
-  Stream<QuerySnapshot<Student?>> getAllWithStream(
-      {required String classID, Map<String, dynamic>? filters}) {
+  Stream<QuerySnapshot<Student?>> getAllWithStream({required String classID, Map<String, dynamic>? filters}) {
     final data = _db
         .collection(_mainRef)
         .where("classID", isEqualTo: classID)
         .orderBy("studentNumber")
         .withConverter(
-            fromFirestore: Student.fromFirestore,
-            toFirestore: (Student object, _) => object.toFirestore())
+            fromFirestore: Student.fromFirestore, toFirestore: (Student object, _) => object.toFirestore())
         .snapshots();
 
     return data;
   }
 
   Future<String> uploadStudentImage(
-      {required XFile imageFile,
-      required String schoolID,
-      required String imageFileName}) async {
+      {required XFile imageFile, required String schoolID, required String imageFileName}) async {
     final storageRef = _storage.ref().child(schoolID).child(imageFileName);
 
     final metadata = SettableMetadata(

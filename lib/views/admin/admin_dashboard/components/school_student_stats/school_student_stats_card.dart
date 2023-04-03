@@ -1,6 +1,8 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/models/school_student_stats.dart';
+
+import '../../../../../common/constants.dart';
+import '../../../../../common/models/school_student_stats.dart';
 
 class SchoolStudentStatsCard extends StatelessWidget {
   const SchoolStudentStatsCard({
@@ -13,18 +15,8 @@ class SchoolStudentStatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        debugPrint("....");
-      },
-      child: Container(
-        padding: const EdgeInsets.all(defaultPadding / 4),
-        decoration: BoxDecoration(
-          color: secondaryColor,
-          border: Border.all(color: Colors.white10),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
+      onTap: () {},
+      child: Card(
         child: Row(
           children: [
             Expanded(
@@ -56,12 +48,10 @@ class SchoolStudentStatsCard extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      Text(
-                        schoolStudentStats.studentCount == 0
-                            ? "..."
-                            : "${schoolStudentStats.studentCount} Öğrenci",
-                        style: const TextStyle(fontSize: 12),
-                      )
+                      schoolStudentStats.studentList == null
+                          ? _getAnimatedTextView()
+                          : Text("${schoolStudentStats.studentList!.length} Öğrenci",
+                              style: const TextStyle(fontSize: 12)),
                     ],
                   ),
                 ),
@@ -69,6 +59,20 @@ class SchoolStudentStatsCard extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _getAnimatedTextView() {
+    return DefaultTextStyle(
+      style: const TextStyle(
+        fontSize: 12.0,
+      ),
+      child: AnimatedTextKit(
+        animatedTexts: [
+          WavyAnimatedText('...', textStyle: const TextStyle(fontSize: 12, color: Colors.white)),
+        ],
+        isRepeatingAnimation: true,
       ),
     );
   }

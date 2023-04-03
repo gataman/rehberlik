@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Helper {
   static String getTimeDayText(int? time) {
@@ -12,5 +13,13 @@ class Helper {
     } else {
       return "Saat Seçin";
     }
+  }
+
+  static String getRandomString(int length) {
+    const characters = 'ABCDEFGHJKLMNPRSTUVYZ123456789';
+    // '+-*=?AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+    Random random = Random();
+    return String.fromCharCodes(
+        Iterable.generate(length, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
+
+import '../constants.dart';
 
 class SearchWidget extends StatefulWidget {
   final String text;
@@ -14,11 +15,17 @@ class SearchWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SearchWidgetState createState() => _SearchWidgetState();
+  State<SearchWidget> createState() => _SearchWidgetState();
 }
 
 class _SearchWidgetState extends State<SearchWidget> {
   final controller = TextEditingController();
+
+  @override
+  void dispose() {
+    widget.onChanged('');
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +37,10 @@ class _SearchWidgetState extends State<SearchWidget> {
       margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
       height: 40,
       child: TextField(
+        autofocus: true,
         controller: controller,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(0),
           prefixIcon: Icon(Icons.search, color: style.color),
           suffixIcon: widget.text.isNotEmpty
               ? GestureDetector(
@@ -41,12 +49,13 @@ class _SearchWidgetState extends State<SearchWidget> {
                     controller.clear();
                     widget.onChanged('');
                     FocusScope.of(context).requestFocus(FocusNode());
+                    Navigator.of(context).pop();
                   },
                 )
               : null,
           hintStyle: const TextStyle(color: Colors.white30, fontSize: 14),
           hintText: "Öğrenci Arama",
-          fillColor: secondaryColor,
+          fillColor: darkSecondaryColor,
           filled: true,
           border: const OutlineInputBorder(
             borderSide: BorderSide.none,

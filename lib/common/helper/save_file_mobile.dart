@@ -1,19 +1,17 @@
 ///Dart import
 import 'dart:io';
-
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 
 class FileSaveHelper {
   //static const MethodChannel _platformCall = MethodChannel('launchFile');
 
-  static Future<void> saveAndLaunchFile(
-      List<int> bytes, String fileName) async {
+  static Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
     final path = (await getExternalStorageDirectory())?.path;
     if (path != null) {
       final file = File('$path/$fileName');
       await file.writeAsBytes(bytes, flush: true);
-      OpenFile.open('$path/$fileName');
+      OpenFilex.open('$path/$fileName');
     }
   }
 

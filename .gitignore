@@ -32,7 +32,6 @@
 /build/
 
 # Web related
-lib/generated_plugin_registrant.dart
 
 # Symbolication related
 app.*.symbols
@@ -44,8 +43,21 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+<<<<<<< HEAD
 .env
 .firebaserc
 
 .firebase/
 .vscode/
+=======
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+/macos/Runner/GoogleService-Info.plist
+
+.env
+.vscode
+.firebaserc
+.metadata
+*.lock
+.firebase/
+>>>>>>> v2.0

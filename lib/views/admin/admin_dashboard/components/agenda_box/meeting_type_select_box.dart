@@ -1,48 +1,49 @@
-part of admin_dashboard_view;
+import 'package:flutter/material.dart';
 
-class MeetingTypeSelectBox extends GetView<AdminDashboardController> {
-  const MeetingTypeSelectBox({Key? key}) : super(key: key);
+import '../../../../../common/constants.dart';
+
+class MeetingTypeSelectBox extends StatelessWidget {
+  final ValueChanged<int> onChanged;
+
+  const MeetingTypeSelectBox({Key? key, required this.onChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return DropdownButtonFormField<String>(
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.symmetric(
-              vertical: -5, horizontal: defaultPadding / 2),
-          hintStyle: TextStyle(color: Colors.white30),
-          fillColor: secondaryColor,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white10),
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: primaryColor),
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: -5, horizontal: defaultPadding / 2),
+        hintStyle: const TextStyle(fontSize: 14),
+        hintText: meetingTypeList[0],
+        fillColor: darkSecondaryColor,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.of(context).dividerColor),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
           ),
         ),
-        value: meetingTypeList[controller.meetingTypeIndex.value],
-        icon: const Icon(Icons.keyboard_arrow_down),
-        onChanged: (String? newValue) {
-          if (newValue != null) {
-            controller.meetingTypeIndex.value =
-                meetingTypeList.indexOf(newValue);
-          }
-        },
-        items: meetingTypeList.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(
-              value,
-              style: const TextStyle(fontSize: 14),
-            ),
-          );
-        }).toList(),
-      );
-    });
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      ),
+      value: meetingTypeList[0],
+      icon: const Icon(Icons.keyboard_arrow_down),
+      onChanged: (String? newValue) {
+        if (newValue != null) {
+          onChanged(meetingTypeList.indexOf(newValue));
+        }
+      },
+      items: meetingTypeList.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(
+            value,
+            style: const TextStyle(fontSize: 14),
+          ),
+        );
+      }).toList(),
+    );
   }
 }

@@ -1,6 +1,12 @@
-part of admin_dashboard_view;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SchoolStudentStatsList extends GetView<AdminDashboardController> {
+import '../../../../../common/constants.dart';
+import '../../../../../common/models/school_student_stats.dart';
+import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import 'school_student_stats_card.dart';
+
+class SchoolStudentStatsList extends StatelessWidget {
   final int crossAxisCount;
   final double childAspectRatio;
 
@@ -12,28 +18,27 @@ class SchoolStudentStatsList extends GetView<AdminDashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    if (controller.schoolStudentStatsList.value == null) {
-      controller.getSchoolStudentStats();
-    }
-    return Obx(() {
-      final schoolStudentStats = controller.schoolStudentStatsList.value;
-      if (schoolStudentStats != null) {
-        return GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: schoolStudentStats.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            childAspectRatio: childAspectRatio,
-            crossAxisSpacing: defaultPadding / 2,
-            mainAxisSpacing: defaultPadding / 2,
-          ),
-          itemBuilder: (context, index) => SchoolStudentStatsCard(
-              schoolStudentStats: schoolStudentStats[index]),
-        );
+    return BlocBuilder<ClassListCubit, ClassListState>(builder: (context, state) {
+      if (state is ClassListLoadingState) {
+        return buildGridView(state.schoolStatsList);
       } else {
-        return Container();
+        return buildGridView((state as ClassListLoadedState).schoolStatsList);
       }
     });
+  }
+
+  GridView buildGridView(List<SchoolStudentStats> schoolStudentStats) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: schoolStudentStats.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: childAspectRatio,
+        crossAxisSpacing: defaultPadding / 2,
+        mainAxisSpacing: defaultPadding / 2,
+      ),
+      itemBuilder: (context, index) => SchoolStudentStatsCard(schoolStudentStats: schoolStudentStats[index]),
+    );
   }
 }

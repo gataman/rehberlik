@@ -1,5 +1,5 @@
-import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/models/student.dart';
+import 'classes.dart';
+import 'student.dart';
 
 class StudentWithClass {
   Classes classes;

@@ -1,16 +1,15 @@
 library admin_message_view;
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rehberlik/views/admin/admin_messages/admin_message_controller.dart';
-
+import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
 part 'widgets/admin_message_content.dart';
 
-class AdminMessageView extends StatelessWidget {
+class AdminMessageView extends AdminBaseView {
   const AdminMessageView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const AdminMessageContent();
-  }
+  Widget get firstView => const Text('Mesajlar');
+
+  @override
+  Widget get secondView => const Text('');
 }

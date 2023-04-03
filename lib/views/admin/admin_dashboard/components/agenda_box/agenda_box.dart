@@ -1,168 +1,89 @@
-part of admin_dashboard_view;
-
 // ignore: must_be_immutable
-class AgendaBox extends GetView<AdminDashboardController> {
-  MeetingDataSource? _meetingDataSource;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-  AgendaBox({Key? key}) : super(key: key);
+import '../../../../../common/constants.dart';
+import '../../../../../models/meeting.dart';
+import 'agenda_box_new_event_alert_dialog.dart';
+import 'agenda_meeting_detail_dialog.dart';
+import 'cubit/agenda_box_cubit.dart';
+import 'meeting_data_source.dart';
+
+class AgendaBox extends StatelessWidget {
+  const AgendaBox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
-    return Container(
+    final Size size = MediaQuery.of(context).size;
+    return SizedBox(
       height: 400,
-      padding: const EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        border: Border.all(color: Colors.white10),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+      child: Card(
+        child: Column(
+          children: [
+            Text(
+              "Randevular - Ajanda",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const Divider(),
+            BlocBuilder<AgendaBoxCubit, AgendaBoxState>(builder: (context, state) {
+              final list = (state as AgendaBoxInitial).meetingList;
+
+              MeetingDataSource? meetingDataSource = MeetingDataSource(list);
+
+              return Expanded(
+                child: SfCalendar(
+                  view: CalendarView.week,
+                  dataSource: meetingDataSource,
+                  showNavigationArrow: true,
+                  showDatePickerButton: true,
+                  firstDayOfWeek: 1,
+                  appointmentTextStyle: TextStyle(
+                      letterSpacing: -0.2,
+                      fontWeight: FontWeight.w500,
+                      fontSize: size.width <= 600 ? 7 : 10,
+                      color: darkBackColor),
+                  onTap: (CalendarTapDetails details) {
+                    _showCalendarDialog(context, details);
+                  },
+                  onViewChanged: (view) {
+                    //DateTime startTime = view.visibleDates.first;
+                    //DateTime endTime = view.visibleDates.last;
+
+                    //controller.getAllMeetingsWithTime(startTime, endTime);
+                  },
+                  timeSlotViewSettings: const TimeSlotViewSettings(dateFormat: 'dd', timeFormat: 'HH.mm'),
+                  monthViewSettings: const MonthViewSettings(
+                      appointmentDisplayMode: MonthAppointmentDisplayMode.appointment, agendaViewHeight: 200),
+                ),
+              );
+            }),
+          ],
         ),
-      ),
-      child: Column(
-        children: [
-          const Text(
-            "Randevular - Ajanda",
-            style: TextStyle(fontSize: 16),
-          ),
-          const Divider(),
-          Obx(() {
-            final _list = controller.meetingList.value;
-            if (_list != null) {
-              _meetingDataSource = MeetingDataSource(_list);
-            }
-
-            return Expanded(
-              child: SfCalendar(
-                view: CalendarView.week,
-                dataSource: _meetingDataSource,
-                showNavigationArrow: true,
-                showDatePickerButton: true,
-                firstDayOfWeek: 1,
-                appointmentTextStyle: TextStyle(
-                    letterSpacing: -0.2,
-                    fontWeight: FontWeight.w500,
-                    fontSize: _size.width <= 600 ? 7 : 10,
-                    color: bgColor),
-                onTap: (CalendarTapDetails details) {
-                  _showCalendarDialog(context, details);
-                },
-                onViewChanged: (view) {
-                  DateTime startTime = view.visibleDates.first;
-                  DateTime endTime = view.visibleDates.last;
-
-                  controller.getAllMeetingsWithTime(startTime, endTime);
-                },
-                timeSlotViewSettings: const TimeSlotViewSettings(
-                    dateFormat: 'dd', timeFormat: 'HH.mm'),
-                monthViewSettings: const MonthViewSettings(
-                    appointmentDisplayMode:
-                        MonthAppointmentDisplayMode.appointment,
-                    agendaViewHeight: 200),
-              ),
-            );
-          }),
-        ],
       ),
     );
   }
 
   void _showCalendarDialog(BuildContext context, CalendarTapDetails details) {
     if (details.targetElement == CalendarElement.appointment) {
-      final Meetings meetings = details.appointments![0];
-      _showEventDetailDialog(context, meetings);
-    } else if (details.targetElement == CalendarElement.calendarCell) {
+      final Meeting meeting = details.appointments![0];
+      final AgendaBoxCubit cubit = context.read<AgendaBoxCubit>();
+
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AgendaBoxNewEventAlertDialog(details: details);
+            return AgendaMeetingDetailDialog(meeting: meeting, cubit: cubit);
+          });
+    } else if (details.targetElement == CalendarElement.calendarCell) {
+      final cubit = context.read<AgendaBoxCubit>();
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AgendaBoxNewEventAlertDialog(
+              details: details,
+              cubit: cubit,
+            );
           });
     }
-  }
-
-  void _showEventDetailDialog(BuildContext context, Meetings meetings) {
-    String _subjectText = meetings.eventName!;
-    String _dateText =
-        DateFormat.yMMMd('tr_TR').format(meetings.from!).toString();
-    String _startTimeText =
-        DateFormat('HH.mm').format(meetings.from!).toString();
-    String _endTimeText = DateFormat('HH.mm').format(meetings.to!).toString();
-    String _timeDetails = '$_startTimeText - $_endTimeText';
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: secondaryColor,
-            title: const Center(
-                child: Text(
-              "Randevu / İş Detayı",
-              style: defaultTitleStyle,
-            )),
-            content: SizedBox(
-              height: 80,
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Center(
-                      child: Text(
-                        _subjectText,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: Colors.white),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: defaultPadding,
-                    ),
-                    Center(
-                      child: Text("$_dateText - $_timeDetails",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                              color: infoColor)),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            actions: <Widget>[
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.redAccent),
-                onPressed: () {
-                  _deleteEvent(meetings, context);
-                },
-                child: const Text('Sil'),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.green),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Kapat'),
-              )
-            ],
-          );
-        });
-  }
-
-  void _deleteEvent(Meetings meetings, BuildContext context) {
-    Get.defaultDialog(
-      title: "Uyarı",
-      middleText:
-          "${meetings.eventName} adlı randevu / iş silinecek. Emin misiniz?",
-      contentPadding: const EdgeInsets.all(defaultPadding),
-      onConfirm: () {
-        controller.deleteMeeting(meetings).then((value) {
-          Get.back();
-          Navigator.of(context).pop();
-        });
-      },
-      onCancel: () => Get.back(),
-      textConfirm: "Sil",
-      textCancel: "İptal",
-    );
   }
 }

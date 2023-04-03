@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/models/meetings.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../../../../../models/meeting.dart';
+
 class MeetingDataSource extends CalendarDataSource {
-  MeetingDataSource(List<Meetings> meetings) {
+  MeetingDataSource(List<Meeting>? meetings) {
     appointments = meetings;
   }
 
@@ -27,10 +28,10 @@ class MeetingDataSource extends CalendarDataSource {
     return _getMeetingData(index).background!;
   }
 
-  Meetings _getMeetingData(int index) {
+  Meeting _getMeetingData(int index) {
     final dynamic meeting = appointments![index];
-    late final Meetings meetingData;
-    if (meeting is Meetings) {
+    late final Meeting meetingData;
+    if (meeting is Meeting) {
       meetingData = meeting;
     }
 

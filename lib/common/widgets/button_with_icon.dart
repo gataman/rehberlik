@@ -1,44 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
+
+import '../constants.dart';
 
 class ButtonWithIcon extends StatelessWidget {
   final String labelText;
   final IconData icon;
-  final Color backgroundColor;
-  final Color textColor;
+  final Color? backgroundColor;
+  final Color? textColor;
   final VoidCallback onPressed;
 
   const ButtonWithIcon(
       {Key? key,
       required this.labelText,
       required this.icon,
-      this.backgroundColor = Colors.amber,
-      this.textColor = secondaryColor,
+      this.backgroundColor,
+      this.textColor,
       required this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: backgroundColor,
-      ),
-      onPressed: onPressed,
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: textColor,
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                labelText,
-                style: TextStyle(color: textColor),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: defaultPadding / 4),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: textColor ?? Theme.of(context).colorScheme.onPrimary,
+            ),
+            Expanded(
+              child: Center(
+                child: Text(
+                  labelText,
+                  style: TextStyle(
+                      color: textColor ?? Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

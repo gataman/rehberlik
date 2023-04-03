@@ -1,17 +1,35 @@
 library admin_classes_view;
 
-import 'admin_classes_imports.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rehberlik/models/teacher.dart';
+import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
+import 'package:rehberlik/views/admin/admin_classes/components/class_form_box/cubit/class_form_box_cubit.dart';
 
-part 'components/class_list_box.dart';
-part 'components/classes_add_form_box.dart';
-part 'components/classes_category_select_box.dart';
+import 'components/class_form_box/class_form_box.dart';
+import 'components/class_list_card/class_list_card.dart';
 
-class AdminClassesView extends AdminBaseView<AdminClassesController> {
+class AdminClassesView extends AdminBaseView {
   const AdminClassesView({Key? key}) : super(key: key);
 
   @override
-  Widget get firstView => const ClassListBox();
+  Widget get firstView => getData();
 
   @override
-  Widget get secondView => const ClassesAddFormBox();
+  Widget get secondView => const ClassFormBox();
+
+  @override
+  bool get isFullPage => teacherType == TeacherType.teacher;
+
+  @override
+  List<BlocProvider<StateStreamableSource<Object?>>> get providers {
+    final providers = <BlocProvider>[
+      BlocProvider<ClassFormBoxCubit>(create: (_) => ClassFormBoxCubit()),
+    ];
+    return providers;
+  }
+
+  Widget getData() {
+    return const ClassListCard();
+  }
 }
