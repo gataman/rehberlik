@@ -1,4 +1,4 @@
-# Guidance
+# Rehberlik
 
 Rehberlik is an application designed to help students track their exam results, while providing teachers and parents with statistical analysis of their progress.
 
