@@ -6,5 +6,5 @@ extension StringLocalization on String {
 }
 
 extension AppTextStyle on BuildContext {
-  TextStyle? get normalTextStyle => Theme.of(this).textTheme.subtitle1;
+  TextStyle? get normalTextStyle => Theme.of(this).textTheme.titleMedium;
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +11,7 @@ part 'student.g.dart';
 
 @JsonSerializable()
 class Student {
-  final String? id;
+  String? id;
   String? classID;
   int? classLevel;
   String? studentName;
@@ -25,24 +26,29 @@ class Student {
   String? className;
   String? targetSchoolID;
   String? password;
+  String? tcKimlik;
+  String? salonNo;
+  String? siraNo;
 
-  Student({
-    this.id,
-    this.classID,
-    this.classLevel,
-    this.studentName,
-    this.studentNumber,
-    this.fatherName,
-    this.motherName,
-    this.gender,
-    this.birthDay,
-    this.photoUrl,
-    this.fatherPhone,
-    this.motherPhone,
-    this.className,
-    this.targetSchoolID,
-    this.password,
-  });
+  Student(
+      {this.id,
+      this.classID,
+      this.classLevel,
+      this.studentName,
+      this.studentNumber,
+      this.fatherName,
+      this.motherName,
+      this.gender,
+      this.birthDay,
+      this.photoUrl,
+      this.fatherPhone,
+      this.motherPhone,
+      this.className,
+      this.targetSchoolID,
+      this.password,
+      this.tcKimlik,
+      this.salonNo,
+      this.siraNo});
 
   factory Student.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -65,6 +71,9 @@ class Student {
       className: data?['className'],
       targetSchoolID: data?['targetSchoolID'],
       password: data?['password'],
+      tcKimlik: data?['tcKimlik'],
+      salonNo: data?['salonNo'],
+      siraNo: data?['siraNo'],
     );
   }
 
@@ -83,6 +92,10 @@ class Student {
       if (motherPhone != null) "motherPhone": motherPhone,
       if (className != null) "className": className,
       if (targetSchoolID != null) "targetSchoolID": targetSchoolID,
+      if (tcKimlik != null) "tcKimlik": tcKimlik,
+      if (salonNo != null) "salonNo": salonNo,
+      if (siraNo != null) "siraNo": siraNo,
+      if (targetSchoolID != null) "targetSchoolID": targetSchoolID,
       "password": password,
     };
   }
@@ -91,11 +104,6 @@ class Student {
 
   Map<String, dynamic> toJson() => _$StudentToJson(this);
 
-  @override
-  String toString() {
-    return 'Student{id: $id, classID: $classID, classLevel: $classLevel, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className, targetSchoolID: $targetSchoolID,password: $password}';
-  }
-
   static Student? getStudentFormLocal() {
     final studentPref = SharedPrefs.instance.getString(PrefKeys.student.toString());
     if (studentPref != null) {
@@ -103,5 +111,10 @@ class Student {
     } else {
       return null;
     }
+  }
+
+  @override
+  String toString() {
+    return 'Student(id: $id, classID: $classID, classLevel: $classLevel, studentName: $studentName, studentNumber: $studentNumber, fatherName: $fatherName, motherName: $motherName, gender: $gender, birthDay: $birthDay, photoUrl: $photoUrl, fatherPhone: $fatherPhone, motherPhone: $motherPhone, className: $className, targetSchoolID: $targetSchoolID, password: $password, tcKimlik: $tcKimlik, salonNo: $salonNo, siraNo: $siraNo)';
   }
 }

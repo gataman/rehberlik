@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/cubit/trial_exam_result_cubit.dart';
+import '../../../models/trial_exam.dart';
+import '../admin_base/admin_base_view.dart';
+import 'cubit/trial_exam_result_cubit.dart';
 
 import 'components/trial_exam_result_container_view.dart';
 import 'components/trial_exam_result_menu.dart';

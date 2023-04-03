@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/views/auth/components/student_login_view.dart';
-import 'package:rehberlik/views/auth/components/teacher_login_view.dart';
-import 'package:rehberlik/views/auth/cubit/auth_cubit.dart';
+import 'components/student_login_view.dart';
+import 'components/teacher_login_view.dart';
+import 'cubit/auth_cubit.dart';
 
 import '../../common/constants.dart';
 import '../../core/widgets/containers/app_list_box_container.dart';

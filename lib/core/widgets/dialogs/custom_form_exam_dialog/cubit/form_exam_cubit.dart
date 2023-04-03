@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
-import 'package:rehberlik/models/lesson.dart';
+import '../../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
+import '../../../../../models/lesson.dart';
 
 part 'form_exam_state.dart';
 
@@ -9,9 +9,6 @@ class FormExamCubit extends Cubit<FormExamState> {
   FormExamCubit() : super(FormExamState());
 
   void checkExamResults({required Map<LessonCode, dynamic> examMap}) {
-    bool isSuccess = false;
-    String? errorMessage;
-
     if (_checkQuestionCount(examMap)) {
       debugPrint('Hata yok');
     } else {

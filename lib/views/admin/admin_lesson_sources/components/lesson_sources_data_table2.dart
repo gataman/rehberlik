@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
+import '../../../../models/helpers/lesson_with_subject.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../common/constants.dart';

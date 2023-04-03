@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/cubit/uploads_type.dart';
+import 'uploads_type.dart';
 
 part 'admin_uploads_state.dart';
 
@@ -17,6 +17,9 @@ class AdminUploadsCubit extends Cubit<AdminUploadsState> {
         break;
       case UploadType.photo:
         emit(AdminUploadsPhotoState());
+        break;
+      case UploadType.tc:
+        emit(AdminUploadsTcState());
         break;
     }
   }

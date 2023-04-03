@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/models/student.dart';
+import '../../../../common/constants.dart';
+import '../../../../models/student.dart';
 
 class ExpansionStudentList extends StatefulWidget {
   final Map<String, List<Student>> data;

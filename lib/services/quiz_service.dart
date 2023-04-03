@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/models/quiz.dart';
+import '../models/quiz.dart';
 import 'base/db_base.dart';
 
 class QuizService implements DBBase<Quiz> {

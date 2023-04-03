@@ -6,14 +6,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_excel/excel.dart';
 import 'package:intl/intl.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/core/init/locale_manager.dart';
-import 'package:rehberlik/core/init/pref_keys.dart';
-import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/models/student.dart';
-import 'package:rehberlik/repository/classes_repository.dart';
-import 'package:rehberlik/repository/student_repository.dart';
+import '../../../../../../common/extensions.dart';
+import '../../../../../../common/locator.dart';
+import '../../../../../../core/init/locale_manager.dart';
+import '../../../../../../core/init/pref_keys.dart';
+import '../../../../../../models/classes.dart';
+import '../../../../../../models/student.dart';
+import '../../../../../../repository/classes_repository.dart';
+import '../../../../../../repository/student_repository.dart';
 
 part 'upload_excel_state.dart';
 

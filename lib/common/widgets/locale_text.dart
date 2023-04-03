@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import '../../core/init/extentions.dart';
+import '../../core/init/extensions.dart';
 
 class LocaleText extends StatelessWidget {
   final String text;

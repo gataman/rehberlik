@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/core/widgets/popup_menu/custom_popup_menu_button.dart';
-import 'package:rehberlik/responsive.dart';
-import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
-import 'package:rehberlik/views/app_main/search/search_student_dialog.dart';
+import '../../core/widgets/popup_menu/custom_popup_menu_button.dart';
+import '../../responsive.dart';
+import '../../views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import '../../views/app_main/search/search_student_dialog.dart';
 
 import '../../core/init/locale_manager.dart';
 import '../../core/init/pref_keys.dart';
@@ -107,7 +107,9 @@ class CustomAppBar extends AppBar {
     await SharedPrefs.instance.remove(PrefKeys.userType.toString());
     await SharedPrefs.instance.remove(PrefKeys.theme.toString());
     await FirebaseAuth.instance.signOut();
-    context.router.replaceNamed(AppRoutes.routeMainAuth);
+    if (context.mounted) {
+      context.router.replaceNamed(AppRoutes.routeMainAuth);
+    }
   }
 
   @override
@@ -156,8 +158,9 @@ class _AdminAppBarTitle extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "Başarı İzleme Uygulaması",
+                  "YSO Başarı İzleme ",
                   style: TextStyle(fontSize: isMobile ? 14 : 16, fontWeight: FontWeight.bold, color: Colors.amber),
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   title,

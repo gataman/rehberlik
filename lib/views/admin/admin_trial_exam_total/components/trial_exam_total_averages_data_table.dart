@@ -2,10 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rehberlik/core/widgets/data_table/sf_data_grid_icon.dart';
-import 'package:rehberlik/models/trial_exam_student_result.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_total/cubit/trial_exam_total_cubit.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+import '../../../../core/widgets/data_table/sf_data_grid_icon.dart';
+import '../../../../models/trial_exam_student_result.dart';
+import '../cubit/trial_exam_total_cubit.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_datagrid_export/export.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
@@ -32,7 +31,7 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
   final String _schoolRankLabel = "Okul";
   final String _classRankLabel = "Sınıf";
   final String _yanlisLabel = "Yan";
-  int _rowsPerPage = 25;
+  // = 25;
 
   late _TrialExamResultDataSource _trialExamResultDataSource;
   late List<TrialExamStudentResult> _trialExamStudentResultList;
@@ -105,6 +104,11 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
     //subjectList.sort((a, b) => a.subject!.compareTo(b.subject!));
     await Future.delayed(const Duration(seconds: 1));
 
+    var columnWidth = double.nan;
+    if (context.mounted) {
+      columnWidth = 35;
+    }
+
     return SizedBox(
         height: 450,
         child: SfDataGridIcon(
@@ -120,9 +124,8 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
             frozenColumnsCount: 2,
             gridLinesVisibility: GridLinesVisibility.both,
             headerGridLinesVisibility: GridLinesVisibility.both,
-
             headerRowHeight: 30,
-            defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
+            defaultColumnWidth: columnWidth,
             rowHeight: 40,
             //rowsPerPage: _rowsPerPage,
             //footerFrozenRowsCount: 1,
@@ -289,7 +292,7 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
     );
   }
 
-  Widget _buildDataPager() {
+  /* Widget _buildDataPager() {
     var pageCount = _trialExamStudentResultList.length / _rowsPerPage;
     if (pageCount % _rowsPerPage != 0) {
       pageCount = pageCount + 1;
@@ -310,7 +313,7 @@ class _TrialExamTotalAveragesDataTableState extends State<TrialExamTotalAverages
         },
       ),
     );
-  }
+  } */
 
   void _sortColumns() {
     _trialExamResultDataSource.sortedColumns

@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
-import 'package:rehberlik/core/init/pref_keys.dart';
-import 'package:rehberlik/views/app_main/cubit/app_main_cubit.dart';
+import '../navigaton/app_router/app_routes.dart';
+import '../../core/init/pref_keys.dart';
+import '../../views/app_main/cubit/app_main_cubit.dart';
 
 import '../../core/init/locale_manager.dart';
 import '../../models/student.dart';
@@ -73,6 +73,8 @@ class ProfileCard extends StatelessWidget {
   void _signOut(BuildContext context) async {
     await SharedPrefs.instance.remove(PrefKeys.userID.toString());
     await FirebaseAuth.instance.signOut();
-    context.router.replaceNamed(AppRoutes.routeMainAuth);
+    if (context.mounted) {
+      context.router.replaceNamed(AppRoutes.routeMainAuth);
+    }
   }
 }

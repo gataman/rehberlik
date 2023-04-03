@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rehberlik/common/extensions.dart';
+import '../../../../common/extensions.dart';
 
 import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 import '../../../../common/locator.dart';

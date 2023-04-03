@@ -4,9 +4,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/custom_dialog.dart';
-import 'package:rehberlik/core/widgets/text_form_fields/app_login_text_form_field.dart';
-import 'package:rehberlik/views/auth/cubit/auth_cubit.dart';
+import '../../../common/custom_dialog.dart';
+import '../../../core/widgets/text_form_fields/app_login_text_form_field.dart';
+import '../cubit/auth_cubit.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/enums/user_type.dart';

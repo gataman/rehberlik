@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
-import '../core/init/extentions.dart';
+import '../core/init/extensions.dart';
 import '../core/init/locale_keys.g.dart';
 import '../core/widgets/buttons/app_delete_button.dart';
 

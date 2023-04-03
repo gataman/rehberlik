@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/models/teacher.dart';
+import '../../../models/teacher.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/widgets/expand_button.dart';

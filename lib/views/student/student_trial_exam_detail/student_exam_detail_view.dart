@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/views/student/student_base/student_base_view.dart';
-import 'package:rehberlik/views/student/student_trial_exam_detail/components/exam_detail_card.dart';
+import '../../../models/trial_exam.dart';
+import '../student_base/student_base_view.dart';
+import 'components/exam_detail_card.dart';
 
 class StudentExamDetailView extends StudentBaseView {
   const StudentExamDetailView({required this.trialExam, Key? key}) : super(key: key);

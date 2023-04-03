@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
+import '../constants.dart';
 
 class ExpandButton extends StatelessWidget {
   final VoidCallback onPressed;

@@ -12,12 +12,12 @@ class AdminDashboardView extends AdminBaseView {
   final denemeList = <String>["Hız Yayınları 1", "Özdebir 1", "Startfen", "Özdebir 2"];
 
   @override
-  Widget get firstView => Column(children: [
-        const SchoolStudentStatsList(
+  Widget get firstView => Column(children: const [
+        SchoolStudentStatsList(
           crossAxisCount: 4,
           childAspectRatio: 2,
         ),
-        const SizedBox(height: defaultPadding),
+        SizedBox(height: defaultPadding),
         AgendaBox(),
       ]);
 

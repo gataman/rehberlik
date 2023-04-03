@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/core/init/extentions.dart';
-import 'package:rehberlik/models/teacher.dart';
+import '../../../../../core/init/extensions.dart';
+import '../../../../../models/teacher.dart';
+import 'edit_student_dialog.dart';
 
 import '../../../../../common/constants.dart';
 import '../../../../../common/custom_dialog.dart';
@@ -92,7 +93,10 @@ class StudentListBox extends StatelessWidget {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (teacherType == TeacherType.admin) AppSmallRoundedButton(onPressed: () {}),
+                    if (teacherType == TeacherType.admin)
+                      AppSmallRoundedButton(onPressed: () {
+                        _showEditStudentDialog(context, student);
+                      }),
                     const SizedBox(
                       width: defaultPadding / 2,
                     ),
@@ -145,5 +149,14 @@ class StudentListBox extends StatelessWidget {
             );
           });
         });
+  }
+
+  void _showEditStudentDialog(BuildContext context, Student student) {
+    showDialog(
+      context: context,
+      builder: (context) => EditStudentDialog(
+        student: student,
+      ),
+    );
   }
 }

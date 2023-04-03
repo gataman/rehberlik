@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/core/widgets/text/app_box_title.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/models/trial_exam_class_result.dart';
-import 'package:rehberlik/models/trial_exam_result.dart';
+import '../../../../common/extensions.dart';
+import '../../../../core/widgets/text/app_box_title.dart';
+import '../../../../models/trial_exam.dart';
+import '../../../../models/trial_exam_class_result.dart';
+import '../../../../models/trial_exam_result.dart';
 
 import '../../../../common/constants.dart';
 import '../../../admin/admin_student_trial_exam_detail_view/cubit/student_trial_exam_detail_cubit.dart';

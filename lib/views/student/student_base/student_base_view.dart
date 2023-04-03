@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/views/admin/admin_base/cubit/expanded_cubit.dart';
+import '../../admin/admin_base/cubit/expanded_cubit.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/widgets/expand_button.dart';

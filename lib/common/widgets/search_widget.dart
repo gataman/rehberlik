@@ -22,6 +22,12 @@ class _SearchWidgetState extends State<SearchWidget> {
   final controller = TextEditingController();
 
   @override
+  void dispose() {
+    widget.onChanged('');
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     const styleActive = TextStyle(color: Colors.white70);
     const styleHint = TextStyle(color: Colors.white70);
@@ -31,6 +37,7 @@ class _SearchWidgetState extends State<SearchWidget> {
       margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
       height: 40,
       child: TextField(
+        autofocus: true,
         controller: controller,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(0),
@@ -42,6 +49,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                     controller.clear();
                     widget.onChanged('');
                     FocusScope.of(context).requestFocus(FocusNode());
+                    Navigator.of(context).pop();
                   },
                 )
               : null,

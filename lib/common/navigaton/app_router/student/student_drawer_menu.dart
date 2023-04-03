@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/navigaton/app_router/student/student_drawer_list_tile.dart';
-import 'package:rehberlik/common/navigaton/app_router/student/student_drawer_model.dart';
+import 'student_drawer_list_tile.dart';
+import 'student_drawer_model.dart';
 
 import '../../../constants.dart';
 

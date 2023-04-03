@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rehberlik/models/trial_exam.dart';
+import '../../../../models/trial_exam.dart';
 
 import '../../../../common/locator.dart';
 import '../../../../repository/trial_exam_repository.dart';

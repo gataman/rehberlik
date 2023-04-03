@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
-import 'package:rehberlik/models/lesson_source.dart';
-import 'package:rehberlik/repository/lesson_source_repository.dart';
+import '../../../../common/locator.dart';
+import '../../../../models/helpers/lesson_with_subject.dart';
+import '../../../../models/lesson_source.dart';
+import '../../../../repository/lesson_source_repository.dart';
 
 import '../../../../models/student.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../common/constants.dart';
 import '../../../../../common/custom_dialog.dart';
 import '../../../../../common/widgets/default_circular_progress.dart';
-import '../../../../../core/init/extentions.dart';
+import '../../../../../core/init/extensions.dart';
 import '../../../../../core/init/locale_keys.g.dart';
 import '../../../../../core/widgets/containers/app_list_box_container.dart';
 import '../../../../../core/widgets/list_tiles/app_liste_tile.dart';

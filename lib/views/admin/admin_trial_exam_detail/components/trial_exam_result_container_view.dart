@@ -35,11 +35,14 @@ class TrialExamResultContainerView extends StatelessWidget {
     final result = await context.read<TrialExamResultCubit>().saveTrialExamResult();
 
     buttonListener.value = false;
-    CustomDialog.showSnackBar(
-      context: context,
-      message: result.message,
-      type: result.isSuccess ? DialogType.success : DialogType.error,
-    );
+
+    if (context.mounted) {
+      CustomDialog.showSnackBar(
+        context: context,
+        message: result.message,
+        type: result.isSuccess ? DialogType.success : DialogType.error,
+      );
+    }
   }
 
   @override

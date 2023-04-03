@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/models/teacher_login_result.dart';
-import 'package:rehberlik/repository/auth_repository.dart';
+import '../../../common/models/teacher_login_result.dart';
+import '../../../repository/auth_repository.dart';
 
 import '../../../common/locator.dart';
 import '../../../common/models/student_login_result.dart';

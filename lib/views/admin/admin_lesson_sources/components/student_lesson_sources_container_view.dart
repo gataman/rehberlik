@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/core/widgets/containers/app_list_box_container.dart';
-import 'package:rehberlik/core/widgets/text/app_box_title.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
-import 'package:rehberlik/models/lesson_source.dart';
+import '../../../../core/widgets/containers/app_list_box_container.dart';
+import '../../../../core/widgets/text/app_box_title.dart';
+import '../../../../models/helpers/lesson_with_subject.dart';
+import '../../../../models/lesson_source.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/widgets/default_circular_progress.dart';
@@ -23,7 +23,6 @@ class StudentLessonSourcesContainerView extends StatelessWidget {
           BlocBuilder<LessonSourcesCubit, LessonSourcesState>(
             builder: (context, state) {
               if (state is StudentLessonSourcesSelectedStade) {
-                final student = state.student;
                 return GestureDetector(
                     onTap: () {
                       List<String> subjectList = ['birinci', 'ikinci', 'ucuncu'];
@@ -73,10 +72,10 @@ class LessonAndSourceTable extends StatelessWidget {
       0: const FixedColumnWidth(150),
     };
 
-    tableColumnWithList[1] = FixedColumnWidth(80);
+    tableColumnWithList[1] = const FixedColumnWidth(80);
 
     for (var i = 0; i < 15; i++) {
-      tableColumnWithList[i + 2] = FixedColumnWidth(80);
+      tableColumnWithList[i + 2] = const FixedColumnWidth(80);
     }
 
     return Padding(
@@ -136,7 +135,7 @@ class LessonAndSourceTable extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text('${subject.subject}'),
       ),
-      for (var resource in resourceList)
+      for (var _ in resourceList)
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Text('.'),

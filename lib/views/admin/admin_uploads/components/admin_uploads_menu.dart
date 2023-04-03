@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/widgets/button_with_icon.dart';
-import 'package:rehberlik/core/widgets/containers/app_list_box_container.dart';
-import 'package:rehberlik/core/widgets/text/app_menu_title.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/cubit/admin_uploads_cubit.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/cubit/uploads_type.dart';
+import '../../../../common/constants.dart';
+import '../../../../common/widgets/button_with_icon.dart';
+import '../../../../core/widgets/containers/app_list_box_container.dart';
+import '../../../../core/widgets/text/app_menu_title.dart';
+import 'cubit/admin_uploads_cubit.dart';
+import 'cubit/uploads_type.dart';
 
 class AdminUploadsMenu extends StatelessWidget {
   const AdminUploadsMenu({Key? key}) : super(key: key);
@@ -33,6 +33,11 @@ class AdminUploadsMenu extends StatelessWidget {
             labelText: "Toplu Fotoğraf Yükle",
             icon: Icons.image,
             onPressed: () => cubit.changeUplaodType(type: UploadType.photo),
+          ),
+          ButtonWithIcon(
+            labelText: "TC ve Salon Bilgileri",
+            icon: Icons.image,
+            onPressed: () => cubit.changeUplaodType(type: UploadType.tc),
           ),
         ],
       ),

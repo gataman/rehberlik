@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/responsive.dart';
 
 import '../../../../../models/helpers/trial_exam_average_helper.dart';
 import '../../../../../models/trial_exam_student_result.dart';
+import '../../../../../responsive.dart';
 
 class StudentExamAveragesWidget extends StatelessWidget {
   const StudentExamAveragesWidget(

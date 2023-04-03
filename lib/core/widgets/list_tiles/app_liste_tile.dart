@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rehberlik/models/teacher.dart';
+import '../../../models/teacher.dart';
 
 import '../../../common/constants.dart';
 import '../../../views/admin/admin_base/cubit/teacher_cubit.dart';

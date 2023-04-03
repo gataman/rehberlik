@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/themes/custom_theme.dart';
-import 'package:rehberlik/core/init/locale_manager.dart';
-import 'package:rehberlik/core/init/pref_keys.dart';
+import '../../../common/themes/custom_theme.dart';
+import '../../../core/init/locale_manager.dart';
+import '../../../core/init/pref_keys.dart';
 
 part 'app_main_state.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/models/quiz.dart';
-import 'package:rehberlik/repository/quiz_repository.dart';
+import '../../../../models/quiz.dart';
+import '../../../../repository/quiz_repository.dart';
 
 import '../../../../common/locator.dart';
 

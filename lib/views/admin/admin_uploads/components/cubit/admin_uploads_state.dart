@@ -10,3 +10,5 @@ class AdminUploadsExcelState extends AdminUploadsState {}
 class AdminUploadsTemplateState extends AdminUploadsState {}
 
 class AdminUploadsPhotoState extends AdminUploadsState {}
+
+class AdminUploadsTcState extends AdminUploadsState {}

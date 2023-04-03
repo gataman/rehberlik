@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/views/admin/admin_lesson_sources/components/student_lesson_sources_menu.dart';
-import 'package:rehberlik/views/admin/admin_lesson_sources/cubit/lesson_sources_cubit.dart';
+import 'components/student_lesson_sources_menu.dart';
+import 'cubit/lesson_sources_cubit.dart';
 
 import '../../../models/student.dart';
 import '../admin_base/admin_base_view.dart';

@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/extensions.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
+import '../../../../../../../common/extensions.dart';
 import '../../../../../../../models/question_follow.dart';
 import '../cubit/question_follow_list_cubit.dart';
 
@@ -251,5 +251,4 @@ class QuestionFollowDataSource extends DataGridSource {
     }
   }
 //endregion
-
 }

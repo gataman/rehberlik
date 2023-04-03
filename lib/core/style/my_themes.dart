@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rehberlik/common/constants.dart';
+import '../../common/constants.dart';
 
 class MyThemes {
   static ThemeData darkThemes(BuildContext context) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/views/admin/admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/upload_student_image_view/cubit/upload_student_image_cubit.dart';
+import '../../../../../common/constants.dart';
+import '../../../admin_classes/components/class_list_card/cubit/class_list_cubit.dart';
+import 'cubit/upload_student_image_cubit.dart';
 
 class UploadStudentImagesView extends StatelessWidget {
   const UploadStudentImagesView({Key? key}) : super(key: key);

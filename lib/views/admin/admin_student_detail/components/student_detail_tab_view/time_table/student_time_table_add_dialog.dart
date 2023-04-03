@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/custom_dialog.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/helper.dart';
-import 'package:rehberlik/core/init/extentions.dart';
-import 'package:rehberlik/core/init/locale_keys.g.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
-import 'package:rehberlik/models/subject.dart';
-import 'package:rehberlik/models/time_table.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/components/student_detail_tab_view/time_table/cubit/time_table_list_cubit.dart';
+import '../../../../../../common/constants.dart';
+import '../../../../../../common/custom_dialog.dart';
+import '../../../../../../common/extensions.dart';
+import '../../../../../../common/helper.dart';
+import '../../../../../../core/init/extensions.dart';
+import '../../../../../../core/init/locale_keys.g.dart';
+import '../../../../../../models/helpers/lesson_with_subject.dart';
+import '../../../../../../models/subject.dart';
+import '../../../../../../models/time_table.dart';
+import 'cubit/time_table_list_cubit.dart';
 
 class TimeTableAddAlertDialog extends StatefulWidget {
   final TimeTable timeTable;

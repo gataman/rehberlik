@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/helper.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
-import 'package:rehberlik/models/subject.dart';
-import 'package:rehberlik/models/time_table.dart';
-import 'package:rehberlik/views/admin/admin_student_detail/components/student_detail_tab_view/time_table/cubit/time_table_list_cubit.dart';
+import '../../../common/extensions.dart';
+import '../../../common/helper.dart';
+import '../../../models/helpers/lesson_with_subject.dart';
+import '../../../models/subject.dart';
+import '../../../models/time_table.dart';
+import '../../../views/admin/admin_student_detail/components/student_detail_tab_view/time_table/cubit/time_table_list_cubit.dart';
 
 class AppTimeTableCardItem extends StatelessWidget {
   final VoidCallback onTap;

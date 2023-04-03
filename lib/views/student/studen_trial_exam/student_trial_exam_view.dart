@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/navigaton/app_router/app_routes.dart';
+import '../../../common/navigaton/app_router/app_routes.dart';
 import '../../../common/constants.dart';
 import '../../../common/helper/excel_creator/student_trial_exam_excel_creator.dart';
 import '../../../core/widgets/containers/app_list_box_container.dart';

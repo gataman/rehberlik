@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/admin_uploads_container_view.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/admin_uploads_menu.dart';
-import 'package:rehberlik/views/admin/admin_uploads/components/cubit/admin_uploads_cubit.dart';
+import '../admin_base/admin_base_view.dart';
+import 'components/admin_uploads_container_view.dart';
+import 'components/admin_uploads_menu.dart';
+import 'components/cubit/admin_uploads_cubit.dart';
 
 class AdminUploadsView extends AdminBaseView {
   const AdminUploadsView({Key? key}) : super(key: key);

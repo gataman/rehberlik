@@ -1,6 +1,6 @@
-import 'package:rehberlik/common/models/student_login_result.dart';
-import 'package:rehberlik/common/models/teacher_login_result.dart';
-import 'package:rehberlik/services/auth_service.dart';
+import '../common/models/student_login_result.dart';
+import '../common/models/teacher_login_result.dart';
+import '../services/auth_service.dart';
 
 import '../common/locator.dart';
 

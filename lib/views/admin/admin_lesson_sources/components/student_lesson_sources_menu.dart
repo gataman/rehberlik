@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/helper/excel_creator/student_trial_exam_excel_creator.dart';
+import '../../../../common/extensions.dart';
+import '../../../../common/helper/excel_creator/student_trial_exam_excel_creator.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../common/widgets/default_circular_progress.dart';
@@ -16,6 +16,7 @@ import '../../admin_lessons/components/lesson_list_card/cubit/lesson_list_cubit.
 import '../../admin_students/components/student_list_card/cubit/student_list_cubit.dart';
 import '../cubit/lesson_sources_cubit.dart';
 
+// ignore: must_be_immutable
 class StudentLessonSourcesMenu extends StatelessWidget {
   StudentLessonSourcesMenu({Key? key, this.selectedStudent}) : super(key: key);
   Student? selectedStudent;
@@ -125,7 +126,7 @@ class StudentLessonSourcesMenu extends StatelessWidget {
               ],
             );
           } else {
-            return Text('Ders listesi boş...');
+            return const Text('Ders listesi boş...');
           }
         }
       },

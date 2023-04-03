@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/extensions.dart';
+import '../../../../../common/extensions.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_datagrid_export/export.dart';
@@ -31,7 +31,7 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
   final String _schoolRankLabel = "Sıra";
   final String _classRankLabel = "Sınıf";
   final String _yanlisLabel = "Yan";
-  int _rowsPerPage = 25;
+  //int _rowsPerPage = 25;
 
   late TrialExamResultDataSource _trialExamResultDataSource;
   late List<TrialExamResult> _trialExamResultList;
@@ -128,6 +128,12 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
     //subjectList.sort((a, b) => a.subject!.compareTo(b.subject!));
     await Future.delayed(const Duration(seconds: 1));
 
+    var columnWidth = double.nan;
+
+    if (context.mounted && Responsive.isMobile(context)) {
+      columnWidth = 35;
+    }
+
     return SizedBox(
       height: 450,
       child: SfDataGridTheme(
@@ -155,7 +161,7 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
           },
 
           headerRowHeight: 30,
-          defaultColumnWidth: Responsive.isMobile(context) ? 35 : double.nan,
+          defaultColumnWidth: columnWidth,
           rowHeight: 40,
           //rowsPerPage: _rowsPerPage,
           //footerFrozenRowsCount: 1,
@@ -269,7 +275,7 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
     ];
   }
 
-  Widget _buildDataPager() {
+/*   Widget _buildDataPager() {
     var pageCount = _trialExamResultList.length / _rowsPerPage;
     if (pageCount % _rowsPerPage != 0) {
       pageCount = pageCount + 1;
@@ -290,7 +296,7 @@ class _TrialExamResultDataGridState extends State<TrialExamResultDataGrid> {
         },
       ),
     );
-  }
+  } */
 
   ColumnWidthMode _getWidthMode() => Responsive.isMobile(context) ? ColumnWidthMode.none : ColumnWidthMode.fill;
 

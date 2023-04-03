@@ -1,1 +1,1 @@
-enum UploadType { excel, template, photo }
+enum UploadType { excel, template, photo, tc }

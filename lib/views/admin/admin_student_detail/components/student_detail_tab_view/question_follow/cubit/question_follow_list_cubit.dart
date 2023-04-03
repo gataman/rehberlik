@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/models/question_follow.dart';
-import 'package:rehberlik/repository/question_follow_repository.dart';
+import '../../../../../../../common/extensions.dart';
+import '../../../../../../../common/locator.dart';
+import '../../../../../../../models/question_follow.dart';
+import '../../../../../../../repository/question_follow_repository.dart';
 
 part 'question_follow_list_state.dart';
 

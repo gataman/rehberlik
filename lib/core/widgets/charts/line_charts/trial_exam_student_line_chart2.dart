@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
+import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 
 class TrialExamStudentLineChart2 extends StatelessWidget {
   const TrialExamStudentLineChart2({Key? key, required this.examGraph, required this.lessonIndex}) : super(key: key);
@@ -32,7 +32,6 @@ class TrialExamStudentLineChart2 extends StatelessWidget {
                         ? 20
                         : 10,
                 minX: 0,
-                maxX: 10,
                 gridData: _getGridData(context),
                 borderData: FlBorderData(
                     border: Border.all(

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/services/student_service.dart';
+import '../common/locator.dart';
+import 'student_service.dart';
 
 import '../models/classes.dart';
 import 'base/db_base.dart';
@@ -65,8 +65,10 @@ class ClassesService implements DBBase<Classes> {
   }
 
   Future<Classes?> get({required String classID}) async {
-    var docRef = _db.collection(_mainRef).doc(classID).withConverter(
-        fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
+    var docRef = _db
+        .collection(_mainRef)
+        .doc(classID)
+        .withConverter(fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
 
     final docSnap = await docRef.get();
 
@@ -74,8 +76,11 @@ class ClassesService implements DBBase<Classes> {
   }
 
   Future<List<Classes>> getAll({Map<String, dynamic>? filters}) async {
-    var colRef = _db.collection(_mainRef).where("").orderBy("className").withConverter(
-        fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
+    var colRef = _db
+        .collection(_mainRef)
+        .where("")
+        .orderBy("className")
+        .withConverter(fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore());
 
     filters?.forEach((key, value) {
       colRef = colRef.where(key, isEqualTo: value);
@@ -86,14 +91,12 @@ class ClassesService implements DBBase<Classes> {
     return list;
   }
 
-  Stream<QuerySnapshot<Classes?>> getAllWithStream(
-      {required String schoolID, Map<String, dynamic>? filters}) {
+  Stream<QuerySnapshot<Classes?>> getAllWithStream({required String schoolID, Map<String, dynamic>? filters}) {
     final data = _db
         .collection(_mainRef)
         .where("schoolID", isEqualTo: schoolID)
         .orderBy("className")
-        .withConverter(
-            fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore())
+        .withConverter(fromFirestore: Classes.fromFirestore, toFirestore: (Classes object, _) => object.toFirestore())
         .snapshots();
 
     return data;

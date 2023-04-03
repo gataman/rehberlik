@@ -1,4 +1,4 @@
-import 'package:rehberlik/models/lesson_source.dart';
+import '../models/lesson_source.dart';
 
 import '../common/locator.dart';
 import '../services/lesson_sources_service.dart';

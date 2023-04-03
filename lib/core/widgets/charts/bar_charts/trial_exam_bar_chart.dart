@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
+import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 
 class TrialExamBarChart extends StatelessWidget {
   final TrialExamGraph trialExamGraph;

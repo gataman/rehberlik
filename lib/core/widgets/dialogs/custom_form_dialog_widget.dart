@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/core/widgets/text_form_fields/app_outline_text_form_field.dart';
 
 import '../../../common/constants.dart';
 import '../../../responsive.dart';
@@ -52,7 +51,7 @@ class _CustomFormDialogState extends State<CustomFormDialog> {
               )),
             ),
             actionsAlignment: MainAxisAlignment.end,
-            actions: [const Text('dddd')]);
+            actions: const [Text('')]);
       },
     );
   }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/custom_dialog.dart';
-import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
-import 'package:rehberlik/core/widgets/buttons/form_cancel_button.dart';
-import 'package:rehberlik/core/widgets/buttons/form_save_button.dart';
-import 'package:rehberlik/core/widgets/dialogs/custom_form_exam_dialog/cubit/form_exam_cubit.dart';
+import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
+import '../../buttons/form_cancel_button.dart';
+import '../../buttons/form_save_button.dart';
+import 'cubit/form_exam_cubit.dart';
 
 import '../../../../common/constants.dart';
 import '../../../../models/lesson.dart';

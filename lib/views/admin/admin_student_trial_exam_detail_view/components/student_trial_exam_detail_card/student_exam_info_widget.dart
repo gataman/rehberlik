@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
+import '../../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 
 import '../../../../../common/constants.dart';
 import '../../../../../core/widgets/charts/line_charts/trial_exam_student_line_chart2.dart';
@@ -29,11 +29,20 @@ class StudentExamInfoWidget extends StatelessWidget {
           child: _infoTable(context, false),
         ),
         Expanded(
-            flex: 1,
-            child: TrialExamStudentLineChart2(
-              examGraph: totalNetGraph,
-              lessonIndex: 5,
-            ))
+          flex: 1,
+          child: Center(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: 370,
+                child: TrialExamStudentLineChart2(
+                  examGraph: totalNetGraph,
+                  lessonIndex: 5,
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -46,10 +55,18 @@ class StudentExamInfoWidget extends StatelessWidget {
         const SizedBox(
           height: defaultPadding,
         ),
-        TrialExamStudentLineChart2(
-          examGraph: totalNetGraph,
-          lessonIndex: 5,
-        )
+        Center(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              width: 370,
+              child: TrialExamStudentLineChart2(
+                examGraph: totalNetGraph,
+                lessonIndex: 5,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/widgets/search_widget.dart';
-import 'package:rehberlik/models/student.dart';
+import '../../../common/widgets/search_widget.dart';
+import '../../../models/student.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/navigaton/app_router/app_router.dart';

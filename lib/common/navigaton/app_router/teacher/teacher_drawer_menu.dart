@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/navigaton/app_router/teacher/teacher_drawer_model.dart';
+import 'teacher_drawer_model.dart';
 import '../../../constants.dart';
 import '../../admin_drawer_list_tile.dart';
 import '../app_router.dart';

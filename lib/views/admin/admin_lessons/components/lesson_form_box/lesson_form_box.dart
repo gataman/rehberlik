@@ -149,9 +149,10 @@ class _LessonFormBoxState extends State<LessonFormBox> {
     if (!buttonListener.value && _checkFormElement()) {
       LessonListCubit cubit = context.read<LessonListCubit>();
       buttonListener.value = true;
+      final schoolId = SharedPrefs.instance.getString(PrefKeys.schoolID.toString());
 
       final Lesson lesson = Lesson(
-          schoolID: "w7WZvgcVPKVheXnhxMHE",
+          schoolID: schoolId,
           lessonName: _tfLessonNameFormController.text,
           classLevel: cubit.selectedCategory,
           lessonTime: int.parse(_tfLessonTimeFormController.text));

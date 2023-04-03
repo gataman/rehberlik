@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/custom_dialog.dart';
-import 'package:rehberlik/core/init/extentions.dart';
-import 'package:rehberlik/models/meeting.dart';
-import 'package:rehberlik/views/admin/admin_dashboard/components/agenda_box/cubit/agenda_box_cubit.dart';
+import '../../../../../common/constants.dart';
+import '../../../../../common/custom_dialog.dart';
+import '../../../../../core/init/extensions.dart';
+import '../../../../../models/meeting.dart';
+import 'cubit/agenda_box_cubit.dart';
 
 import '../../../../../core/init/locale_keys.g.dart';
 

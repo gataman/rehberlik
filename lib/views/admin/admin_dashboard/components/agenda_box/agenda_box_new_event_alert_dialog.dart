@@ -180,11 +180,14 @@ class _AgendaBoxNewEventDialogFormState extends State<AgendaBoxNewEventAlertDial
           if (newEndTime == null) return;
 
           if ((newEndTime.hour * 60) + newEndTime.minute <= (startTime.hour * 60) + startTime.minute) {
-            CustomDialog.showSnackBar(
-                context: context,
-                message: "Bitiş saati, başlangıç saatinden önce "
-                    "olamaz!",
-                type: DialogType.warning);
+            if (context.mounted) {
+              CustomDialog.showSnackBar(
+                  context: context,
+                  message: "Bitiş saati, başlangıç saatinden önce "
+                      "olamaz!",
+                  type: DialogType.warning);
+            }
+
             return;
           }
 

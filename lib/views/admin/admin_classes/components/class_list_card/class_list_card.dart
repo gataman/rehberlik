@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/core/init/extentions.dart';
+import '../../../../../core/init/extensions.dart';
 
 import '../../../../../common/constants.dart';
 import '../../../../../common/custom_dialog.dart';

@@ -11,9 +11,7 @@ import 'cubit/agenda_box_cubit.dart';
 import 'meeting_data_source.dart';
 
 class AgendaBox extends StatelessWidget {
-  MeetingDataSource? _meetingDataSource;
-
-  AgendaBox({Key? key}) : super(key: key);
+  const AgendaBox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +28,13 @@ class AgendaBox extends StatelessWidget {
             const Divider(),
             BlocBuilder<AgendaBoxCubit, AgendaBoxState>(builder: (context, state) {
               final list = (state as AgendaBoxInitial).meetingList;
-              if (list != null) {
-                _meetingDataSource = MeetingDataSource(list);
-              }
+
+              MeetingDataSource? meetingDataSource = MeetingDataSource(list);
 
               return Expanded(
                 child: SfCalendar(
                   view: CalendarView.week,
-                  dataSource: _meetingDataSource,
+                  dataSource: meetingDataSource,
                   showNavigationArrow: true,
                   showDatePickerButton: true,
                   firstDayOfWeek: 1,

@@ -1,7 +1,7 @@
 import 'package:flutter_excel/excel.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-import 'package:rehberlik/models/trial_exam_class_result.dart';
+import '../../../../common/extensions.dart';
+import '../../../../models/trial_exam.dart';
+import '../../../../models/trial_exam_class_result.dart';
 
 import '../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 import '../../../../models/helpers/lgs_factors.dart';

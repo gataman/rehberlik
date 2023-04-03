@@ -1,6 +1,6 @@
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/models/trial_exam_class_result.dart';
-import 'package:rehberlik/models/trial_exam_result.dart';
+import '../../../../common/extensions.dart';
+import '../../../../models/trial_exam_class_result.dart';
+import '../../../../models/trial_exam_result.dart';
 
 import '../../../../models/lesson.dart';
 

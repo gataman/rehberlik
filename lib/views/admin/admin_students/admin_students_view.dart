@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/views/admin/admin_base/admin_base_view.dart';
+import '../admin_base/admin_base_view.dart';
 
 import 'components/student_form_box/student_form_box.dart';
 import 'components/student_list_card/student_list_card.dart';

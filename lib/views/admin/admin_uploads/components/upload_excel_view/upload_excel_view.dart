@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:universal_html/html.dart' as html;
 
@@ -47,6 +48,8 @@ class UploadExcelView extends StatelessWidget {
   }
 
   Widget _excelUploadInfo(BuildContext context) {
+    final downloadUrl = dotenv.env['FIREBASE_DOWNLOAD_URL']!;
+
     if (isEokul) {
       return Text(
         "E-okul Öğrenci İşlemleri kısmından aldığınız Fotoğraflı Kimlik Bilgili Öğrenci listesini "
@@ -64,7 +67,7 @@ class UploadExcelView extends StatelessWidget {
                 icon: Icons.download,
                 onPressed: () {
                   openInANewTab(
-                      'https://firebasestorage.googleapis.com/v0/b/rehberlik-810e1.appspot.com/o/documents%2Fsablon_liste.xlsx?alt=media&token=f3fdf075-8aa6-4159-a69e-197fdac4f9cd');
+                      '$downloadUrl/o/documents%2Fsablon_liste.xlsx?alt=media&token=f3fdf075-8aa6-4159-a69e-197fdac4f9cd');
                 }),
           ),
           Text(

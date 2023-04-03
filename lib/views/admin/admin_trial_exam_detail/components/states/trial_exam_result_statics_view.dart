@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/core/widgets/charts/bar_charts/trial_exam_bar_chart.dart';
-import 'package:rehberlik/responsive.dart';
+import '../../../../../common/constants.dart';
+import '../../../../../core/widgets/charts/bar_charts/trial_exam_bar_chart.dart';
+import '../../../../../responsive.dart';
 
 import '../../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 

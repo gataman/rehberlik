@@ -4,23 +4,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/core/init/pref_keys.dart';
-import 'package:rehberlik/views/app_main/app_main_view.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:url_strategy/url_strategy.dart';
+
 import 'common/constants.dart';
 import 'common/locator.dart';
 import 'core/init/locale_manager.dart';
+import 'core/init/pref_keys.dart';
+import 'views/app_main/app_main_view.dart';
 
 void main() async {
   await _init();
-
-  //final ClassesRepository _repository = locator<ClassesRepository>();
-  //final SchoolRepository _repositorySchool = locator<SchoolRepository>();
-  //final LessonRepository _repositoryLesson = locator<LessonRepository>();
-
-  //var filters = {"classLevel": 5, "className": "5-B"};
-
-  await SharedPrefs.instance.setString(PrefKeys.schoolID.toString(), 'w7WZvgcVPKVheXnhxMHE');
 
   runApp(
     EasyLocalization(
@@ -33,26 +27,35 @@ void main() async {
 }
 
 Future<void> _init() async {
+  await dotenv.load(); // .env documents loaded
   WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
   await EasyLocalization.ensureInitialized();
   await setupFirebaseOptions();
   await SharedPrefs.init();
   setupLocator();
+  final schoolId = dotenv.env['SHOOL_ID']!;
+  await SharedPrefs.instance.setString(PrefKeys.schoolID.toString(), schoolId);
 }
 
 Future<void> setupFirebaseOptions() async {
+  final apiKey = dotenv.env['FIREBASE_API_KEY']!;
+  final projectId = dotenv.env['FIREBASE_PROJECT_ID']!;
+  final senderId = dotenv.env['FIREBASE_SENDER_ID']!;
+  final appId = dotenv.env['FIREBASE_APP_ID']!;
+  final measurementId = dotenv.env['FIREBASE_MEASUREMENT_ID']!;
+
   if (kIsWeb || Platform.isIOS) {
     await Firebase.initializeApp(
         //web options
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyBXzMyeobl0HH0qD36Kk6JgoY162U8LJlo",
-            authDomain: "rehberlik-810e1.firebaseapp.com",
-            projectId: "rehberlik-810e1",
-            storageBucket: "rehberlik-810e1.appspot.com",
-            messagingSenderId: "628522179079",
-            appId: "1:628522179079:web:f24b8e41f3d064c91868a2",
-            measurementId: "G-NLSTYD7RDQ"));
+        options: FirebaseOptions(
+            apiKey: apiKey,
+            authDomain: "$projectId.firebaseapp.com",
+            projectId: projectId,
+            storageBucket: "$projectId.appspot.com",
+            messagingSenderId: senderId,
+            appId: appId,
+            measurementId: measurementId));
   } else {
     await Firebase.initializeApp();
   }

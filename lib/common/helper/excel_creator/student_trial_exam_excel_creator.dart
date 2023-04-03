@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
-import 'package:rehberlik/models/helpers/trial_exam_average_helper.dart';
-import 'package:rehberlik/models/student.dart';
-import 'package:rehberlik/models/trial_exam_result.dart';
-import 'package:rehberlik/models/trial_exam_student_result.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:syncfusion_officechart/officechart.dart';
 
-import '../../../views/admin/admin_student_trial_exam_detail_view/cubit/student_trial_exam_detail_cubit.dart';
 import '../save_file_mobile.dart' if (dart.library.html) 'package:rehberlik/common/helper/save_file_web.dart';
+
+import '../../../models/helpers/trial_exam_average_helper.dart';
+import '../../../models/student.dart';
+import '../../../models/trial_exam_result.dart';
+import '../../../models/trial_exam_student_result.dart';
+import '../../../views/admin/admin_student_trial_exam_detail_view/cubit/student_trial_exam_detail_cubit.dart';
+import '../trial_exam_graph/trial_exam_graph.dart';
 import 'excel_helper.dart';
 
 class StudentTrialExamExcelCreator {

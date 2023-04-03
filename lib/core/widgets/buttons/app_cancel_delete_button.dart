@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../init/extentions.dart';
+import '../../init/extensions.dart';
 import '../../init/locale_keys.g.dart';
 
 class AppCancelDeleteButton extends StatelessWidget {

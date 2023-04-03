@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/services/trial_exam_class_result_service.dart';
-import 'package:rehberlik/services/trial_exam_result_service.dart';
+import 'trial_exam_class_result_service.dart';
+import 'trial_exam_result_service.dart';
 
 import '../common/locator.dart';
 import '../models/trial_exam.dart';

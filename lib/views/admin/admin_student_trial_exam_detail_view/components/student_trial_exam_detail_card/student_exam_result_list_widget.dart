@@ -1,12 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/core/widgets/data_table/sf_data_grid_icon.dart';
-import 'package:rehberlik/core/widgets/dialogs/custom_form_dialog_widget.dart';
-import 'package:rehberlik/core/widgets/dialogs/custom_form_exam_dialog/custom_form_exam_dialog_widget.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../../common/constants.dart';
+import '../../../../../common/extensions.dart';
+import '../../../../../core/widgets/data_table/sf_data_grid_icon.dart';
 import '../../../../../models/trial_exam_result.dart';
 import '../../../../../responsive.dart';
 
@@ -188,7 +185,7 @@ class _StudentExamResultListWidgetState extends State<StudentExamResultListWidge
   ColumnWidthMode _getWidthMode() => Responsive.isMobile(context) ? ColumnWidthMode.none : ColumnWidthMode.fill;
 
   //ANCHOR - _showDialog
-  void _showDialog(TrialExamResult result) {}
+  //void _showDialog(TrialExamResult result) {}
 }
 //!SECTION
 
@@ -246,33 +243,33 @@ class _DataSource extends DataGridSource {
   }
 
   //ANCHOR - _getClickableData
-  Widget _getClickableData(TrialExamResult result) {
-    return InkWell(
-      onTap: () {},
-      child: CustomFormExamDialogWidget(
-        examResult: result,
-        child: _examNameWidget(result),
-      ),
-    );
-  }
+  // Widget _getClickableData(TrialExamResult result) {
+  //   return InkWell(
+  //     onTap: () {},
+  //     child: CustomFormExamDialogWidget(
+  //       examResult: result,
+  //       child: _examNameWidget(result),
+  //     ),
+  //   );
+  // }
 
   //ANCHOR - _examNameWidget
-  Widget _examNameWidget(TrialExamResult result) {
-    return Container(
-      padding: const EdgeInsets.only(left: 3),
-      alignment: Alignment.centerLeft,
-      child: AutoSizeText(
-        result.trialExam!.examName!,
-        style: const TextStyle(
-          fontSize: 12,
-          color: Colors.amber,
-          fontWeight: FontWeight.normal,
-          overflow: TextOverflow.ellipsis,
-        ),
-        textAlign: TextAlign.start,
-      ),
-    );
-  }
+  // Widget _examNameWidget(TrialExamResult result) {
+  //   return Container(
+  //     padding: const EdgeInsets.only(left: 3),
+  //     alignment: Alignment.centerLeft,
+  //     child: AutoSizeText(
+  //       result.trialExam!.examName!,
+  //       style: const TextStyle(
+  //         fontSize: 12,
+  //         color: Colors.amber,
+  //         fontWeight: FontWeight.normal,
+  //         overflow: TextOverflow.ellipsis,
+  //       ),
+  //       textAlign: TextAlign.start,
+  //     ),
+  //   );
+  // }
 
   @override
   List<DataGridRow> get rows => _dataGridRows;
@@ -341,20 +338,20 @@ class _DataSource extends DataGridSource {
   }
 
   //ANCHOR - _getFormElementList
-  List<FormElement> _getFormElementList(TrialExamResult result) => <FormElement>[
-        FormElement(label: 'Türkçe Doğru', value: result.turDog.toString()),
-        FormElement(label: 'Türkçe Yanlış', value: result.turYan.toString()),
-        FormElement(label: 'Sosyal Doğru', value: result.sosDog.toString()),
-        FormElement(label: 'Sosyal Yanlış', value: result.sosYan.toString()),
-        FormElement(label: 'Din Doğru', value: result.dinDog.toString()),
-        FormElement(label: 'Din Yanlış', value: result.dinYan.toString()),
-        FormElement(label: 'İngilizce Doğru', value: result.ingDog.toString()),
-        FormElement(label: 'İngilizce Yanlış', value: result.ingYan.toString()),
-        FormElement(label: 'Matematik Doğru', value: result.matDog.toString()),
-        FormElement(label: 'Matematik Yanlış', value: result.matYan.toString()),
-        FormElement(label: 'Fen Doğru', value: result.fenDog.toString()),
-        FormElement(label: 'Fen Yanlış', value: result.fenYan.toString()),
-      ];
+  // List<FormElement> _getFormElementList(TrialExamResult result) => <FormElement>[
+  //       FormElement(label: 'Türkçe Doğru', value: result.turDog.toString()),
+  //       FormElement(label: 'Türkçe Yanlış', value: result.turYan.toString()),
+  //       FormElement(label: 'Sosyal Doğru', value: result.sosDog.toString()),
+  //       FormElement(label: 'Sosyal Yanlış', value: result.sosYan.toString()),
+  //       FormElement(label: 'Din Doğru', value: result.dinDog.toString()),
+  //       FormElement(label: 'Din Yanlış', value: result.dinYan.toString()),
+  //       FormElement(label: 'İngilizce Doğru', value: result.ingDog.toString()),
+  //       FormElement(label: 'İngilizce Yanlış', value: result.ingYan.toString()),
+  //       FormElement(label: 'Matematik Doğru', value: result.matDog.toString()),
+  //       FormElement(label: 'Matematik Yanlış', value: result.matYan.toString()),
+  //       FormElement(label: 'Fen Doğru', value: result.fenDog.toString()),
+  //       FormElement(label: 'Fen Yanlış', value: result.fenYan.toString()),
+  //     ];
 }
 
 //!SECTION - _DataSource

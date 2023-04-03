@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_detail/components/states/trial_exam_result_statics_view.dart';
-import 'package:rehberlik/views/admin/admin_trial_exam_total/components/trial_exam_total_averages_data_table.dart';
+import '../admin_trial_exam_detail/components/states/trial_exam_result_statics_view.dart';
+import 'components/trial_exam_total_averages_data_table.dart';
 
 import '../../../common/constants.dart';
 import '../../../common/widgets/default_circular_progress.dart';

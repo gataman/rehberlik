@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/helper/trial_exam_graph/trial_exam_graph.dart';
+import '../../../../../common/helper/trial_exam_graph/trial_exam_graph.dart';
 
 import '../../../../../common/constants.dart';
 import '../../../../../models/helpers/trial_exam_average_helper.dart';

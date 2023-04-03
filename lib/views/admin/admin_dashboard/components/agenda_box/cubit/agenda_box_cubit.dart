@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/models/meeting.dart';
-import 'package:rehberlik/repository/meeting_repository.dart';
+import '../../../../../../common/constants.dart';
+import '../../../../../../common/locator.dart';
+import '../../../../../../models/meeting.dart';
+import '../../../../../../repository/meeting_repository.dart';
 
 part 'agenda_box_state.dart';
 

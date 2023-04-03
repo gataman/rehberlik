@@ -1,4 +1,4 @@
-import 'package:rehberlik/common/extensions.dart';
+import '../../../../common/extensions.dart';
 
 import '../../../../models/trial_exam_result.dart';
 import '../../../../models/trial_exam_student_result.dart';

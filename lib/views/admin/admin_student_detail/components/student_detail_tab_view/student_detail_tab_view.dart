@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:rehberlik/common/constants.dart';
-import 'package:rehberlik/models/student.dart';
+import '../../../../../common/constants.dart';
+import '../../../../../models/student.dart';
 import 'question_follow/question_follow_list_card.dart';
 import 'time_table/student_time_table_card.dart';
 

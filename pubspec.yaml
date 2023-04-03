@@ -5,7 +5,7 @@ description: Yavuz Selim Ortaokulu Başarı İzleme
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.4.0
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -24,36 +24,24 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  pdf_text: ^0.5.0
-  file_picker: ^4.6.1
-  flutter_svg: ^1.0.3 
-  intl: ^0.17.0
-  image_picker: ^0.8.5+3
-  open_file: ^3.2.1
-  get_it: ^7.2.0
+  ga_uikit:
+    git:
+      url: https://github.com/gataman/ga_uikit.git
+      ref: "3c31cb2"
+
+ 
+
+  #State Management
   flutter_bloc: ^8.1.1
-  
-  auto_size_text: ^3.0.0
-  shared_preferences: ^2.0.15
-  auto_route: ^5.0.1
-  #excel: ^2.0.0-null-safety-3
-  animated_text_kit: ^4.2.2
-  meta: ^1.8.0
-  json_annotation: ^4.6.0
-  #excel:
-    #git:
-      #url: https://github.com/justkawal/excel.git
-      #ref: eb091ba # branch name
 
-
-  # firebase
+  # Firebase
   firebase_core: ^2.4.1
   firebase_auth: ^4.2.5
   # firebase_messaging: ^14.2.1
   firebase_storage: ^11.0.10
   cloud_firestore: ^4.3.1
 
-  # syncfusion packets
+  # Syncfusion Packages
   syncfusion_flutter_calendar: ^20.4.38
   syncfusion_flutter_pdf: ^20.4.38
   syncfusion_flutter_datagrid: ^20.4.38
@@ -64,21 +52,34 @@ dependencies:
   syncfusion_flutter_xlsio: ^20.4.38-beta
   syncfusion_officechart: ^20.4.38-beta
   syncfusion_flutter_datagrid_export: ^20.4.38-beta
-  
+
+  auto_route: ^5.0.1
+  get_it: ^7.2.0
+  shared_preferences: ^2.0.15
+
+
+
+  #Utility    
+  pdf_text: ^0.5.0
+  file_picker: ^5.2.5
+  image_picker: ^0.8.5+3
+  flutter_svg: ^1.0.3 
   flutter_excel: ^1.0.1
+  open_filex: ^4.3.2
+  meta: ^1.8.0
+  intl: ^0.17.0
+  auto_size_text: ^3.0.0
+  animated_text_kit: ^4.2.2
   turkish: ^0.2.1
   path_provider: ^2.0.11
   url_strategy: ^0.2.0
   universal_html: ^2.0.8
+  http: ^0.13.5
+  image: ^3.3.0
+  json_annotation: ^4.6.0
+  flutter_dotenv: ^5.0.2
   
-  
-  
-
-
-  ##excel_to_json: ^0.0.2-dev.1
-  ##spreadsheet_decoder: ^2.1.0
-  ##flutter_svg: ^1.1.0
-
+ 
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -112,6 +113,8 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - assets/translations/
+    - .env
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

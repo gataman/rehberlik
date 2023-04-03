@@ -1,8 +1,7 @@
 import 'dart:collection';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
+import '../../../../../../models/helpers/lesson_with_subject.dart';
 
 import '../../../../../../common/extensions.dart';
 import '../../../../../../common/locator.dart';

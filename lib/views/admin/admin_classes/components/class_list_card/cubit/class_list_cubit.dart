@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/helper.dart';
-import 'package:rehberlik/common/models/school_student_stats.dart';
-import 'package:rehberlik/core/init/locale_manager.dart';
-import 'package:rehberlik/core/init/pref_keys.dart';
+import '../../../../../../common/extensions.dart';
+import '../../../../../../common/helper.dart';
+import '../../../../../../common/models/school_student_stats.dart';
+import '../../../../../../core/init/locale_manager.dart';
+import '../../../../../../core/init/pref_keys.dart';
 
 import '../../../../../../common/locator.dart';
 import '../../../../../../models/classes.dart';
@@ -57,6 +58,20 @@ class ClassListCubit extends Cubit<ClassListState> {
     return _studentRepository.delete(objectID: student.id!).whenComplete(() {
       _updateOrDeleteStudentInLocalList(student: student);
     });
+  }
+
+  Future<String> addStudent(Student student) async {
+    return _studentRepository.add(object: student).then(
+      (studentID) {
+        student.id = studentID;
+        _addStudentInLocalList(student);
+        return studentID;
+      },
+    );
+  }
+
+  Future<void> updateStudent(Student student) async {
+    return _studentRepository.update(object: student).whenComplete(() => _refreshList());
   }
 
   void _addClassInLocalList(Classes classes) {
@@ -150,6 +165,20 @@ class ClassListCubit extends Cubit<ClassListState> {
       }
 
       _studentRepository.updateAll(list: allStudentList).then((value) => _refreshList());
+    }
+  }
+
+  void _addStudentInLocalList(Student student) {
+    final selectedClass = studentWithClassList!.findOrNull(
+      (element) => element.classes.id == student.classID,
+    );
+
+    if (selectedClass != null) {
+      var studentList = selectedClass.studentList;
+      studentList ??= [];
+      studentList.add(student);
+      allStudentList.add(student);
+      _refreshList();
     }
   }
 }

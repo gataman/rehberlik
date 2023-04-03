@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/models/trial_exam.dart';
-
-import '../common/constants.dart';
+import '../common/extensions.dart';
+import 'trial_exam.dart';
 
 class TrialExamResult {
   String? id;

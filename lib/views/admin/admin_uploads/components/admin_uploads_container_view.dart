@@ -5,6 +5,7 @@ import 'cubit/admin_uploads_cubit.dart';
 
 import 'upload_excel_view/upload_excel_view.dart';
 import 'upload_student_image_view/upload_student_images_view.dart';
+import 'upload_tc_view/upload_tc_view.dart';
 
 class AdminUploadsContainerView extends StatelessWidget {
   const AdminUploadsContainerView({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class AdminUploadsContainerView extends StatelessWidget {
           );
         } else if (state is AdminUploadsPhotoState) {
           return const UploadStudentImagesView();
+        } else if (state is AdminUploadsTcState) {
+          return const UploadTcView();
         } else {
           return _defaultType();
         }

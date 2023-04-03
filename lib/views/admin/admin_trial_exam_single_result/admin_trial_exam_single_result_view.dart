@@ -50,7 +50,7 @@ class AdminTrialExamSingleResultView extends AdminBaseView {
         if (state is StudentTrialExamStudentSelectedStade) {
           return Text(state.studentTrialExamResultList.toString());
         } else {
-          return Text('test');
+          return const Text('test');
         }
       },
     );

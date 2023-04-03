@@ -45,7 +45,7 @@ class StudentDetailExcelBuilder {
 
     final Workbook workbook = Workbook(1);
 
-    await _createPage1(workbook, student, questionFollowList, timeTableList, trialExamStudentResult!);
+    await _createPage1(workbook, student, questionFollowList, timeTableList, trialExamStudentResult);
 
     final List<int> bytes = workbook.saveAsStream();
     //Dispose the document.
@@ -58,7 +58,7 @@ class StudentDetailExcelBuilder {
 
 // PAGE 1 -->
   Future<void> _createPage1(Workbook workbook, Student student, List<QuestionFollow>? questionFollowList,
-      Map<int, List<TimeTable>>? timeTableList, TrialExamStudentResult trialExamStudentResult) async {
+      Map<int, List<TimeTable>>? timeTableList, TrialExamStudentResult? trialExamStudentResult) async {
     final Worksheet sheet = workbook.worksheets[0];
     int firstRow = 1;
     int firstColumn = 1;
@@ -516,7 +516,7 @@ class _TimeTableBox {
 
 class _FooterBox {
   final StudentDetailExcelHelper _helper = locator<StudentDetailExcelHelper>();
-  final TrialExamStudentResult trialExamStudentResult;
+  final TrialExamStudentResult? trialExamStudentResult;
   final ExcelBoxSettings box;
   final Worksheet worksheet;
 
@@ -577,7 +577,9 @@ class _FooterBox {
 
       final cell = worksheet.getRangeByIndex(box.firstRow + 4, col, box.firstRow + 5, col + 1);
       cell.merge();
-      cell.setNumber(_getExamResult(index: examResultIndex, examResult: trialExamStudentResult));
+      if (trialExamStudentResult != null) {
+        cell.setNumber(_getExamResult(index: examResultIndex, examResult: trialExamStudentResult!));
+      }
       examResultIndex++;
     }
   }

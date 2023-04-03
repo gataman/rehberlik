@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rehberlik/common/extensions.dart';
-import 'package:rehberlik/common/locator.dart';
-import 'package:rehberlik/models/classes.dart';
-import 'package:rehberlik/models/helpers/lesson_with_subject.dart';
-import 'package:rehberlik/models/student.dart';
-import 'package:rehberlik/models/time_table.dart';
-import 'package:rehberlik/repository/classes_repository.dart';
-import 'package:rehberlik/repository/lesson_repository.dart';
-import 'package:rehberlik/repository/time_table_repository.dart';
+import '../../../../../../../common/extensions.dart';
+import '../../../../../../../common/locator.dart';
+import '../../../../../../../models/classes.dart';
+import '../../../../../../../models/helpers/lesson_with_subject.dart';
+import '../../../../../../../models/student.dart';
+import '../../../../../../../models/time_table.dart';
+import '../../../../../../../repository/classes_repository.dart';
+import '../../../../../../../repository/lesson_repository.dart';
+import '../../../../../../../repository/time_table_repository.dart';
 
 part 'time_table_list_state.dart';
 
