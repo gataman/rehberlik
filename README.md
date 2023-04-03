@@ -1,16 +1,25 @@
-# rehberlik
+# Guidance
 
-A new Flutter application.
+Rehberlik is an application designed to help students track their exam results, while providing teachers and parents with statistical analysis of their progress.
 
-## Getting Started
+This application is built using the Firebase framework and Flutter.
 
-This project is a starting point for a Flutter application.
+## Packages Used and Their Descriptions
 
-A few resources to get you started if this is your first Flutter project:
+| Package Name            | Description                                       |
+|-------------------------|---------------------------------------------------|
+| [flutter_bloc](https://pub.dev/packages/flutter_bloc) | State management                    |
+| [syncfusion_flutter_datagrid](https://pub.dev/packages/syncfusion_flutter_datagrid) | Advanced data tables and Excel outputs |
+| [fl_chart](https://pub.dev/packages/fl_chart) | Student result charts                       |
+| [auto_router](https://pub.dev/packages/auto_route) | Route management                    |
+| [easy_localization](https://pub.dev/packages/easy_localization) | Localization management             |
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Application Screenshot
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot](./screen_shoot.png)
+
+## Get Rehberlik on Google Play and YSOSINAV
+
+Get Rehberlik on [Google Play](https://play.google.com/store/apps/details?id=com.gurcanataman.rehberlik) and [YSOSINAV](https://ysosinav.com.tr/) website.
+
+Thank you for checking out our app!
